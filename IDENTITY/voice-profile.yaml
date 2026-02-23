@@ -1,0 +1,44 @@
+# Voice Profile — ILOS
+# Defines your writing style so PARACELSUS can generate content that sounds like you.
+# Each dimension is a spectrum from 1 (left) to 10 (right).
+# Update when you notice the AI isn't capturing your voice.
+
+# Style Dimensions (1-10 spectrum)
+dimensions:
+  formal_casual: 5        # 1 = very formal, 10 = very casual
+  technical_simple: 5     # 1 = very technical, 10 = very simple
+  concise_elaborate: 5    # 1 = very concise, 10 = very elaborate
+  serious_playful: 5      # 1 = very serious, 10 = very playful
+  direct_nuanced: 5       # 1 = very direct, 10 = very nuanced
+
+# Writing Patterns
+patterns:
+  sentence_length: "medium"          # short | medium | long | varied
+  paragraph_style: "moderate"        # brief | moderate | long
+  uses_headers: true                 # true | false
+  uses_lists: true                   # true | false
+  uses_questions: false              # rhetorical questions in writing
+  uses_metaphors: false              # figurative language
+  first_person: true                 # writes in first person
+
+# Tone
+tone:
+  primary: "thoughtful"              # e.g., thoughtful, energetic, warm, authoritative
+  secondary: "encouraging"           # secondary tone quality
+  when_teaching: "clear and patient" # how you sound when explaining
+  when_celebrating: "genuine"        # how you sound when celebrating wins
+
+# Things to Avoid
+avoid:
+  - "corporate jargon"
+  - "passive voice (unless intentional)"
+  - "cliches"
+  - "unnecessary qualifiers"
+
+# Example Phrases (things you actually say)
+signature_phrases:
+  - "Example: Let's dig into this."
+  - "Example: Here's what I notice..."
+
+# Notes
+notes: "Fill this in by providing writing samples to PARACELSUS and asking it to analyze your style. Or simply update the dimensions based on your preferences."

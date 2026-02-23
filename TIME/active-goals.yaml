@@ -1,0 +1,80 @@
+# Active Goals — ILOS
+# Maximum 3 goals per time scale (Extreme Prioritization)
+# Update during every review session
+# Each goal connects upward (to parent_goal or HHG) and to an area
+
+annual:
+  period: "2026"
+  goals:
+    - id: annual_1
+      description: "Example: Launch my first digital product"
+      area: career
+      connected_hhg: "HHG 1"
+      status: active  # active | completed | abandoned
+    - id: annual_2
+      description: "Example: Establish a consistent fitness routine"
+      area: health
+      connected_hhg: null
+      status: active
+    - id: annual_3
+      description: "Example: Deepen my primary relationship"
+      area: love
+      connected_hhg: null
+      status: active
+
+quarterly:
+  period: "2026-Q1"
+  goals:
+    - id: q1_1
+      description: "Example: Complete product MVP and get 10 beta users"
+      area: career
+      parent_goal: annual_1
+      status: active
+    - id: q1_2
+      description: "Example: Run 3x per week for 12 consecutive weeks"
+      area: health
+      parent_goal: annual_2
+      status: active
+    - id: q1_3
+      description: "Example: Plan and take a weekend trip together"
+      area: love
+      parent_goal: annual_3
+      status: active
+
+monthly:
+  period: "2026-01"
+  goals:
+    - id: m01_1
+      description: "Example: Build landing page and waitlist"
+      area: career
+      parent_goal: q1_1
+      status: active
+    - id: m01_2
+      description: "Example: Run 3x per week (12 runs this month)"
+      area: health
+      parent_goal: q1_2
+      status: active
+    - id: m01_3
+      description: "Example: Have 2 dedicated date nights"
+      area: love
+      parent_goal: q1_3
+      status: active
+
+weekly:
+  period: "2026-W04"
+  goals:
+    - id: w04_1
+      description: "Example: Finish landing page copy and design"
+      area: career
+      parent_goal: m01_1
+      status: active
+    - id: w04_2
+      description: "Example: Run Monday, Wednesday, Friday"
+      area: health
+      parent_goal: m01_2
+      status: active
+    - id: w04_3
+      description: "Example: Plan Saturday date night"
+      area: love
+      parent_goal: m01_3
+      status: active

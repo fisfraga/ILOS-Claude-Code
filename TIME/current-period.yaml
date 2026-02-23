@@ -1,0 +1,44 @@
+# Current Period — ILOS
+# Tracks which VPER phase is active and the elemental assessment
+# Update during reviews and planning sessions
+
+current_year: "2026"
+current_quarter: "Q1"
+current_month: "01"
+current_week: "W04"
+
+# Which VPER phase are you currently in?
+# vision | plan | execute | review
+vper_phase: execute
+
+# When did you enter this phase?
+phase_started: "2026-01-20"
+
+# Elemental assessment (updated during monthly/quarterly reviews)
+# Rate each element 1-10 based on how present it has been
+elemental_balance:
+  fire:
+    score: 7
+    notes: "Example: Strong connection to purpose this month. Vision feels clear."
+  air:
+    score: 6
+    notes: "Example: Planning is solid but could be more detailed for weekly goals."
+  earth:
+    score: 5
+    notes: "Example: Execution has been inconsistent — too many context switches."
+  water:
+    score: 8
+    notes: "Example: Weekly reviews have been consistent. Wins are flowing."
+
+# Which element needs the most attention right now?
+element_focus: earth
+
+# Last review dates (helps track review consistency)
+last_reviews:
+  weekly: "2026-01-19"
+  monthly: "2025-12-31"
+  quarterly: "2025-12-31"
+  annual: "2025-12-31"
+
+# Notes on current season
+season_notes: "Example: High energy period. New year momentum. Focus on building execution consistency."
