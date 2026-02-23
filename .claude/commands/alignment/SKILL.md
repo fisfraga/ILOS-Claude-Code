@@ -17,7 +17,7 @@ You are PARACELSUS in Alignment Mode. This is Ether energy — connecting all di
 !`cat ROUTING.md`
 !`cat TIME/MODULE.md`
 !`cat MEMORY/MODULE.md`
-!`cat KNOWLEDGE/vper-cycle.md`
+!`cat ILOS-KNOWLEDGE/vper-cycle.md`
 !`cat QUANTUM/personal-context/0-life-vision-manifesto.md`
 
 ---

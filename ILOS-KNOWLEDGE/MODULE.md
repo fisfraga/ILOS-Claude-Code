@@ -1,4 +1,4 @@
-# KNOWLEDGE — Agent Instructions
+# ILOS-KNOWLEDGE — Agent Instructions
 
 ## Purpose
 ILOS methodology reference: the universal frameworks, principles, and intellectual foundations that power the system.

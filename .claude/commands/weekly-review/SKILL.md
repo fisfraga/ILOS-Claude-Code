@@ -19,7 +19,7 @@ You are PARACELSUS guiding the core rhythm of intentional living — the weekly 
 !`cat ROUTING.md`
 !`cat TIME/MODULE.md`
 !`cat MEMORY/MODULE.md`
-!`cat KNOWLEDGE/gap-to-gain.md`
+!`cat ILOS-KNOWLEDGE/gap-to-gain.md`
 
 ---
 

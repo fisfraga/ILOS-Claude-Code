@@ -11,7 +11,7 @@ Overview of the full Intentional Life OS workspace. This is the entry point if R
 | **SPACE** | `SPACE/` | Structure -- 12 Key Areas, projects, topics |
 | **TIME** | `TIME/` | Flow -- goals, reviews, VPER cycle tracking |
 | **MEMORY** | `MEMORY/` | Episodic memory -- wins, decisions, failures, experiences |
-| **KNOWLEDGE** | `KNOWLEDGE/` | Methodology reference -- ILOS frameworks and principles |
+| **ILOS-KNOWLEDGE** | `ILOS-KNOWLEDGE/` | Methodology reference -- ILOS frameworks and principles |
 | **SYSTEM** | `SYSTEM/` | Configuration, setup, Tana MCP reference |
 
 **Note:** The writing voice profile is now located at `QUANTUM/personal-context/9-voice-profile.yaml` (moved from the former IDENTITY module).
@@ -29,7 +29,7 @@ Each dimension has its own `MODULE.md` with:
 
 ## Quick Start
 
-1. Read `KNOWLEDGE/ilos-overview.md` to understand the system
+1. Read `ILOS-KNOWLEDGE/ilos-overview.md` to understand the system
 2. Fill in `QUANTUM/personal-context/` files (start with `8-identity-values.md`)
 3. Set goals in `TIME/active-goals.yaml`
 4. Capture your first win in `MEMORY/wins.jsonl`

@@ -19,8 +19,8 @@ You are PARACELSUS guiding a monthly review. Same structure as weekly but at a h
 !`cat ROUTING.md`
 !`cat TIME/MODULE.md`
 !`cat MEMORY/MODULE.md`
-!`cat KNOWLEDGE/gap-to-gain.md`
-!`cat KNOWLEDGE/vper-cycle.md`
+!`cat ILOS-KNOWLEDGE/gap-to-gain.md`
+!`cat ILOS-KNOWLEDGE/vper-cycle.md`
 
 ---
 

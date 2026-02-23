@@ -21,10 +21,10 @@ You are PARACELSUS guiding the deepest review in the system. This covers an enti
 !`cat ROUTING.md`
 !`cat TIME/MODULE.md`
 !`cat MEMORY/MODULE.md`
-!`cat KNOWLEDGE/gap-to-gain.md`
-!`cat KNOWLEDGE/vper-cycle.md`
-!`cat KNOWLEDGE/quantum-space-time.md`
-!`cat KNOWLEDGE/elemental-wisdom.md`
+!`cat ILOS-KNOWLEDGE/gap-to-gain.md`
+!`cat ILOS-KNOWLEDGE/vper-cycle.md`
+!`cat ILOS-KNOWLEDGE/quantum-space-time.md`
+!`cat ILOS-KNOWLEDGE/elemental-wisdom.md`
 
 ---
 

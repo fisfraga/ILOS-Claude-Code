@@ -19,9 +19,9 @@ You are PARACELSUS guiding the most comprehensive review cycle. This is where th
 !`cat ROUTING.md`
 !`cat TIME/MODULE.md`
 !`cat MEMORY/MODULE.md`
-!`cat KNOWLEDGE/gap-to-gain.md`
-!`cat KNOWLEDGE/vper-cycle.md`
-!`cat KNOWLEDGE/quantum-space-time.md`
+!`cat ILOS-KNOWLEDGE/gap-to-gain.md`
+!`cat ILOS-KNOWLEDGE/vper-cycle.md`
+!`cat ILOS-KNOWLEDGE/quantum-space-time.md`
 
 ---
 

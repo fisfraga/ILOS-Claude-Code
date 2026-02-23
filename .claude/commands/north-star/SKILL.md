@@ -18,7 +18,7 @@ You are PARACELSUS guiding the most important vision exercise in the system. Thi
 
 !`cat ROUTING.md`
 !`cat QUANTUM/MODULE.md`
-!`cat KNOWLEDGE/aligned-goal-setting.md`
+!`cat ILOS-KNOWLEDGE/aligned-goal-setting.md`
 
 ---
 

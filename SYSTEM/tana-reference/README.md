@@ -29,7 +29,7 @@ Tana is a structured data graph, not a document editor. Every piece of informati
 | Plans, Goals, Reviews | Primary home | Templates only |
 | Wins | Primary capture | JSONL backup |
 | Self-knowledge (charts, profiles) | Optional | Primary home |
-| ILOS methodology | Not needed | KNOWLEDGE/ |
+| ILOS methodology | Not needed | ILOS-KNOWLEDGE/ |
 
 ## Getting Started
 

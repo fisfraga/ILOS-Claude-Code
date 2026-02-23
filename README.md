@@ -30,7 +30,7 @@ Your life is organized through the **Quantum-Space-Time** framework:
 - **SPACE/** — What matters. Your 12 life areas, active projects, interests.
 - **TIME/** — When things happen. Goals, reviews, plans across fractal time scales.
 - **MEMORY/** — What you've learned. Wins, decisions, failures, key experiences.
-- **KNOWLEDGE/** — How the system works. ILOS methodology and frameworks.
+- **ILOS-KNOWLEDGE/** — How the system works. ILOS methodology and frameworks.
 
 ### The VPER Cycle
 
@@ -65,7 +65,7 @@ Open this folder in Claude Code and try:
 
 ### 3. Explore the Framework
 
-Read `KNOWLEDGE/ilos-overview.md` for the full system overview, or ask the AI:
+Read `ILOS-KNOWLEDGE/ilos-overview.md` for the full system overview, or ask the AI:
 
 > "What are my current goals and how do they connect to my vision?"
 
@@ -95,7 +95,7 @@ ILOS-Template/
 │   ├── decisions.jsonl     # Key decisions with reasoning
 │   ├── failures.jsonl      # Lessons learned
 │   └── experiences.jsonl   # Significant life moments
-├── KNOWLEDGE/              # ILOS methodology reference
+├── ILOS-KNOWLEDGE/         # ILOS methodology reference
 ├── SYSTEM/                 # Configuration and setup
 │   └── tana-reference/     # Optional Tana MCP integration
 ├── .claude/commands/       # 22 skills (slash commands)

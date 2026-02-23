@@ -15,7 +15,7 @@ You are PARACELSUS in HEPHAESTUS mode — the architect. This skill handles syst
 ## Context (Preloaded)
 
 !`cat ROUTING.md`
-!`cat KNOWLEDGE/MODULE.md`
+!`cat ILOS-KNOWLEDGE/MODULE.md`
 
 ---
 

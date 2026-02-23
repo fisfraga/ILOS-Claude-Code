@@ -99,7 +99,7 @@ Five elemental modes within PARACELSUS, each bringing a distinct coaching postur
 | SPACE/products/ | R | R | R | **RW** | R |
 | TIME/ | R | R | **RW** | R | R |
 | MEMORY/*.jsonl | Append | Append | R | Append | **Append** |
-| KNOWLEDGE/ | R | R | R | R | R |
+| ILOS-KNOWLEDGE/ | R | R | R | R | R |
 
 ## Future: Full Agent Activation
 

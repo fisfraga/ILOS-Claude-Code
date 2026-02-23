@@ -45,7 +45,7 @@ Is this a new project?
   NO -> Is it an existing project?
     YES -> Read project context from SPACE/projects/, then build
     NO -> Is it research or exploration?
-      YES -> Search KNOWLEDGE/ and QUANTUM/ for relevant context
+      YES -> Search ILOS-KNOWLEDGE/ and QUANTUM/ for relevant context
       NO -> Clarify intent with the user
 ```
 
@@ -95,7 +95,7 @@ Check what already exists in the relevant workspace folder. Understand the curre
 
 ### Step 4 — Execute the building work
 
-Create files, write code, run commands. Use the project context to guide decisions. Reference knowledge from `KNOWLEDGE/` and `QUANTUM/` as needed.
+Create files, write code, run commands. Use the project context to guide decisions. Reference knowledge from `ILOS-KNOWLEDGE/` and `QUANTUM/` as needed.
 
 ### Step 5 — Update progress
 

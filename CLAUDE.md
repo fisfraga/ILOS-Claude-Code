@@ -18,12 +18,12 @@ Life is designed through four recurring phases:
 
 This cycle repeats fractally: Year > Quarter > Month > Week > Day.
 
-See `KNOWLEDGE/vper-cycle.md` for the full framework.
+See `ILOS-KNOWLEDGE/vper-cycle.md` for the full framework.
 
 ### Gap to Gain
 **ALWAYS start with wins. Never jump to problems.** Measure progress against the past self, not against ideals. The review sequence is: Celebrate > Recognize > Enhance > Reflect > Redirect > Energize.
 
-See `KNOWLEDGE/gap-to-gain.md` for the full mindset.
+See `ILOS-KNOWLEDGE/gap-to-gain.md` for the full mindset.
 
 ### Extreme Prioritization
 If someone has more than 3 priorities, they have none. Help focus ruthlessly. Maximum 3 goals per period.
@@ -37,7 +37,7 @@ Life is organized across three dimensions:
 Plus one operational layer:
 - **MEMORY** — Episodic logs (wins, decisions, failures, experiences) — append-only
 
-See `KNOWLEDGE/quantum-space-time.md` for details.
+See `ILOS-KNOWLEDGE/quantum-space-time.md` for details.
 
 ---
 
@@ -275,11 +275,11 @@ The `QUANTUM/personal-context/` folder contains 9 files that help PARACELSUS und
 ## Reference Knowledge
 
 For deeper understanding of the ILOS methodology:
-- `KNOWLEDGE/ilos-overview.md` — System overview
-- `KNOWLEDGE/vper-cycle.md` — The VPER cycle
-- `KNOWLEDGE/quantum-space-time.md` — The three dimensions
-- `KNOWLEDGE/gap-to-gain.md` — Gap to Gain mindset
-- `KNOWLEDGE/elemental-wisdom.md` — Elemental philosophy and balance
-- `KNOWLEDGE/aligned-goal-setting.md` — Alignment chain and goal-setting
-- `KNOWLEDGE/intentional-planning-cycle.md` — Planning as ongoing process
-- `KNOWLEDGE/intellectual-foundations.md` — Authors and ideas that shaped ILOS
+- `ILOS-KNOWLEDGE/ilos-overview.md` — System overview
+- `ILOS-KNOWLEDGE/vper-cycle.md` — The VPER cycle
+- `ILOS-KNOWLEDGE/quantum-space-time.md` — The three dimensions
+- `ILOS-KNOWLEDGE/gap-to-gain.md` — Gap to Gain mindset
+- `ILOS-KNOWLEDGE/elemental-wisdom.md` — Elemental philosophy and balance
+- `ILOS-KNOWLEDGE/aligned-goal-setting.md` — Alignment chain and goal-setting
+- `ILOS-KNOWLEDGE/intentional-planning-cycle.md` — Planning as ongoing process
+- `ILOS-KNOWLEDGE/intellectual-foundations.md` — Authors and ideas that shaped ILOS
