@@ -25,13 +25,18 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Vision exploration | QUANTUM/vision/ | life-manifesto.md, favorite-problems.md |
 | Goal setting | TIME/ + QUANTUM/ | active-goals.yaml, favorite-problems.md |
 | Alignment check | QUANTUM/ + TIME/ + SPACE/ | personal-context/, active-goals.yaml, areas/ |
-| Content creation | IDENTITY/ + QUANTUM/ | voice-profile.yaml, relevant vision files |
+| Content creation | QUANTUM/ | personal-context/9-voice-profile.yaml, relevant vision files |
 | Project work | SPACE/projects/ | Project-specific files |
 | Decision logging | MEMORY/ | decisions.jsonl (append) |
 | Self-knowledge exploration | QUANTUM/self-knowledge/ | Relevant tradition files |
 | Personal context update | QUANTUM/personal-context/ | Specific context file |
 | Understanding ILOS methodology | KNOWLEDGE/ | Start with ilos-overview.md |
 | Tana MCP setup | SYSTEM/ | setup-guide.md, tana-reference/ |
+| Area deep dive | SPACE/ + MEMORY/ | areas/[area].md, wins.jsonl, active-goals.yaml |
+| Project initiation | SPACE/ + TIME/ | projects/README.md, active-goals.yaml |
+| Major decision | TIME/ + MEMORY/ | templates/major-decision.md, decisions.jsonl |
+| Tana operations | SYSTEM/ | tana-reference/, relevant SPACE/ or TIME/ files |
+| System architecture | SYSTEM/ + KNOWLEDGE/ | setup-guide.md, schemas.md |
 
 ---
 

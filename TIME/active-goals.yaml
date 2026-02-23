@@ -11,6 +11,16 @@ annual:
       area: career
       connected_hhg: "HHG 1"
       status: active  # active | completed | abandoned
+      key_results:  # Optional OKR-style measurable results
+        - description: "Product published and accessible"
+          target: 1
+          current: 0
+        - description: "10 paying customers"
+          target: 10
+          current: 0
+        - description: "Net Promoter Score above 8"
+          target: 8
+          current: 0
     - id: annual_2
       description: "Example: Establish a consistent fitness routine"
       area: health

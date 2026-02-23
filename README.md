@@ -84,6 +84,7 @@ ILOS-Template/
 ├── SPACE/                  # Structure — what matters
 │   ├── areas/              # 12 Key Life Areas
 │   ├── projects/           # Active initiatives
+│   ├── products/           # Products and offerings
 │   └── topics/             # Interests and learning
 ├── TIME/                   # Flow — what's happening now
 │   ├── active-goals.yaml   # Current goals (max 3 per scale)
@@ -95,10 +96,10 @@ ILOS-Template/
 │   ├── failures.jsonl      # Lessons learned
 │   └── experiences.jsonl   # Significant life moments
 ├── KNOWLEDGE/              # ILOS methodology reference
-├── IDENTITY/               # Your writing voice profile
 ├── SYSTEM/                 # Configuration and setup
 │   └── tana-reference/     # Optional Tana MCP integration
-└── .claude/commands/       # 12 skills (slash commands)
+├── .claude/commands/       # 22 skills (slash commands)
+└── .claude/agents/         # Agent personas (PARACELSUS modes)
 ```
 
 ---
@@ -119,6 +120,16 @@ ILOS-Template/
 | `/build` | Variable | Focused execution session |
 | `/context-update` | 5-10 min | Extract signals from reviews into context |
 | `/dashboard` | 2-3 min | Generate visual HTML dashboard |
+| `/area-review` | Variable | Deep dive into a single Key Area |
+| `/project-kickoff` | 15-30 min | Structured project initiation |
+| `/decision` | 15-30 min | Major decision framework with logging |
+| `/ilos-master` | Variable | Master coaching orchestration |
+| `/strategist` | Variable | Deep planning and strategy session |
+| `/architect` | Variable | System design and dashboard deployment |
+| `/tana` | Variable | Tana MCP operations hub |
+| `/tana-search-builder` | 5-10 min | Build Tana search nodes from natural language |
+| `/tana-schema-graph` | 5-10 min | Visualize tag schemas as HTML graphs |
+| `/tana-understand` | 10-20 min | Explore and document Tana system |
 
 ---
 

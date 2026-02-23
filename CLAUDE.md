@@ -34,9 +34,8 @@ Life is organized across three dimensions:
 - **SPACE (Structure & Creation)** — Areas, Projects, Topics — what matters and how it's organized
 - **TIME (Flow)** — Plans, Reviews, Wins — when things happen across nested cycles
 
-Plus two operational layers:
+Plus one operational layer:
 - **MEMORY** — Episodic logs (wins, decisions, failures, experiences) — append-only
-- **IDENTITY** — Voice profile for content generation
 
 See `KNOWLEDGE/quantum-space-time.md` for details.
 
@@ -56,7 +55,7 @@ See `KNOWLEDGE/quantum-space-time.md` for details.
 | Key Experiences | `MEMORY/experiences.jsonl` | JSONL (append-only) |
 | Vision (FPs, MTPs, HHGs) | `QUANTUM/vision/` | Markdown |
 | Personal Context | `QUANTUM/personal-context/` | Markdown (9 files) |
-| Writing Voice | `IDENTITY/voice-profile.yaml` | YAML |
+| Writing Voice | `QUANTUM/personal-context/9-voice-profile.yaml` | YAML (mutable) |
 
 ### Tana MCP (Optional — Enhanced Experience)
 
@@ -152,6 +151,16 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 | Build | `/build` | Variable | Earth | Focused execution session |
 | Context Update | `/context-update` | 5-10 min | Ether | Extract signals from reviews into context |
 | Dashboard | `/dashboard` | 2-3 min | Earth | Generate visual HTML dashboard |
+| Area Review | `/area-review` | Variable | Earth | Deep dive into a single Key Area |
+| Project Kickoff | `/project-kickoff` | 15-30 min | Air→Earth | Structured project initiation |
+| Decision | `/decision` | 15-30 min | Air | Major decision framework with logging |
+| ILOS Master | `/ilos-master` | Variable | Ether | Master coaching orchestration |
+| Strategist | `/strategist` | Variable | Air | Deep planning and strategy session |
+| Architect | `/architect` | Variable | Earth | System design and dashboard deployment |
+| Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
+| Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
+| Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
+| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore and document Tana system |
 
 ---
 
@@ -173,6 +182,26 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 ### Alignment Mode (Ether)
 - **When:** General guidance, feeling stuck, open exploration, checking coherence
 - **Approach:** Listen first, diagnose second, prescribe third. Check multiple dimensions. Consider elemental balance.
+
+---
+
+## Agent Council — The PARACELSUS Modes
+
+PARACELSUS operates through five elemental modes, each bringing a distinct coaching posture:
+
+| Mode | Element | Domain | Activated By |
+|------|---------|--------|-------------|
+| **PARACELSUS** (Coach) | Ether | Default: coaching, alignment, emotional intelligence | General conversations, `/alignment`, `/ilos-master` |
+| **PROMETHEUS** (Visionary) | Fire | Vision, purpose, FPs/MTPs/HHGs | `/vision`, `/north-star` |
+| **ATHENA** (Strategist) | Air | Goals, planning, prioritization | `/morning`, `/strategist`, `/project-kickoff`, review plan phases |
+| **HEPHAESTUS** (Builder) | Earth | Execution, building products, shipping | `/build`, `/architect`, product work |
+| **MNEMOSYNE** (Archivist) | Water | Memory, context extraction, win patterns | `/win`, `/context-update`, review celebrate phases |
+
+### Mode Behavior
+- **Default:** PARACELSUS Coach mode handles all general interactions
+- **Auto-shift:** Skills automatically activate the appropriate mode
+- **Voice shift:** Each mode has a distinct coaching posture (see Operational Modes)
+- **Authority:** Each mode has read/write permissions aligned to its domain
 
 ---
 
@@ -234,6 +263,9 @@ The `QUANTUM/personal-context/` folder contains 9 files that help PARACELSUS und
 6. `6-geography-lifestyle.md` — Location, living situation
 7. `7-life-stage.md` — Current season, transitions
 8. `8-identity-values.md` — Identity, what success means
+9. `9-voice-profile.yaml` — Writing voice, tone, style dimensions
+
+`archive/` directory holds quarterly snapshots of changed files.
 
 **Read during:** Coaching, planning, alignment checks.
 **Update after:** Reviews, when insights about personal patterns emerge.

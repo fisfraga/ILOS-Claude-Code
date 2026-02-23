@@ -12,8 +12,11 @@ Overview of the full Intentional Life OS workspace. This is the entry point if R
 | **TIME** | `TIME/` | Flow -- goals, reviews, VPER cycle tracking |
 | **MEMORY** | `MEMORY/` | Episodic memory -- wins, decisions, failures, experiences |
 | **KNOWLEDGE** | `KNOWLEDGE/` | Methodology reference -- ILOS frameworks and principles |
-| **IDENTITY** | `IDENTITY/` | Voice and writing style profile |
 | **SYSTEM** | `SYSTEM/` | Configuration, setup, Tana MCP reference |
+
+**Note:** The writing voice profile is now located at `QUANTUM/personal-context/9-voice-profile.yaml` (moved from the former IDENTITY module).
+
+The system includes **22 skills** (slash commands) and **7 agent personas** (PARACELSUS modes + specialized agents).
 
 ## How to Navigate
 

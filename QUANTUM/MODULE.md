@@ -24,7 +24,9 @@ The Essence dimension: holds your vision, personal context, and self-knowledge -
 - `personal-context/5-work-patterns.md` — Professional context
 - `personal-context/6-geography-lifestyle.md` — Location and practical constraints
 - `personal-context/7-life-stage.md` — Current season and bandwidth
+- `personal-context/9-voice-profile.yaml` — Writing voice, tone, style dimensions (moved from the former IDENTITY module)
 - `self-knowledge/` — Wisdom tradition profiles (optional deeper layer)
+- `personal-context/archive/` — Quarterly snapshots of changed personal context files
 
 ## Rules
 - This dimension is **atemporal** -- it does not change with weekly cycles. Update during quarterly or annual reviews.

@@ -18,6 +18,7 @@ ILOS methodology reference: the universal frameworks, principles, and intellectu
 6. `aligned-goal-setting.md` — The alignment chain and goal-setting philosophy
 7. `intentional-planning-cycle.md` — Planning as an ongoing process
 8. `intellectual-foundations.md` — Authors and ideas that shaped ILOS
+9. `schemas.md` — Complete data schemas reference (JSONL, YAML, IDs, area slugs)
 
 ## Data Files (load only when needed)
 - All files are reference material -- load specific files based on the topic being discussed
