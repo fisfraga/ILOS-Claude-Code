@@ -1,6 +1,6 @@
 # Intentional Life OS — System Overview
 
-The Intentional Life OS (ILOS) is a complete life operating system built on Tana. It combines vision-aligned planning, AI coaching, and holistic life mapping into a single system for designing and living your life with intention.
+The Intentional Life OS (ILOS) is a complete life operating system that runs locally with Claude Code. It combines vision-aligned planning, AI coaching, and holistic life mapping into a single system for designing and living your life with intention. Optionally, ILOS integrates with Tana for enhanced visual dashboards, calendar views, and graph-based knowledge management.
 
 ---
 
@@ -17,24 +17,27 @@ ILOS is not a productivity system. It is a consciousness architecture -- a frame
 
 ## What Makes ILOS Different
 
-### Tana as a Structured Data Graph
-Unlike flat-file or document-based systems, ILOS is built on Tana — a tool where every piece of information is a structured node in a graph. Goals, wins, projects, areas, and tasks are not just text; they are typed, tagged, and connected. This means your AI agent can query your life data precisely: "find all wins from this month connected to my Health area" or "show me active projects linked to this HHG."
+### Local-First with Claude Code
+ILOS runs as a local-first system powered by Claude Code. Your life data -- vision, goals, wins, personal context -- lives in local files (Markdown, YAML, JSONL) inside your repository. PARACELSUS reads and writes these files directly, making the system fully functional without any external dependencies.
 
-Tana also provides native calendar integration — your plans, reviews, and daily nodes exist within a calendar structure, making time-based queries natural and powerful.
+### Optional Tana Integration
+For users who want a visual layer, ILOS integrates with Tana via MCP. Tana adds structured data graphs, dashboards, saved searches, and calendar views on top of the local file system. Every piece of information becomes a typed, tagged node in a graph, enabling precise queries like "find all wins from this month connected to my Health area."
+
+Tana is an enhancement, not a requirement. The Claude Code Edition runs standalone.
 
 ### Multi-Interface Access
 Your life data is accessible through multiple interfaces, each suited to different modes of work:
 
-- **Tana Native** — Visual outliner with dashboards, saved searches, and graph views. Best for browsing, organizing, and visual overview of your life system.
-- **Claude Code (Conversational AI)** — Natural language interaction with PARACELSUS. Best for coaching conversations, reviews, planning sessions, and building.
+- **Claude Code (Conversational AI)** — Natural language interaction with PARACELSUS. Best for coaching conversations, reviews, planning sessions, and building. This is the primary interface.
+- **Tana (Optional)** — Visual outliner with dashboards, saved searches, and graph views. Best for browsing, organizing, and visual overview of your life system.
 
-The same data, two complementary ways to access it. Use Tana when you want to see and organize. Use Claude Code when you want to think, plan, review, or build.
+Use Claude Code when you want to think, plan, review, or build. Add Tana when you want visual organization and browsing.
 
 ### Bidirectional AI Partnership
-PARACELSUS does not just read your data — it writes back. After a review session, wins are captured in Tana. After planning, goals are created. After building, tasks are checked off. This bidirectional flow means the AI is a true partner in your system, not just a consumer of your notes.
+PARACELSUS does not just read your data -- it writes back. After a review session, wins are captured in local files (and synced to Tana if configured). After planning, goals are created. After building, tasks are checked off. This bidirectional flow means the AI is a true partner in your system, not just a consumer of your notes.
 
 ### Building & Creation
-Claude Code agents can build real software, websites, dashboards, and integrations. Instructions and project context live in Tana (as projects, tasks, strategies). The agent reads from Tana what to build, then creates files, writes code, and runs commands in your local repository. Your knowledge informs your creation — and both live in the same system, accessed by the same agent.
+Claude Code agents can build real software, websites, dashboards, and integrations. Instructions and project context live in your local repository (and optionally in Tana). The agent reads your context to understand what to build, then creates files, writes code, and runs commands. Your knowledge informs your creation -- and both live in the same system, accessed by the same agent.
 
 ---
 
@@ -179,7 +182,7 @@ In traditional setups, your notes are in one app, your code is in another, your 
 
 - **Knowledge** (Areas, Topics) and **Creation** (Projects, Products) share the same SPACE dimension
 - Your AI agent (PARACELSUS) can read your area strategies while building your product
-- Project context in Tana (desired outcomes, tasks, related notes) directly informs what gets built in your repository
-- Progress flows back to Tana — tasks checked off, wins captured, notes created
+- Project context (desired outcomes, tasks, related notes) directly informs what gets built in your repository
+- Progress flows back to your local files (and Tana if configured) -- tasks checked off, wins captured, notes created
 
 This means building apps, websites, dashboards, and code is not a separate activity from your life system — it is a natural extension of it. Your knowledge informs your creation. Your creation lives alongside your knowledge. Same folder, same agent, no disconnect.

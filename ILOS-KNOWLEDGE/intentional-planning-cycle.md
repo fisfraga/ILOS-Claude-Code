@@ -1,4 +1,4 @@
-# Intentional Planning Cycle in Tana to Make Massive Progress
+# Intentional Planning Cycle to Make Massive Progress
 
 **Author**: Fis Fraga
 **Date**: Dec 21, 2023
@@ -288,7 +288,7 @@ This way you are striving for big goals, but you're focused on **how much progre
 
 ---
 
-## The Tana Connection
+## Connecting Planning to Your Second Brain
 
 And it's not over yet!!
 
@@ -298,9 +298,7 @@ Since planning happens in cycles, you can **connect to other places in your Seco
 
 You can use these connections to reliably prepare for Execution.
 
-This is where Tana becomes really useful.
-
-**You can add references to searches that bring up other important parts of your Second Brain.**
+**Reference other parts of your system during planning moments.**
 
 The process of planning is a moment when you can:
 - Review Active Projects
@@ -308,7 +306,7 @@ The process of planning is a moment when you can:
 - Update your Tasks
 - Add Meetings
 
-Use the `#month plan` and `#week plan` to access other parts of your Second Brain, and always be in control of your life.
+In the Claude Code Edition, PARACELSUS navigates your local files (areas, projects, goals) during planning sessions. If you also use Tana, you can add saved searches and graph references for visual browsing.
 
 ---
 
@@ -352,4 +350,4 @@ This article directly informs the IPR System structure:
 4. **2 Core Tasks** → Set Goals + List Wins (simplified workflow)
 5. **Measure the Gain** → Win extraction and progress tracking
 6. **Planning as Process** → Ongoing reflection, not one-time setup
-7. **Tana Integration** → References to searches, connected Second Brain
+7. **Second Brain Integration** → References to areas, projects, and goals (local files + optional Tana)

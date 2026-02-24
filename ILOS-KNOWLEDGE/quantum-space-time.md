@@ -133,17 +133,17 @@ The three dimensions are not independent. They form a unified system where each 
 
 ---
 
-## What Goes LOCAL vs. What Goes to TANA
+## What Goes Where — Local Files vs. Optional Tana
 
-For a hybrid system using both local files and Tana:
+ILOS is local-first: all data lives in local files (Markdown, YAML, JSONL) and is fully functional with Claude Code alone. If you also use Tana, some data can be mirrored or managed there for visual dashboards and graph-based browsing.
 
-| Dimension | Destination | Reason |
+| Dimension | Local Files (Primary) | Tana (Optional Enhancement) |
 |---|---|---|
-| **Quantum: Vision** | Local (deep reference) + Tana (living reference) | MTPs and HHGs are referenced in both places. The deep self-knowledge documents live locally as stable references. Key vision elements also live in Tana so the AI agent has context. |
-| **Quantum: Self-Knowledge** | Primarily Local | Astrology charts, Human Design reports, Gene Keys profiles are stable reference documents. They do not change weekly. Store them locally in a personal repository where they serve as deep context. |
-| **Quantum: Personal Context** | Tana (living document) | Personal context changes as your life changes. Keep it in Tana so it is always current and available to the AI agent. Update it during quarterly reviews. |
-| **Space: Areas, Projects, Topics** | Tana (living operations) | These are dynamic. Projects start and finish. Areas evolve. Topics grow. They belong in the living knowledge graph where they can be linked to tasks, notes, and goals. |
-| **Time: Plans, Reviews, Wins** | Tana (living operations) | Plans are created, goals are set, wins are captured, reviews are completed -- all within the rhythm of Tana's calendar system. This is the beating heart of the operating system. |
+| **Quantum: Vision** | `QUANTUM/vision/` -- MTPs, HHGs, Favorite Problems as stable Markdown references | Mirror key vision elements for dashboard views |
+| **Quantum: Self-Knowledge** | `QUANTUM/self-knowledge/` -- Astrology charts, HD reports, Gene Keys profiles | Not typically needed in Tana (stable reference docs) |
+| **Quantum: Personal Context** | `QUANTUM/personal-context/` -- 9 context files, updated during quarterly reviews | Can mirror for enhanced AI context queries |
+| **Space: Areas, Projects, Topics** | `SPACE/areas/`, `SPACE/projects/` -- Markdown files for each area and project | Tana adds graph linking, saved searches, and visual overviews |
+| **Time: Plans, Reviews, Wins** | `TIME/` for goals + `MEMORY/` for wins (JSONL append-only) | Tana adds calendar integration and time-based queries |
 
 ---
 

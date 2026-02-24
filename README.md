@@ -1,40 +1,61 @@
-# Intentional Life OS — Git Edition
+# ILOS -- Intentional Life OS (Claude Code Edition)
 
-A file-based personal operating system for living intentionally with AI as your thinking partner.
+**Your life, intentionally designed. Powered by Claude Code.**
+
+ILOS is a complete life operating system that runs entirely in Claude Code. 22 AI-powered skills, 8 specialized agent personas, a zero-dependency HTML dashboard, and local-first data architecture -- all in one git repository.
 
 ---
 
-## What Is This?
+## What's Included
 
-This is your **Intentional Life OS** workspace — a structured folder system that gives AI agents (Claude Code, Cursor, Windsurf, or any AI tool) deep context about who you are, what matters to you, and where you're going. It turns any AI into a personalized life coach, planning partner, and wisdom guide.
+- **22 Slash Commands** -- from `/morning` (5-min daily planning) to `/annual-review` (full year reflection)
+- **8 Agent Personas** -- PARACELSUS (Coach), PROMETHEUS (Visionary), ATHENA (Strategist), HEPHAESTUS (Builder), MNEMOSYNE (Archivist), HERMES (Tana), DAEDALUS (Dashboard), plus Council meta-system
+- **Zero-Dependency Dashboard** -- 15-view HTML SPA generated on demand: VPER wheel, area health, goals, wins, education, transits, systems, alignment
+- **Progressive Disclosure** -- PARACELSUS loads only what it needs for each task
+- **Local-First Data** -- YAML configs, JSONL memory, Markdown narrative. Git-tracked. You own everything.
+- **Elemental Wisdom** -- VPER Cycle maps to Fire/Air/Earth/Water/Ether
+- **12 Key Areas** -- Life areas mapped to zodiac houses
+- **Transit Integration** -- Cosmic weather connected to your life areas
+- **Gap to Gain** -- Always measure progress against your past self, never against ideals
 
-### The Three Dimensions
+---
 
-Your life is organized through the **Quantum-Space-Time** framework:
+## Prerequisites
 
+- [Claude Code CLI](https://claude.ai/code) installed and authenticated
+- Git
+
+---
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/fisfraga/ILOS-Claude-Code.git
+cd ILOS-Claude-Code
+
+# Open in Claude Code
+claude
+
+# Try your first commands:
+/win "Set up ILOS"        # Celebrate your first win
+/morning                  # Plan your day
+/dashboard                # Generate your visual dashboard
 ```
-         QUANTUM (Essence)
-         Vision | Self-Knowledge | Personal Context
-              |
-              |  informs
-              v
-    TIME (Flow) <---------> SPACE (Structure)
-    Plans | Reviews | Wins     Areas | Projects | Topics
-              |
-              |  grounds into
-              v
-         MANIFEST (Reality)
-```
 
-- **QUANTUM/** — Who you are. Atemporal truths: vision, identity, values, self-knowledge.
-- **SPACE/** — What matters. Your 12 life areas, active projects, interests.
-- **TIME/** — When things happen. Goals, reviews, plans across fractal time scales.
-- **MEMORY/** — What you've learned. Wins, decisions, failures, key experiences.
-- **ILOS-KNOWLEDGE/** — How the system works. ILOS methodology and frameworks.
+---
 
-### The VPER Cycle
+## The VPER Cycle
 
-Every period (day, week, month, quarter, year) flows through four phases:
+Life is designed through four recurring phases:
+
+- **Vision (Fire)** -- Clarify purpose, direction, what matters most
+- **Planning (Air)** -- Set clear goals across time horizons (max 3 per period)
+- **Execution (Earth)** -- Take aligned action, ground plans into reality
+- **Review (Water)** -- Celebrate wins, extract insights, integrate learning
+- **Alignment (Ether)** -- The fifth element connecting all four into coherence
+
+This cycle repeats fractally: Year > Quarter > Month > Week > Day.
 
 | Phase | Element | Energy | Action |
 |-------|---------|--------|--------|
@@ -45,115 +66,122 @@ Every period (day, week, month, quarter, year) flows through four phases:
 
 ---
 
-## Quick Start
+## All 22 Skills
 
-### 1. Fill Your Context (15-30 minutes)
-
-Start with these three files — they give the AI 80% of what it needs:
-
-1. **`QUANTUM/personal-context/8-identity-values.md`** — Who you are, what you value
-2. **`QUANTUM/vision/favorite-problems.md`** — Your 12 burning questions
-3. **`TIME/active-goals.yaml`** — Your current goals (max 3 per time scale)
-
-### 2. Run Your First Skill
-
-Open this folder in Claude Code and try:
-
-```
-/win "Completed my first ILOS setup"
-```
-
-### 3. Explore the Framework
-
-Read `ILOS-KNOWLEDGE/ilos-overview.md` for the full system overview, or ask the AI:
-
-> "What are my current goals and how do they connect to my vision?"
-
----
-
-## Folder Structure
-
-```
-ILOS-Template/
-├── ROUTING.md              # Agent context routing (progressive disclosure)
-├── CLAUDE.md               # AI agent system prompt (PARACELSUS)
-├── QUANTUM/                # Essence — who you are
-│   ├── vision/             # Manifesto, favorite problems, MTPs, HHGs
-│   ├── self-knowledge/     # Strengths, wisdom traditions (optional)
-│   └── personal-context/   # 9 dimensions of personal context
-├── SPACE/                  # Structure — what matters
-│   ├── areas/              # 12 Key Life Areas
-│   ├── projects/           # Active initiatives
-│   ├── products/           # Products and offerings
-│   └── topics/             # Interests and learning
-├── TIME/                   # Flow — what's happening now
-│   ├── active-goals.yaml   # Current goals (max 3 per scale)
-│   ├── current-period.yaml # VPER phase and elemental balance
-│   └── templates/          # Review templates
-├── MEMORY/                 # Episodic memory (append-only logs)
-│   ├── wins.jsonl          # Celebrated achievements
-│   ├── decisions.jsonl     # Key decisions with reasoning
-│   ├── failures.jsonl      # Lessons learned
-│   └── experiences.jsonl   # Significant life moments
-├── ILOS-KNOWLEDGE/         # ILOS methodology reference
-├── SYSTEM/                 # Configuration and setup
-│   └── tana-reference/     # Optional Tana MCP integration
-├── .claude/commands/       # 22 skills (slash commands)
-└── .claude/agents/         # Agent personas (PARACELSUS modes)
-```
+| Skill | Command | Duration | Element | What It Does |
+|-------|---------|----------|---------|-------------|
+| Morning Planning | `/morning` | 5 min | Air | Plan the day -- review goals, set focus |
+| Win Capture | `/win` | 1-2 min | Water | Celebrate and log a win |
+| Weekly Review | `/weekly-review` | 15-20 min | Water>Air | Weekly review + planning cycle |
+| Monthly Review | `/monthly-review` | 30-45 min | Water>Air | Monthly review + elemental balance |
+| Quarterly Review | `/quarterly-review` | 1-2 hrs | Water>Fire>Air | 90-day review + vision reconnection |
+| Annual Review | `/annual-review` | 3+ hrs | All | Full year review + identity evolution |
+| Vision | `/vision` | Open | Fire | Explore FPs, MTPs, HHGs |
+| Alignment Check | `/alignment` | Variable | Ether | Cross-dimension coherence assessment |
+| North Star | `/north-star` | 45-90 min | Fire | Guided workshop for FPs/MTPs/HHGs |
+| Build | `/build` | Variable | Earth | Focused execution session |
+| Context Update | `/context-update` | 5-10 min | Ether | Extract signals from reviews into context |
+| Dashboard | `/dashboard` | 2-3 min | Earth | Generate visual HTML dashboard |
+| Area Review | `/area-review` | Variable | Earth | Deep dive into a single Key Area |
+| Project Kickoff | `/project-kickoff` | 15-30 min | Air>Earth | Structured project initiation |
+| Decision | `/decision` | 15-30 min | Air | Major decision framework with logging |
+| ILOS Master | `/ilos-master` | Variable | Ether | Master coaching orchestration |
+| Strategist | `/strategist` | Variable | Air | Deep planning and strategy session |
+| Architect | `/architect` | Variable | Earth | System design and dashboard deployment |
+| Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
+| Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
+| Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
+| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore and document Tana system |
 
 ---
 
-## Skills (Slash Commands)
+## The Agent Council
 
-| Skill | Duration | Description |
-|-------|----------|-------------|
-| `/morning` | 5 min | Daily planning — set intention, review goals |
-| `/win` | 1-2 min | Capture and celebrate a win |
-| `/weekly-review` | 15-20 min | Weekly review + planning cycle |
-| `/monthly-review` | 30-45 min | Monthly review + elemental balance |
-| `/quarterly-review` | 1-2 hrs | Quarterly review + vision reconnection |
-| `/annual-review` | 3+ hrs | Full year review + identity evolution |
-| `/vision` | Open | Explore favorite problems, MTPs, HHGs |
-| `/alignment` | Variable | Cross-dimension coherence check |
-| `/north-star` | 45-90 min | Guided workshop for purpose clarity |
-| `/build` | Variable | Focused execution session |
-| `/context-update` | 5-10 min | Extract signals from reviews into context |
-| `/dashboard` | 2-3 min | Generate visual HTML dashboard |
-| `/area-review` | Variable | Deep dive into a single Key Area |
-| `/project-kickoff` | 15-30 min | Structured project initiation |
-| `/decision` | 15-30 min | Major decision framework with logging |
-| `/ilos-master` | Variable | Master coaching orchestration |
-| `/strategist` | Variable | Deep planning and strategy session |
-| `/architect` | Variable | System design and dashboard deployment |
-| `/tana` | Variable | Tana MCP operations hub |
-| `/tana-search-builder` | 5-10 min | Build Tana search nodes from natural language |
-| `/tana-schema-graph` | 5-10 min | Visualize tag schemas as HTML graphs |
-| `/tana-understand` | 10-20 min | Explore and document Tana system |
+PARACELSUS operates through eight specialized modes, each bringing a distinct coaching posture. Modes shift automatically based on skill activation or can be invoked directly.
+
+| Agent | Archetype | Element | When It Activates |
+|-------|-----------|---------|-------------------|
+| **PARACELSUS** | The Alchemist (Coach) | Ether | Default mode. Coaching, alignment, emotional intelligence. General conversations, `/alignment`, `/ilos-master`. |
+| **PROMETHEUS** | The Fire-Bringer (Visionary) | Fire | Vision, purpose, favorite problems, MTPs, HHGs. `/vision`, `/north-star`. |
+| **ATHENA** | The Strategist | Air | Goals, planning, prioritization, decision-making. `/morning`, `/strategist`, `/project-kickoff`, `/decision`, review planning phases. |
+| **HEPHAESTUS** | The Craftsman (Builder) | Earth | Execution, building products, shipping. `/build`, `/architect`, product work. |
+| **MNEMOSYNE** | The Memory Keeper (Archivist) | Water | Memory, context extraction, win patterns, reflection. `/win`, `/context-update`, `/area-review`, review celebration phases. |
+| **HERMES** | The Messenger (Tana) | -- | Bridges ILOS with Tana workspaces via MCP. `/tana`, `/tana-search-builder`, `/tana-schema-graph`, `/tana-understand`. |
+| **DAEDALUS** | The Master Builder (Architect) | -- | System design, dashboard generation, schema architecture. `/dashboard`, `/architect`. |
+| **Council** | Meta-System | All | Orchestrates transitions between agents. Manages authority matrix and escalation patterns across all modes. |
 
 ---
 
-## The Gap-to-Gain Philosophy
+## Directory Structure
 
-ILOS measures progress against your **past self**, not your ideals.
+```
+QUANTUM/          # Essence -- vision, self-knowledge, personal context
+  vision/         #   Manifesto, favorite problems, MTPs, HHGs
+  self-knowledge/ #   Strengths, wisdom traditions (optional)
+  personal-context/ # 9 dimensions of personal context
 
-- **Always start reviews with wins.** Never jump to problems.
-- **The Gap** = measuring against where you want to be (creates anxiety)
-- **The Gain** = measuring against where you were (creates confidence)
-- Every failure encodes a lesson. Every decision builds judgment.
+SPACE/            # Structure -- 12 Key Areas, projects, products
+  areas/          #   12 Key Life Areas
+  projects/       #   Active initiatives
+  products/       #   Products, offerings, generated dashboards
+  topics/         #   Interests and learning
+
+TIME/             # Flow -- goals, VPER phase, strategy systems
+  active-goals.yaml    # Current goals (max 3 per scale)
+  current-period.yaml  # VPER phase and elemental balance
+  strategy-systems.yaml # Recurring routines and tracking
+  templates/           # Review templates
+
+MEMORY/           # Episodic logs -- wins, decisions, failures, experiences
+  wins.jsonl      #   Celebrated achievements
+  decisions.jsonl #   Key decisions with reasoning
+  failures.jsonl  #   Lessons learned
+  experiences.jsonl #  Significant life moments
+
+ILOS-KNOWLEDGE/   # Reference -- methodology, frameworks, philosophy
+SYSTEM/           # Infrastructure -- transit data, Tana reference
+```
+
+---
+
+## Data Philosophy
+
+- **YAML** = Configuration (mutable state)
+- **JSONL** = Memory (append-only, never delete)
+- **Markdown** = Narrative (human-readable context)
+- **Git** = Version control for your life data
+
+All data lives in plain text files you can read, edit, and track with git. No database, no server, no vendor lock-in.
 
 ---
 
 ## Tana Integration (Optional)
 
-If you use [Tana](https://tana.inc) as your knowledge management tool, ILOS can sync with it via MCP (Model Context Protocol). See `SYSTEM/setup-guide.md` for configuration.
+If you use [Tana](https://tana.inc), ILOS connects to it via MCP (Model Context Protocol). The `/tana` family of skills syncs goals, wins, and projects between your local files and your Tana workspace. HERMES handles all Tana operations.
 
-Without Tana, the system works fully with local files.
+But Tana is optional -- everything works locally with plain files. Local files are always the canonical source; Tana is a sync target, not a dependency.
+
+---
+
+## Gap to Gain
+
+ILOS always starts with wins. Measure progress against your past self, not against ideals.
+
+- **The Gap** = measuring against where you want to be (creates anxiety)
+- **The Gain** = measuring against where you were (creates confidence)
+
+The review sequence: **Celebrate > Recognize > Enhance > Reflect > Redirect > Energize.**
+
+Every failure encodes a lesson. Every decision builds judgment. MNEMOSYNE (the Archivist) enforces this -- no review begins without celebrating wins first.
 
 ---
 
 ## Credits
 
-Built on the shoulders of: Benjamin Hardy (Gap vs. Gain, Future Self), Steven Kotler (MTP, High Hard Goals, Flow), Tiago Forte (Second Brain, PARA), Mindvalley (12 Life Areas), Dragon Dreaming (Dream-Plan-Do-Celebrate), Dan Sullivan (Strategic Coach), and classical elemental philosophy.
+Built on the shoulders of: Benjamin Hardy (Gap vs. Gain, Future Self), Steven Kotler (MTP, High Hard Goals, Flow), Tiago Forte (Second Brain, PARA), Dan Sullivan (Strategic Coach), Mindvalley (12 Life Areas), Dragon Dreaming (Dream-Plan-Do-Celebrate), and classical elemental philosophy.
 
-Created by [Fis Fraga](https://fisfraga.com) — M.Sc. Computer Science, Tana Ambassador, 7+ years studying wisdom traditions.
+Created by [Fis Fraga](https://fisfraga.com) -- M.Sc. Computer Science, Tana Ambassador, 7+ years studying wisdom traditions.
+
+---
+
+**Stay Aligned.**

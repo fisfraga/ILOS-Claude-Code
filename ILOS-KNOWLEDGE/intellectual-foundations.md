@@ -83,4 +83,4 @@ A project design methodology combining ancient indigenous wisdom with modern sys
 
 It is a system AND a course on how to live intentionally -- a distillation of frameworks, research, and lived experience transformed into a practical system anyone can use every day.
 
-The technology (Tana + Claude Code + MCP) is the vehicle. The wisdom is the destination.
+The technology (Claude Code + local files, with optional Tana integration) is the vehicle. The wisdom is the destination.
