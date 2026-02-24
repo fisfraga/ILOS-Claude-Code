@@ -89,6 +89,42 @@ Organize wins by **month** and by **theme/area**:
 5. **REDIRECT** — Quarterly goals: what completed? What carries forward? What's no longer relevant?
 6. **ENERGIZE** — "What do you want the next 90 days to be about?"
 
+### Step 3b — Decisions Review (quarterly scope)
+
+**Tana path:**
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 20
+})
+```
+
+Also search for all decisions from the quarter:
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { created: { last: 90 } }
+  ]},
+  limit: 30
+})
+```
+
+**Local path:**
+Read all entries from `MEMORY/decisions.jsonl`:
+- Filter `status: "open"` for ALL unresolved decisions (regardless of age)
+- Filter decisions from the last 90 days for outcome review
+
+**At quarterly scope, no open decision should be older than 90 days without a deliberate carry-forward.**
+
+Present:
+1. **Open decisions** — "You have [N] open decision(s). At quarterly scope, each one needs a resolution: decide, set aside, or carry forward with a reason."
+2. **Quarter's decisions** — "Here are the major decisions you made this quarter. Let's check outcomes for any that have review dates."
+3. **Decision patterns** — "Which areas generated the most decisions? What does that tell us about where your life needs the most active steering?"
+
 ---
 
 ## Phase 2: Vision Reconnection (Fire)
@@ -210,7 +246,7 @@ After completing all three phases:
 2. **Suggest strategy refresh** — Offer to review and update area strategies.
 3. **Suggest `/dashboard quarterly`** — Generate a visual quarterly progress dashboard.
 4. **Archive** — If major life changes surfaced, suggest archiving previous personal context versions in `QUANTUM/personal-context/archive/`.
-5. **Log decisions** — If major decisions emerged, offer to append to `MEMORY/decisions.jsonl`.
+5. **Log decisions** — If major new decisions emerged, offer to run `/decision` for structured analysis.
 
 ---
 

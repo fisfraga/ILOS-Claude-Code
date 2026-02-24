@@ -53,6 +53,7 @@ Record your Tana supertag IDs here. These are required for all MCP queries.
 |----------|--------|-------|
 | #voice review | | |
 | #win | | |
+| #decision | | Status: Open / Decided / Set Aside |
 | #needsattention | | |
 | #opportunity | | |
 | #journal | | |

@@ -120,8 +120,10 @@ When capturing wins, decisions, failures, or experiences, **always append to the
 
 **Decision:**
 ```jsonl
-{"id": "dec_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "decision": "What was decided", "context": "Why it came up", "alternatives_considered": ["alt1", "alt2"], "reasoning": "Why this choice", "outcome": null, "outcome_date": null, "confidence": 8, "area": "career", "tags": ["tag1"]}
+{"id": "dec_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "decision": "What was decided", "status": "decided", "context": "Why it came up", "alternatives_considered": ["alt1", "alt2"], "reasoning": "Why this choice", "outcome": null, "outcome_date": null, "review_date": "YYYY-MM-DD", "confidence": 8, "area": "career", "tags": ["tag1"]}
 ```
+
+Status values: `"open"` (not yet decided), `"decided"` (resolved), `"set_aside"` (no longer relevant)
 
 **Failure:**
 ```jsonl

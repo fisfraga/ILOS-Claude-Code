@@ -65,6 +65,17 @@ search_nodes({ query: { and: [
 ]}, limit: 20 })
 ```
 
+Open decisions:
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 10
+})
+```
+
 Vision elements (if relevant):
 ```
 search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 10 })
@@ -80,6 +91,7 @@ Read these files:
 - `QUANTUM/vision/high-hard-goals.md` — for vision context
 - `QUANTUM/vision/massively-transformative-purposes.md` — for purpose context
 - `SPACE/projects/` — check for active project files (if any)
+- `MEMORY/decisions.jsonl` — filter for `status: "open"` entries
 
 ### Step 2 — Lead with wins (Gap to Gain)
 
@@ -101,6 +113,11 @@ Analyze recent activity across the four elements:
 Read `TIME/current-period.yaml` for the stored elemental balance. Compare with what the data shows now.
 
 Identify which element is dominant and which is neglected.
+
+**Ether signal — Open decisions:**
+If there are open decisions, note them as an alignment indicator. Multiple open decisions can signal decision avoidance (Air deficit) or overwhelm. A single long-standing open decision may indicate a values conflict worth exploring.
+
+> "I also notice you have [N] open decision(s). [Observation about what that might mean for alignment.]"
 
 ### Step 4 — Use emotional intelligence
 
@@ -130,7 +147,8 @@ Every alignment check ends with action:
 
 If a major insight or decision emerged, offer to log it:
 - Insight -> `MEMORY/experiences.jsonl`
-- Decision -> `MEMORY/decisions.jsonl`
+- New decision -> run `/decision` for structured analysis
+- Open decision ready to resolve -> update via `/decision`
 
 ---
 

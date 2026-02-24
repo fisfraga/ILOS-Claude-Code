@@ -123,6 +123,54 @@ Guide this reflection:
 
 Read `QUANTUM/personal-context/8-identity-values.md` and `QUANTUM/personal-context/7-life-stage.md` for the user's documented identity. Compare with what emerges in this conversation.
 
+### Step 5b — Decisions Audit (annual scope)
+
+**This is a full audit of the year's decision-making.**
+
+**Tana path:**
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { created: { last: 365 } }
+  ]},
+  limit: 100
+})
+```
+
+Also check for any remaining open decisions:
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 20
+})
+```
+
+**Local path:**
+Read all entries from `MEMORY/decisions.jsonl`:
+- All decisions from the year (for outcome review)
+- ALL open decisions (must be resolved at annual scope)
+
+**Present the year's decision landscape:**
+
+1. **Open decisions** — At annual scope, every open decision MUST be resolved:
+   > "No open decision should carry into a new year without a deliberate choice. Let's resolve each one: decide, or set aside."
+
+2. **Decision outcomes** — For decided items with review dates:
+   > "Let's review how your major decisions played out. Which worked well? Which taught you something unexpected?"
+
+3. **Decision patterns** — Analyze the full set:
+   - Which areas generated the most decisions?
+   - What was your average confidence level? Did high-confidence decisions play out better?
+   - Were there decisions you avoided that you wish you'd made sooner?
+   - What does your decision-making pattern reveal about your growth this year?
+
+4. **Decision quality** — This is a meta-reflection:
+   > "How has your decision-making process evolved this year? Are you deciding faster? More aligned? More confident?"
+
 ---
 
 ## Phase 2: Vision Reconnection (Fire)
@@ -272,7 +320,7 @@ After completing all three phases:
 2. **Suggest `/north-star`** — If vision felt unclear or stale during Phase 2, offer the full workshop to refresh FPs, MTPs, HHGs.
 3. **Suggest archiving** — If major life or identity changes surfaced, suggest archiving previous personal context versions in `QUANTUM/personal-context/archive/`.
 4. **Suggest `/dashboard overview`** — Generate a visual snapshot of the new year's starting position.
-5. **Log major decisions** — Append year-level decisions to `MEMORY/decisions.jsonl`.
+5. **Log major decisions** — If new year-level decisions emerged, offer to run `/decision` for structured analysis.
 
 ---
 

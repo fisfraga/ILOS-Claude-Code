@@ -104,6 +104,42 @@ search_nodes({
 **Local path:**
 Read `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from the last 30 days.
 
+### Step 3b — Decisions Review
+
+**Tana path:**
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 15
+})
+```
+
+Also search for decisions made this month to check outcomes:
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { created: { last: 30 } }
+  ]},
+  limit: 20
+})
+```
+
+**Local path:**
+Read `MEMORY/decisions.jsonl`:
+- Filter `status: "open"` for unresolved decisions
+- Filter decisions from the last 30 days for outcome review
+
+**Present findings:**
+1. **Open decisions** — "You have [N] open decision(s). At monthly scope, let's resolve or deliberately carry forward each one."
+2. **Recent decisions with review dates** — "These decisions are due for outcome review: [list]"
+
+For each open decision: resolve now, carry forward, or set aside.
+For decided items past their review date: ask about the outcome and update the `outcome` field.
+
 ### Step 4 — Run Gap to Gain at monthly scope
 
 Same sequence as weekly but with month-level perspective:
@@ -202,7 +238,7 @@ After completing both phases:
 
 1. **Suggest `/context-update`** — Monthly reviews surface significant personal context signals.
 2. **Suggest updating strategies** — If systems or routines need adjustment, offer to update relevant files.
-3. **Log decisions** — If major decisions emerged, offer to append to `MEMORY/decisions.jsonl`.
+3. **Log decisions** — If major new decisions emerged, offer to run `/decision` for structured analysis.
 
 ---
 

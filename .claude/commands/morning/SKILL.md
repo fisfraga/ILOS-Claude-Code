@@ -63,6 +63,21 @@ search_nodes({
 })
 ```
 
+### Step 2bT — Surface open decisions
+
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 5
+})
+```
+
+If open decisions exist, mention them briefly in the landscape (Step 5T):
+> "You also have [N] open decision(s): [brief titles]. Want to address any of these today?"
+
 ### Step 3T — Search for active weekly goals
 
 ```
@@ -93,6 +108,7 @@ Present a clear overview:
 - Weekly goals still active
 - Tasks due today
 - Daily routines and strategies
+- Open decisions (if any found in Step 2bT)
 
 If `$ARGUMENTS` was provided, acknowledge it as their declared intention.
 
@@ -125,6 +141,10 @@ Read `TIME/active-goals.yaml` to get the current weekly goals and their statuses
 
 Read the last 7 entries from `MEMORY/wins.jsonl` to see recent momentum.
 
+### Step 2bL — Check for open decisions
+
+Read `MEMORY/decisions.jsonl` and filter for entries where `status` is `"open"`. If any exist, include them briefly in the landscape (Step 4L).
+
 ### Step 3L — Read current period state
 
 Read `TIME/current-period.yaml` to understand the current VPER phase and elemental balance.
@@ -135,6 +155,7 @@ Present a clear overview:
 - Weekly goals still active (from active-goals.yaml)
 - Recent wins (momentum indicator from wins.jsonl)
 - Current VPER phase and what it suggests for today's energy
+- Open decisions (if any found in Step 2bL)
 
 If `$ARGUMENTS` was provided, acknowledge it as their declared intention.
 
@@ -148,13 +169,11 @@ If the user names specific daily goals, acknowledge them and connect them to wee
 
 If a daily goal represents a win from yesterday, offer: **"Would you like me to capture that as a win first?"** and run the `/win` flow.
 
-### Step 6L (Optional) — Log a decision
+### Step 6L (Optional) — Log or resolve a decision
 
-If a major prioritization decision emerges during morning planning, offer to append it to `MEMORY/decisions.jsonl`:
+If a major prioritization decision emerges during morning planning, offer to log it via `/decision`.
 
-```jsonl
-{"id": "dec_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "decision": "...", "reasoning": "...", "area": "...", "reversible": true}
-```
+If the user wants to resolve an open decision surfaced in Step 2bL, guide them through it briefly or suggest running `/decision` for a full structured session.
 
 ---
 

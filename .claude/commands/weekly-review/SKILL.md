@@ -95,6 +95,27 @@ search_nodes({
 **Local path:**
 Check `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from the last 7 days.
 
+### Step 3b — Check for open decisions
+
+**Tana path:**
+```
+search_nodes({
+  query: { and: [
+    { hasType: "[DECISION_TAG_ID]" },
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+  ]},
+  limit: 10
+})
+```
+
+**Local path:**
+Read `MEMORY/decisions.jsonl` and filter for entries where `status` is `"open"`.
+
+If open decisions exist, surface them during the REDIRECT phase (Step 4.5):
+> "You have [N] open decision(s) from recent weeks. Let's check if any are ready to resolve."
+
+For each open decision: carry forward, resolve now (via `/decision`), or set aside.
+
 ### Step 4 — Run the Gap to Gain Sequence
 
 Follow this exact order:
@@ -122,7 +143,13 @@ Follow this exact order:
    set_field_option({ nodeId: GOAL_ID, attributeId: "[GOAL_STATUS_FIELD_ID]", optionId: "[BACKLOG_OPTION_ID]" })
    ```
 
-6. **ENERGIZE** — "What excites you about next week?"
+6. **REDIRECT (Decisions)** — If open decisions were found in Step 3b, surface them here:
+   > "You also have these open decisions. For each one: resolve now, carry forward, or set aside?"
+   - If resolved, update `MEMORY/decisions.jsonl` entry with `status: "decided"` and reasoning
+   - If set aside, update with `status: "set_aside"`
+   - If carried forward, leave as `status: "open"`
+
+7. **ENERGIZE** — "What excites you about next week?"
    - Transition energy from reflection to forward motion.
 
 ---
@@ -202,7 +229,7 @@ After completing both phases, if you noticed personal context signals during the
 
 > "I noticed some personal context signals in this review. Would you like me to run `/context-update` to capture them?"
 
-If a major decision was made during the review, offer to log it in `MEMORY/decisions.jsonl`.
+If a major new decision emerged during the review, offer to run `/decision` for structured analysis and logging.
 
 ---
 

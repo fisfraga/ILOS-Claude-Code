@@ -40,6 +40,20 @@ Record your Tana field IDs here. These are required for setting and querying fie
 | Win Area | | #win | Reference |
 | Win Source | | #win | Option |
 
+## Decision Fields
+
+| Field Name | Field ID | Used In | Type |
+|------------|----------|---------|------|
+| Decision Status | | #decision | Option |
+| Context | | #decision | Text |
+| Alternatives Considered | | #decision | Text |
+| Reasoning | | #decision | Text |
+| Confidence | | #decision | Number (1-10) |
+| Area | | #decision | Reference |
+| Connected Goal | | #decision | Reference |
+| Review Date | | #decision | Date |
+| Outcome | | #decision | Text |
+
 ## Task Fields
 
 | Field Name | Field ID | Used In | Type |
@@ -54,6 +68,14 @@ Record your Tana field IDs here. These are required for setting and querying fie
 ## Option Field Values
 
 For option fields (like Status), you also need the option IDs:
+
+### Decision Status Options
+
+| Option | Option ID |
+|--------|-----------|
+| Open | |
+| Decided | |
+| Set Aside | |
 
 ### Goal Status Options
 
