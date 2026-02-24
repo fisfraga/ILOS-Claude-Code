@@ -55,6 +55,25 @@ Read Tana reference files:
 !`cat SYSTEM/tana-reference/tag-ids.md`
 !`cat SYSTEM/tana-reference/field-ids.md`
 
+**Decide: Win or Gratitude?**
+Not every positive moment is a win. Apply this filter:
+
+- **#win** — Something was accomplished, completed, or created that represents forward progress toward a goal or HHG. Something you'd mention in a weekly review.
+- **#gratitude** — A small daily task done well, a moment of appreciation, a routine done consistently. Lives under the Daily Gratitude node.
+
+If the moment is too small for a weekly review, suggest capturing it as gratitude instead: "This sounds more like a gratitude moment than a win. Would you like me to capture it under Daily Gratitude instead?"
+
+**Set Periodicity (required for wins):**
+Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scoped wins are invisible in weekly reviews and all higher-level dashboards.
+
+| Periodicity | When to use |
+|-------------|-------------|
+| **Week** | Default — something notable that happened this week |
+| **Month** | A meaningful milestone in a monthly goal or project |
+| **Quarter** | A breakthrough, launch, or significant life achievement |
+| **Year** | A peak experience, life milestone, major transformation |
+
+**Create the win:**
 ```
 get_or_create_calendar_node({
   workspaceId: "[WORKSPACE_ID]",
@@ -63,13 +82,15 @@ get_or_create_calendar_node({
 
 import_tana_paste({
   parentNodeId: TODAY_NODE_ID,
-  content: "- [Win description] #[[^[WIN_TAG_ID]]]"
+  content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"
 })
 ```
 
+Replace `Week` with `Month`, `Quarter`, or `Year` if the win warrants a higher scope.
+
 Optionally add area or project connection if clearly relevant:
 ```
-content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]"
+content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]"
 ```
 
 **If Tana MCP is NOT available**: Skip this step. The win is already saved in `MEMORY/wins.jsonl`.

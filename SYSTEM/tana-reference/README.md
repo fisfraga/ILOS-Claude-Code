@@ -51,6 +51,18 @@ Tana is a structured data graph, not a document editor. Every piece of informati
 4. Map your workspace structure in `structure-map.md`
 5. Ask PARACELSUS to test the connection: "Search for my active goals in Tana"
 
+## Periodicity Semantics
+
+Tana uses a **Periodicity** field to control which review horizon a node surfaces in. This matters most for wins:
+
+- **Day** — Only appears in daily views. Effectively invisible during weekly reviews. **Never use Day for wins.**
+- **Week** — Default for wins. Surfaces in weekly review dashboards and win search nodes.
+- **Month/Quarter/Year** — Use for milestones at that scale. Surfaces in all views at that level and below.
+
+If a moment is too small for Week periodicity, it belongs as **#gratitude** (daily appreciation), not **#win** (Gap-to-Gain progress).
+
+---
+
 ## Reference Files
 
 - `tag-ids.md` -- All supertag IDs needed for MCP queries
