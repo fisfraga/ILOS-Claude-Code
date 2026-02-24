@@ -36,6 +36,10 @@ Read the data computation guide in `view-specs.md` for the full data shape and c
 | Projects | `SPACE/projects/` | List project files, extract title + status + area |
 | User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from context |
 | Education content | `ILOS-KNOWLEDGE/*.md` | Parse markdown → structured sections for Learn pages |
+| Transit — Sign Calendar | `SYSTEM/transit-data/sign-calendar.yaml` | Sun sign date ranges for current date lookup |
+| Transit — Slow Planets | `SYSTEM/transit-data/slow-planets-2026.yaml` | Monthly planet positions by sign |
+| Transit — Moon Phases | `SYSTEM/transit-data/moon-phases-2026.yaml` | New/Full Moon dates for 8-phase interpolation |
+| Birth Data (optional) | `QUANTUM/self-knowledge/` | Sun sign, dominant element for Cosmic Blueprint teaser |
 
 #### Data Sources (Tana MCP — Optional Enhancement)
 
@@ -57,6 +61,8 @@ Using the fetched data, compute these derived values (see `view-specs.md` for fo
 3. **Goal enrichment** — Attach key_results percentage, link child goals, resolve parent chains
 4. **Area enrichment** — Attach winCount90d, winTrend (4-week array), projectCount, activeGoals list, hasGoal flag
 5. **Education content** — Read all `ILOS-KNOWLEDGE/*.md` files and parse into `DATA.education` (see `view-specs.md` Education Data Computation section). Split by headings into sections, extract quotes, assign element colors per topic.
+6. **Transit data** — Read `SYSTEM/transit-data/*.yaml` files and compute `DATA.transits` (see `view-specs.md` Transit Computation section): Sun sign from date lookup, slow planet positions by month, cosmic VPER summary (dominant phase, active areas), elemental weather (element distribution), moon phase (8-phase interpolation from nearest New/Full Moon).
+7. **Cosmic teaser** — If birth data exists in `QUANTUM/self-knowledge/`, extract Sun sign and dominant element for `DATA.cosmicTeaser`. Set CTA URL if configured.
 
 ### Step 3 — Generate HTML
 
@@ -107,7 +113,9 @@ const DATA = {
   areas: [ { id, name, houseNum, element, winCount90d, winTrend, projectCount, activeGoals, hasGoal, healthScore } ],
   projects: [ { id, title, status, area, connectedGoal } ],
   vision: { fps: [...], mtps: [...], hhgs: [...] },
-  education: { vper: {...}, elements: {...}, gapToGain: {...}, areas: {...}, goals: {...}, planning: {...} }
+  education: { vper: {...}, elements: {...}, gapToGain: {...}, areas: {...}, goals: {...}, planning: {...} },
+  transits: { sunSign, sunElement, sunVperPhase, slowPlanets: [...], cosmicVper: {...}, moonPhase: {...}, elementalWeather: {...} },
+  cosmicTeaser: { hasBirthData, sunSign, sunElement, dominantElement, ctaUrl, ctaText }
 };
 ```
 

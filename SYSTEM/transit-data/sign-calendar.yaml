@@ -1,0 +1,90 @@
+# Sun Sign Calendar — Perpetual date ranges for sign-level accuracy
+# Used by DAEDALUS to determine current Sun sign at dashboard generation time
+
+signs:
+  aries:
+    start: "03-21"
+    end: "04-19"
+    element: fire
+    vperPhase: vision
+
+  taurus:
+    start: "04-20"
+    end: "05-20"
+    element: earth
+    vperPhase: execute
+
+  gemini:
+    start: "05-21"
+    end: "06-20"
+    element: air
+    vperPhase: plan
+
+  cancer:
+    start: "06-21"
+    end: "07-22"
+    element: water
+    vperPhase: review
+
+  leo:
+    start: "07-23"
+    end: "08-22"
+    element: fire
+    vperPhase: vision
+
+  virgo:
+    start: "08-23"
+    end: "09-22"
+    element: earth
+    vperPhase: execute
+
+  libra:
+    start: "09-23"
+    end: "10-22"
+    element: air
+    vperPhase: plan
+
+  scorpio:
+    start: "10-23"
+    end: "11-21"
+    element: water
+    vperPhase: review
+
+  sagittarius:
+    start: "11-22"
+    end: "12-21"
+    element: fire
+    vperPhase: vision
+
+  capricorn:
+    start: "12-22"
+    end: "01-19"
+    element: earth
+    vperPhase: execute
+
+  aquarius:
+    start: "01-20"
+    end: "02-18"
+    element: air
+    vperPhase: plan
+
+  pisces:
+    start: "02-19"
+    end: "03-20"
+    element: water
+    vperPhase: review
+
+# Sign-to-House natural mapping (for area activation)
+sign_to_house:
+  aries: 1
+  taurus: 2
+  gemini: 3
+  cancer: 4
+  leo: 5
+  virgo: 6
+  libra: 7
+  scorpio: 8
+  sagittarius: 9
+  capricorn: 10
+  aquarius: 11
+  pisces: 12

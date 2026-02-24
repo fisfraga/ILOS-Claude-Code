@@ -1,6 +1,6 @@
 # ILOS Dashboard — HTML Template
 
-Self-contained Single-Page Application for the Intentional Life OS dashboard. Zero external dependencies. Hash-based routing with 4 views: Dashboard, Areas, Goals, Wins.
+Self-contained Single-Page Application for the Intentional Life OS dashboard. Zero external dependencies. Hash-based routing with 13 views: Dashboard, Areas, Goals, Wins, Learn (hub + 6 topics), Transits, Cosmic Blueprint.
 
 ## Placeholders
 
@@ -425,6 +425,98 @@ body {
 }
 
 /* ============================================================
+   Transit Pages
+   ============================================================ */
+.transit-card {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.transit-card-title {
+  font-size: .85rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--c2); margin-bottom: 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--bg3);
+}
+.planet-row {
+  display: flex; align-items: center; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid var(--bg3); font-size: .82rem;
+}
+.planet-row:last-child { border-bottom: none; }
+.planet-name { font-weight: 700; width: 80px; flex-shrink: 0; }
+.sign-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 10px; border-radius: 10px; font-size: .72rem; font-weight: 600;
+}
+.phase-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 8px; font-size: .68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .03em;
+}
+.moon-widget {
+  text-align: center; padding: 20px;
+  background: var(--bg2); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.moon-emoji { font-size: 3rem; margin-bottom: 8px; }
+.moon-name { font-size: .9rem; font-weight: 700; }
+.moon-illumination { font-size: .75rem; color: var(--c3); margin-top: 4px; }
+.moon-guidance { font-size: .8rem; color: var(--c2); margin-top: 8px; font-style: italic; }
+
+.cosmic-vs-personal {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px;
+  align-items: center; padding: 16px;
+  background: var(--bg2); border-radius: var(--radius); box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.cosmic-vs-personal .vs-label {
+  font-size: .75rem; font-weight: 700; color: var(--c3);
+  text-transform: uppercase;
+}
+.cosmic-vs-personal .vs-side { text-align: center; }
+.cosmic-vs-personal .vs-phase { font-size: 1.1rem; font-weight: 800; }
+.cosmic-vs-personal .vs-element { font-size: .7rem; color: var(--c3); margin-top: 2px; }
+
+.active-area-card {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--bg2); border-radius: 8px; margin-bottom: 8px;
+  border-left: 4px solid var(--c3); box-shadow: var(--shadow);
+}
+.active-area-card .area-info { flex: 1; }
+.active-area-card .area-info .name { font-size: .85rem; font-weight: 600; }
+.active-area-card .area-info .planet { font-size: .7rem; color: var(--c3); }
+
+.teaser-card {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 24px; box-shadow: var(--shadow); text-align: center;
+  border: 1px dashed var(--bg3); position: relative;
+}
+.teaser-card .lock-icon {
+  font-size: 1.5rem; margin-bottom: 8px; color: var(--c3);
+}
+.teaser-card .teaser-title { font-size: .9rem; font-weight: 700; margin-bottom: 6px; }
+.teaser-card .teaser-desc { font-size: .78rem; color: var(--c2); }
+
+.cta-button {
+  display: inline-block; padding: 12px 28px; border-radius: 8px;
+  background: var(--ether); color: #fff; font-weight: 700; font-size: .9rem;
+  text-decoration: none; margin-top: 20px; transition: opacity .15s;
+}
+.cta-button:hover { opacity: .85; }
+
+.elemental-weather-summary {
+  display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap;
+}
+.elemental-weather-summary .ew-item {
+  flex: 1; min-width: 80px; text-align: center; padding: 10px;
+  border-radius: 8px; font-size: .8rem;
+}
+.elemental-weather-summary .ew-count { font-size: 1.3rem; font-weight: 800; }
+.elemental-weather-summary .ew-label { font-size: .65rem; text-transform: uppercase; margin-top: 2px; }
+
+@media (max-width: 767px) {
+  .cosmic-vs-personal { grid-template-columns: 1fr; text-align: center; }
+  .cosmic-vs-personal .vs-label { padding: 8px 0; }
+}
+
+/* ============================================================
    Responsive: Mobile (< 768px)
    ============================================================ */
 @media (max-width: 767px) {
@@ -537,7 +629,9 @@ const ROUTES = {
   'learn/gap-to-gain':{ render: renderLearnGapToGain, icon: '', label: 'Gap to Gain', nav: false },
   'learn/areas':   { render: renderLearnAreas, icon: '', label: '12 Key Areas', nav: false },
   'learn/goals':   { render: renderLearnGoals, icon: '', label: 'Goal Setting', nav: false },
-  'learn/planning':{ render: renderLearnPlanning, icon: '', label: 'Planning Cycle', nav: false }
+  'learn/planning':{ render: renderLearnPlanning, icon: '', label: 'Planning Cycle', nav: false },
+  'transits':      { render: renderTransits,     icon: '\u263D', label: 'Transits', nav: true },
+  'cosmic-teaser': { render: renderCosmicTeaser,  icon: '\u2727', label: 'Cosmic Blueprint', nav: true }
 };
 
 function buildNav() {
@@ -829,6 +923,69 @@ function renderTabGroup(tabs) {
 }
 
 const RAW_ELEM_COLORS = { fire: '#ef6c00', air: '#0097a7', earth: '#2e7d32', water: '#1565c0', ether: '#9c27b0' };
+
+/* ============================================================
+   ILOS TRANSIT CONSTANTS
+   ============================================================ */
+const ILOS_KEY_AREAS = [
+  'Health & Vitality','Finances & Resources','Intellectual & Communication','Home & Foundation',
+  'Creative Expression','Routines & Service','Love & Partnership','Emotional Depth',
+  'Vision & Expansion','Career & Legacy','Social & Community','Spiritual & Transcendence'
+];
+const SIGN_TO_HOUSE = {
+  aries:1,taurus:2,gemini:3,cancer:4,leo:5,virgo:6,
+  libra:7,scorpio:8,sagittarius:9,capricorn:10,aquarius:11,pisces:12
+};
+const SIGN_ELEMENT = {
+  aries:'fire',taurus:'earth',gemini:'air',cancer:'water',leo:'fire',virgo:'earth',
+  libra:'air',scorpio:'water',sagittarius:'fire',capricorn:'earth',aquarius:'air',pisces:'water'
+};
+const SIGN_VPER = {
+  aries:'vision',taurus:'execute',gemini:'plan',cancer:'review',leo:'vision',virgo:'execute',
+  libra:'plan',scorpio:'review',sagittarius:'vision',capricorn:'execute',aquarius:'plan',pisces:'review'
+};
+const MOON_PHASES_8 = [
+  { name: 'New Moon',         emoji: '\uD83C\uDF11', element: 'fire',  guidance: 'Set intentions and plant seeds for the new cycle' },
+  { name: 'Waxing Crescent',  emoji: '\uD83C\uDF12', element: 'fire',  guidance: 'Take initial action on your intentions' },
+  { name: 'First Quarter',    emoji: '\uD83C\uDF13', element: 'earth', guidance: 'Push through challenges and build momentum' },
+  { name: 'Waxing Gibbous',   emoji: '\uD83C\uDF14', element: 'earth', guidance: 'Refine and adjust your approach' },
+  { name: 'Full Moon',        emoji: '\uD83C\uDF15', element: 'water', guidance: 'Celebrate completion and harvest results' },
+  { name: 'Waning Gibbous',   emoji: '\uD83C\uDF16', element: 'water', guidance: 'Share what you have learned with others' },
+  { name: 'Last Quarter',     emoji: '\uD83C\uDF17', element: 'air',   guidance: 'Release what no longer serves you' },
+  { name: 'Waning Crescent',  emoji: '\uD83C\uDF18', element: 'air',   guidance: 'Rest and reflect before the next cycle begins' }
+];
+
+function getCosmicVperSummary(positions) {
+  const counts = { vision: 0, plan: 0, execute: 0, review: 0 };
+  const activeAreas = [];
+  positions.forEach(p => {
+    const phase = SIGN_VPER[p.sign] || 'execute';
+    counts[phase]++;
+    const houseNum = SIGN_TO_HOUSE[p.sign] || 1;
+    activeAreas.push({ houseNum, areaName: ILOS_KEY_AREAS[houseNum - 1], planet: p.name, element: SIGN_ELEMENT[p.sign] || 'earth' });
+  });
+  const dominant = Object.entries(counts).sort((a,b) => b[1] - a[1])[0][0];
+  return { dominantPhase: dominant, phaseCounts: counts, activeAreas };
+}
+
+function getElementalWeather(positions) {
+  const counts = { fire: 0, air: 0, earth: 0, water: 0 };
+  positions.forEach(p => {
+    const elem = SIGN_ELEMENT[p.sign] || 'earth';
+    counts[elem]++;
+  });
+  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+  const dominant = sorted[0][0];
+  const weakest = sorted[sorted.length - 1][0];
+  const summaries = {
+    fire: 'Strong Fire energy \u2014 ideal for vision, creativity, and bold action',
+    air: 'Strong Air energy \u2014 ideal for planning, communication, and new ideas',
+    earth: 'Strong Earth energy \u2014 ideal for execution, grounding, and building',
+    water: 'Heavy Water energy \u2014 ideal for review, emotional processing, and reflection'
+  };
+  return { ...counts, dominant, weakest, summary: summaries[dominant] };
+}
+
 
 /* ============================================================
    PAGE RENDERERS
@@ -1632,6 +1789,248 @@ function renderLearnPlanning(container) {
   quotesHTML += renderQuoteCard('Plans are nothing; planning is everything.', 'Dwight D. Eisenhower');
   quotesHTML += renderQuoteCard('99% of people aim for "realistic" goals, paradoxically making them the most competitive.', 'Tim Ferriss');
   container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
+}
+
+
+/* ---------- #transits ---------- */
+function renderTransits(container) {
+  const t = DATA.transits || {};
+  const vper = DATA.vper || {};
+
+  if (!t.sunSign && !t.slowPlanets) {
+    container.innerHTML = '<div class="card"><div class="card-title">Transits</div><p style="color:var(--c3);font-size:.85rem">Transit data not configured. Run <code>/dashboard</code> to generate with transit data.</p></div>';
+    return;
+  }
+
+  /* Cosmic VPER Summary */
+  const cosmicVper = t.cosmicVper || {};
+  const dominantPhase = cosmicVper.dominantPhase || 'execute';
+  const phaseCap = dominantPhase.charAt(0).toUpperCase() + dominantPhase.slice(1);
+  const phaseElem = VPER_ELEMENT[phaseCap] || 'earth';
+
+  const vperCard = document.createElement('div');
+  vperCard.className = 'transit-card';
+  vperCard.innerHTML = `<div class="transit-card-title">Cosmic VPER Phase</div>
+    <div style="display:flex;justify-content:center;margin-bottom:16px">${svgVperWheel(dominantPhase)}</div>
+    <p style="text-align:center;font-size:.9rem">The cosmos is currently in <strong style="color:${RAW_ELEM_COLORS[phaseElem]}">${phaseCap}</strong> mode</p>`;
+  container.appendChild(vperCard);
+
+  /* Elemental Weather Bar */
+  const ew = t.elementalWeather || {};
+  const ewCard = document.createElement('div');
+  ewCard.className = 'transit-card';
+  let ewHTML = '<div class="transit-card-title">Elemental Weather</div>';
+  ewHTML += '<div class="elemental-weather-summary">';
+  ['fire','air','earth','water'].forEach(e => {
+    const count = ew[e] || 0;
+    const isDominant = e === ew.dominant;
+    const isWeakest = e === ew.weakest;
+    ewHTML += `<div class="ew-item" style="background:${RAW_ELEM_COLORS[e]}${isDominant ? '33' : '15'};${isWeakest ? 'border:1px dashed '+RAW_ELEM_COLORS[e] : ''}">
+      <div class="ew-count" style="color:${RAW_ELEM_COLORS[e]}">${count}</div>
+      <div class="ew-label" style="color:${RAW_ELEM_COLORS[e]}">${e}</div>
+      ${isDominant ? '<div style="font-size:.6rem;color:var(--c2)">DOMINANT</div>' : ''}
+      ${isWeakest ? '<div style="font-size:.6rem;color:var(--c3)">WEAKEST</div>' : ''}
+    </div>`;
+  });
+  ewHTML += '</div>';
+  if (ew.summary) ewHTML += `<p style="text-align:center;font-size:.82rem;color:var(--c2);margin-top:8px;font-style:italic">${ew.summary}</p>`;
+  ewCard.innerHTML = ewHTML;
+  container.appendChild(ewCard);
+
+  /* Active Areas */
+  const activeAreas = (cosmicVper.activeAreas || []).slice(0, 6);
+  if (activeAreas.length) {
+    const aaCard = document.createElement('div');
+    aaCard.className = 'transit-card';
+    let aaHTML = '<div class="transit-card-title">Active Life Areas</div>';
+    activeAreas.forEach(a => {
+      const elem = a.element || 'earth';
+      aaHTML += `<div class="active-area-card" style="border-left-color:${RAW_ELEM_COLORS[elem]}">
+        <div class="area-info">
+          <div class="name">${a.areaName || 'Area ' + a.houseNum}</div>
+          <div class="planet">Activated by ${a.planet}</div>
+        </div>
+        <span class="sign-badge" style="background:${RAW_ELEM_COLORS[elem]}22;color:${RAW_ELEM_COLORS[elem]}">${elem}</span>
+      </div>`;
+    });
+    aaCard.innerHTML = aaHTML;
+    container.appendChild(aaCard);
+  }
+
+  /* Moon Phase Widget */
+  const moon = t.moonPhase || {};
+  if (moon.name) {
+    const moonCard = document.createElement('div');
+    moonCard.className = 'moon-widget';
+    moonCard.innerHTML = `
+      <div class="moon-emoji">${moon.emoji || '\\uD83C\\uDF15'}</div>
+      <div class="moon-name">${moon.name}</div>
+      <div class="moon-illumination">${moon.illumination != null ? moon.illumination + '% illumination' : ''}</div>
+      <div class="moon-guidance">${moon.guidance || ''}</div>`;
+    container.appendChild(moonCard);
+  }
+
+  /* Slow Planet Table */
+  const planets = t.slowPlanets || [];
+  if (planets.length) {
+    const ptCard = document.createElement('div');
+    ptCard.className = 'transit-card';
+    let ptHTML = '<div class="transit-card-title">Slow Planet Positions</div>';
+    planets.forEach(p => {
+      const elem = p.element || SIGN_ELEMENT[p.sign] || 'earth';
+      const phase = p.vperPhase || SIGN_VPER[p.sign] || 'execute';
+      const pCap = phase.charAt(0).toUpperCase() + phase.slice(1);
+      ptHTML += `<div class="planet-row">
+        <span class="planet-name">${p.name}</span>
+        <span class="sign-badge" style="background:${RAW_ELEM_COLORS[elem]}22;color:${RAW_ELEM_COLORS[elem]}">${(p.sign||'').charAt(0).toUpperCase()+(p.sign||'').slice(1)}</span>
+        <span class="phase-badge" style="background:${RAW_ELEM_COLORS[VPER_ELEMENT[pCap]||'earth']}22;color:${RAW_ELEM_COLORS[VPER_ELEMENT[pCap]||'earth']}">${pCap}</span>
+        <span style="flex:1"></span>
+        <span style="font-size:.72rem;color:var(--c3)">${elem}</span>
+      </div>`;
+    });
+    ptCard.innerHTML = ptHTML;
+    container.appendChild(ptCard);
+  }
+
+  /* Cosmic vs Personal */
+  const userPhase = (vper.phase || 'execute');
+  const userPhaseCap = userPhase.charAt(0).toUpperCase() + userPhase.slice(1);
+  const cosmicElem = VPER_ELEMENT[phaseCap] || 'earth';
+  const userElem = VPER_ELEMENT[userPhaseCap] || 'earth';
+  const aligned = dominantPhase === userPhase;
+
+  const vsCard = document.createElement('div');
+  vsCard.className = 'cosmic-vs-personal';
+  vsCard.innerHTML = `
+    <div class="vs-side">
+      <div style="font-size:.65rem;text-transform:uppercase;color:var(--c3);margin-bottom:4px">Cosmic Phase</div>
+      <div class="vs-phase" style="color:${RAW_ELEM_COLORS[cosmicElem]}">${phaseCap}</div>
+      <div class="vs-element">${cosmicElem}</div>
+    </div>
+    <div class="vs-label">${aligned ? '\\u2713 Aligned' : '\\u26A1 Tension'}</div>
+    <div class="vs-side">
+      <div style="font-size:.65rem;text-transform:uppercase;color:var(--c3);margin-bottom:4px">Your Phase</div>
+      <div class="vs-phase" style="color:${RAW_ELEM_COLORS[userElem]}">${userPhaseCap}</div>
+      <div class="vs-element">${userElem}</div>
+    </div>`;
+  container.appendChild(vsCard);
+
+  if (!aligned) {
+    const hint = document.createElement('div');
+    hint.style.cssText = 'text-align:center;font-size:.78rem;color:var(--c2);margin-top:-8px;margin-bottom:16px';
+    hint.textContent = `The cosmos favors ${phaseCap} energy while you\\'re in ${userPhaseCap}. Consider how to bridge these energies.`;
+    container.appendChild(hint);
+  }
+}
+
+/* ---------- #cosmic-teaser ---------- */
+function renderCosmicTeaser(container) {
+  const ct = DATA.cosmicTeaser || {};
+  const t = DATA.transits || {};
+
+  /* Header */
+  const header = document.createElement('div');
+  header.className = 'transit-card';
+  header.style.textAlign = 'center';
+  header.style.borderBottom = '3px solid var(--ether)';
+  header.innerHTML = `
+    <div style="font-size:2rem;margin-bottom:8px">\\u2727</div>
+    <div style="font-size:1.2rem;font-weight:800;margin-bottom:4px">Cosmic Blueprint</div>
+    <div style="font-size:.85rem;color:var(--c2)">Your celestial DNA decoded through Astrology, Human Design, and Gene Keys</div>`;
+  container.appendChild(header);
+
+  /* Element Profile Card (if birth data exists) */
+  if (ct.hasBirthData && ct.sunSign) {
+    const elem = SIGN_ELEMENT[ct.sunSign] || 'fire';
+    const profileCard = document.createElement('div');
+    profileCard.className = 'transit-card';
+    profileCard.style.borderLeft = `4px solid ${RAW_ELEM_COLORS[elem]}`;
+    profileCard.innerHTML = `
+      <div class="transit-card-title">Your Cosmic Profile</div>
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <div>
+          <div style="font-size:.7rem;color:var(--c3);text-transform:uppercase">Sun Sign</div>
+          <div style="font-size:1.1rem;font-weight:700;color:${RAW_ELEM_COLORS[elem]}">${ct.sunSign.charAt(0).toUpperCase()+ct.sunSign.slice(1)}</div>
+        </div>
+        <div>
+          <div style="font-size:.7rem;color:var(--c3);text-transform:uppercase">Sun Element</div>
+          <div style="font-size:1.1rem;font-weight:700;color:${RAW_ELEM_COLORS[ct.sunElement||elem]}">${(ct.sunElement||elem).charAt(0).toUpperCase()+(ct.sunElement||elem).slice(1)}</div>
+        </div>
+        ${ct.dominantElement ? `<div>
+          <div style="font-size:.7rem;color:var(--c3);text-transform:uppercase">Dominant Element</div>
+          <div style="font-size:1.1rem;font-weight:700;color:${RAW_ELEM_COLORS[ct.dominantElement]}">${ct.dominantElement.charAt(0).toUpperCase()+ct.dominantElement.slice(1)}</div>
+        </div>` : ''}
+      </div>`;
+    container.appendChild(profileCard);
+
+    /* Elemental Balance Radar (simplified as bars) */
+    if (ct.dominantElement) {
+      const radarCard = document.createElement('div');
+      radarCard.className = 'transit-card';
+      let radarHTML = '<div class="transit-card-title">Natal Elemental Balance</div>';
+      radarHTML += '<div class="elemental-weather-summary">';
+      ['fire','air','earth','water'].forEach(e => {
+        const isDominant = e === ct.dominantElement;
+        radarHTML += `<div class="ew-item" style="background:${RAW_ELEM_COLORS[e]}${isDominant ? '33' : '11'}">
+          <div class="ew-count" style="color:${RAW_ELEM_COLORS[e]}">${isDominant ? '\\u2605' : '\\u25CB'}</div>
+          <div class="ew-label" style="color:${RAW_ELEM_COLORS[e]}">${e}</div>
+          ${isDominant ? '<div style="font-size:.6rem;color:var(--c2)">DOMINANT</div>' : ''}
+        </div>`;
+      });
+      radarHTML += '</div>';
+      radarCard.innerHTML = radarHTML;
+      container.appendChild(radarCard);
+    }
+  } else {
+    const noData = document.createElement('div');
+    noData.className = 'transit-card';
+    noData.style.textAlign = 'center';
+    noData.innerHTML = `
+      <div style="font-size:1.5rem;margin-bottom:8px">\\uD83D\\uDD12</div>
+      <p style="color:var(--c2);font-size:.85rem">Add your birth data to <code>QUANTUM/self-knowledge/</code> to unlock cosmic insights</p>`;
+    container.appendChild(noData);
+  }
+
+  /* Teaser Cards: What Your Chart Reveals */
+  const teasers = [
+    { title: 'Your Life Purpose Path', desc: 'Discover the Incarnation Cross and Gene Key sequences that reveal your unique purpose and evolutionary journey.' },
+    { title: 'Your Energy Type', desc: 'Understand your Human Design Type, Strategy, and Authority \\u2014 the blueprint for making correct decisions.' },
+    { title: 'Your Transformation Keys', desc: 'Explore the Gene Keys in your profile \\u2014 Shadow frequencies to transmute and Gift frequencies to embody.' }
+  ];
+
+  const teaserGrid = document.createElement('div');
+  teaserGrid.className = 'grid-3';
+  teaserGrid.style.marginBottom = '20px';
+  teasers.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'teaser-card';
+    card.innerHTML = `
+      <div class="lock-icon">\\uD83D\\uDD12</div>
+      <div class="teaser-title">${t.title}</div>
+      <div class="teaser-desc">${t.desc}</div>`;
+    teaserGrid.appendChild(card);
+  });
+  container.appendChild(teaserGrid);
+
+  /* ILOS Connection */
+  const connCard = document.createElement('div');
+  connCard.className = 'transit-card';
+  connCard.innerHTML = `
+    <div class="transit-card-title">ILOS Connection</div>
+    <p style="font-size:.85rem;color:var(--c2);line-height:1.6">Your cosmic profile connects directly to your 12 Key Areas. Each planet in your birth chart activates a specific life domain through the zodiac houses. Current transits then show which areas are being energized RIGHT NOW \\u2014 creating a bridge between celestial patterns and practical life planning.</p>
+    <p style="font-size:.82rem;color:var(--c2);margin-top:8px">The VPER cycle (Vision/Plan/Execute/Review) maps to the four elements (Fire/Air/Earth/Water), which are the same elements that govern your chart. Your elemental balance is your cosmic operating system.</p>`;
+  container.appendChild(connCard);
+
+  /* CTA Button */
+  const ctaDiv = document.createElement('div');
+  ctaDiv.style.textAlign = 'center';
+  ctaDiv.style.padding = '20px';
+  if (ct.ctaUrl) {
+    ctaDiv.innerHTML = `<a href="${ct.ctaUrl}" class="cta-button" target="_blank">${ct.ctaText || 'Explore your full Cosmic Blueprint'}</a>`;
+  } else {
+    ctaDiv.innerHTML = `<div class="cta-button" style="opacity:.5;cursor:default">Coming Soon</div>`;
+  }
+  container.appendChild(ctaDiv);
 }
 
 /* ============================================================

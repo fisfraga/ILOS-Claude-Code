@@ -170,6 +170,57 @@ const DATA = {
       ],
       quotes: [{ text: "Quote text", attribution: "Author" }]
     }
+  },
+
+  transits: {
+    date: "2026-02-23",
+    sunSign: "pisces",
+    sunElement: "water",
+    sunVperPhase: "review",
+
+    slowPlanets: [
+      { name: "Jupiter", sign: "cancer", element: "water", vperPhase: "review" },
+      { name: "Saturn", sign: "aries", element: "fire", vperPhase: "vision" },
+      { name: "Uranus", sign: "taurus", element: "earth", vperPhase: "execute" },
+      { name: "Neptune", sign: "aries", element: "fire", vperPhase: "vision" },
+      { name: "Pluto", sign: "aquarius", element: "air", vperPhase: "plan" }
+    ],
+
+    cosmicVper: {
+      dominantPhase: "review",           // most planets in this phase
+      phaseCounts: { vision: 2, plan: 1, execute: 1, review: 2 },
+      activeAreas: [
+        { houseNum: 12, areaName: "Spiritual & Transcendence", planet: "Sun", element: "water" },
+        { houseNum: 4, areaName: "Home & Foundation", planet: "Jupiter", element: "water" }
+      ]
+    },
+
+    moonPhase: {
+      name: "Waning Crescent",
+      emoji: "\uD83C\uDF18",
+      illumination: 15,
+      element: "air",
+      guidance: "Rest and reflect before the next cycle begins"
+    },
+
+    elementalWeather: {
+      fire: 2,
+      air: 1,
+      earth: 1,
+      water: 2,
+      dominant: "water",
+      weakest: "air",
+      summary: "Balanced Fire-Water energy — vision and review in harmony"
+    }
+  },
+
+  cosmicTeaser: {
+    hasBirthData: true,                   // false if no QUANTUM/self-knowledge/ data
+    sunSign: "libra",
+    sunElement: "air",
+    dominantElement: "water",
+    ctaUrl: "https://cosmicblueprint.app", // or null
+    ctaText: "Explore your full Cosmic Blueprint"
   }
 };
 ```
@@ -262,6 +313,45 @@ For each of the 12 areas:
 5. `hasGoal` — `activeGoals.length > 0`
 6. `healthScore` — Computed per formula above
 
+### Transit Computation
+
+**Strategy:** Sign-level accuracy from static YAML lookup tables. No external API or ephemeris library needed.
+
+**Sun Sign:**
+1. Read `SYSTEM/transit-data/sign-calendar.yaml`
+2. Match today's date (MM-DD) against sign date ranges → `sunSign`, `sunElement`, `sunVperPhase`
+3. Note: Capricorn wraps across year boundary (12-22 to 01-19)
+
+**Slow Planets:**
+1. Read `SYSTEM/transit-data/slow-planets-2026.yaml`
+2. Look up current month (YYYY-MM) for each planet → `sign`, `element`, `vperPhase`
+3. Build array: `[{ name, sign, element, vperPhase }]` for Jupiter, Saturn, Uranus, Neptune, Pluto
+
+**Cosmic VPER Summary:**
+1. Collect all positions: Sun + 5 slow planets = 6 positions
+2. Count planets per VPER phase → `phaseCounts`
+3. Phase with highest count = `dominantPhase` (tie-break: prefer Sun's phase)
+4. For each position, map sign → house → area name → build `activeAreas` array
+
+**Elemental Weather:**
+1. Count planets per element from all 6 positions
+2. Highest count = `dominant`, lowest = `weakest`
+3. Generate summary string based on dominant element
+
+**Moon Phase:**
+1. Read `SYSTEM/transit-data/moon-phases-2026.yaml`
+2. Find the two nearest entries (previous and next New/Full Moon)
+3. Calculate days since last phase event
+4. Map to 8-phase name: each phase ≈ 3.7 days (29.5 / 8)
+5. Estimate illumination: 0% at New Moon, 100% at Full Moon, linear interpolation
+6. Assign element: waxing phases = fire/earth, waning = water/air
+7. Assign guidance string from `MOON_PHASES_8` constant
+
+**Cosmic Teaser:**
+1. Check if `QUANTUM/self-knowledge/` contains birth data
+2. If yes: extract Sun sign, compute dominant element from natal chart
+3. Set `ctaUrl` if Cosmic Blueprint app URL is configured, otherwise null
+
 ---
 
 ## Data Source Queries
@@ -277,6 +367,10 @@ For each of the 12 areas:
 | Vision — FPs | `QUANTUM/vision/favorite-problems.md` | Parse markdown headings/list items |
 | Vision — MTPs | `QUANTUM/vision/massively-transformative-purposes.md` | Parse markdown headings/list items |
 | Projects | `SPACE/projects/` | Read each .md or .yaml file for title, status, area |
+| Transit — Sign Calendar | `SYSTEM/transit-data/sign-calendar.yaml` | Sun sign date ranges + sign-to-house mapping |
+| Transit — Slow Planets | `SYSTEM/transit-data/slow-planets-2026.yaml` | Monthly positions for Jupiter, Saturn, Uranus, Neptune, Pluto |
+| Transit — Moon Phases | `SYSTEM/transit-data/moon-phases-2026.yaml` | New/Full Moon dates for 8-phase interpolation |
+| Birth Data (optional) | `QUANTUM/self-knowledge/` | Sun sign, dominant element for Cosmic Blueprint teaser |
 | User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from first heading or context |
 | Meta | `TIME/current-period.yaml` | current_year, current_quarter, current_month, current_week |
 
