@@ -13,7 +13,7 @@ Development roadmap for the ILOS Dashboard SPA. Each sprint extends the zero-dep
 | Sprint | Name | Status | Commit | Tasks |
 |--------|------|--------|--------|-------|
 | **S1** | Dashboard + Areas | **Done** | `83ec061` | 4/4 |
-| **S2** | Educational Pages | Planned | — | 5 tasks |
+| **S2** | Educational Pages | **Done** | — | 5/5 |
 | **S3** | Transit + CB Teasers | Planned | — | 6 tasks |
 | **S4** | Systems Audit | Planned | — | 5 tasks |
 

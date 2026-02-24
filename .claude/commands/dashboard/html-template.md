@@ -310,6 +310,121 @@ body {
 .bar-chart-row .bar-value { width: 28px; color: var(--c3); font-size: .7rem; text-align: right; }
 
 /* ============================================================
+   Educational Pages
+   ============================================================ */
+.learn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.learn-card {
+  background: var(--bg2); border-radius: var(--radius); padding: 24px;
+  box-shadow: var(--shadow); cursor: pointer; transition: transform .15s, box-shadow .15s;
+  border-left: 4px solid var(--c3);
+}
+.learn-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.learn-card .learn-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.learn-card .learn-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.learn-card .learn-desc { font-size: .8rem; color: var(--c2); line-height: 1.4; }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .8rem; color: var(--ether); text-decoration: none;
+  margin-bottom: 20px; font-weight: 600;
+}
+.back-link:hover { text-decoration: underline; }
+
+.edu-section {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.edu-section-header {
+  font-size: .95rem; font-weight: 700; margin-bottom: 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--bg3);
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.edu-section-header .chevron {
+  transition: transform .2s; font-size: .7rem; color: var(--c3);
+}
+.edu-section-header.collapsed .chevron { transform: rotate(-90deg); }
+.edu-section-body { line-height: 1.7; color: var(--c2); font-size: .85rem; }
+.edu-section-body.hidden { display: none; }
+.edu-section-body p { margin-bottom: 10px; }
+.edu-section-body strong { color: var(--c1); }
+
+.quote-card {
+  border-left: 4px solid var(--ether);
+  padding: 14px 18px; margin: 14px 0;
+  background: var(--ether-soft); border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic; font-size: .85rem; color: var(--c1); line-height: 1.6;
+}
+.quote-card .attribution {
+  font-style: normal; font-size: .75rem; color: var(--c3);
+  margin-top: 6px; font-weight: 600;
+}
+
+.element-card {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 18px; box-shadow: var(--shadow);
+  border-left: 4px solid var(--c3);
+  cursor: pointer; transition: all .15s;
+}
+.element-card.expanded { border-left-width: 5px; }
+.element-card .element-title {
+  font-size: .9rem; font-weight: 700; display: flex;
+  justify-content: space-between; align-items: center;
+}
+.element-card .element-body { margin-top: 12px; font-size: .82rem; color: var(--c2); line-height: 1.6; }
+.element-card .element-body.hidden { display: none; }
+
+.tab-group { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid var(--bg3); }
+.tab-btn {
+  padding: 8px 18px; font-size: .8rem; font-weight: 600;
+  background: none; border: none; border-bottom: 2px solid transparent;
+  cursor: pointer; color: var(--c3); margin-bottom: -2px;
+  transition: all .15s;
+}
+.tab-btn:hover { color: var(--c1); }
+.tab-btn.active { border-bottom-color: var(--ether); color: var(--c1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.user-data-overlay {
+  background: var(--ether-soft); border: 1px solid var(--ether);
+  border-radius: var(--radius); padding: 14px 18px; margin: 14px 0;
+  font-size: .82rem;
+}
+.user-data-overlay .overlay-label {
+  font-size: .7rem; font-weight: 700; text-transform: uppercase;
+  color: var(--ether); margin-bottom: 6px; letter-spacing: .04em;
+}
+
+.flow-diagram {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap; margin: 16px 0; padding: 12px;
+  background: var(--bg3); border-radius: var(--radius);
+}
+.flow-step {
+  padding: 8px 14px; border-radius: 8px; font-size: .8rem;
+  font-weight: 600; text-align: center;
+}
+.flow-arrow { color: var(--c3); font-size: .8rem; }
+
+.cycle-diagram {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;
+}
+.cycle-step {
+  padding: 14px; border-radius: var(--radius); text-align: center;
+  font-size: .85rem; font-weight: 600;
+}
+
+.slider-group { margin: 12px 0; }
+.slider-group label { display: flex; justify-content: space-between; font-size: .8rem; font-weight: 600; margin-bottom: 4px; }
+.slider-group input[type="range"] { width: 100%; accent-color: var(--ether); }
+
+@media (max-width: 767px) {
+  .learn-grid { grid-template-columns: 1fr; }
+  .flow-diagram { justify-content: center; }
+  .cycle-diagram { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    Responsive: Mobile (< 768px)
    ============================================================ */
 @media (max-width: 767px) {
@@ -412,10 +527,17 @@ function statusColor(s) { return s === 'active' ? 'var(--earth)' : s === 'comple
    ROUTER
    ============================================================ */
 const ROUTES = {
-  dashboard: { render: renderDashboard, icon: '\u25CE', label: 'Dashboard' },
-  areas:     { render: renderAreas,     icon: '\u25EB', label: 'Areas' },
-  goals:     { render: renderGoals,     icon: '\u25C8', label: 'Goals' },
-  wins:      { render: renderWins,      icon: '\u2605', label: 'Wins' }
+  dashboard:       { render: renderDashboard, icon: '\u25CE', label: 'Dashboard', nav: true },
+  areas:           { render: renderAreas,     icon: '\u25EB', label: 'Areas', nav: true },
+  goals:           { render: renderGoals,     icon: '\u25C8', label: 'Goals', nav: true },
+  wins:            { render: renderWins,      icon: '\u2605', label: 'Wins', nav: true },
+  learn:           { render: renderLearnHub,  icon: '\u25C9', label: 'Learn', nav: true },
+  'learn/vper':    { render: renderLearnVper, icon: '', label: 'VPER Cycle', nav: false },
+  'learn/elements':{ render: renderLearnElements, icon: '', label: 'Elements', nav: false },
+  'learn/gap-to-gain':{ render: renderLearnGapToGain, icon: '', label: 'Gap to Gain', nav: false },
+  'learn/areas':   { render: renderLearnAreas, icon: '', label: '12 Key Areas', nav: false },
+  'learn/goals':   { render: renderLearnGoals, icon: '', label: 'Goal Setting', nav: false },
+  'learn/planning':{ render: renderLearnPlanning, icon: '', label: 'Planning Cycle', nav: false }
 };
 
 function buildNav() {
@@ -423,6 +545,7 @@ function buildNav() {
   const mobileNav = document.getElementById('mobile-nav');
   let sideHTML = '', mobileHTML = '';
   for (const [key, r] of Object.entries(ROUTES)) {
+    if (!r.nav) continue;
     sideHTML += `<a href="#${key}" data-route="${key}"><span class="icon">${r.icon}</span><span class="label">${r.label}</span></a>`;
     mobileHTML += `<a href="#${key}" data-route="${key}"><span class="icon">${r.icon}</span>${r.label}</a>`;
   }
@@ -437,7 +560,9 @@ function navigate() {
   el.innerHTML = '';
   document.getElementById('page-title').textContent = route.label;
   route.render(el);
-  updateActiveNav(hash);
+  /* For nested routes like learn/vper, highlight the parent "learn" in nav */
+  const navKey = hash.includes('/') ? hash.split('/')[0] : hash;
+  updateActiveNav(navKey);
 }
 
 function updateActiveNav(hash) {
@@ -629,6 +754,81 @@ function svgWeeklyTrend(byWeek) {
   const totalW = byWeek.slice(-13).length * (barW + gap);
   return `<svg viewBox="0 0 ${totalW} ${h}" width="100%" style="max-width:${totalW}px;display:block">${bars}</svg>`;
 }
+
+/* ============================================================
+   SHARED EDUCATIONAL HELPERS
+   ============================================================ */
+
+function renderBackLink(container) {
+  const link = document.createElement('a');
+  link.href = '#learn';
+  link.className = 'back-link';
+  link.innerHTML = '\u2190 Back to Learn';
+  container.appendChild(link);
+}
+
+function renderEduSection(heading, contentHTML, elementColor, startExpanded) {
+  const sec = document.createElement('div');
+  sec.className = 'edu-section';
+  if (elementColor) sec.style.borderLeft = `4px solid ${elementColor}`;
+  const expanded = startExpanded !== false;
+  sec.innerHTML = `
+    <div class="edu-section-header${expanded ? '' : ' collapsed'}" onclick="this.classList.toggle('collapsed');this.nextElementSibling.classList.toggle('hidden')">
+      <span class="chevron">\u25BC</span> ${heading}
+    </div>
+    <div class="edu-section-body${expanded ? '' : ' hidden'}">${contentHTML}</div>`;
+  return sec;
+}
+
+function renderQuoteCard(text, attribution) {
+  return `<div class="quote-card">"${text}"${attribution ? `<div class="attribution">— ${attribution}</div>` : ''}</div>`;
+}
+
+function renderUserOverlay(label, contentHTML) {
+  return `<div class="user-data-overlay"><div class="overlay-label">\u25C8 ${label}</div>${contentHTML}</div>`;
+}
+
+function renderFlowDiagram(steps, colors) {
+  let html = '<div class="flow-diagram">';
+  steps.forEach((s, i) => {
+    const bg = colors && colors[i] ? colors[i] : 'var(--bg2)';
+    const color = colors && colors[i] ? '#fff' : 'var(--c1)';
+    html += `<div class="flow-step" style="background:${bg};color:${color}">${s}</div>`;
+    if (i < steps.length - 1) html += '<span class="flow-arrow">\u2192</span>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderCycleDiagram(steps, colors) {
+  let html = '<div class="cycle-diagram">';
+  steps.forEach((s, i) => {
+    const bg = colors && colors[i] ? colors[i] + '33' : 'var(--bg3)';
+    const border = colors && colors[i] ? colors[i] : 'var(--c3)';
+    html += `<div class="cycle-step" style="background:${bg};border:2px solid ${border}">${s}</div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderTabGroup(tabs) {
+  const id = 'tg_' + Math.random().toString(36).slice(2, 8);
+  let btnHTML = '<div class="tab-group">';
+  let contentHTML = '';
+  tabs.forEach((t, i) => {
+    btnHTML += `<button class="tab-btn${i === 0 ? ' active' : ''}" onclick="
+      this.parentElement.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active');
+      document.querySelectorAll('.${id}').forEach(c=>c.classList.remove('active'));
+      document.getElementById('${id}_${i}').classList.add('active');
+    ">${t.label}</button>`;
+    contentHTML += `<div id="${id}_${i}" class="tab-content ${id}${i === 0 ? ' active' : ''}">${t.content}</div>`;
+  });
+  btnHTML += '</div>';
+  return btnHTML + contentHTML;
+}
+
+const RAW_ELEM_COLORS = { fire: '#ef6c00', air: '#0097a7', earth: '#2e7d32', water: '#1565c0', ether: '#9c27b0' };
 
 /* ============================================================
    PAGE RENDERERS
@@ -994,6 +1194,444 @@ function renderWins(container) {
   layout.appendChild(analytics);
 
   container.appendChild(layout);
+}
+
+/* ---------- #learn ---------- */
+function renderLearnHub(container) {
+  const topics = [
+    { route: 'learn/vper', icon: '\uD83D\uDD25', title: 'VPER Cycle', desc: 'The four-phase cycle that drives all planning: Vision, Plan, Execute, Review.', element: 'fire' },
+    { route: 'learn/elements', icon: '\u2728', title: 'Elemental Wisdom', desc: 'Understand the four elements and find your elemental balance.', element: 'ether' },
+    { route: 'learn/gap-to-gain', icon: '\uD83D\uDCA7', title: 'Gap to Gain', desc: 'Measure progress against your past self, never against ideals.', element: 'water' },
+    { route: 'learn/areas', icon: '\u26F0', title: '12 Key Areas', desc: 'The complete framework mapping 12 life domains to zodiac houses.', element: 'earth' },
+    { route: 'learn/goals', icon: '\uD83C\uDF2C', title: 'Goal Setting', desc: 'The alignment chain from purpose down to daily actions.', element: 'air' },
+    { route: 'learn/planning', icon: '\u2726', title: 'Planning Cycle', desc: 'Intentional planning as an ongoing process across time cycles.', element: 'ether' }
+  ];
+
+  const grid = document.createElement('div');
+  grid.className = 'learn-grid';
+  topics.forEach(t => {
+    const card = document.createElement('div');
+    card.className = 'learn-card';
+    card.style.borderLeftColor = RAW_ELEM_COLORS[t.element] || 'var(--ether)';
+    card.innerHTML = `
+      <div class="learn-icon">${t.icon}</div>
+      <div class="learn-title">${t.title}</div>
+      <div class="learn-desc">${t.desc}</div>`;
+    card.addEventListener('click', () => { location.hash = t.route; });
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+}
+
+/* ---------- #learn/vper ---------- */
+function renderLearnVper(container) {
+  renderBackLink(container);
+  const edu = (DATA.education && DATA.education.vper) || {};
+  const vper = DATA.vper || {};
+
+  /* Interactive VPER Wheel (large, 300px) */
+  const wheelCard = document.createElement('div');
+  wheelCard.className = 'edu-section';
+  wheelCard.innerHTML = `<div class="edu-section-header">\u25BC VPER Cycle</div>
+    <div class="edu-section-body">
+      <p>Life is designed through four recurring phases, each connected to an element. The cycle repeats fractally across all time scales.</p>
+      <div style="display:flex;justify-content:center;margin:16px 0">${svgVperWheel(vper.phase || 'execute')}</div>
+      ${renderUserOverlay('Your Current Phase', `<strong style="color:${RAW_ELEM_COLORS[VPER_ELEMENT[(vper.phase||'execute').charAt(0).toUpperCase()+(vper.phase||'execute').slice(1)]] || 'var(--ether)'}">${(vper.phase||'execute').charAt(0).toUpperCase()+(vper.phase||'execute').slice(1)}</strong> since ${vper.phaseStarted || 'N/A'}`)}
+    </div>`;
+  container.appendChild(wheelCard);
+
+  /* 4 Phase Sections */
+  const phases = [
+    { name: 'Vision', element: 'fire', desc: 'Clarify purpose, direction, what matters most. This is where alignment begins — in your WHY.' },
+    { name: 'Plan', element: 'air', desc: 'Set clear goals across time horizons. Maximum 3 goals per period. Connect goals UP to vision and DOWN to actions.' },
+    { name: 'Execute', element: 'earth', desc: 'Take aligned action. Ground your plans into reality. Focus on the ONE thing that matters most right now.' },
+    { name: 'Review', element: 'water', desc: 'Celebrate wins, extract insights, integrate learning. The Review Sequence: Celebrate, Recognize, Enhance, Reflect, Redirect, Energize.' }
+  ];
+  phases.forEach(p => {
+    container.appendChild(renderEduSection(
+      `${p.name} (${p.element.charAt(0).toUpperCase()+p.element.slice(1)})`,
+      `<p>${p.desc}</p>`,
+      RAW_ELEM_COLORS[p.element], false
+    ));
+  });
+
+  /* Alignment (Ether) */
+  container.appendChild(renderEduSection('Alignment (Ether)',
+    '<p>The fifth element connecting all four into coherence. When Vision, Plan, Execute, and Review are in harmony, you experience alignment — today\'s actions serve tomorrow\'s vision.</p>',
+    RAW_ELEM_COLORS.ether, false));
+
+  /* Review Sequence */
+  container.appendChild(renderEduSection('Review Sequence',
+    renderFlowDiagram(['Celebrate','Recognize','Enhance','Reflect','Redirect','Energize'],
+      ['#2e7d32','#0097a7','#ef6c00','#1565c0','#9c27b0','#2e7d32']),
+    RAW_ELEM_COLORS.water, true));
+
+  /* Fractal Time Scales */
+  container.appendChild(renderEduSection('Fractal Time Scales',
+    `<p>The VPER cycle repeats at every time scale:</p>
+    <table style="width:100%;font-size:.8rem;border-collapse:collapse">
+      <tr style="border-bottom:2px solid var(--bg3)"><th style="text-align:left;padding:6px">Scale</th><th>Vision</th><th>Plan</th><th>Execute</th><th>Review</th></tr>
+      <tr style="border-bottom:1px solid var(--bg3)"><td style="padding:6px;font-weight:600">Year</td><td style="text-align:center">Annual Vision</td><td style="text-align:center">Annual Goals</td><td style="text-align:center">Quarters</td><td style="text-align:center">Annual Review</td></tr>
+      <tr style="border-bottom:1px solid var(--bg3)"><td style="padding:6px;font-weight:600">Quarter</td><td style="text-align:center">90-Day Vision</td><td style="text-align:center">Quarterly Goals</td><td style="text-align:center">Months</td><td style="text-align:center">Quarterly Review</td></tr>
+      <tr style="border-bottom:1px solid var(--bg3)"><td style="padding:6px;font-weight:600">Month</td><td style="text-align:center">Monthly Focus</td><td style="text-align:center">Monthly Goals</td><td style="text-align:center">Weeks</td><td style="text-align:center">Monthly Review</td></tr>
+      <tr style="border-bottom:1px solid var(--bg3)"><td style="padding:6px;font-weight:600">Week</td><td style="text-align:center">Weekly Intention</td><td style="text-align:center">Weekly Goals</td><td style="text-align:center">Days</td><td style="text-align:center">Weekly Review</td></tr>
+      <tr><td style="padding:6px;font-weight:600">Day</td><td style="text-align:center">Morning Focus</td><td style="text-align:center">Daily Plan</td><td style="text-align:center">Actions</td><td style="text-align:center">Evening Reflection</td></tr>
+    </table>`, RAW_ELEM_COLORS.ether, true));
+
+  /* User data overlay: elemental balance */
+  if (vper.elementalBalance) {
+    const bal = vper.elementalBalance;
+    let balHTML = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center">';
+    ['fire','air','earth','water'].forEach(e => {
+      const s = bal[e] ? bal[e].score : 0;
+      balHTML += `<div style="padding:10px;border-radius:8px;background:${RAW_ELEM_COLORS[e]}22;border:1px solid ${RAW_ELEM_COLORS[e]}44">
+        <div style="font-size:1.2rem;font-weight:700;color:${RAW_ELEM_COLORS[e]}">${s}</div>
+        <div style="font-size:.7rem;color:var(--c2)">${e.charAt(0).toUpperCase()+e.slice(1)}</div>
+      </div>`;
+    });
+    balHTML += '</div>';
+    const overlay = document.createElement('div');
+    overlay.innerHTML = renderUserOverlay('Your Elemental Balance', balHTML);
+    container.appendChild(overlay);
+  }
+}
+
+/* ---------- #learn/elements ---------- */
+function renderLearnElements(container) {
+  renderBackLink(container);
+  const vper = DATA.vper || {};
+
+  const elements = [
+    { name: 'Fire', key: 'fire', principle: 'Transformation & Creation', psychology: 'Passion, initiative, courage, vision', vperMapping: 'Vision', whenWeak: 'Lack of motivation, unclear direction, procrastination', whenUncontrolled: 'Burnout, impulsiveness, aggression, over-commitment', nature: 'Sun, volcanoes, lightning', body: 'Heart, metabolism', geometry: 'Tetrahedron' },
+    { name: 'Air', key: 'air', principle: 'Communication & Intellect', psychology: 'Thinking, analysis, social connection, ideas', vperMapping: 'Plan', whenWeak: 'Scattered thinking, indecision, isolation', whenUncontrolled: 'Over-analysis, detachment, anxiety, restlessness', nature: 'Wind, breath, sky', body: 'Lungs, nervous system', geometry: 'Octahedron' },
+    { name: 'Earth', key: 'earth', principle: 'Stability & Manifestation', psychology: 'Discipline, patience, persistence, structure', vperMapping: 'Execute', whenWeak: 'Inconsistency, lack of follow-through, ungrounded', whenUncontrolled: 'Rigidity, stubbornness, materialism, workaholism', nature: 'Mountains, soil, crystals', body: 'Bones, muscles', geometry: 'Hexahedron' },
+    { name: 'Water', key: 'water', principle: 'Emotion & Reflection', psychology: 'Empathy, intuition, emotional depth, healing', vperMapping: 'Review', whenWeak: 'Emotional numbness, inability to reflect, stagnation', whenUncontrolled: 'Overwhelm, moodiness, attachment, excessive rumination', nature: 'Oceans, rivers, rain', body: 'Blood, lymph', geometry: 'Icosahedron' }
+  ];
+
+  /* Element Cards (click to expand) */
+  const grid = document.createElement('div');
+  grid.className = 'grid-2';
+  grid.style.marginBottom = '16px';
+  elements.forEach(el => {
+    const card = document.createElement('div');
+    card.className = 'element-card';
+    card.style.borderLeftColor = RAW_ELEM_COLORS[el.key];
+    card.innerHTML = `
+      <div class="element-title" onclick="this.nextElementSibling.classList.toggle('hidden');this.parentElement.classList.toggle('expanded')">
+        <span style="color:${RAW_ELEM_COLORS[el.key]}">${el.name}</span>
+        <span style="font-size:.7rem;color:var(--c3)">${el.principle}</span>
+      </div>
+      <div class="element-body hidden">
+        <p><strong>Psychology:</strong> ${el.psychology}</p>
+        <p><strong>VPER Phase:</strong> ${el.vperMapping}</p>
+        <p><strong>When Weak:</strong> ${el.whenWeak}</p>
+        <p><strong>When Uncontrolled:</strong> ${el.whenUncontrolled}</p>
+        <p><strong>In Nature:</strong> ${el.nature} | <strong>In Body:</strong> ${el.body}</p>
+        <p><strong>Sacred Geometry:</strong> ${el.geometry}</p>
+      </div>`;
+    grid.appendChild(card);
+  });
+  container.appendChild(grid);
+
+  /* Ether Card */
+  container.appendChild(renderEduSection('Ether (Alignment)',
+    '<p><strong>Principle:</strong> Integration & Coherence</p><p>Ether is the fifth element — the space in which all others exist. It represents alignment itself: the coherent field that connects Vision, Plan, Execute, and Review into a unified cycle. When the four elements are in balance, Ether naturally emerges.</p>',
+    RAW_ELEM_COLORS.ether, true));
+
+  /* Opposite Pole Principle */
+  container.appendChild(renderEduSection('Opposite Pole Principle',
+    `<p>Each element pair holds complementary wisdom. When one is weak, look to its opposite for medicine:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0">
+      <div style="padding:12px;border-radius:8px;background:${RAW_ELEM_COLORS.fire}11;border:1px solid ${RAW_ELEM_COLORS.fire}44;text-align:center">
+        <strong style="color:${RAW_ELEM_COLORS.fire}">Fire</strong> <span style="color:var(--c3)">\u2194</span> <strong style="color:${RAW_ELEM_COLORS.water}">Water</strong>
+        <div style="font-size:.75rem;color:var(--c2);margin-top:4px">Action \u2194 Reflection</div>
+      </div>
+      <div style="padding:12px;border-radius:8px;background:${RAW_ELEM_COLORS.air}11;border:1px solid ${RAW_ELEM_COLORS.air}44;text-align:center">
+        <strong style="color:${RAW_ELEM_COLORS.air}">Air</strong> <span style="color:var(--c3)">\u2194</span> <strong style="color:${RAW_ELEM_COLORS.earth}">Earth</strong>
+        <div style="font-size:.75rem;color:var(--c2);margin-top:4px">Thinking \u2194 Doing</div>
+      </div>
+    </div>`, RAW_ELEM_COLORS.ether, true));
+
+  /* Elemental Self-Assessment (pre-populated from user data) */
+  const bal = vper.elementalBalance || {};
+  let assessHTML = '<p>Rate your current elemental balance (1 = weak, 10 = strong):</p>';
+  ['fire','air','earth','water'].forEach(e => {
+    const val = bal[e] ? bal[e].score : 5;
+    assessHTML += `<div class="slider-group">
+      <label><span style="color:${RAW_ELEM_COLORS[e]}">${e.charAt(0).toUpperCase()+e.slice(1)}</span><span id="slider_${e}_val">${val}</span></label>
+      <input type="range" min="1" max="10" value="${val}" oninput="document.getElementById('slider_${e}_val').textContent=this.value">
+    </div>`;
+  });
+  if (vper.elementFocus) {
+    assessHTML += renderUserOverlay('Element Needing Attention', `<strong style="color:${RAW_ELEM_COLORS[vper.elementFocus]}">${vper.elementFocus.charAt(0).toUpperCase()+vper.elementFocus.slice(1)}</strong> — this element currently needs more focus.`);
+  }
+  container.appendChild(renderEduSection('Elemental Self-Assessment', assessHTML, RAW_ELEM_COLORS.ether, true));
+}
+
+/* ---------- #learn/gap-to-gain ---------- */
+function renderLearnGapToGain(container) {
+  renderBackLink(container);
+  const wa = DATA.winAnalytics || {};
+  const wins = DATA.wins || [];
+
+  /* Gap vs Gain Toggle */
+  container.appendChild(renderEduSection('The Gap vs The Gain',
+    renderTabGroup([
+      { label: 'The Gap', content: `<div style="padding:12px;background:#c1554d11;border-left:4px solid #c1554d;border-radius:0 8px 8px 0;margin:8px 0">
+        <p><strong style="color:#c1554d">The Gap</strong> is every time you compare yourself to an ideal.</p>
+        <p>It breeds dissatisfaction, anxiety, and the feeling that you're never enough. The ideal keeps moving, so you never arrive.</p>
+        <p>Hedonic adaptation means you constantly seek a new and better scenario. The Gap is an attempt to reach an ever-moving target.</p>
+      </div>` },
+      { label: 'The Gain', content: `<div style="padding:12px;background:#2e7d3211;border-left:4px solid #2e7d32;border-radius:0 8px 8px 0;margin:8px 0">
+        <p><strong style="color:#2e7d32">The Gain</strong> is every time you compare yourself to your previous self.</p>
+        <p>It builds confidence, gratitude, and momentum. Your reference point is always your past — a fixed, measurable target.</p>
+        <p>Simple and powerful: acknowledge all the progress you\'ve already made.</p>
+      </div>` }
+    ]), RAW_ELEM_COLORS.water, true));
+
+  /* Why This Matters */
+  const concepts = [
+    { title: 'Always Start with Wins', desc: 'Every review, every planning session, every conversation begins by celebrating what went well. Wins are evidence of capability.' },
+    { title: 'No Failure, Only Data', desc: 'Reframe every setback as information. What did it teach you? What will you do differently? There is no failure — only experiments that produced data.' },
+    { title: 'Healthy Detachment', desc: 'Be heavily committed to your goals but emotionally detached from the outcome. If it happens, GREAT! If it doesn\'t, OK! You don\'t need it to be happy.' }
+  ];
+  let conceptsHTML = '';
+  concepts.forEach(c => {
+    conceptsHTML += `<div style="padding:12px;margin-bottom:8px;background:var(--bg3);border-radius:8px">
+      <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">${c.title}</div>
+      <div style="font-size:.8rem;color:var(--c2)">${c.desc}</div>
+    </div>`;
+  });
+  container.appendChild(renderEduSection('Why This Matters', conceptsHTML, RAW_ELEM_COLORS.water, true));
+
+  /* Time Scale Application */
+  const scales = ['Daily: End each day by listing 3 wins.','Weekly: Start weekly reviews with all wins from the week.','Monthly: Count total wins, compare to last month.','Quarterly: Review 90-day trajectory. How far have you come?','Annual: Full year Gain measurement. Who were you 12 months ago?'];
+  let scaleHTML = '<ol style="padding-left:20px">';
+  scales.forEach(s => { scaleHTML += `<li style="margin-bottom:8px;font-size:.82rem">${s}</li>`; });
+  scaleHTML += '</ol>';
+  container.appendChild(renderEduSection('Applying the Gain at Every Scale', scaleHTML, RAW_ELEM_COLORS.water, false));
+
+  /* Connection to Water Element */
+  container.appendChild(renderEduSection('Connection to Water Element',
+    `<p>In Portuguese, "m\u00E1goa" (resentment/grief) literally translates to "bad water." The Gap produces m\u00E1goa — stagnant, toxic emotional residue from constantly falling short of ideals.</p>
+    <p>The Gain is clean, flowing water — acknowledging progress, releasing attachment, moving forward with clarity.</p>
+    <p>The Review phase (Water) in the VPER cycle is where the Gain lives. Every review starts with celebration.</p>`,
+    RAW_ELEM_COLORS.water, false));
+
+  /* Key Quotes */
+  let quotesHTML = '';
+  quotesHTML += renderQuoteCard('Those who have a "why" to live, can bear with almost any "how".', 'Viktor Frankl quoting Friedrich Nietzsche');
+  quotesHTML += renderQuoteCard('You actively choose how to measure your progress. In The Gap you compare to an ideal. In The Gain you compare to your previous self.', 'Dan Sullivan');
+  quotesHTML += renderQuoteCard('Goals are not a fixed destination you arrive at. Rather, a goal represents the direction you want to go.', 'Fis Fraga');
+  container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
+
+  /* User data overlay: Your Gain Evidence */
+  const total = wa.total90d || wins.length || 0;
+  const streak = wa.currentStreak || 0;
+  const avg = wa.weeklyAvg != null ? wa.weeklyAvg : (wins.length / 13).toFixed(1);
+  const overlay = document.createElement('div');
+  overlay.innerHTML = renderUserOverlay('Your Gain — Evidence of Progress',
+    `<div style="display:flex;gap:20px;flex-wrap:wrap">
+      <div><span style="font-size:1.4rem;font-weight:800;color:var(--earth)">${total}</span><div style="font-size:.65rem;color:var(--c3)">WINS (90 DAYS)</div></div>
+      <div><span style="font-size:1.4rem;font-weight:800;color:var(--earth)">${avg}</span><div style="font-size:.65rem;color:var(--c3)">WEEKLY AVG</div></div>
+      <div><span style="font-size:1.4rem;font-weight:800;color:var(--earth)">${streak}</span><div style="font-size:.65rem;color:var(--c3)">CURRENT STREAK</div></div>
+    </div>
+    <p style="margin-top:10px;font-size:.82rem;color:var(--c2)">You've logged <strong>${total}</strong> wins in the last 90 days. That's the Gain.</p>`);
+  container.appendChild(overlay);
+}
+
+/* ---------- #learn/areas ---------- */
+function renderLearnAreas(container) {
+  renderBackLink(container);
+  const areas = DATA.areas || [];
+
+  container.appendChild(renderEduSection('The 12 Key Areas Framework',
+    '<p>ILOS organizes life into 12 Key Areas, mapped to the 12 zodiac houses. Each area belongs to one of four elements, creating a balanced system that covers every dimension of human experience.</p>' +
+    renderCycleDiagram(
+      ['Fire: Identity & Expression','Earth: Resources & Structure','Air: Mind & Relationships','Water: Inner World & Spirit'],
+      [RAW_ELEM_COLORS.fire, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.air, RAW_ELEM_COLORS.water]
+    ), RAW_ELEM_COLORS.earth, true));
+
+  /* 4x3 Grid with educational annotations */
+  const areaMap = [
+    { id:'health',name:'Health & Vitality',house:1,elem:'fire',desc:'Physical body, energy, self-image. How you show up in the world.'},
+    { id:'finances',name:'Finances & Resources',house:2,elem:'earth',desc:'Money, assets, material security. What you value and build.'},
+    { id:'intellectual',name:'Intellectual & Communication',house:3,elem:'air',desc:'Learning, communication, ideas. How you think and share.'},
+    { id:'home',name:'Home & Foundation',house:4,elem:'water',desc:'Family, roots, emotional base. Where you feel safe.'},
+    { id:'creative',name:'Creative Expression',house:5,elem:'fire',desc:'Creativity, joy, children, romance. What brings you alive.'},
+    { id:'routines',name:'Routines & Service',house:6,elem:'earth',desc:'Daily habits, health routines, service. How you maintain yourself.'},
+    { id:'love',name:'Love & Partnership',house:7,elem:'air',desc:'Intimate relationships, partnerships, collaboration.'},
+    { id:'emotional',name:'Emotional Depth',house:8,elem:'water',desc:'Transformation, shared resources, deep emotional processes.'},
+    { id:'vision',name:'Vision & Expansion',house:9,elem:'fire',desc:'Philosophy, travel, higher learning. Your big-picture worldview.'},
+    { id:'career',name:'Career & Legacy',house:10,elem:'earth',desc:'Career, public reputation, legacy. Your contribution to the world.'},
+    { id:'social',name:'Social & Community',house:11,elem:'air',desc:'Friends, networks, collective purpose. Your tribe and causes.'},
+    { id:'spiritual',name:'Spiritual & Transcendence',house:12,elem:'water',desc:'Spirituality, solitude, the unconscious. Inner wisdom.'}
+  ];
+
+  const elemOrder = ['fire','earth','air','water'];
+  elemOrder.forEach(elem => {
+    const elemAreas = areaMap.filter(a => a.elem === elem);
+    const label = document.createElement('div');
+    label.style.cssText = `font-size:.75rem;font-weight:700;text-transform:uppercase;color:${RAW_ELEM_COLORS[elem]};margin:16px 0 8px;letter-spacing:.04em`;
+    label.textContent = elem.charAt(0).toUpperCase() + elem.slice(1);
+    container.appendChild(label);
+
+    const row = document.createElement('div');
+    row.className = 'grid-4x3';
+    elemAreas.forEach(a => {
+      const userData = areas.find(ua => ua.id === a.id);
+      const health = userData ? userData.healthScore || 0 : 0;
+      const winCount = userData ? userData.winCount90d || 0 : 0;
+      const card = document.createElement('div');
+      card.className = 'area-card';
+      card.style.borderLeftColor = RAW_ELEM_COLORS[a.elem];
+      card.innerHTML = `
+        <div class="area-header">
+          <div>
+            <div class="area-name">${a.name}</div>
+            <div style="font-size:.65rem;color:var(--c3)">House ${a.house}</div>
+          </div>
+          ${svgHealthDonut(health, a.elem)}
+        </div>
+        <div style="font-size:.78rem;color:var(--c2);margin-top:4px">${a.desc}</div>
+        <div class="area-meta">
+          <span class="win-badge">${winCount} wins</span>
+        </div>`;
+      row.appendChild(card);
+    });
+    container.appendChild(row);
+  });
+}
+
+/* ---------- #learn/goals ---------- */
+function renderLearnGoals(container) {
+  renderBackLink(container);
+  const goals = DATA.goals || {};
+  const vision = DATA.vision || {};
+
+  /* Alignment Chain */
+  container.appendChild(renderEduSection('The Alignment Chain',
+    '<p>Alignment starts at your highest vision and flows down to daily actions. Each level feeds from the one above and supports the one below.</p>' +
+    renderFlowDiagram(
+      ['Purpose','Vision','Goals','Projects','Systems','Daily Actions'],
+      [RAW_ELEM_COLORS.ether, RAW_ELEM_COLORS.fire, RAW_ELEM_COLORS.air, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.earth]
+    ) +
+    '<p style="margin-top:12px;font-size:.82rem;color:var(--c2)">You are fueled by your purpose to face the challenges of each day. <strong>Get insanely clear on WHAT you want and WHY you want it.</strong></p>',
+    RAW_ELEM_COLORS.ether, true));
+
+  /* User's Alignment Chain */
+  if (vision.hhgs && vision.hhgs.length) {
+    let chainHTML = '<div style="font-size:.82rem">';
+    chainHTML += '<div style="font-weight:700;margin-bottom:6px;color:var(--ether)">Your High Hard Goals:</div>';
+    vision.hhgs.forEach(h => {
+      chainHTML += `<div style="padding:4px 8px;margin-bottom:4px;background:var(--ether-soft);border-radius:4px">\u25C8 ${h.title}${h.timeframe ? ` <span style="color:var(--c3);font-size:.7rem">(${h.timeframe})</span>` : ''}</div>`;
+    });
+    const annualActive = (goals.annual || []).filter(g => g.status === 'active');
+    if (annualActive.length) {
+      chainHTML += '<div style="font-weight:700;margin:10px 0 6px;color:var(--fire)">Your Annual Goals:</div>';
+      annualActive.forEach(g => {
+        chainHTML += `<div style="padding:4px 8px;margin-bottom:4px;background:var(--fire-soft);border-radius:4px">${g.description}</div>`;
+      });
+    }
+    chainHTML += '</div>';
+    const overlay = document.createElement('div');
+    overlay.innerHTML = renderUserOverlay('Your Alignment Chain', chainHTML);
+    container.appendChild(overlay);
+  }
+
+  /* Three Parts of Reviewing */
+  container.appendChild(renderEduSection('The Three Parts of Reviewing',
+    renderTabGroup([
+      { label: 'Celebrating', content: '<p style="padding:8px;font-size:.82rem">Celebrate the positive aspects of the cycle. Wins, progress, breakthroughs, lessons. Start EVERY review here — this is non-negotiable in ILOS.</p>' },
+      { label: 'Redirecting', content: '<p style="padding:8px;font-size:.82rem">Redirect your goals, projects, and tasks for the next cycle. Adjust direction based on what you learned. Flexibility is strength.</p>' },
+      { label: 'Improving', content: '<p style="padding:8px;font-size:.82rem">Improve the negative aspects of the cycle. What systems broke down? What habits slipped? How can you do better next time?</p>' }
+    ]), RAW_ELEM_COLORS.water, true));
+
+  /* Dragon Dreaming */
+  container.appendChild(renderEduSection('Dragon Dreaming',
+    '<p>A project management philosophy based on collective intelligence and balance:</p>' +
+    renderCycleDiagram(
+      ['Dreaming','Planning','Doing','Celebrating'],
+      [RAW_ELEM_COLORS.fire, RAW_ELEM_COLORS.air, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.water]
+    ) +
+    '<p style="margin-top:12px;font-size:.82rem;color:var(--c2)">Modern society has lost touch with <strong>Dreaming</strong> and <strong>Celebrating</strong>. These are the most important stages for alignment — accessible during quiet reflection, not busy execution.</p>',
+    RAW_ELEM_COLORS.ether, false));
+
+  /* Key Quotes */
+  let quotesHTML = '';
+  quotesHTML += renderQuoteCard('Those who have a "why" to live, can bear with almost any "how".', 'Viktor Frankl');
+  quotesHTML += renderQuoteCard('When goals are clear, the mind doesn\'t have to wonder about what to do next.', 'Steven Kotler');
+  quotesHTML += renderQuoteCard('Goals without Projects are Dreams.', 'Tiago Forte');
+  quotesHTML += renderQuoteCard('You can\'t connect the dots looking forward; you can only connect them looking backwards.', 'Steve Jobs');
+  container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
+}
+
+/* ---------- #learn/planning ---------- */
+function renderLearnPlanning(container) {
+  renderBackLink(container);
+
+  /* Core Message */
+  container.appendChild(renderEduSection('The Power of Intentional Planning',
+    '<p><strong>Intentional planning is life changing. Period.</strong></p><p>When you take time to plan, you have a shot at greatness. When you plan intentionally, you are among the few people who can change the world.</p><p>The secret: swap the perfect plan for intentional cycles.</p>',
+    RAW_ELEM_COLORS.ether, true));
+
+  /* The 4 Stages */
+  container.appendChild(renderEduSection('The Four Stages',
+    renderCycleDiagram(
+      ['1. Vision','2. Plan','3. Execute','4. Review'],
+      [RAW_ELEM_COLORS.fire, RAW_ELEM_COLORS.air, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.water]
+    ) +
+    '<p style="margin-top:12px;font-size:.82rem;color:var(--c2)">Every Year, Quarter, Month and Week, go through this cycle. Things get interesting when you <strong>connect everything</strong> across scales.</p>',
+    RAW_ELEM_COLORS.ether, true));
+
+  /* How to Plan Your Year */
+  const steps = [
+    { title: 'Step 1: Measure the Gain', desc: 'List all your wins for the past year. This puts you into a state of confidence, motivation, and courage.', element: 'water' },
+    { title: 'Step 2: Visualize Your Future Self', desc: 'How can you 10X your life in the next 3 years? Write out exactly how your Future Self is 10X better than you today.', element: 'fire' },
+    { title: 'Step 3: Reflect on Priorities', desc: 'Given your Future Self, what are your priorities NOW? Pick the top 3 — if you have more than 3 priorities, you have none.', element: 'air' },
+    { title: 'Step 4: Set Big Goals', desc: 'From your top 3 priorities, set goals for the year. Goals give direction. Go Big. What matters is progress.', element: 'earth' }
+  ];
+  let stepsHTML = '';
+  steps.forEach(s => {
+    stepsHTML += `<div style="padding:12px;margin-bottom:8px;border-radius:8px;background:${RAW_ELEM_COLORS[s.element]}11;border-left:3px solid ${RAW_ELEM_COLORS[s.element]}">
+      <div style="font-weight:700;font-size:.85rem;color:${RAW_ELEM_COLORS[s.element]}">${s.title}</div>
+      <div style="font-size:.8rem;color:var(--c2);margin-top:4px">${s.desc}</div>
+    </div>`;
+  });
+  container.appendChild(renderEduSection('How to Plan Your Year', stepsHTML, RAW_ELEM_COLORS.ether, true));
+
+  /* Cycles of Time */
+  container.appendChild(renderEduSection('Cycles of Time',
+    `<p>Life happens in Cycles of Time, from Year down to Day:</p>
+    ${renderFlowDiagram(['Year','Quarter','Month','Week','Day'], [RAW_ELEM_COLORS.fire, RAW_ELEM_COLORS.air, RAW_ELEM_COLORS.earth, RAW_ELEM_COLORS.water, RAW_ELEM_COLORS.ether])}
+    <p style="margin-top:12px;font-size:.82rem;color:var(--c2)">Planning your year is a <strong>continuous process</strong>. You only have 2 tasks per cycle: <strong>Set 3 Big Goals</strong> and <strong>List All Your Wins</strong>. This is the 80/20 of planning.</p>`,
+    RAW_ELEM_COLORS.ether, true));
+
+  /* Key Principles */
+  const principles = [
+    { title: 'Planning is a Process', desc: 'Not a one-time event. Continuous reflection across multiple time cycles.' },
+    { title: 'Progress Over Perfection', desc: 'Focus on how much you\'ve gained, not how much is left.' },
+    { title: 'Big Goals + Healthy Detachment', desc: 'Set audacious goals for direction. Stay flexible and adaptable.' },
+    { title: 'Cycles Connect Everything', desc: 'Year → Quarter → Month → Week → Day. Each cycle informs the next.' },
+    { title: 'Integration with Your Life OS', desc: 'Planning connects to Projects, Areas, Goals. Creates a holistic system.' },
+    { title: 'Simplicity at the Core', desc: 'Just 2 tasks per cycle: Set Goals + List Wins. The 80/20 of effectiveness.' }
+  ];
+  let princHTML = '';
+  principles.forEach((p, i) => {
+    princHTML += `<div style="padding:10px 12px;margin-bottom:6px;background:var(--bg3);border-radius:8px;display:flex;gap:10px;align-items:flex-start">
+      <span style="font-weight:800;color:var(--ether);font-size:.9rem;flex-shrink:0">${i+1}</span>
+      <div><div style="font-weight:700;font-size:.82rem">${p.title}</div><div style="font-size:.78rem;color:var(--c2)">${p.desc}</div></div>
+    </div>`;
+  });
+  container.appendChild(renderEduSection('6 Key Principles', princHTML, RAW_ELEM_COLORS.ether, true));
+
+  /* Key Quotes */
+  let quotesHTML = '';
+  quotesHTML += renderQuoteCard('If you don\'t design your own life plan, chances are you\'ll fall into someone else\'s plan.', 'Jim Rohn');
+  quotesHTML += renderQuoteCard('Do not go where the path may lead, go instead where there is no path and leave a trail.', 'Ralph Waldo Emerson');
+  quotesHTML += renderQuoteCard('Plans are nothing; planning is everything.', 'Dwight D. Eisenhower');
+  quotesHTML += renderQuoteCard('99% of people aim for "realistic" goals, paradoxically making them the most competitive.', 'Tim Ferriss');
+  container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
 }
 
 /* ============================================================

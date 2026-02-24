@@ -1,6 +1,6 @@
 # Sprint S2: Educational Pages
 
-**Status:** Planned
+**Status:** Done
 **Depends on:** S1 (Done)
 **Estimate:** 1 session
 **Element:** Fire (knowledge illumination)

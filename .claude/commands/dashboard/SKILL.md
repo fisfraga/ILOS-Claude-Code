@@ -35,6 +35,7 @@ Read the data computation guide in `view-specs.md` for the full data shape and c
 | Vision | `QUANTUM/vision/` | Parse HHGs, FPs, MTPs from markdown files |
 | Projects | `SPACE/projects/` | List project files, extract title + status + area |
 | User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from context |
+| Education content | `ILOS-KNOWLEDGE/*.md` | Parse markdown → structured sections for Learn pages |
 
 #### Data Sources (Tana MCP — Optional Enhancement)
 
@@ -55,6 +56,7 @@ Using the fetched data, compute these derived values (see `view-specs.md` for fo
 2. **Area health scores** — For each of the 12 areas: healthScore (0-100) based on wins (40%), goals (25%), projects (20%), trend (15%)
 3. **Goal enrichment** — Attach key_results percentage, link child goals, resolve parent chains
 4. **Area enrichment** — Attach winCount90d, winTrend (4-week array), projectCount, activeGoals list, hasGoal flag
+5. **Education content** — Read all `ILOS-KNOWLEDGE/*.md` files and parse into `DATA.education` (see `view-specs.md` Education Data Computation section). Split by headings into sections, extract quotes, assign element colors per topic.
 
 ### Step 3 — Generate HTML
 
@@ -104,7 +106,8 @@ const DATA = {
   winAnalytics: { total90d, weeklyAvg, byArea, byWeek, longestStreak, currentStreak },
   areas: [ { id, name, houseNum, element, winCount90d, winTrend, projectCount, activeGoals, hasGoal, healthScore } ],
   projects: [ { id, title, status, area, connectedGoal } ],
-  vision: { fps: [...], mtps: [...], hhgs: [...] }
+  vision: { fps: [...], mtps: [...], hhgs: [...] },
+  education: { vper: {...}, elements: {...}, gapToGain: {...}, areas: {...}, goals: {...}, planning: {...} }
 };
 ```
 

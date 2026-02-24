@@ -98,6 +98,78 @@ const DATA = {
     fps: [{ title: "Favorite Problem 1" }],
     mtps: [{ title: "Massively Transformative Purpose 1" }],
     hhgs: [{ title: "High Hard Goal 1", timeframe: "5 years" }]
+  },
+
+  education: {
+    vper: {
+      sections: [
+        { heading: "Section title", content: "Full markdown content", element: "fire" }
+      ],
+      reviewSequence: ["Celebrate","Recognize","Enhance","Reflect","Redirect","Energize"],
+      fractalScales: [
+        { scale: "Year", vision: "...", plan: "...", execute: "...", review: "..." },
+        // ... Quarter, Month, Week, Day
+      ],
+      quotes: [{ text: "Quote text", attribution: "Author" }]
+    },
+    elements: {
+      sections: [
+        {
+          element: "fire",
+          principle: "...", psychology: "...", vperMapping: "vision",
+          whenWeak: "...", whenUncontrolled: "...",
+          nature: "...", body: "...", sacredGeometry: "..."
+        }
+        // ... air, earth, water, ether
+      ],
+      opposites: [
+        { pair: ["fire","water"], description: "..." },
+        { pair: ["air","earth"], description: "..." }
+      ],
+      quotes: [{ text: "Quote text", attribution: "Author" }]
+    },
+    gapToGain: {
+      sections: [
+        { heading: "Section title", content: "Full markdown content" }
+      ],
+      concepts: ["Always Start with Wins","No Failure Only Data","Detachment"],
+      timeScales: ["Daily","Weekly","Monthly","Quarterly","Annual"],
+      quotes: [{ text: "Quote text", attribution: "Author" }]
+    },
+    areas: {
+      sections: [
+        { heading: "Section title", content: "Full markdown content" }
+      ],
+      framework: [
+        { id: "health", name: "Health & Vitality", houseNum: 1, element: "fire", description: "..." }
+        // ... all 12 areas
+      ]
+    },
+    goals: {
+      sections: [
+        { heading: "Section title", content: "Full markdown content" }
+      ],
+      alignmentChain: ["Purpose","Vision","Goals","Projects","Systems","Daily Actions"],
+      reviewParts: ["Celebrating","Redirecting","Improving"],
+      dragonDreaming: ["Dreaming","Planning","Doing","Celebrating"],
+      quotes: [{ text: "Quote text", attribution: "Author" }]
+    },
+    planning: {
+      sections: [
+        { heading: "Section title", content: "Full markdown content" }
+      ],
+      fourStages: ["Vision","Plan","Execute","Review"],
+      yearSteps: ["Measure the Gain","Visualize Future Self","Reflect on Priorities","Set Big Goals"],
+      principles: [
+        "Planning is a Process, Not a One-Time Event",
+        "Progress Over Perfection",
+        "Big Goals + Healthy Detachment",
+        "Cycles Connect Everything",
+        "Integration with Your Second Brain",
+        "Simplicity at the Core"
+      ],
+      quotes: [{ text: "Quote text", attribution: "Author" }]
+    }
   }
 };
 ```
@@ -232,6 +304,30 @@ search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
 Replace `[BRACKET_IDS]` with actual Tana IDs from `SYSTEM/tana-reference/tag-ids.md`.
 
 **Merge rule:** Local files are canonical. Tana data enriches but never overwrites local entries.
+
+---
+
+## Education Data Computation
+
+### Source Files
+
+DAEDALUS reads all `ILOS-KNOWLEDGE/*.md` files and converts them to structured data for the educational pages.
+
+| Topic | Source File | Key Extractions |
+|-------|-----------|-----------------|
+| VPER Cycle | `ILOS-KNOWLEDGE/vper-cycle.md` | 4 phase sections, Review Sequence (6 steps), Fractal Time Scales table, quotes |
+| Elements | `ILOS-KNOWLEDGE/elemental-wisdom.md` | 5 element cards (fire/air/earth/water/ether), Opposite Pole pairs, comparison table, quotes |
+| Gap to Gain | `ILOS-KNOWLEDGE/gap-to-gain.md` | Gap vs Gain comparison, 3 sub-concepts, 5 time scales, Water Element connection, quotes |
+| 12 Key Areas | `ILOS-KNOWLEDGE/aligned-goal-setting.md` | Area framework (12 areas with house/element), educational annotations |
+| Goal Setting | `ILOS-KNOWLEDGE/aligned-goal-setting.md` | Alignment Chain, 3 Review Parts, Dragon Dreaming cycle, quotes |
+| Planning | `ILOS-KNOWLEDGE/intentional-planning-cycle.md` | 4-stage cycle, Year Planning steps, 6 Key Principles, quotes |
+
+### Parsing Rules
+
+1. **Sections:** Split by `## ` headings. Each heading becomes a section with `heading` + `content` (remaining markdown until next heading).
+2. **Quotes:** Extract lines starting with `> ` — capture quote text and attribution (line after `> —`).
+3. **Element assignment:** VPER sections get element by phase mapping. Element sections get their own element. Others default to `ether`.
+4. **User data overlays:** At render time, the template weaves in real user data (e.g., current VPER phase highlight, win count as Gain evidence, goal cascade inline).
 
 ---
 
