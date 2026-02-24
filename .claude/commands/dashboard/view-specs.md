@@ -221,6 +221,59 @@ const DATA = {
     dominantElement: "water",
     ctaUrl: "https://cosmicblueprint.app", // or null
     ctaText: "Explore your full Cosmic Blueprint"
+  },
+
+  systems: [
+    {
+      id: "sys_1",
+      name: "Morning routine",
+      frequency: "daily",           // daily | weekdays | weekly | biweekly
+      area: "health",
+      element: "earth",
+      connectedGoal: "q1_2",        // active goal ID or null
+      targetDays: ["mon","tue","wed","thu","fri"],
+      tracking: [
+        { week: "W09", days: { mon: true, tue: true, wed: false, thu: true, fri: true } },
+        { week: "W08", days: { mon: true, tue: false, wed: true, thu: true, fri: true } }
+        // ... up to 4 weeks, most recent first
+      ],
+      completionRate: 80,            // computed: completed / target days (last 4 weeks)
+      streak: 3,                     // consecutive most-recent target days hit
+      trend: "rising"                // rising | flat | falling
+    }
+  ],
+
+  systemsAnalytics: {
+    overallScore: 78,                // weighted average of all system completion rates
+    totalSystems: 3,
+    consistentSystems: 2,            // >80% completion
+    needsAttention: 1,               // <60% completion
+    bestDay: "monday",               // day with highest execution across all systems
+    worstDay: "friday",              // day with lowest execution
+    weeklyTrend: [75, 80, 72, 78]   // 4-week overall scores (oldest → newest)
+  },
+
+  alignment: {
+    goalCoverage: 67,                // % of goals with parent chain to HHG
+    goalsWithVision: 2,
+    goalsOrphaned: 1,
+
+    areaBalance: {
+      active: 5,                     // areas with wins in last 30 days
+      neglected: 7,                  // areas with 0 wins (30 days)
+      overFocused: ["career"],       // >40% of total wins
+      underFocused: ["spiritual","social","emotional"]
+    },
+
+    systemsWithGoals: 2,             // systems with non-null connected_goal matching active goal
+    systemsOrphaned: 1,
+
+    overallScore: 62,                // composite: goalCoverage(40%) + areaBalance(30%) + systemsWithGoals(30%)
+    insights: [
+      "7 of 12 life areas have received no attention in the last 30 days",
+      "1 goal has no connection to your vision — consider cutting or connecting it",
+      "Your career area has 45% of all wins — strong focus, but check balance"
+    ]
   }
 };
 ```
@@ -352,6 +405,107 @@ For each of the 12 areas:
 2. If yes: extract Sun sign, compute dominant element from natal chart
 3. Set `ctaUrl` if Cosmic Blueprint app URL is configured, otherwise null
 
+### Systems Analytics
+
+**Source:** `TIME/strategy-systems.yaml`
+
+**Per-System Computation:**
+
+```
+completionRate:
+  totalTarget = sum of target days across last 4 weeks of tracking
+  totalDone = sum of days marked true
+  completionRate = Math.round((totalDone / totalTarget) * 100)
+
+streak:
+  Walk backward from most recent target day
+  Count consecutive true values until first false or end of data
+  streak = count
+
+trend:
+  week1Rate = completedDays / targetDays for most recent week
+  week3Avg = average of weeks 2-4 rates
+  if week1Rate > week3Avg + 0.05 → "rising"
+  if week1Rate < week3Avg - 0.05 → "falling"
+  else → "flat"
+```
+
+**Aggregate Analytics:**
+
+```
+overallScore = Math.round(average of all system completionRates)
+consistentSystems = count where completionRate > 80
+needsAttention = count where completionRate < 60
+
+bestDay / worstDay:
+  For each day of week (mon-sun):
+    count total times it was a target day across all systems (4 weeks)
+    count total times it was completed (true)
+    dayRate = completed / target
+  bestDay = day with highest dayRate
+  worstDay = day with lowest dayRate (among days that are targets)
+
+weeklyTrend:
+  For each of the 4 tracked weeks:
+    weekScore = total completed / total target across all systems
+  weeklyTrend = [week-4, week-3, week-2, week-1] (oldest → newest)
+```
+
+### Alignment Analytics
+
+**Goal Coverage (40% weight):**
+
+```
+For each goal at any scale (annual, quarterly, monthly, weekly):
+  Trace parent chain: goal.parentGoal → parent.parentGoal → ...
+  If chain reaches an annual goal with connectedHhg ≠ null → "connected"
+  If chain dead-ends (no parent or no HHG link) → "orphaned"
+
+goalsWithVision = count of connected goals
+goalsOrphaned = count of orphaned goals
+goalCoverage = Math.round((goalsWithVision / totalGoals) * 100)
+```
+
+**Area Balance (30% weight):**
+
+```
+For each of 12 areas, count wins in last 30 days:
+  active = areas with >= 1 win
+  neglected = areas with 0 wins
+  totalWins30d = sum of all wins in 30 days
+  overFocused = areas where (areaWins / totalWins30d) > 0.40
+  underFocused = areas with 0 wins AND the area has an active goal
+
+areaBalanceScore = (active / 12) * 100
+```
+
+**Systems-to-Goals (30% weight):**
+
+```
+systemsWithGoals = systems where connectedGoal matches an active goal ID
+systemsOrphaned = systems where connectedGoal is null or not found in active goals
+systemsGoalScore = totalSystems > 0 ? (systemsWithGoals / totalSystems) * 100 : 50
+```
+
+**Overall Alignment Score:**
+
+```
+overallScore = Math.round(
+  goalCoverage * 0.40 +
+  areaBalanceScore * 0.30 +
+  systemsGoalScore * 0.30
+)
+```
+
+**Insights Generation:**
+
+Generate 2-4 insight strings based on data:
+1. If neglected > 6: "{neglected} of 12 life areas have received no attention in the last 30 days"
+2. If goalsOrphaned > 0: "{goalsOrphaned} goal(s) have no connection to your vision — consider cutting or connecting"
+3. If overFocused.length > 0: "Your {area} area has {pct}% of all wins — strong focus, but check balance"
+4. If systemsOrphaned > 0: "{systemsOrphaned} system(s) aren't connected to any goal — consider linking or removing"
+5. If overallScore > 80: "Strong alignment — your actions reflect your vision"
+
 ---
 
 ## Data Source Queries
@@ -371,6 +525,7 @@ For each of the 12 areas:
 | Transit — Slow Planets | `SYSTEM/transit-data/slow-planets-2026.yaml` | Monthly positions for Jupiter, Saturn, Uranus, Neptune, Pluto |
 | Transit — Moon Phases | `SYSTEM/transit-data/moon-phases-2026.yaml` | New/Full Moon dates for 8-phase interpolation |
 | Birth Data (optional) | `QUANTUM/self-knowledge/` | Sun sign, dominant element for Cosmic Blueprint teaser |
+| Strategy Systems | `TIME/strategy-systems.yaml` | Recurring routines: id, name, frequency, area, target_days, 4-week tracking |
 | User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from first heading or context |
 | Meta | `TIME/current-period.yaml` | current_year, current_quarter, current_month, current_week |
 

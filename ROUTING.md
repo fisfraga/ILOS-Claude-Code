@@ -32,6 +32,7 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Personal context update | QUANTUM/personal-context/ | Specific context file |
 | Understanding ILOS methodology | ILOS-KNOWLEDGE/ | Start with ilos-overview.md |
 | Tana MCP setup | SYSTEM/ | setup-guide.md, tana-reference/ |
+| Routines, habits, execution tracking | TIME/ | strategy-systems.yaml |
 | Area deep dive | SPACE/ + MEMORY/ | areas/[area].md, wins.jsonl, active-goals.yaml |
 | Project initiation | SPACE/ + TIME/ | projects/README.md, active-goals.yaml |
 | Major decision | TIME/ + MEMORY/ | templates/major-decision.md, decisions.jsonl |

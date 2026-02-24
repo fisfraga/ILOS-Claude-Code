@@ -1,0 +1,56 @@
+# Strategy Systems — Recurring routines that support your goals
+# Update during weekly reviews
+# Schema: see ILOS-KNOWLEDGE/schemas.md
+
+systems:
+  - id: sys_1
+    name: "Morning routine"
+    frequency: daily          # daily | weekdays | weekly | biweekly
+    area: health
+    element: earth
+    connected_goal: null      # optional link to active goal ID
+    target_days: [mon, tue, wed, thu, fri]
+    tracking:
+      # Last 4 weeks of execution (most recent first)
+      - week: "2026-W09"
+        days: { mon: true, tue: true, wed: false, thu: true, fri: true }
+      - week: "2026-W08"
+        days: { mon: true, tue: false, wed: true, thu: true, fri: true }
+      - week: "2026-W07"
+        days: { mon: true, tue: true, wed: true, thu: false, fri: true }
+      - week: "2026-W06"
+        days: { mon: false, tue: true, wed: true, thu: true, fri: true }
+
+  - id: sys_2
+    name: "Run 3x per week"
+    frequency: weekly
+    area: health
+    element: earth
+    connected_goal: null
+    target_days: [mon, wed, fri]
+    tracking:
+      - week: "2026-W09"
+        days: { mon: true, wed: true, fri: false }
+      - week: "2026-W08"
+        days: { mon: true, wed: false, fri: true }
+      - week: "2026-W07"
+        days: { mon: false, wed: true, fri: true }
+      - week: "2026-W06"
+        days: { mon: true, wed: true, fri: false }
+
+  - id: sys_3
+    name: "Weekly review"
+    frequency: weekly
+    area: vision
+    element: water
+    connected_goal: null
+    target_days: [sun]
+    tracking:
+      - week: "2026-W09"
+        days: { sun: true }
+      - week: "2026-W08"
+        days: { sun: true }
+      - week: "2026-W07"
+        days: { sun: false }
+      - week: "2026-W06"
+        days: { sun: true }

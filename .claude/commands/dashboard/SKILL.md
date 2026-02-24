@@ -40,6 +40,7 @@ Read the data computation guide in `view-specs.md` for the full data shape and c
 | Transit — Slow Planets | `SYSTEM/transit-data/slow-planets-2026.yaml` | Monthly planet positions by sign |
 | Transit — Moon Phases | `SYSTEM/transit-data/moon-phases-2026.yaml` | New/Full Moon dates for 8-phase interpolation |
 | Birth Data (optional) | `QUANTUM/self-knowledge/` | Sun sign, dominant element for Cosmic Blueprint teaser |
+| Strategy Systems | `TIME/strategy-systems.yaml` | Recurring routines, target days, 4-week tracking history |
 
 #### Data Sources (Tana MCP — Optional Enhancement)
 
@@ -63,6 +64,8 @@ Using the fetched data, compute these derived values (see `view-specs.md` for fo
 5. **Education content** — Read all `ILOS-KNOWLEDGE/*.md` files and parse into `DATA.education` (see `view-specs.md` Education Data Computation section). Split by headings into sections, extract quotes, assign element colors per topic.
 6. **Transit data** — Read `SYSTEM/transit-data/*.yaml` files and compute `DATA.transits` (see `view-specs.md` Transit Computation section): Sun sign from date lookup, slow planet positions by month, cosmic VPER summary (dominant phase, active areas), elemental weather (element distribution), moon phase (8-phase interpolation from nearest New/Full Moon).
 7. **Cosmic teaser** — If birth data exists in `QUANTUM/self-knowledge/`, extract Sun sign and dominant element for `DATA.cosmicTeaser`. Set CTA URL if configured.
+8. **Systems analytics** — Read `TIME/strategy-systems.yaml` and compute `DATA.systems` (per-system completionRate, streak, trend) and `DATA.systemsAnalytics` (overallScore, bestDay/worstDay, weeklyTrend). See `view-specs.md` Systems Analytics section.
+9. **Alignment analytics** — Compute `DATA.alignment`: trace goal parent chains to HHGs (goalCoverage), count wins per area for balance (areaBalance), check system-to-goal connections (systemsWithGoals), generate insight strings. See `view-specs.md` Alignment Analytics section.
 
 ### Step 3 — Generate HTML
 
@@ -115,7 +118,10 @@ const DATA = {
   vision: { fps: [...], mtps: [...], hhgs: [...] },
   education: { vper: {...}, elements: {...}, gapToGain: {...}, areas: {...}, goals: {...}, planning: {...} },
   transits: { sunSign, sunElement, sunVperPhase, slowPlanets: [...], cosmicVper: {...}, moonPhase: {...}, elementalWeather: {...} },
-  cosmicTeaser: { hasBirthData, sunSign, sunElement, dominantElement, ctaUrl, ctaText }
+  cosmicTeaser: { hasBirthData, sunSign, sunElement, dominantElement, ctaUrl, ctaText },
+  systems: [ { id, name, frequency, area, element, connectedGoal, targetDays, tracking, completionRate, streak, trend } ],
+  systemsAnalytics: { overallScore, totalSystems, consistentSystems, needsAttention, bestDay, worstDay, weeklyTrend },
+  alignment: { goalCoverage, goalsWithVision, goalsOrphaned, areaBalance, systemsWithGoals, systemsOrphaned, overallScore, insights }
 };
 ```
 

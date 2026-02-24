@@ -1,6 +1,6 @@
 # ILOS Dashboard — HTML Template
 
-Self-contained Single-Page Application for the Intentional Life OS dashboard. Zero external dependencies. Hash-based routing with 13 views: Dashboard, Areas, Goals, Wins, Learn (hub + 6 topics), Transits, Cosmic Blueprint.
+Self-contained Single-Page Application for the Intentional Life OS dashboard. Zero external dependencies. Hash-based routing with 15 views: Dashboard, Areas, Goals, Wins, Learn (hub + 6 topics), Transits, Cosmic Blueprint, Systems, Alignment.
 
 ## Placeholders
 
@@ -517,6 +517,125 @@ body {
 }
 
 /* ============================================================
+   Systems & Alignment Pages
+   ============================================================ */
+.systems-score {
+  text-align: center; padding: 24px;
+  background: var(--bg2); border-radius: var(--radius); box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.systems-score .big-score { font-size: 3rem; font-weight: 800; }
+.systems-score .score-label { font-size: .75rem; color: var(--c3); text-transform: uppercase; margin-top: 4px; }
+
+.system-row {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow);
+  border-left: 4px solid var(--c3);
+}
+.system-row.needs-attention { border-color: #c1554d; }
+.system-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.system-name { font-size: .9rem; font-weight: 700; }
+.system-meta { display: flex; gap: 8px; align-items: center; }
+
+.week-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+  margin: 8px 0;
+}
+.week-grid .day-header {
+  text-align: center; font-size: .6rem; font-weight: 700;
+  color: var(--c3); text-transform: uppercase;
+}
+.week-grid .day-cell {
+  text-align: center; padding: 6px 2px; border-radius: 4px;
+  font-size: .75rem; font-weight: 600;
+}
+.week-grid .day-cell.hit { background: var(--earth-soft); color: var(--earth); }
+.week-grid .day-cell.miss { background: #c1554d22; color: #c1554d; }
+.week-grid .day-cell.not-target { color: var(--c3); }
+
+.history-sparkline { display: flex; gap: 2px; align-items: flex-end; height: 24px; margin-top: 6px; }
+.history-sparkline .bar { width: 16px; border-radius: 2px 2px 0 0; min-height: 2px; }
+
+.completion-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 10px; font-size: .72rem; font-weight: 700;
+}
+.streak-badge {
+  font-size: .7rem; color: var(--c2); display: flex; align-items: center; gap: 4px;
+}
+
+.day-summary-chart {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;
+  margin: 12px 0;
+}
+.day-summary-chart .day-col { text-align: center; }
+.day-summary-chart .day-bar-track {
+  height: 60px; background: var(--bg3); border-radius: 4px;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.day-summary-chart .day-bar-fill { width: 100%; border-radius: 4px 4px 0 0; }
+.day-summary-chart .day-label { font-size: .65rem; font-weight: 700; color: var(--c3); margin-top: 4px; }
+
+.alignment-score {
+  text-align: center; padding: 24px;
+  background: var(--bg2); border-radius: var(--radius); box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+.alignment-score .big-score { font-size: 3rem; font-weight: 800; }
+.alignment-score .score-label { font-size: .75rem; color: var(--c3); text-transform: uppercase; margin-top: 4px; }
+
+.audit-section {
+  background: var(--bg2); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.audit-section-title {
+  font-size: .85rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em; color: var(--c2); margin-bottom: 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--bg3);
+}
+
+.connection-line {
+  display: flex; align-items: center; gap: 8px; padding: 6px 0;
+  font-size: .82rem; border-bottom: 1px solid var(--bg3);
+}
+.connection-line:last-child { border-bottom: none; }
+.connection-line .conn-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.connection-line .conn-label { flex: 1; }
+.connection-line .conn-status { font-size: .7rem; font-weight: 600; }
+
+.balance-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+}
+.balance-cell {
+  padding: 12px; border-radius: 8px; text-align: center;
+  font-size: .78rem; font-weight: 600;
+}
+.balance-cell.hot { background: #ef6c0022; border: 1px solid #ef6c0044; color: #ef6c00; }
+.balance-cell.cold { background: #1565c022; border: 1px solid #1565c044; color: #1565c0; }
+.balance-cell.balanced { background: var(--earth-soft); border: 1px solid var(--earth); color: var(--earth); }
+
+.insight-card {
+  padding: 14px 18px; margin-bottom: 10px;
+  border-radius: var(--radius); font-size: .82rem;
+  border-left: 4px solid var(--ether);
+  background: var(--ether-soft); color: var(--c1);
+  line-height: 1.5;
+}
+
+.action-suggestion {
+  padding: 10px 14px; margin-bottom: 8px;
+  border-radius: 8px; background: var(--bg3);
+  font-size: .8rem; display: flex; align-items: center; gap: 8px;
+}
+.action-suggestion .action-icon { font-size: 1rem; flex-shrink: 0; }
+
+@media (max-width: 767px) {
+  .week-grid { grid-template-columns: repeat(7, 1fr); }
+  .balance-grid { grid-template-columns: repeat(2, 1fr); }
+  .day-summary-chart { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================================
    Responsive: Mobile (< 768px)
    ============================================================ */
 @media (max-width: 767px) {
@@ -631,7 +750,9 @@ const ROUTES = {
   'learn/goals':   { render: renderLearnGoals, icon: '', label: 'Goal Setting', nav: false },
   'learn/planning':{ render: renderLearnPlanning, icon: '', label: 'Planning Cycle', nav: false },
   'transits':      { render: renderTransits,     icon: '\u263D', label: 'Transits', nav: true },
-  'cosmic-teaser': { render: renderCosmicTeaser,  icon: '\u2727', label: 'Cosmic Blueprint', nav: true }
+  'cosmic-teaser': { render: renderCosmicTeaser,  icon: '\u2727', label: 'Cosmic Blueprint', nav: true },
+  'systems':       { render: renderSystems,    icon: '\u2699', label: 'Systems', nav: true },
+  'alignment':     { render: renderAlignment,  icon: '\u221E', label: 'Alignment', nav: true }
 };
 
 function buildNav() {
@@ -1091,6 +1212,46 @@ function renderDashboard(container) {
     <div class="stat-item"><div class="number">${wa.weeklyAvg != null ? wa.weeklyAvg : (wins.length / 13).toFixed(1)}</div><div class="label">Weekly Avg</div></div>
     <div class="stat-item"><div class="number">${wa.currentStreak || 0}</div><div class="label">Current Streak</div></div>
     <div class="stat-item"><div class="number">${totalGoals}</div><div class="label">Active Goals</div></div>`;
+
+  /* Systems + Alignment Mini-Cards */
+  const miniRow = document.createElement('div');
+  miniRow.className = 'grid-2';
+  miniRow.style.marginBottom = '20px';
+
+  const sysScore = (DATA.systemsAnalytics || {}).overallScore;
+  const sysNeeds = (DATA.systemsAnalytics || {}).needsAttention || 0;
+  if (sysScore != null) {
+    const sysMini = document.createElement('div');
+    sysMini.className = 'card';
+    sysMini.style.cursor = 'pointer';
+    sysMini.onclick = () => { location.hash = 'systems'; };
+    const sysColor = sysScore >= 80 ? RAW_ELEM_COLORS.earth : sysScore >= 60 ? '#f9a825' : '#c1554d';
+    sysMini.innerHTML = `<div class="card-title">Systems</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:1.6rem;font-weight:800;color:${sysColor}">${sysScore}</span>
+        <div><div style="font-size:.7rem;color:var(--c3)">EXECUTION SCORE</div>
+        ${sysNeeds > 0 ? `<div style="font-size:.7rem;color:#c1554d">${sysNeeds} need attention</div>` : '<div style="font-size:.7rem;color:var(--earth)">All systems on track</div>'}</div>
+      </div>`;
+    miniRow.appendChild(sysMini);
+  }
+
+  const alignScore = (DATA.alignment || {}).overallScore;
+  if (alignScore != null) {
+    const alMini = document.createElement('div');
+    alMini.className = 'card';
+    alMini.style.cursor = 'pointer';
+    alMini.onclick = () => { location.hash = 'alignment'; };
+    const alColor = alignScore >= 80 ? RAW_ELEM_COLORS.earth : alignScore >= 60 ? '#f9a825' : '#c1554d';
+    alMini.innerHTML = `<div class="card-title">Alignment</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:1.6rem;font-weight:800;color:${alColor}">${alignScore}</span>
+        <div style="font-size:.7rem;color:var(--c3)">ALIGNMENT SCORE</div>
+      </div>`;
+    miniRow.appendChild(alMini);
+  }
+
+  if (miniRow.children.length) container.appendChild(miniRow);
+
   container.appendChild(statsBar);
 }
 
@@ -2032,6 +2193,315 @@ function renderCosmicTeaser(container) {
   }
   container.appendChild(ctaDiv);
 }
+
+/* ---------- #systems ---------- */
+function renderSystems(container) {
+  const systems = DATA.systems || [];
+  const sa = DATA.systemsAnalytics || {};
+
+  if (!systems.length) {
+    container.innerHTML = '<div class="card"><div class="card-title">Strategy Systems</div><p style="color:var(--c3);font-size:.85rem">No strategy systems configured. Run <code>/strategist</code> to define your recurring routines.</p></div>';
+    return;
+  }
+
+  /* Overall Score */
+  const score = sa.overallScore || 0;
+  const scoreColor = score >= 80 ? RAW_ELEM_COLORS.earth : score >= 60 ? '#f9a825' : '#c1554d';
+  const scoreCard = document.createElement('div');
+  scoreCard.className = 'systems-score';
+  scoreCard.innerHTML = `
+    <svg width="120" height="120" viewBox="0 0 120 120" style="display:block;margin:0 auto">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="${scoreColor}" stroke-width="8"
+        stroke-dasharray="${(score/100)*326.7} 326.7" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="800" fill="var(--c1)">${score}</text>
+      <text x="60" y="74" text-anchor="middle" font-size="9" fill="var(--c3)">EXECUTION</text>
+    </svg>
+    <div class="score-label" style="margin-top:12px">${sa.consistentSystems || 0} consistent / ${sa.needsAttention || 0} need attention</div>`;
+  container.appendChild(scoreCard);
+
+  /* Weekly Grid per System */
+  const DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
+  const DAY_LABELS = ['M','T','W','T','F','S','S'];
+
+  systems.forEach(sys => {
+    const sysCard = document.createElement('div');
+    const rate = sys.completionRate || 0;
+    const needsAtt = rate < 60;
+    sysCard.className = 'system-row' + (needsAtt ? ' needs-attention' : '');
+    const elem = sys.element || AREA_ELEMENT[sys.area] || 'earth';
+    sysCard.style.borderLeftColor = needsAtt ? '#c1554d' : RAW_ELEM_COLORS[elem];
+
+    /* Header */
+    const rateColor = rate >= 80 ? RAW_ELEM_COLORS.earth : rate >= 60 ? '#f9a825' : '#c1554d';
+    let html = `<div class="system-header">
+      <div>
+        <div class="system-name">${sys.name}</div>
+        <div style="font-size:.7rem;color:var(--c3)">${sys.area || ''} \u00B7 ${sys.frequency || ''}</div>
+      </div>
+      <div class="system-meta">
+        <span class="completion-badge" style="background:${rateColor}22;color:${rateColor}">${rate}%</span>
+        <span class="streak-badge">${sys.streak || 0 > 0 ? '\uD83D\uDD25 ' + (sys.streak||0) + '-day streak' : '\u26A0 broken'}</span>
+      </div>
+    </div>`;
+
+    /* Current week grid */
+    const currentWeek = (sys.tracking && sys.tracking[0]) || {};
+    const days = currentWeek.days || {};
+    const targetSet = new Set(sys.targetDays || []);
+    html += '<div class="week-grid">';
+    DAYS.forEach((d, i) => { html += `<div class="day-header">${DAY_LABELS[i]}</div>`; });
+    DAYS.forEach(d => {
+      if (!targetSet.has(d)) {
+        html += '<div class="day-cell not-target">\u2014</div>';
+      } else if (days[d]) {
+        html += '<div class="day-cell hit">\u2713</div>';
+      } else {
+        html += '<div class="day-cell miss">\u2717</div>';
+      }
+    });
+    html += '</div>';
+
+    /* 4-week history sparkline */
+    const tracking = sys.tracking || [];
+    if (tracking.length > 1) {
+      html += '<div class="history-sparkline">';
+      tracking.slice(0, 4).reverse().forEach(wk => {
+        const wkDays = wk.days || {};
+        const tgt = (sys.targetDays || []).length || 1;
+        const hit = Object.values(wkDays).filter(Boolean).length;
+        const pct = Math.round((hit / tgt) * 100);
+        const h = Math.max(2, (pct / 100) * 24);
+        const col = pct >= 80 ? RAW_ELEM_COLORS.earth : pct >= 60 ? '#f9a825' : '#c1554d';
+        html += `<div class="bar" style="height:${h}px;background:${col}" title="${wk.week}: ${pct}%"></div>`;
+      });
+      html += '</div>';
+    }
+
+    /* Connected goal */
+    if (sys.connectedGoal) {
+      html += `<div style="font-size:.7rem;color:var(--c3);margin-top:6px">\u2192 Goal: ${sys.connectedGoal}</div>`;
+    }
+
+    sysCard.innerHTML = html;
+    container.appendChild(sysCard);
+  });
+
+  /* Day-of-Week Summary */
+  if (sa.bestDay || sa.worstDay) {
+    const dayCard = document.createElement('div');
+    dayCard.className = 'transit-card';
+    let dayHTML = '<div class="transit-card-title">Day-of-Week Execution</div>';
+
+    /* Calculate day totals from all systems */
+    const dayTotals = {};
+    DAYS.forEach(d => { dayTotals[d] = { hit: 0, total: 0 }; });
+    systems.forEach(sys => {
+      const targetSet = new Set(sys.targetDays || []);
+      (sys.tracking || []).forEach(wk => {
+        const wkDays = wk.days || {};
+        DAYS.forEach(d => {
+          if (targetSet.has(d)) {
+            dayTotals[d].total++;
+            if (wkDays[d]) dayTotals[d].hit++;
+          }
+        });
+      });
+    });
+
+    const maxTotal = Math.max(...Object.values(dayTotals).map(d => d.total), 1);
+    dayHTML += '<div class="day-summary-chart">';
+    DAYS.forEach((d, i) => {
+      const pct = dayTotals[d].total > 0 ? (dayTotals[d].hit / dayTotals[d].total) * 100 : 0;
+      const col = pct >= 80 ? RAW_ELEM_COLORS.earth : pct >= 60 ? '#f9a825' : '#c1554d';
+      const isBest = d === sa.bestDay;
+      const isWorst = d === sa.worstDay;
+      dayHTML += `<div class="day-col">
+        <div class="day-bar-track"><div class="day-bar-fill" style="height:${pct}%;background:${col}"></div></div>
+        <div class="day-label" style="${isBest ? 'color:'+RAW_ELEM_COLORS.earth : isWorst ? 'color:#c1554d' : ''}">${DAY_LABELS[i]}</div>
+        <div style="font-size:.6rem;color:var(--c3)">${Math.round(pct)}%</div>
+      </div>`;
+    });
+    dayHTML += '</div>';
+
+    if (sa.bestDay) dayHTML += `<div style="font-size:.75rem;color:var(--c2);text-align:center;margin-top:4px">Best: <strong style="color:${RAW_ELEM_COLORS.earth}">${sa.bestDay.charAt(0).toUpperCase()+sa.bestDay.slice(1)}</strong> \u00B7 Worst: <strong style="color:#c1554d">${(sa.worstDay||'').charAt(0).toUpperCase()+(sa.worstDay||'').slice(1)}</strong></div>`;
+    dayCard.innerHTML = dayHTML;
+    container.appendChild(dayCard);
+  }
+
+  /* Needs Attention List */
+  const attentionSystems = systems.filter(s => (s.completionRate || 0) < 60);
+  if (attentionSystems.length) {
+    const attCard = document.createElement('div');
+    attCard.className = 'transit-card';
+    attCard.style.borderLeft = '4px solid #c1554d';
+    let attHTML = '<div class="transit-card-title" style="color:#c1554d">Needs Attention</div>';
+    attentionSystems.forEach(s => {
+      attHTML += `<div style="padding:6px 0;font-size:.82rem;border-bottom:1px solid var(--bg3);display:flex;justify-content:space-between">
+        <span>${s.name}</span>
+        <span style="color:#c1554d;font-weight:700">${s.completionRate || 0}%</span>
+      </div>`;
+    });
+    attCard.innerHTML = attHTML;
+    container.appendChild(attCard);
+  }
+}
+
+/* ---------- #alignment ---------- */
+function renderAlignment(container) {
+  const align = DATA.alignment || {};
+  const goals = DATA.goals || {};
+  const areas = DATA.areas || [];
+  const systems = DATA.systems || [];
+  const wa = DATA.winAnalytics || {};
+
+  /* If insufficient data */
+  if (!goals.annual && !areas.length) {
+    container.innerHTML = '<div class="card"><div class="card-title">Alignment</div><p style="color:var(--c3);font-size:.85rem">Not enough data for alignment analysis. Add goals and log wins to see alignment insights.</p></div>';
+    return;
+  }
+
+  /* Overall Alignment Score */
+  const score = align.overallScore || 0;
+  const scoreColor = score >= 80 ? RAW_ELEM_COLORS.earth : score >= 60 ? '#f9a825' : '#c1554d';
+  const scoreCard = document.createElement('div');
+  scoreCard.className = 'alignment-score';
+  scoreCard.innerHTML = `
+    <svg width="120" height="120" viewBox="0 0 120 120" style="display:block;margin:0 auto">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--bg3)" stroke-width="8"/>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="${scoreColor}" stroke-width="8"
+        stroke-dasharray="${(score/100)*326.7} 326.7" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+      <text x="60" y="58" text-anchor="middle" font-size="28" font-weight="800" fill="var(--c1)">${score}</text>
+      <text x="60" y="74" text-anchor="middle" font-size="9" fill="var(--c3)">ALIGNMENT</text>
+    </svg>
+    <div class="score-label" style="margin-top:12px">Goal Coverage ${align.goalCoverage || 0}% \u00B7 Systems Connected ${align.systemsWithGoals || 0}/${(align.systemsWithGoals||0)+(align.systemsOrphaned||0)}</div>`;
+  container.appendChild(scoreCard);
+
+  /* Goal-to-Vision Audit */
+  const goalAudit = document.createElement('div');
+  goalAudit.className = 'audit-section';
+  let gaHTML = '<div class="audit-section-title">Goal-to-Vision Coherence</div>';
+  const allGoals = [].concat(goals.annual||[]);
+  if (allGoals.length) {
+    allGoals.forEach(g => {
+      const connected = !!g.connectedHhg;
+      gaHTML += `<div class="connection-line">
+        <div class="conn-dot" style="background:${connected ? RAW_ELEM_COLORS.earth : '#c1554d'}"></div>
+        <div class="conn-label">${g.description || g.id}</div>
+        <div class="conn-status" style="color:${connected ? RAW_ELEM_COLORS.earth : '#c1554d'}">${connected ? '\u2713 Connected to: ' + g.connectedHhg : '\u26A0 Orphaned'}</div>
+      </div>`;
+    });
+    gaHTML += `<div style="margin-top:8px;font-size:.75rem;color:var(--c2)">${align.goalsWithVision || 0} connected / ${align.goalsOrphaned || 0} orphaned — ${align.goalCoverage || 0}% coverage</div>`;
+  } else {
+    gaHTML += '<p style="color:var(--c3);font-size:.82rem">No annual goals set. Run /morning or /weekly-review to define goals.</p>';
+  }
+  goalAudit.innerHTML = gaHTML;
+  container.appendChild(goalAudit);
+
+  /* Area Balance Heatmap */
+  const areaBalance = align.areaBalance || {};
+  const balCard = document.createElement('div');
+  balCard.className = 'audit-section';
+  let balHTML = '<div class="audit-section-title">Area Balance</div>';
+  balHTML += '<div class="balance-grid">';
+  const overFocused = new Set(areaBalance.overFocused || []);
+  const underFocused = new Set(areaBalance.underFocused || []);
+  const elementOrder = ['fire','earth','air','water'];
+  elementOrder.forEach(elem => {
+    const slugs = ELEMENT_AREAS[elem] || [];
+    slugs.forEach(slug => {
+      const areaData = areas.find(a => a.id === slug);
+      const winCount = areaData ? areaData.winCount90d || 0 : 0;
+      let cellClass = 'balanced';
+      if (overFocused.has(slug)) cellClass = 'hot';
+      else if (underFocused.has(slug) || winCount === 0) cellClass = 'cold';
+      balHTML += `<div class="balance-cell ${cellClass}">
+        <div style="font-size:.7rem">${(areaData ? areaData.name : slug).split('&')[0].trim()}</div>
+        <div style="font-size:.95rem;font-weight:800">${winCount}</div>
+        <div style="font-size:.55rem;text-transform:uppercase">${cellClass === 'hot' ? 'over-focused' : cellClass === 'cold' ? 'neglected' : 'balanced'}</div>
+      </div>`;
+    });
+  });
+  balHTML += '</div>';
+  balHTML += `<div style="margin-top:8px;font-size:.72rem;color:var(--c2)">${areaBalance.active || 0} active / ${areaBalance.neglected || 0} neglected areas (last 30 days)</div>`;
+  balCard.innerHTML = balHTML;
+  container.appendChild(balCard);
+
+  /* Win Distribution (simplified bar chart) */
+  const byArea = wa.byArea || {};
+  const areaEntries = Object.entries(byArea).filter(([,d]) => (d.count||0) > 0).sort((a,b) => (b[1].count||0)-(a[1].count||0));
+  if (areaEntries.length) {
+    const distCard = document.createElement('div');
+    distCard.className = 'audit-section';
+    let distHTML = '<div class="audit-section-title">Win Distribution</div>';
+    const totalWins = areaEntries.reduce((s,[,d]) => s + (d.count||0), 0);
+    const maxC = Math.max(...areaEntries.map(([,d]) => d.count||0), 1);
+    areaEntries.forEach(([slug, data]) => {
+      const pct = Math.round(((data.count||0) / totalWins) * 100);
+      const barPct = ((data.count||0) / maxC) * 100;
+      const elem = AREA_ELEMENT[slug] || '';
+      const col = RAW_ELEM_COLORS[elem] || '#a8a29e';
+      const isOver = pct > 40;
+      distHTML += `<div class="bar-chart-row">
+        <span class="bar-label">${slug}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${barPct}%;background:${col}"></div></div>
+        <span class="bar-value" style="${isOver ? 'color:#c1554d;font-weight:700' : ''}">${pct}%</span>
+      </div>`;
+    });
+    distCard.innerHTML = distHTML;
+    container.appendChild(distCard);
+  }
+
+  /* System-to-Goal Connection */
+  if (systems.length) {
+    const sysCard = document.createElement('div');
+    sysCard.className = 'audit-section';
+    let sysHTML = '<div class="audit-section-title">System-to-Goal Connections</div>';
+    systems.forEach(s => {
+      const connected = !!s.connectedGoal;
+      sysHTML += `<div class="connection-line">
+        <div class="conn-dot" style="background:${connected ? RAW_ELEM_COLORS.earth : '#f9a825'}"></div>
+        <div class="conn-label">${s.name}</div>
+        <div class="conn-status" style="color:${connected ? RAW_ELEM_COLORS.earth : '#f9a825'}">${connected ? '\u2713 ' + s.connectedGoal : 'orphaned'}</div>
+      </div>`;
+    });
+    sysHTML += `<div style="margin-top:8px;font-size:.75rem;color:var(--c2)">${align.systemsWithGoals || 0} connected / ${align.systemsOrphaned || 0} orphaned</div>`;
+    sysCard.innerHTML = sysHTML;
+    container.appendChild(sysCard);
+  }
+
+  /* Insights Panel */
+  const insights = align.insights || [];
+  if (insights.length) {
+    const insCard = document.createElement('div');
+    insCard.className = 'audit-section';
+    let insHTML = '<div class="audit-section-title">Insights</div>';
+    insights.forEach(ins => {
+      insHTML += `<div class="insight-card">${ins}</div>`;
+    });
+    insCard.innerHTML = insHTML;
+    container.appendChild(insCard);
+  }
+
+  /* Action Suggestions */
+  const suggestions = [];
+  if ((areaBalance.neglected || 0) >= 5) suggestions.push({ icon: '\uD83C\uDFAF', text: `${areaBalance.neglected} areas neglected \u2014 try /area-review for a neglected area` });
+  if ((align.goalsOrphaned || 0) > 0) suggestions.push({ icon: '\uD83D\uDD17', text: `${align.goalsOrphaned} goal(s) not connected to vision \u2014 run /alignment to reconnect` });
+  if ((align.systemsOrphaned || 0) > 0) suggestions.push({ icon: '\u2699', text: `${align.systemsOrphaned} system(s) have no goal \u2014 run /strategist to connect them` });
+  if (score < 50) suggestions.push({ icon: '\uD83D\uDD25', text: 'Low alignment score \u2014 start with /vision to clarify your direction' });
+
+  if (suggestions.length) {
+    const actCard = document.createElement('div');
+    actCard.className = 'audit-section';
+    let actHTML = '<div class="audit-section-title">Suggested Actions</div>';
+    suggestions.forEach(s => {
+      actHTML += `<div class="action-suggestion"><span class="action-icon">${s.icon}</span>${s.text}</div>`;
+    });
+    actCard.innerHTML = actHTML;
+    container.appendChild(actCard);
+  }
+}
+
 
 /* ============================================================
    INIT

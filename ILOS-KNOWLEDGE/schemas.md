@@ -335,3 +335,40 @@ All IDs are designed to be unique, sortable, and human-readable.
 
 **Timestamp IDs** use the moment of capture (UTC or local time).
 **Goal IDs** use the period identifier plus a sequential number (max 3 per period).
+
+---
+
+## Strategy Systems (`TIME/strategy-systems.yaml`)
+
+Tracks recurring routines and habits that support goals. Updated during weekly reviews.
+
+### Schema
+
+```yaml
+systems:
+  - id: string              # Unique identifier (sys_1, sys_2, ...)
+    name: string            # Human-readable name
+    frequency: string       # daily | weekdays | weekly | biweekly
+    area: string            # Area slug (health, career, etc.)
+    element: string         # fire | air | earth | water
+    connected_goal: string  # Optional: ID from active-goals.yaml, or null
+    target_days: [string]   # Days expected: [mon, tue, wed, thu, fri, sat, sun]
+    tracking:               # Rolling 4-week execution log (most recent first)
+      - week: string        # ISO week (e.g., "2026-W09")
+        days: object        # { day: boolean } for each target day
+```
+
+### Computed Fields (by DAEDALUS)
+
+| Field | Formula |
+|-------|---------|
+| `completionRate` | completed days / target days (last 4 weeks) x 100 |
+| `streak` | consecutive most-recent target days completed |
+| `trend` | Compare week-1 rate vs week-3 average -> rising / flat / falling |
+
+### Rules
+
+- Maximum 4 weeks of tracking history (rolling window)
+- Older weeks are dropped when a new week is added
+- `target_days` defines which days count -- non-target days are ignored
+- `connected_goal` should reference an active goal ID or be null

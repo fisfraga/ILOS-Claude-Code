@@ -1,6 +1,6 @@
 # Sprint S4: Systems Audit + Refinement
 
-**Status:** Planned
+**Status:** Done
 **Depends on:** S1 (Done), S2 (recommended), S3 (optional)
 **Estimate:** 1 session
 **Element:** Earth + Water (grounded execution meets reflective review)
