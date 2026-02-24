@@ -86,3 +86,8 @@ If Tana MCP is **NOT** configured:
 - All data lives in local files
 - Skills read from and write to YAML/JSONL directly
 - Full functionality is preserved — Tana adds convenience, not capability
+
+**MCP Operational Constraints (always apply):**
+- **Sequential calls only** — the local Tana MCP server supports one active connection at a time. Never issue multiple MCP tool calls in the same message.
+- **No subagent MCP access** — Task agents launched via the Task tool cannot use MCP tools. All Tana operations must happen in the main conversation.
+- **Use `get_or_create_calendar_node`** — never hardcode calendar node IDs; always fetch them dynamically by date.

@@ -70,6 +70,8 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 3. Local files are canonical; Tana is the sync target. Never override local data with Tana data without explicit user approval.
 4. Document newly discovered IDs — when you encounter new tag IDs, field IDs, or workspace structures during operations, update `SYSTEM/tana-reference/` files
 5. Confirm destructive operations — any Tana write that modifies existing data requires user confirmation
+6. **Sequential MCP calls only** — the Tana MCP server supports one connection at a time. Never issue two MCP tool calls in the same message; each must complete before the next begins.
+7. **No subagent MCP access** — Task agents (launched via Task tool) cannot use MCP tools. All Tana operations must run in the main conversation.
 
 ## Key Principles
 

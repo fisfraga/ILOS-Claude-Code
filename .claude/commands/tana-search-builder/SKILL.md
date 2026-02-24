@@ -46,7 +46,9 @@ Ask clarifying questions. "Overdue tasks" could mean:
 
 ## Phase 2: Explore the Schema
 
-**Critical step.** Use a cheap subagent (e.g., Haiku) to explore the workspace.
+**Critical step.** Explore the workspace schema directly in the main conversation.
+
+**Important:** Tana MCP tools are only available in the main Claude Code conversation — do NOT delegate to subagents (they have no MCP access). All MCP calls must be sequential (one at a time, wait for each to complete).
 
 The agent should discover:
 

@@ -10,7 +10,7 @@ Create interactive, zero-dependency HTML visualizations of Tana supertag schemas
 
 ## Philosophy
 
-1. **Use cheap exploration** — Spin up a cheap subagent (e.g., Haiku) to fetch tag schemas via MCP tools
+1. **Explore directly** — Fetch tag schemas via MCP tools in the main conversation (subagents cannot access MCP)
 2. **Scope carefully** — Large schemas don't visualize well; focus on branches or subsystems rather than entire workspaces
 3. **Show fields as nodes** — Reveals which tags share fields and instance relationships
 4. **Dynamic branches** — Colors auto-assigned based on root elements discovered
@@ -45,11 +45,11 @@ Based on response, determine:
 
 ---
 
-## Phase 2: Explore Schema (Use Cheap Subagent)
+## Phase 2: Explore Schema
 
-**Important**: Use a cheap subagent (e.g., Haiku) for schema exploration — it's mechanical lookup work.
+**Important**: All MCP calls must happen in the main conversation (subagents have no MCP access) and must be sequential — one call at a time, wait for each to complete before the next.
 
-The agent should:
+Steps:
 
 1. **Load Tana MCP tools** via `ToolSearch`
 2. **List workspaces** to get workspace ID

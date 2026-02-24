@@ -1,5 +1,17 @@
 # Tana MCP Integration
 
+## MCP Constraints (Read First)
+
+Before using Tana MCP tools, understand these hard constraints:
+
+1. **Sequential calls only.** The local Tana MCP server supports one active connection at a time. Never issue two MCP tool calls in the same message — all but the first will fail with a transport error. Always wait for each call to complete before issuing the next.
+
+2. **No subagent access.** Tana MCP tools are only available in the main Claude Code conversation. Task agents (subagents) launched via the Task tool have no MCP access and will fail if asked to perform Tana operations.
+
+3. **`get_or_create_calendar_node` for dates.** Never hardcode calendar node IDs for today/week/month — use this tool to get the correct node ID for any date.
+
+---
+
 ## When to Use Tana
 
 Tana is **optional** but powerful. ILOS works fully with local files and Claude Code alone. Tana adds:

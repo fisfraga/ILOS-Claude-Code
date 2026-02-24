@@ -73,6 +73,8 @@ If Tana MCP is configured, you can also:
 
 ### Common Tana Query Patterns
 
+**MCP Constraints:** All Tana MCP calls must be sequential (one at a time — the server supports only one active connection). Tana MCP tools are only available in the main conversation, not in subagents.
+
 When Tana MCP is available:
 
 ```

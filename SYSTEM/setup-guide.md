@@ -61,15 +61,23 @@ If you are using Claude Code with PARACELSUS, you can simply say "let's do a wee
 
 ## Step 5 (Optional): Configure Tana MCP
 
-Tana integration is **entirely optional**. ILOS works fully with just local files and Claude Code. However, if you use Tana, the MCP integration enables powerful bidirectional data flow.
+Tana integration is **entirely optional**. ILOS works fully with just local files and Claude Code. However, if you use Tana, the MCP integration enables powerful bidirectional data flow — Claude can read your live goals, create wins, mark goals complete, and navigate your workspace directly.
 
-**To set up Tana:**
-1. Get access to Tana MCP (see Tana documentation)
-2. Fill in `SYSTEM/tana-reference/tag-ids.md` with your supertag IDs
-3. Fill in `SYSTEM/tana-reference/field-ids.md` with your field IDs
-4. Fill in `SYSTEM/tana-reference/structure-map.md` with your workspace structure
+**Prerequisites:**
+- You have a Tana workspace with the ILOS supertag structure installed (see Tana documentation)
+- The Tana MCP local server is running and configured in Claude Code
 
-See `SYSTEM/tana-reference/README.md` for detailed guidance.
+**To set up the integration (5 minutes):**
+
+1. Confirm the MCP server is running — type `/tana` and see if Claude can list your workspaces
+2. Type `/tana-understand` — Claude will detect that your reference files are empty and automatically explore your workspace
+3. Claude will populate `SYSTEM/tana-reference/tag-ids.md`, `field-ids.md`, and `structure-map.md` with your real IDs
+4. All future `/tana`, `/win`, `/morning`, and review skills will use these IDs automatically
+
+**Important MCP constraint:**
+The Tana MCP local server only supports one operation at a time. Claude handles this automatically — you don't need to do anything, but if you see errors about "transport already connected," this is why.
+
+See `SYSTEM/tana-reference/README.md` for details on what each reference file contains.
 
 ---
 

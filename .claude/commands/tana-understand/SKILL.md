@@ -12,6 +12,25 @@ Explore a **specific part** of a user's Tana system—a tag, workflow, or subsys
 
 User asks to understand, explore, document, or analyze a specific tag, workflow, or subsystem in Tana.
 
+## Initial Setup Mode (Auto-Trigger)
+
+**Check `SYSTEM/tana-reference/tag-ids.md` before asking the user for a focus.**
+
+If the file exists but contains empty table cells (IDs not yet filled in), this is an **Initial Setup session**. Skip the focus question and proceed directly to full workspace exploration:
+
+1. `list_workspaces` → identify the primary workspace
+2. `list_tags` → get all tags (up to 200)
+3. `read_node` on the home node (maxDepth: 2) → map the hub structure
+4. `read_node` on each hub → get all child node IDs
+5. `get_tag_schema` (sequentially, one at a time) for all key tags: goal types, win, key area, day, week, month, task, context, voice review
+6. `get_or_create_calendar_node` for day, week, month, year → capture current calendar IDs
+
+Then populate all three reference files (`tag-ids.md`, `field-ids.md`, `structure-map.md`) and confirm to the user.
+
+**Do not ask "what part do you want to explore?" when the reference files are empty.** The answer is always "all of it."
+
+---
+
 ## Key Principle: Stay Focused
 
 **This skill is NOT for exploring entire workspaces.** It's for understanding specific parts:
@@ -24,7 +43,11 @@ User asks to understand, explore, document, or analyze a specific tag, workflow,
 
 ## Process
 
-Use a cheap subagent (e.g., Haiku) for exploration, but this is not rote lookup — it requires reasoning about what you find and making smart decisions about what to explore next. The goal is to truly understand how the user has built their system and how they use it.
+**Important:** Tana MCP tools (`list_workspaces`, `list_tags`, `get_tag_schema`, `read_node`, etc.) are only available in the **main Claude Code conversation**. Do NOT delegate Tana exploration to subagents (Task tool) — they have no MCP access and will fail silently or ask if Tana is configured.
+
+**MCP calls must be sequential.** The Tana MCP server does not support parallel connections. Never issue two Tana tool calls in the same message. Each call must complete before the next begins. Batching calls will cause transport errors.
+
+All exploration in this skill happens directly in the main conversation. The goal is to truly understand how the user has built their system and how they use it.
 
 ### Tools for Exploration
 
@@ -76,13 +99,25 @@ Don't explore broadly without a clear target.
 
 ### 4. Document Findings
 
-Present clearly:
+Present findings clearly in conversation:
 - Tag names with IDs (actionable references)
-- Visual hierarchy showing inheritance
+- Visual hierarchy showing inheritance and base types
 - Key fields and their purposes
 - How the system is meant to be used
 
-Offer to save documentation to a markdown file.
+**For ILOS workspaces (when `SYSTEM/tana-reference/` exists):**
+After exploration, always update the three reference files rather than saving to a generic markdown file:
+
+1. **`SYSTEM/tana-reference/tag-ids.md`** — populate all supertag IDs grouped by category (Vision, Goals, Review, Execution, Calendar, AI/System)
+2. **`SYSTEM/tana-reference/field-ids.md`** — populate all field IDs with types, and all option IDs for option fields
+3. **`SYSTEM/tana-reference/structure-map.md`** — populate workspace ID, home node ID, hub node IDs, key area node IDs, and current calendar nodes
+
+Add a comment at the top of each file with the workspace name and date updated.
+
+After updating, confirm to the user: "Reference files are now populated. All `/tana` operations will use these IDs automatically."
+
+**For non-ILOS workspaces:**
+Offer to save documentation to a new markdown file in `SYSTEM/` or another appropriate location.
 
 ### 5. Present How I Can Help
 
