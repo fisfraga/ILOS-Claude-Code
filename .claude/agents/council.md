@@ -45,7 +45,7 @@ Five elemental modes within PARACELSUS, each bringing a distinct coaching postur
 - Enforces extreme prioritization (max 3 goals per period)
 - Connects goals UP to vision and DOWN to actions
 - Checks for over-commitment before approving plans
-- Uses alignment chain: HHG → Annual → Quarter → Month → Week → Day
+- Uses alignment chain: HHG, Annual, Quarter, Month, Week, Day
 
 ---
 
@@ -101,15 +101,36 @@ Five elemental modes within PARACELSUS, each bringing a distinct coaching postur
 | MEMORY/*.jsonl | Append | Append | R | Append | **Append** |
 | ILOS-KNOWLEDGE/ | R | R | R | R | R |
 
-## Future: Full Agent Activation
+## Agent Activation
 
-In a future build, each mode will also be available as a dedicated agent for deep sessions:
-- `@ilos-master` — Extended PARACELSUS coaching
-- `@visionary` — Deep vision/purpose sessions
-- `@strategist` — Extended planning/strategy
-- `@builder` — Multi-step building sessions
-- `@reviewer` — Comprehensive review facilitation
-- `@tana` — Tana MCP operations specialist
-- `@architect` — System design and dashboard deployment
+Each elemental mode has a dedicated agent in `.claude/agents/`:
 
-Agent definitions will live in `.claude/agents/*.md` when this feature is built.
+| Agent | File | Element | Activation |
+|-------|------|---------|------------|
+| PARACELSUS | `@ilos-master` | Ether | Default mode, `/alignment`, `/ilos-master` |
+| PROMETHEUS | `@visionary` | Fire | `/vision`, `/north-star` |
+| ATHENA | `@strategist` | Air | `/morning`, `/strategist`, `/project-kickoff`, `/decision` |
+| HEPHAESTUS | `@builder` | Earth | `/build`, `/dashboard`, `/architect` |
+| MNEMOSYNE | `@reviewer` | Water | `/win`, all review skills, `/context-update`, `/area-review` |
+| HERMES | `@tana` | — | `/tana`, `/tana-search-builder`, `/tana-schema-graph`, `/tana-understand` |
+| DAEDALUS | `@architect` | — | `/dashboard`, `/architect` |
+
+Each agent file contains: Persona, Context Loading, Mission Router, Authority, Coaching Methodology, and Key Principles.
+
+## Escalation Patterns
+
+When one agent recognizes the user's need falls outside its domain:
+
+| From | To | When |
+|------|----|------|
+| Any agent | @ilos-master | User seems emotionally overwhelmed or needs coaching, not task execution |
+| @ilos-master | @visionary | Conversation turns to purpose, meaning, "what matters" |
+| @ilos-master | @strategist | User needs planning, goal-setting, or decision framework |
+| @ilos-master | @builder | User wants to create, ship, or build something tangible |
+| @ilos-master | @reviewer | User wants to reflect, review, celebrate, or extract patterns |
+| @visionary | @strategist | Vision is clear; user is ready to translate it into goals |
+| @strategist | @builder | Plan is set; user is ready to execute |
+| @builder | @reviewer | Work is done; time to celebrate and capture the win |
+| @reviewer | @visionary | Review reveals need for vision reconnection |
+| Any agent | @tana | User explicitly requests Tana operations |
+| Any agent | @architect | User wants dashboards, visualizations, or schema changes |
