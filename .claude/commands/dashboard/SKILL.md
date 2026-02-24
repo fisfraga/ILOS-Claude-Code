@@ -1,14 +1,13 @@
 ---
 name: dashboard
-description: Generate a visual HTML dashboard from your ILOS data — overview, weekly, goals, areas, or wins views
-argument-hint: "[view: overview, weekly, goals, areas, wins]"
+description: Generate the ILOS Dashboard — a self-contained HTML single-page app with VPER wheel, area health, goal cascade, and win analytics
 ---
 
 # Dashboard Generation
 
-**Duration:** 2-3 minutes | **Mode:** Building (Earth)
+**Duration:** 2-3 minutes | **Mode:** Building (Earth) | **Agent:** DAEDALUS
 
-You are PARACELSUS generating a visual dashboard. Fetch data from local files (and optionally Tana), build a self-contained HTML file, and open it in the user's browser. Zero dependencies, no server required.
+You are DAEDALUS generating the ILOS Dashboard. Fetch ALL data from local files (and optionally Tana), compute analytics, build a self-contained HTML single-page application, and open it in the user's browser. Zero dependencies, no server required.
 
 ---
 
@@ -22,22 +21,22 @@ You are PARACELSUS generating a visual dashboard. Fetch data from local files (a
 
 ## Procedure
 
-### Step 1 — Determine view type
+### Step 1 — Fetch ALL data
 
-Parse `$ARGUMENTS` for the view type:
-- `overview` (default if no argument) — Full Life OS snapshot
-- `weekly` — This week's wins, goals, and tasks
-- `goals` — Goal cascade across all time horizons
-- `areas` — 12 life area attention map
-- `wins` — Win timeline with patterns
+Read the data computation guide in `view-specs.md` for the full data shape and computation rules.
 
-If no valid argument, default to `overview`.
+#### Data Sources (Local Files — Always Available)
 
-### Step 2 — Fetch data
+| Data | Source File | How to Extract |
+|------|-----------|----------------|
+| VPER state | `TIME/current-period.yaml` | Read vper_phase, phase_started, elemental_balance, element_focus |
+| Goals (all scales) | `TIME/active-goals.yaml` | Read annual, quarterly, monthly, weekly sections |
+| Wins (90 days) | `MEMORY/wins.jsonl` | Read all entries, filter last 90 days by `date` field |
+| Vision | `QUANTUM/vision/` | Parse HHGs, FPs, MTPs from markdown files |
+| Projects | `SPACE/projects/` | List project files, extract title + status + area |
+| User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from context |
 
-Run the queries specified in `view-specs.md` for the chosen view.
-
-#### Data Source
+#### Data Sources (Tana MCP — Optional Enhancement)
 
 **If Tana MCP is available** (test with `list_workspaces`):
 
@@ -46,102 +45,79 @@ Read Tana reference files:
 !`cat SYSTEM/tana-reference/field-ids.md`
 !`cat SYSTEM/tana-reference/structure-map.md`
 
-Run the Tana MCP queries from `view-specs.md`. Run queries in parallel when possible.
+Run Tana queries in parallel for enhanced data (see view-specs.md for query patterns). Merge with local file data — local files are canonical.
 
-**If Tana MCP is NOT available** (file-based mode):
+### Step 2 — Compute analytics
 
-Build the data object from local files:
+Using the fetched data, compute these derived values (see `view-specs.md` for formulas):
 
-| Data Section | Source File | How to Extract |
-|-------------|------------|----------------|
-| `wins` | `MEMORY/wins.jsonl` | Read all entries, filter by date range per view |
-| `goals.weekly` | `TIME/active-goals.yaml` | Read `weekly.goals` array |
-| `goals.monthly` | `TIME/active-goals.yaml` | Read `monthly.goals` array |
-| `goals.quarterly` | `TIME/active-goals.yaml` | Read `quarterly.goals` array |
-| `goals.annual` | `TIME/active-goals.yaml` | Read `annual.goals` array |
-| `vision.hhgs` | `QUANTUM/vision/high-hard-goals.md` | Parse HHG entries |
-| `vision.fps` | `QUANTUM/vision/favorite-problems.md` | Parse FP entries |
-| `vision.mtps` | `QUANTUM/vision/massively-transformative-purposes.md` | Parse MTP entries |
-| `projects` | `SPACE/projects/` | List project files, extract status |
-| `areas` | ROUTING.md area slugs + `MEMORY/wins.jsonl` | Count wins per area, check for projects |
-| `meta.userName` | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from context |
+1. **winAnalytics** — total90d, weeklyAvg, byArea (count + 4-week trend), byWeek (weekly counts), longestStreak, currentStreak
+2. **Area health scores** — For each of the 12 areas: healthScore (0-100) based on wins (40%), goals (25%), projects (20%), trend (15%)
+3. **Goal enrichment** — Attach key_results percentage, link child goals, resolve parent chains
+4. **Area enrichment** — Attach winCount90d, winTrend (4-week array), projectCount, activeGoals list, hasGoal flag
 
 ### Step 3 — Generate HTML
 
-1. Read `html-template.md` (companion file in this command directory) for the base HTML structure
-2. Build a JavaScript data object from the fetched data
-3. Replace `{{DATA}}` with the serialized data object (as JS literal, NOT JSON string)
-4. Replace `{{VIEW_TYPE}}` with the chosen view
-5. Replace `{{GENERATED_AT}}` with current timestamp
-6. Replace `{{USER_NAME}}` with the user's name (from personal context or Tana)
+1. Read `html-template.md` (companion file in this command directory) for the SPA template
+2. Build the complete DATA JavaScript object from fetched + computed data
+3. Replace these placeholders in the template:
+   - `{{DATA}}` → Serialized data object (as JS literal, NOT JSON string)
+   - `{{GENERATED_AT}}` → Current timestamp (e.g., "Feb 23, 2026 at 14:30")
+   - `{{USER_NAME}}` → User's name from personal context
 
 ### Step 4 — Write and open
 
 ```bash
+# Ensure output directory exists
+mkdir -p SPACE/products/dashboards
+
 # Write the file
-Write the generated HTML to ./ilos-dashboard.html
+Write the generated HTML to SPACE/products/dashboards/ilos-dashboard.html
 
 # Open in browser
-open ./ilos-dashboard.html
+open SPACE/products/dashboards/ilos-dashboard.html
 ```
 
 Tell the user:
-> "Your dashboard is ready. I've opened it in your browser."
+> "Your ILOS Dashboard is ready. I've opened it in your browser. Navigate between tabs to explore your data."
 
 ### Step 5 — Iterate
 
 Listen for feedback:
-- **"Add more data"** — Fetch additional queries, regenerate
-- **"Different view"** — Switch view type, regenerate
-- **"Change style"** — Adjust colors, layout, font
-- **"Export"** — The dashboard has a built-in PDF export button
+- **"Regenerate"** — Refetch data, recompute, regenerate
+- **"Change colors"** — Adjust element colors or theme in template
+- **"Add data"** — Include additional context, regenerate
+- **"Export"** — The dashboard has a built-in print/PDF export button
 
 ---
 
 ## Data Shape
 
-The injected data object should follow this structure:
+The injected DATA object follows this structure (see `view-specs.md` for full specification):
 
 ```javascript
-const data = {
-  meta: {
-    viewType: "overview",          // which view is active
-    generatedAt: "2026-02-07T...", // when data was fetched
-    userName: "User Name"
-  },
-  wins: [
-    { id: "...", title: "...", date: "...", area: "..." }
-  ],
-  goals: {
-    weekly: [{ id: "...", title: "...", done: false }],
-    monthly: [{ id: "...", title: "...", done: false }],
-    quarterly: [{ id: "...", title: "...", done: false }],
-    annual: [{ id: "...", title: "...", done: false }]
-  },
-  projects: [
-    { id: "...", title: "...", status: "Active", area: "..." }
-  ],
-  areas: [
-    { id: "...", title: "...", winCount: 0, projectCount: 0, hasGoal: false }
-  ],
-  vision: {
-    fps: [{ id: "...", title: "..." }],
-    mtps: [{ id: "...", title: "..." }],
-    hhgs: [{ id: "...", title: "..." }]
-  }
+const DATA = {
+  meta: { generatedAt, userName, currentWeek, currentMonth, currentQuarter, currentYear },
+  vper: { phase, phaseStarted, elementFocus, elementalBalance: { fire, air, earth, water } },
+  goals: { annual: [...], quarterly: [...], monthly: [...], weekly: [...] },
+  wins: [ { id, date, title, area, connectedGoal, tags } ],
+  winAnalytics: { total90d, weeklyAvg, byArea, byWeek, longestStreak, currentStreak },
+  areas: [ { id, name, houseNum, element, winCount90d, winTrend, projectCount, activeGoals, hasGoal, healthScore } ],
+  projects: [ { id, title, status, area, connectedGoal } ],
+  vision: { fps: [...], mtps: [...], hhgs: [...] }
 };
 ```
-
-Only include the data sections relevant to the chosen view (see `view-specs.md`).
 
 ---
 
 ## Rules
 
 - **Self-contained HTML** — Zero external dependencies. Everything inline.
+- **Single-page app** — All 4 views in one file with hash-based routing.
 - **Dark/light mode** — Auto-detect system preference via `prefers-color-scheme`.
-- **Responsive** — Works on desktop and mobile.
+- **Responsive** — Desktop sidebar becomes mobile bottom bar below 768px.
 - **No server** — Just a file opened in the browser. No localhost, no npm.
 - **Fresh data** — Always fetch from source files at generation time. No caching.
-- **Branded** — Use cosmic theme colors. This is the Intentional Life OS.
+- **Real data only** — Never use placeholder data in generated dashboards.
+- **Element colors** — Fire (#ef6c00), Air (#0097a7), Earth (#2e7d32), Water (#1565c0), Ether (#9c27b0).
 - **Works without Tana** — Local files provide full data for all views.

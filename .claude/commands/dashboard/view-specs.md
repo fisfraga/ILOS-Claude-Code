@@ -1,23 +1,223 @@
-# Dashboard View Specifications
+# Dashboard Data Specification
 
-Each view defines which data to fetch and what sections to include in the dashboard. Queries are shown for both Tana MCP and local file paths.
+Complete reference for the ILOS Dashboard data shape, computation rules, and query patterns. DAEDALUS reads this before generating any dashboard.
 
 ---
 
-## View: Overview
+## Full Data Shape
 
-**Description:** Full Life OS snapshot -- goals, wins, projects, and areas at a glance.
+```javascript
+const DATA = {
+  meta: {
+    generatedAt: "Feb 23, 2026 at 14:30",
+    userName: "User Name",
+    currentWeek: "W08",
+    currentMonth: "02",
+    currentQuarter: "Q1",
+    currentYear: "2026"
+  },
 
-**Tana Queries:**
+  vper: {
+    phase: "execute",           // vision | plan | execute | review
+    phaseStarted: "2026-01-20",
+    elementFocus: "earth",      // element needing most attention
+    elementalBalance: {
+      fire:  { score: 7, notes: "Strong vision clarity" },
+      air:   { score: 6, notes: "Planning needs structure" },
+      earth: { score: 5, notes: "Inconsistent execution" },
+      water: { score: 8, notes: "Reviews flowing well" }
+    }
+  },
+
+  goals: {
+    annual: [{
+      id: "annual_1",
+      description: "Goal description",
+      area: "career",
+      status: "active",           // active | completed | abandoned
+      connectedHhg: "HHG title or null",
+      keyResults: [               // optional
+        { description: "Measurable result", target: 10, current: 3, pct: 30 }
+      ],
+      childGoals: ["q1_1"]       // IDs of direct children at next scale
+    }],
+    quarterly: [{ id, description, area, status, parentGoal, childGoals, keyResults }],
+    monthly:   [{ id, description, area, status, parentGoal, childGoals }],
+    weekly:    [{ id, description, area, status, parentGoal }]
+  },
+
+  wins: [
+    {
+      id: "win_20260215_143022",
+      date: "2026-02-15",
+      title: "What was accomplished",
+      area: "career",
+      connectedGoal: "Goal text or null",
+      tags: ["shipping", "consistency"]
+    }
+  ],
+
+  winAnalytics: {
+    total90d: 42,
+    weeklyAvg: 3.2,
+    byArea: {
+      health:  { count: 5, trend: [1, 2, 1, 1] },
+      career:  { count: 12, trend: [3, 4, 2, 3] },
+      // ... all 12 areas
+    },
+    byWeek: [
+      { week: "W05", count: 4 },
+      { week: "W06", count: 3 },
+      // ... last 13 weeks
+    ],
+    longestStreak: 8,     // consecutive days with at least 1 win
+    currentStreak: 3
+  },
+
+  areas: [
+    {
+      id: "health",
+      name: "Health & Vitality",
+      houseNum: 1,
+      element: "fire",
+      winCount90d: 5,
+      winTrend: [1, 2, 1, 1],   // last 4 weeks
+      projectCount: 1,
+      activeGoals: ["q1_2"],     // IDs of active goals in this area
+      hasGoal: true,
+      healthScore: 62            // 0-100 composite
+    }
+    // ... all 12 areas
+  ],
+
+  projects: [
+    { id: "proj_1", title: "Project name", status: "active", area: "career", connectedGoal: "q1_1" }
+  ],
+
+  vision: {
+    fps: [{ title: "Favorite Problem 1" }],
+    mtps: [{ title: "Massively Transformative Purpose 1" }],
+    hhgs: [{ title: "High Hard Goal 1", timeframe: "5 years" }]
+  }
+};
 ```
-// Active goals at all levels
-search_nodes({ query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
 
-// Recent wins (14 days)
-search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 14 } }]}, limit: 50 })
+---
+
+## 12 Key Areas Reference
+
+Used for area enrichment. Each area maps to a zodiac house and element.
+
+| ID | Name | House | Element |
+|----|------|-------|---------|
+| `health` | Health & Vitality | 1 | fire |
+| `finances` | Finances & Resources | 2 | earth |
+| `intellectual` | Intellectual & Communication | 3 | air |
+| `home` | Home & Foundation | 4 | water |
+| `creative` | Creative Expression | 5 | fire |
+| `routines` | Routines & Service | 6 | earth |
+| `love` | Love & Partnership | 7 | air |
+| `emotional` | Emotional Depth | 8 | water |
+| `vision` | Vision & Expansion | 9 | fire |
+| `career` | Career & Legacy | 10 | earth |
+| `social` | Social & Community | 11 | air |
+| `spiritual` | Spiritual & Transcendence | 12 | water |
+
+**Element grouping for area grid display:**
+- **Fire row:** health (1), creative (5), vision (9)
+- **Earth row:** finances (2), routines (6), career (10)
+- **Air row:** intellectual (3), love (7), social (11)
+- **Water row:** home (4), emotional (8), spiritual (12)
+
+---
+
+## Computation Rules
+
+### Win Analytics
+
+**Source:** `MEMORY/wins.jsonl` — filter entries where `date` is within last 90 days.
+
+```
+total90d = count of wins in last 90 days
+weeklyAvg = total90d / 13 (90 days ≈ 13 weeks)
+
+byArea[areaSlug] = {
+  count: wins in this area (90 days),
+  trend: [week-4 count, week-3 count, week-2 count, week-1 count]
+    // where week-1 = most recent full week
+}
+
+byWeek = array of { week: "WNN", count: N } for last 13 weeks
+
+longestStreak = max consecutive days with >= 1 win (looking at last 90 days)
+currentStreak = consecutive days ending today/yesterday with >= 1 win
+```
+
+### Area Health Score (0-100)
+
+For each of the 12 areas, compute:
+
+```
+winsScore    = min(winCount90d / 10, 1.0) * 40   // 40% weight, capped at 10 wins
+goalsScore   = hasGoal ? 25 : 0                    // 25% weight, binary
+projectScore = min(projectCount / 3, 1.0) * 20    // 20% weight, capped at 3 projects
+trendScore   = trendDirection * 15                  // 15% weight
+
+trendDirection:
+  - rising (week-1 > week-3 average)  = 1.0
+  - flat                               = 0.5
+  - falling (week-1 < week-3 average) = 0.0
+
+healthScore = winsScore + goalsScore + projectScore + trendScore
+```
+
+### Goal Enrichment
+
+For each goal in `active-goals.yaml`:
+
+1. If `key_results` exist, compute `pct` for each: `Math.round((current / target) * 100)`
+2. Build `childGoals` array by finding goals at the next scale down where `parent_goal` matches this goal's `id`
+3. Preserve `connected_hhg` as `connectedHhg` for annual goals
+
+### Area Enrichment
+
+For each of the 12 areas:
+
+1. `winCount90d` — Count wins in this area from winAnalytics.byArea
+2. `winTrend` — 4-week trend array from winAnalytics.byArea
+3. `projectCount` — Count projects with matching area
+4. `activeGoals` — IDs of active goals at any scale with matching area
+5. `hasGoal` — `activeGoals.length > 0`
+6. `healthScore` — Computed per formula above
+
+---
+
+## Data Source Queries
+
+### Local Files (Always Available)
+
+| Data | File | Extraction |
+|------|------|-----------|
+| VPER state | `TIME/current-period.yaml` | Parse YAML: vper_phase, phase_started, elemental_balance, element_focus |
+| Goals | `TIME/active-goals.yaml` | Parse YAML: annual.goals, quarterly.goals, monthly.goals, weekly.goals |
+| Wins | `MEMORY/wins.jsonl` | Read lines, parse JSON per line, filter by date (skip _schema line) |
+| Vision — HHGs | `QUANTUM/vision/high-hard-goals.md` | Parse markdown headings/list items as HHG entries |
+| Vision — FPs | `QUANTUM/vision/favorite-problems.md` | Parse markdown headings/list items |
+| Vision — MTPs | `QUANTUM/vision/massively-transformative-purposes.md` | Parse markdown headings/list items |
+| Projects | `SPACE/projects/` | Read each .md or .yaml file for title, status, area |
+| User name | `QUANTUM/personal-context/0-life-vision-manifesto.md` | Extract name from first heading or context |
+| Meta | `TIME/current-period.yaml` | current_year, current_quarter, current_month, current_week |
+
+### Tana MCP (Optional — Enhanced)
+
+If Tana MCP is available, run these queries **in parallel** to enrich local data:
+
+```
+// Active goals (all scales)
+search_nodes({ query: { and: [{ hasType: "[GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 20 })
+
+// Wins (last 90 days)
+search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 90 } }]}, limit: 200 })
 
 // Active projects
 search_nodes({ query: { and: [
@@ -27,151 +227,19 @@ search_nodes({ query: { and: [
 
 // Key areas
 search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
-
-// Vision (HHGs only for overview)
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 10 })
 ```
 
-**Local File Sources:**
-- Goals: `TIME/active-goals.yaml` -- all sections (weekly, monthly, quarterly, annual)
-- Wins: `MEMORY/wins.jsonl` -- filter last 14 days
-- Projects: `SPACE/projects/` -- list project files with status
-- Areas: 12 Key Area slugs from ROUTING.md + win counts from wins.jsonl
-- Vision: `QUANTUM/vision/high-hard-goals.md` -- parse HHG entries
+Replace `[BRACKET_IDS]` with actual Tana IDs from `SYSTEM/tana-reference/tag-ids.md`.
 
-**Data sections:** goals, wins, projects, areas, vision.hhgs
-
-**Layout:** 3-column grid on desktop
-- Left: Goals cascade (annual -> quarterly -> monthly -> weekly)
-- Center: Recent wins list + win count
-- Right: Active projects + area attention indicators
+**Merge rule:** Local files are canonical. Tana data enriches but never overwrites local entries.
 
 ---
 
-## View: Weekly
+## VPER Phase Mapping
 
-**Description:** This week's wins, goals, and tasks.
-
-**Tana Queries:**
-```
-// This week's wins
-search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 7 } }]}, limit: 50 })
-
-// Weekly goals
-search_nodes({ query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { created: { last: 10 } }]}, limit: 10 })
-
-// Tasks due this week (not done)
-search_nodes({ query: { and: [{ hasType: "[TASK_TAG_ID]" }, { not: { is: "done" } }]}, limit: 30 })
-
-// Notes created this week
-search_nodes({ query: { and: [{ hasType: "[NOTE_TAG_ID]" }, { created: { last: 7 } }]}, limit: 20 })
-```
-
-**Local File Sources:**
-- Wins: `MEMORY/wins.jsonl` -- filter last 7 days
-- Goals: `TIME/active-goals.yaml` -- `weekly.goals` section
-- Decisions: `MEMORY/decisions.jsonl` -- filter last 7 days (substitute for notes)
-
-**Data sections:** wins, goals.weekly, tasks, notes
-
-**Layout:** 2-column grid
-- Left: Weekly goals (with done/not-done status) + tasks
-- Right: Wins list + notes created
-
----
-
-## View: Goals
-
-**Description:** Goal cascade across all time horizons.
-
-**Tana Queries:**
-```
-// All non-done goals at every level
-search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-
-// Recently completed goals (last 30 days)
-search_nodes({ query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { done: { last: 30 } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { done: { last: 14 } }]}, limit: 20 })
-
-// HHGs for vision context
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 10 })
-```
-
-**Local File Sources:**
-- Goals: `TIME/active-goals.yaml` -- all sections, check status field for completed
-- Vision: `QUANTUM/vision/high-hard-goals.md` -- parse HHG entries
-
-**Data sections:** goals (all levels), vision.hhgs
-
-**Layout:** Single column, hierarchical
-- HHGs at top (vision anchor)
-- Annual goals -> Quarterly goals -> Monthly goals -> Weekly goals
-- Each level shows active + recently completed
-- Status badges: Active, Completed, Backlog
-
----
-
-## View: Areas
-
-**Description:** 12 life area attention heatmap.
-
-**Tana Queries:**
-```
-// All 12 key areas
-search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
-
-// Wins by area (last 90 days -- need to count per area)
-search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 90 } }]}, limit: 200 })
-
-// Active projects (to count per area)
-search_nodes({ query: { and: [
-  { hasType: "[PROJECT_TAG_ID]" },
-  { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", stringValue: "Active" } }
-]}, limit: 30 })
-
-// Active goals (to check which areas have goals)
-search_nodes({ query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-```
-
-**Local File Sources:**
-- Areas: 12 Key Area slugs from ROUTING.md: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`, `love`, `emotional`, `vision`, `career`, `social`, `spiritual`
-- Wins: `MEMORY/wins.jsonl` -- filter last 90 days, group by `area` field
-- Projects: `SPACE/projects/` -- count per area
-- Goals: `TIME/active-goals.yaml` -- check `area` field on active goals
-
-**Data sections:** areas (enriched with win counts, project counts, goal presence)
-
-**Layout:** 4x3 grid of area cards
-- Each card: area name, win count (90 days), active projects, has-goal indicator
-- Color intensity based on activity level (more wins = warmer color)
-- Neglected areas highlighted (0 wins, 0 projects)
-
----
-
-## View: Wins
-
-**Description:** Win timeline with patterns and area breakdown.
-
-**Tana Queries:**
-```
-// All wins from last 90 days
-search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 90 } }]}, limit: 200 })
-
-// Key areas for grouping
-search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
-```
-
-**Local File Sources:**
-- Wins: `MEMORY/wins.jsonl` -- filter last 90 days
-- Areas: 12 Key Area slugs from ROUTING.md for grouping
-
-**Data sections:** wins (full list), areas (for grouping)
-
-**Layout:** Timeline + sidebar
-- Main: Win timeline sorted by date, grouped by week
-- Sidebar: Area breakdown (bar chart), total count, weekly average
-- Highlight: Longest streak, most active area, recent momentum
+| Phase | Element | Icon | Color |
+|-------|---------|------|-------|
+| vision | Fire | flame | #ef6c00 |
+| plan | Air | wind | #0097a7 |
+| execute | Earth | mountain | #2e7d32 |
+| review | Water | droplet | #1565c0 |
