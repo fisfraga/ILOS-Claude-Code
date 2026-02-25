@@ -34,7 +34,7 @@ Do NOT load all modules. Follow progressive disclosure.
 
 | Trigger | Skill | Extra Context |
 |---------|-------|---------------|
-| dashboard, generate dashboard, overview, life dashboard, ILOS dashboard | `/dashboard` | `TIME/MODULE.md`, `MEMORY/MODULE.md`, relevant YAML/JSONL files |
+| dashboard, open dashboard, overview, life dashboard, ILOS dashboard | `/dashboard` | `dashboard/` web app (primary build target) |
 | architect, system design, new schema, data structure, infrastructure | `/architect` | — |
 | visualize, chart, graph, interactive view | `/dashboard` | Relevant data files |
 
@@ -42,9 +42,31 @@ Do NOT load all modules. Follow progressive disclosure.
 
 **When no match is found:** Use default behavior below.
 
+## Primary Build Target: `dashboard/` Web App
+
+The ILOS Dashboard is a Node.js web app at `dashboard/`. It is the **primary build target** for this agent.
+
+```
+dashboard/
+├── server.js          # HTTP server: /api/data + static serving
+├── lib/analytics.js   # buildData() — all data computation
+├── lib/parser.js      # File readers (YAML, JSONL, Markdown)
+├── lib/graceful.js    # safeRead() — graceful file-not-found handling
+└── public/
+    ├── index.html     # SPA shell
+    ├── style.css      # All styles
+    └── app.js         # Client-side router + 15 view renderers
+```
+
+**Maintenance tasks** (when requested):
+- Add new views → `app.js`: add to `ROUTES` + write `renderXxx(container)` function
+- Style changes → `public/style.css` directly
+- Data computation → `lib/analytics.js` `buildData()` function
+- New data source → add parser in `lib/parser.js` + integrate in `lib/analytics.js`
+
 ## Default Behavior
 
-System-level building and design. Generate zero-dependency HTML dashboards using real ILOS data (never placeholders). Design data schemas following the format-function mapping: YAML for mutable state, JSONL for append-only memory, Markdown for narrative content. All built artifacts save to `SPACE/products/`. Open generated files for immediate user review.
+System-level building and design. Maintain the `dashboard/` web app using real ILOS data (never placeholders). Design data schemas following the format-function mapping: YAML for mutable state, JSONL for append-only memory, Markdown for narrative content. For one-off visualizations not suited to the web app, save HTML artifacts to `SPACE/products/`.
 
 ## Authority
 
@@ -65,14 +87,15 @@ System-level building and design. Generate zero-dependency HTML dashboards using
 
 1. Read real data — never use placeholder or example data in dashboards or visualizations
 2. Follow format-function mapping — YAML for mutable state, JSONL for append-only, MD for narrative
-3. Zero-dependency HTML — all visualizations must work offline, no CDN links, inline CSS/JS only
-4. Save all artifacts to `SPACE/products/` with descriptive filenames
-5. Document any schema changes or additions in `ILOS-KNOWLEDGE/schemas.md`
+3. Dashboard is a live web app — edit `public/style.css` or `public/app.js` in place; a browser refresh picks up changes immediately
+4. For one-off visualizations, zero-dependency HTML — offline-capable, no CDN, inline CSS/JS
+5. Save one-off artifacts to `SPACE/products/` with descriptive filenames
+6. Document any schema changes or additions in `ILOS-KNOWLEDGE/schemas.md`
 
 ## Key Principles
 
-1. Zero-dependency HTML files for all visualizations
+1. The `dashboard/` web app is the canonical dashboard — maintain it, don't regenerate static HTML
 2. Always read real data — never use placeholders
-3. Save all artifacts to SPACE/products/
-4. Open generated files for immediate user review
-5. Document schemas in ILOS-KNOWLEDGE/schemas.md
+3. Browser refresh = data refresh (server reads files on every `/api/data` request)
+4. One-off HTML artifacts save to `SPACE/products/`; open them for immediate user review
+5. Document schemas in `ILOS-KNOWLEDGE/schemas.md`

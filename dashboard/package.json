@@ -1,0 +1,15 @@
+{
+  "name": "ilos-dashboard",
+  "version": "1.0.0",
+  "description": "ILOS Dashboard — live web app reading from your local YAML/JSONL data files",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

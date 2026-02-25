@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ILOS Dashboard</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Loading overlay — shown while data fetches -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading your ILOS data…</div>
+</div>
+
+<!-- Error overlay — shown if server is unreachable -->
+<div id="error-overlay">
+  <div class="error-icon">⚠️</div>
+  <div class="error-msg">Could not reach the ILOS data server.<br>Make sure the server is running (<code>npm start</code> in the dashboard directory).</div>
+  <button class="retry-btn" onclick="location.reload()">Retry</button>
+</div>
+
+<!-- Desktop Sidebar -->
+<aside class="sidebar">
+  <div class="brand">
+    <span style="font-size:1.2rem">&#9672;</span>
+    <span class="brand-text">ILOS</span>
+  </div>
+  <nav id="sidebar-nav"></nav>
+  <div class="sidebar-footer">
+    <button id="theme-toggle" title="Toggle theme">&#9788;</button>
+    <span class="label">Theme</span>
+  </div>
+</aside>
+
+<!-- Mobile Bottom Bar -->
+<div class="mobile-bar" id="mobile-nav"></div>
+
+<!-- Main Content -->
+<div class="main">
+  <div class="main-header">
+    <h1 id="page-title">Dashboard</h1>
+    <div class="meta" id="header-meta"></div>
+  </div>
+  <div id="content"></div>
+</div>
+
+<!-- VPER Mini-Indicator -->
+<div class="vper-mini" id="vper-mini"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -181,6 +181,7 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 | North Star | `/north-star` | 45-90 min | Fire | Guided workshop for FPs/MTPs/HHGs |
 | Build | `/build` | Variable | Earth | Focused execution session |
 | Context Update | `/context-update` | 5-10 min | Ether | Extract signals from reviews into context |
+| Cosmic Profile | `/cosmic-profile` | 5-10 min | Ether | Input Astrology / Human Design / Gene Keys data — powers Cosmic Blueprint teaser |
 | Dashboard | `/dashboard` | 2-3 min | Earth | Generate visual HTML dashboard |
 | Area Review | `/area-review` | Variable | Earth | Deep dive into a single Key Area |
 | Project Kickoff | `/project-kickoff` | 15-30 min | Air→Earth | Structured project initiation |
@@ -240,6 +241,7 @@ The ILOS system has two layers: a **system orchestrator** and five **elemental c
 | **HEPHAESTUS** (Builder) | Earth | Execution, building products, shipping | `/build`, `/architect`, product work |
 | **MNEMOSYNE** (Archivist) | Water | Memory, context extraction, win patterns | `/win`, `/context-update`, review celebrate phases |
 | **SOPHIA** (Sage) | Ether | Teaching, understanding, onboarding | `/guide`, "explain...", "what is...", "how does...", "I'm new" |
+| **PYTHIA** (Self-Knower) | Ether | Personal context, self-knowledge, Cosmic Blueprint profiles | `/context-update`, `/cosmic-profile`, "update my context", "my cosmic profile" |
 
 ### How They Interact
 - User opens Claude Code → ILOS Master greets with awareness of current state
@@ -249,6 +251,7 @@ The ILOS system has two layers: a **system orchestrator** and five **elemental c
 - User types `/alignment` → PARACELSUS activates for coaching
 - User asks "what is ILOS?" or "explain Gap to Gain" → ILOS Master routes to SOPHIA (`/guide`)
 - User types `/guide` → SOPHIA activates as the Wisdom Teacher
+- User types `/cosmic-profile` or says "update my context" → PYTHIA activates for self-knowledge and context maintenance
 
 ### Mode Behavior
 - **Default:** ILOS Master handles initial interactions and routes appropriately
