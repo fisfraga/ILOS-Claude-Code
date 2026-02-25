@@ -71,6 +71,31 @@ If Tana MCP is configured, you can also:
 
 **Local files are always the canonical source.** Tana is a sync target, not a dependency.
 
+### Sync System
+
+ILOS supports two-mode bidirectional sync between local files and Tana:
+
+| Mode | What Syncs | When to Use |
+|---|---|---|
+| **Full** (default) | Everything — areas with full content, all projects, complete history, all 9 context files | Want Tana as complete life mirror |
+| **Partial** | Goals, vision, area/project/topic metadata, recent wins, open decisions, 4 core context files | Lighter overhead, local-first users |
+
+**Sync direction rules:**
+- Tana → Local: areas, projects, topics, vision (Tana is source of truth for structure)
+- Local → Tana: wins, decisions (local is canonical for episodic memory)
+- Bidirectional: goals (status + content), personal context
+
+**Getting started with sync:**
+1. Run `/tana-understand` to discover your workspace IDs (one time)
+2. Run `/sync-setup` to choose your mode and configure preferences
+3. Run `/sync` anytime to sync, or use `/sync status` to check state
+
+**Auto-sync triggers** (configurable in `SYSTEM/sync-config.yaml`):
+- `/morning` shows a reminder if last sync was > 2 days ago
+- `/weekly-review` runs a goals + wins push before the review starts
+
+**Sync files:** `SYSTEM/sync-config.yaml` (user config) · `SYSTEM/sync-state.yaml` (auto-managed state)
+
 ### Common Tana Query Patterns
 
 **MCP Constraints:** All Tana MCP calls must be sequential (one at a time — the server supports only one active connection). Tana MCP tools are only available in the main conversation, not in subagents.
@@ -164,9 +189,12 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 | Strategist | `/strategist` | Variable | Air | Deep planning and strategy session |
 | Architect | `/architect` | Variable | Earth | System design and dashboard deployment |
 | Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
+| Tana Sync | `/sync` | 5-15 min | Ether | Bidirectional sync with Tana (full or partial) |
+| Sync Setup | `/sync-setup` | 5-10 min | Ether | First-time sync configuration wizard |
 | Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
 | Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
 | Tana Understand | `/tana-understand` | 10-20 min | Air | Explore and document Tana system |
+| ILOS Guide | `/guide` | Variable | Ether | Understand ILOS — methodology, philosophy, technical implementation, or tool usage |
 | Help | `/help` | Instant | System | Skill catalog + context-aware suggestions |
 
 ---
@@ -211,6 +239,7 @@ The ILOS system has two layers: a **system orchestrator** and five **elemental c
 | **ATHENA** (Strategist) | Air | Goals, planning, prioritization | `/morning`, `/strategist`, `/project-kickoff`, review plan phases |
 | **HEPHAESTUS** (Builder) | Earth | Execution, building products, shipping | `/build`, `/architect`, product work |
 | **MNEMOSYNE** (Archivist) | Water | Memory, context extraction, win patterns | `/win`, `/context-update`, review celebrate phases |
+| **SOPHIA** (Sage) | Ether | Teaching, understanding, onboarding | `/guide`, "explain...", "what is...", "how does...", "I'm new" |
 
 ### How They Interact
 - User opens Claude Code → ILOS Master greets with awareness of current state
@@ -218,6 +247,8 @@ The ILOS system has two layers: a **system orchestrator** and five **elemental c
 - User asks "I feel stuck" → ILOS Master routes to PARACELSUS for coaching
 - User asks "where are my wins stored?" → ILOS Master answers directly (system knowledge)
 - User types `/alignment` → PARACELSUS activates for coaching
+- User asks "what is ILOS?" or "explain Gap to Gain" → ILOS Master routes to SOPHIA (`/guide`)
+- User types `/guide` → SOPHIA activates as the Wisdom Teacher
 
 ### Mode Behavior
 - **Default:** ILOS Master handles initial interactions and routes appropriately
@@ -243,6 +274,7 @@ The ILOS system has two layers: a **system orchestrator** and five **elemental c
 12. **When excited:** Match energy, channel into concrete steps, check for over-commitment
 13. **After reviews, scan for personal context signals** — Update `QUANTUM/personal-context/` files when insights emerge
 14. **Route coaching to PARACELSUS** — system questions are answered directly by ILOS Master; emotional/alignment needs go to PARACELSUS
+15. **Route learning to SOPHIA** — when users ask "what is...", "explain...", "why does...", "how does...", or "I'm new" → suggest `/guide` or activate SOPHIA
 
 ---
 

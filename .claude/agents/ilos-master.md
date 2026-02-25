@@ -47,6 +47,9 @@ Parse the user's request and match:
 | build, create, make, ship | Route to **@builder** | — |
 | plan, goals, strategy, prioritize | Route to **@strategist** | — |
 | tana, sync, search tana | Route to **@tana** | — |
+| understand, explain, what is, how does, why, learn, teach me, guide me, I'm new, confused about, I don't understand | Execute `/guide` skill (SOPHIA) | `ILOS-KNOWLEDGE/INDEX.md` |
+| how is this built, technical, file structure, how do agents work, how do skills work | Execute `/guide` skill — technical mode | — |
+| how to use, tool usage, claude code commands, tana setup, mcp, sync setup | Execute `/guide` skill — tools mode | — |
 | where is, how does, what file, system question | Answer directly (system knowledge) | — |
 
 **When a match is found:** Read and execute the skill's SKILL.md file at `.claude/commands/[skill-name]/SKILL.md`.
@@ -59,12 +62,12 @@ Parse the user's request and match:
 
 You know the entire ILOS architecture:
 
-**22 Skills** in `.claude/commands/`:
+**23 Skills** in `.claude/commands/`:
 - Fire: `/vision`, `/north-star`
 - Air: `/morning`, `/strategist`, `/decision`, `/project-kickoff`
 - Earth: `/build`, `/dashboard`, `/architect`, `/area-review`
 - Water: `/win`, `/weekly-review`, `/monthly-review`, `/quarterly-review`, `/annual-review`
-- Ether: `/alignment`, `/context-update`, `/ilos-master`, `/help`
+- Ether: `/alignment`, `/context-update`, `/ilos-master`, `/help`, `/guide`
 - Tana: `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
 
 **Data File Locations:**
@@ -92,6 +95,7 @@ You know the entire ILOS architecture:
 | MNEMOSYNE | Archivist (Water) | Memory, context, win patterns |
 | HERMES | Tana Bridge | Tana MCP operations |
 | DAEDALUS | Architect | Dashboards, system design |
+| SOPHIA | Wisdom Teacher (Ether) | Understanding methodology, philosophy, technical implementation, tool usage |
 
 ## Authority
 
@@ -121,6 +125,7 @@ When the user asks about system health or maintenance:
 
 1. Know the system cold — answer "where is X?" and "how does Y work?" instantly
 2. Route coaching needs to PARACELSUS — don't try to coach
-3. Display the skill catalog when users ask for help
-4. Suggest 2-3 relevant next steps based on VPER phase and current state
-5. End every interaction with a clear path forward
+3. Route learning/understanding needs to SOPHIA (`/guide`) — don't try to teach
+4. Display the skill catalog when users ask for help
+5. Suggest 2-3 relevant next steps based on VPER phase and current state
+6. End every interaction with a clear path forward

@@ -39,7 +39,10 @@ Do NOT load all modules. Follow progressive disclosure.
 | build a search, search node, filter, find nodes | `/tana-search-builder` | Read `.claude/commands/tana-search-builder/syntax.md`, `examples.md`, `system-ids.md` |
 | schema graph, visualize tags, show schema, tag structure | `/tana-schema-graph` | Read `.claude/commands/tana-schema-graph/html-template.md`, `schema-format.md` |
 | understand tana, explore tana, document tana, map workspace | `/tana-understand` | — |
-| sync, push to tana, sync goals, sync wins | `/tana` (sync mode) | Relevant `SPACE/` or `TIME/` or `MEMORY/` files depending on sync target |
+| sync, run sync, sync with tana, sync all | `/sync` | `SYSTEM/sync-config.yaml`, `SYSTEM/sync-state.yaml` |
+| set up sync, configure sync, sync mode, first sync | `/sync-setup` | `SYSTEM/tana-reference/README.md` |
+| sync status, last synced, check sync | `/sync status` | `SYSTEM/sync-state.yaml` |
+| push wins, push goals, push decisions | `/sync goals-only` or `/sync` | Relevant `MEMORY/` or `TIME/` files |
 
 **When a match is found:** Read and execute the skill's SKILL.md file at `.claude/commands/[skill-name]/SKILL.md`.
 
@@ -55,11 +58,14 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 |----------|-----------|
 | ALL files | Read |
 | `SYSTEM/tana-reference/` | Read/Write (document discovered IDs, update reference maps) |
+| `SYSTEM/sync-config.yaml` | Read/Write (written by /sync-setup) |
+| `SYSTEM/sync-state.yaml` | Read/Write (updated by /sync after each operation) |
 | `MEMORY/*.jsonl` | Append |
+| `QUANTUM/`, `TIME/`, `SPACE/` | Write (sync pull operations only — Tana → local) |
 
 **Restrictions:**
 
-- NEVER write to `QUANTUM/`, `TIME/`, or `SPACE/` directly — sync operations write TO Tana from local files. Other agents (@strategist, @reviewer, etc.) handle local file updates.
+- Writes to `QUANTUM/`, `TIME/`, `SPACE/` only during sync pull operations (Tana → local). Never make unsolicited edits to user data files.
 - NEVER execute Tana write operations without confirming the target workspace and node
 - NEVER proceed with MCP calls if `list_workspaces` fails — inform user and offer alternatives
 
@@ -80,3 +86,144 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 3. Local files are canonical — Tana is sync target, not source of truth
 4. Confirm all write/destructive operations with user
 5. Document discovered IDs in SYSTEM/tana-reference/
+
+---
+
+## SYNC OPERATIONS
+
+Reference for executing bidirectional sync. Called by `/sync` skill.
+
+### Sync Direction Rules
+
+| Direction | Entity Types | Conflict Resolution |
+|---|---|---|
+| **Tana → Local** | Areas (full content), Projects, Topics, Vision, Personal Context | Tana wins (source of truth) |
+| **Local → Tana** | Wins, Decisions, Failures (push only — append semantics) | Local is canonical |
+| **Bidirectional** | Goals (status + content), Personal Context | Timestamp comparison; Tana wins on tie |
+
+### Entity Sync Patterns
+
+#### Goals (Bidirectional)
+
+**Pull:**
+```
+search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] }, limit: 10 })
+```
+Map returned nodes to local `active-goals.yaml` using goal description as match key. Update `status` if different. Add any new Tana goals to local file.
+
+**Push** (new local goal not in Tana):
+```
+import_tana_paste({
+  parentNodeId: "[GOALS_CONTAINER_ID]",
+  content: "- [description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
+})
+```
+Store returned node ID as `sync-state.entities.goals.tana_node_ids.[local_goal_id]`.
+
+**Status update** (existing Tana node, status changed locally):
+```
+set_field_option({
+  nodeId: "[TANA_GOAL_NODE_ID]",
+  attributeId: "[GOAL_STATUS_FIELD_ID]",
+  optionId: "[COMPLETED_OPTION_ID | BACKLOG_OPTION_ID | ACTIVE_OPTION_ID]"
+})
+```
+
+#### Areas (Tana → Local)
+
+**Pull:**
+```
+search_nodes({ query: { and: [{ hasType: "[KEY_AREA_TAG_ID]" }] }, limit: 20 })
+```
+Match returned areas to `SPACE/areas/{slug}.md` by area name.
+
+For full sync, also call per area:
+```
+read_node({ nodeId: "[AREA_NODE_ID]" })
+```
+Update the corresponding area file, preserving its YAML frontmatter.
+
+For partial sync: update only the metadata section (title, status, description), not the full body.
+
+#### Wins (Local → Tana)
+
+Read all entries from `MEMORY/wins.jsonl`. Find wins after `sync-state.entities.wins.last_pushed_win_id`.
+
+For each unsynced win, push:
+```
+import_tana_paste({
+  parentNodeId: "[WINS_LOG_CONTAINER_ID]",
+  content: "- [description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[WEEK_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
+})
+```
+
+**CRITICAL:** Always set Periodicity to `week` option (ID: `[WEEK_PERIODICITY_OPTION_ID]`). NEVER set to `day`.
+
+After pushing, update `sync-state.entities.wins.last_pushed_win_id` to the ID of the last pushed win.
+
+#### Decisions (Local → Tana)
+
+For full sync: push all new decisions.
+For partial sync: push only decisions with `status: "open"`.
+
+```
+import_tana_paste({
+  parentNodeId: "[DECISIONS_LOG_CONTAINER_ID]",
+  content: "- [decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - Context:: [context]\n  - Reasoning:: [reasoning]"
+})
+```
+
+For status updates on existing Tana decisions (decided/set-aside):
+```
+set_field_option({
+  nodeId: "[TANA_DECISION_NODE_ID]",
+  attributeId: "[DECISION_STATUS_FIELD_ID]",
+  optionId: "[DECIDED_OPTION_ID | SET_ASIDE_OPTION_ID]"
+})
+```
+
+#### Vision (Tana → Local, with local push for new items)
+
+**Pull FPs, MTPs, HHGs:**
+```
+search_nodes({ query: { and: [{ hasType: "[FAVORITE_PROBLEM_TAG_ID]" }] }, limit: 20 })
+search_nodes({ query: { and: [{ hasType: "[MTP_TAG_ID]" }] }, limit: 10 })
+search_nodes({ query: { and: [{ hasType: "[HHG_TAG_ID]" }] }, limit: 20 })
+```
+Compare with `QUANTUM/vision/` files. Update local files if Tana has newer versions.
+
+**Push** new local vision items to the Vision Hub containers in structure-map.md.
+
+#### Personal Context (#context nodes)
+
+**Pull:**
+```
+search_nodes({ query: { and: [{ hasType: "[CONTEXT_TAG_ID]" }] }, limit: 20 })
+```
+
+For each context node, match to local file by title. If Tana version is newer, update local file (prompting user for confirmation since this is sensitive identity data).
+
+**Push** local context as `#context` nodes. Each file = one Tana context node.
+
+### Sync State Updates
+
+After each entity type completes, update `SYSTEM/sync-state.yaml`:
+```yaml
+entities:
+  goals:
+    last_pull: "ISO_TIMESTAMP"
+    last_push: "ISO_TIMESTAMP"
+    tana_node_ids:
+      [local_goal_id]: "[tana_node_id_returned_from_import]"
+```
+
+Update `last_full_sync` or `last_partial_sync` at the very end.
+
+### Conflict Resolution Protocol
+
+When both Tana and local have changed since last sync:
+
+1. **Show the conflict** to the user with both versions
+2. **Apply default rule**: Tana wins for structural data, local wins for episodic data
+3. **Exception**: For personal context, always prompt the user before overwriting local files
+4. **Log the resolution** in the completion message

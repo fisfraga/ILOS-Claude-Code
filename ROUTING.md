@@ -37,6 +37,9 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Project initiation | SPACE/ + TIME/ | projects/README.md, active-goals.yaml |
 | Major decision | TIME/ + MEMORY/ | templates/major-decision.md, decisions.jsonl |
 | Tana operations | SYSTEM/ | tana-reference/, relevant SPACE/ or TIME/ files |
+| Sync with Tana / run sync | SYSTEM/ + skill | sync-config.yaml → `.claude/commands/sync/SKILL.md` |
+| Set up sync / configure sync mode | SYSTEM/ + skill | tana-reference/README.md → `.claude/commands/sync-setup/SKILL.md` |
+| Sync status / last synced | SYSTEM/ | sync-state.yaml |
 | System architecture | SYSTEM/ + ILOS-KNOWLEDGE/ | setup-guide.md, schemas.md |
 
 ---

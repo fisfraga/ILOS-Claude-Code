@@ -1,0 +1,110 @@
+_schema: ilos_sync_state
+_version: "1.0"
+_description: >
+  Auto-managed sync state. Tracks last sync timestamps and local-to-Tana node ID mappings.
+  DO NOT edit manually — this file is written by /sync after each successful sync operation.
+
+# ─────────────────────────────────────────────
+# LAST SYNC TIMESTAMPS
+# ─────────────────────────────────────────────
+last_full_sync: null
+last_partial_sync: null
+
+# ─────────────────────────────────────────────
+# ENTITY STATE
+# ─────────────────────────────────────────────
+# Each entity type tracks:
+#   last_pull: ISO timestamp of last Tana → local pull
+#   last_push: ISO timestamp of last local → Tana push
+#   tana_node_ids: map of local IDs to Tana node IDs
+#     (populated when items are pushed; enables updates vs creates)
+
+entities:
+
+  goals:
+    last_pull: null
+    last_push: null
+    tana_node_ids: {}
+    # Example entries after first sync:
+    # annual_2026_1: "TANA_NODE_ID_HERE"
+    # q1_2026_1: "TANA_NODE_ID_HERE"
+    # m01_2026_1: "TANA_NODE_ID_HERE"
+    # w08_2026_1: "TANA_NODE_ID_HERE"
+
+  areas:
+    last_pull: null
+    # Areas node IDs — populated from structure-map.md or discovered during sync
+    tana_node_ids:
+      health: ""
+      finances: ""
+      intellectual: ""
+      home: ""
+      creative: ""
+      routines: ""
+      love: ""
+      emotional: ""
+      vision: ""
+      career: ""
+      social: ""
+      spiritual: ""
+
+  projects:
+    last_pull: null
+    last_push: null
+    tana_node_ids: {}
+    # Example: "my-project-slug": "TANA_NODE_ID_HERE"
+
+  topics:
+    last_pull: null
+    last_push: null
+    tana_node_ids: {}
+    # Example: "my-topic-slug": "TANA_NODE_ID_HERE"
+
+  vision:
+    last_pull: null
+    last_push: null
+    tana_node_ids:
+      # Tana container node IDs for vision items
+      favorite_problems_container: ""
+      mtps_container: ""
+      hhgs_container: ""
+      # Individual item IDs populated after sync:
+      # fp_1: "TANA_NODE_ID_HERE"
+      # mtp_1: "TANA_NODE_ID_HERE"
+      # hhg_1: "TANA_NODE_ID_HERE"
+
+  personal_context:
+    last_pull: null
+    last_push: null
+    tana_node_ids:
+      context_container: ""
+      # Individual context node IDs populated after sync:
+      # context_0_manifesto: "TANA_NODE_ID_HERE"
+      # context_4_non_negotiables: "TANA_NODE_ID_HERE"
+      # context_5_work: "TANA_NODE_ID_HERE"
+      # context_8_identity: "TANA_NODE_ID_HERE"
+
+  wins:
+    last_push: null
+    last_pushed_win_id: null
+    # The ID of the most recently pushed win from wins.jsonl.
+    # On next push, only wins with IDs after this one will be synced.
+    # Example: "win_20260225_120000"
+
+  decisions:
+    last_push: null
+    last_pushed_decision_id: null
+    tana_node_ids: {}
+    # Maps local decision IDs to Tana node IDs for status updates
+    # Example: "dec_20260225_120000": "TANA_NODE_ID_HERE"
+
+  strategy_systems:
+    last_pull: null
+    last_push: null
+    tana_node_ids: {}
+
+  weekly_reviews:
+    last_push: null
+    tana_node_ids: {}
+    # Maps "YYYY-WNN" week keys to Tana voice review node IDs
+    # Example: "2026-W08": "TANA_NODE_ID_HERE"

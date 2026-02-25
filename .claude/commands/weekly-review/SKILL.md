@@ -40,6 +40,26 @@ Use **local file flow** (Steps L below).
 
 ---
 
+## Pre-Review Sync (Optional)
+
+**Before gathering wins**, check sync configuration:
+
+Read `SYSTEM/sync-config.yaml` (if it exists):
+- If `auto_sync.on_weekly_review` is `true` AND Tana MCP is available (test with `list_workspaces`):
+
+> "📡 Quick sync before we begin — pushing this week's wins and goals to Tana so both systems are current."
+
+Run a **goals-only + wins push** (not a full sync):
+1. Read `MEMORY/wins.jsonl` — push wins after `last_pushed_win_id` in `sync-state.yaml` to Tana
+2. Update goal statuses in Tana for any goals completed this week
+3. Update `sync-state.yaml` with new timestamps
+
+This takes < 1 minute and ensures the Tana review data is current.
+
+If Tana MCP is not available, or if `sync-config.yaml` doesn't exist, skip this step and proceed directly to Phase 1.
+
+---
+
 ## Phase 1: Review (Water)
 
 ### Step 1 — Gather wins

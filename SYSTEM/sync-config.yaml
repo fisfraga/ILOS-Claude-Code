@@ -1,0 +1,67 @@
+_schema: ilos_sync_config
+_version: "1.0"
+_description: >
+  ILOS sync configuration. Controls how local files stay in sync with your Tana workspace.
+  Edit manually or run /sync-setup to reconfigure interactively.
+  Run /sync to execute sync based on these settings.
+
+# ─────────────────────────────────────────────
+# SYNC MODE
+# ─────────────────────────────────────────────
+# full    — Sync everything: all areas (full content), all projects, all topics,
+#           complete win history, all personal context files, strategy systems.
+#           Best for users who want Tana as a complete bidirectional mirror.
+#
+# partial — Sync only what you need to operate daily: goals (all 4 levels),
+#           vision items (FPs/MTPs/HHGs), area/project/topic metadata only,
+#           recent wins, open decisions, 4 core context files.
+#           Best for users who want lighter sync overhead.
+#
+sync_mode: full
+
+# ─────────────────────────────────────────────
+# TANA WORKSPACE
+# ─────────────────────────────────────────────
+# Populated automatically by /tana-understand.
+# Required before running /sync.
+tana_workspace_id: ""
+
+# ─────────────────────────────────────────────
+# AUTO-SYNC TRIGGERS
+# ─────────────────────────────────────────────
+auto_sync:
+  # Show a sync reminder at the end of /morning if last sync was > 2 days ago
+  on_morning_reminder: true
+
+  # Run a goals + wins push at the start of /weekly-review
+  on_weekly_review: true
+
+# ─────────────────────────────────────────────
+# PARTIAL SYNC SETTINGS
+# (only used when sync_mode is "partial")
+# ─────────────────────────────────────────────
+partial_sync:
+  # Vision items — FPs, MTPs, HHGs (always included in partial)
+  include_vision: true
+
+  # Goals — all 4 levels: annual, quarterly, monthly, weekly (always included)
+  include_goals: true
+
+  # Areas: sync name, status, and description only (no full markdown content)
+  include_areas_metadata: true
+
+  # Projects: sync name, status, area, and desired outcome only
+  include_projects_metadata: true
+
+  # Topics: sync name, status, and area only
+  include_topics_metadata: true
+
+  # Personal context: only the 4 core files
+  # (0-life-vision-manifesto, 4-non-negotiables, 5-work-patterns, 8-identity-values)
+  include_core_context: true
+
+  # Wins: only sync wins from the last N days (0 = all, default 30)
+  include_recent_wins_days: 30
+
+  # Decisions: only sync decisions with status "open"
+  include_open_decisions: true

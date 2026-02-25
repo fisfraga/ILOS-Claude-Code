@@ -188,3 +188,20 @@ Morning energy. Grounding. Brief. No long speeches — the user wants clarity, n
 - No weekly goals? Say so warmly — "Clean slate this week. Would you like to set goals now, or run `/weekly-review` first?"
 - No recent wins? Encourage — "Let's build some momentum today."
 - Goals file has only examples? Acknowledge this is a fresh workspace and offer to help set real goals.
+
+---
+
+## Sync Reminder (Optional — End of Morning)
+
+After delivering the morning planning overview and receiving the user's focus:
+
+**Check sync-config.yaml (if it exists):**
+- If `auto_sync.on_morning_reminder` is `true`:
+  - Read `sync-state.yaml` to check `last_full_sync` and `last_partial_sync`
+  - If both are null or the most recent sync was more than 2 days ago:
+
+> "💡 Quick sync note: Your last Tana sync was [N days ago / never]. Run `/sync` anytime to keep your goals and wins in sync with Tana."
+
+Keep this note brief — one line. Do not interrupt the morning flow or run sync automatically. This is a gentle nudge only.
+
+If `sync-config.yaml` doesn't exist yet, skip this step entirely.
