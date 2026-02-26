@@ -28,13 +28,11 @@ Check `SYSTEM/tana-reference/tag-ids.md` and `SYSTEM/tana-reference/structure-ma
 
 **If the files are empty or still contain placeholder text:**
 
-> "Before setting up sync, we need to document your Tana workspace structure.
+> "⚠️ Tana reference IDs haven't been populated yet. You can configure your sync preferences now, but actual syncing will require running `/tana-understand` first to map your workspace.
 >
-> Run `/tana-understand` first — it will explore your Tana workspace and automatically fill in all the tag IDs, field IDs, and node IDs that sync needs.
->
-> Come back to `/sync-setup` once `/tana-understand` is complete."
+> **Recommendation:** Run `/tana-understand` after this setup to enable full sync. For now, let's configure your preferences."
 
-Stop here. Do not proceed until reference files are populated.
+**Continue to Step 1B regardless.** Do NOT stop here — the user can configure preferences and trigger setup without having Tana IDs already populated.
 
 **If the files have real IDs:**
 
@@ -47,10 +45,14 @@ Stop here. Do not proceed until reference files are populated.
 list_workspaces()
 ```
 
-If this fails:
-> "Tana MCP is not currently available. You can still configure sync settings now, but sync won't run until MCP is connected.
+If this fails or is not available:
+> "Tana MCP is not currently connected. You can still configure your sync preferences now — sync will run once MCP is set up.
 >
-> To enable Tana MCP: check your Claude Code settings and ensure the Tana MCP server is configured. See `SYSTEM/tana-reference/README.md` for setup instructions."
+> To enable Tana MCP: check your Claude Code settings and ensure the Tana MCP server is configured. See `SYSTEM/tana-reference/README.md` for setup instructions.
+>
+> Continuing with preference setup..."
+
+**Continue to Step 2 regardless.** The user can set all preferences without a live MCP connection. Only the final "Run first sync?" step (Step 6) requires MCP.
 
 If available: note the workspace ID and confirm it matches `tana_workspace_id` in any existing sync-config.yaml.
 
@@ -165,6 +167,9 @@ Confirm:
 
 ## Step 6 — Offer Initial Sync
 
+**Only offer this if Tana MCP was available in Step 1B AND reference IDs were populated in Step 1A.**
+
+If both conditions are met:
 > "Your sync is configured. Would you like to run your first sync now? This will:
 > - Pull your current [full: all | partial: goals, areas, vision, context] data from Tana
 > - Check for any local items not yet in Tana
@@ -175,6 +180,15 @@ Confirm:
 If yes: execute the `/sync` skill.
 If no:
 > "No problem. Run /sync anytime when you're ready. It will be suggested during /morning and /weekly-review based on your auto-sync settings."
+
+**If Tana MCP was NOT available or reference IDs are not yet populated:**
+> "✅ Sync preferences saved to SYSTEM/sync-config.yaml.
+>
+> To activate sync:
+> 1. Run `/tana-understand` — maps your Tana workspace and fills in the required IDs (one-time setup, ~10 min)
+> 2. Run `/sync` — your preferences are already configured and ready to go
+>
+> Your auto-sync settings will activate once Tana is connected."
 
 ---
 

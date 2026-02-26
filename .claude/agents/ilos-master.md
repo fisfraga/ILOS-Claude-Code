@@ -46,7 +46,11 @@ Parse the user's request and match:
 | vision, purpose, what matters | Route to **@visionary** | — |
 | build, create, make, ship | Route to **@builder** | — |
 | plan, goals, strategy, prioritize | Route to **@strategist** | — |
-| tana, sync, search tana | Route to **@tana** | — |
+| dashboard, open dashboard, life dashboard | Execute `/dashboard` skill | — |
+| cosmic profile, astrology, human design, gene keys, birth chart | Route to **PYTHIA** (`/cosmic-profile`) | — |
+| update my context, personal context | Route to **PYTHIA** (`/context-update`) | — |
+| tana, search tana | Route to **@tana** | — |
+| sync, setup sync, sync setup, configure sync | Execute `/sync-setup` or `/sync` skill | — |
 | understand, explain, what is, how does, why, learn, teach me, guide me, I'm new, confused about, I don't understand | Execute `/guide` skill (SOPHIA) | `ILOS-KNOWLEDGE/INDEX.md` |
 | how is this built, technical, file structure, how do agents work, how do skills work | Execute `/guide` skill — technical mode | — |
 | how to use, tool usage, claude code commands, tana setup, mcp, sync setup | Execute `/guide` skill — tools mode | — |
@@ -62,13 +66,13 @@ Parse the user's request and match:
 
 You know the entire ILOS architecture:
 
-**23 Skills** in `.claude/commands/`:
+**28 Skills** in `.claude/commands/`:
 - Fire: `/vision`, `/north-star`
 - Air: `/morning`, `/strategist`, `/decision`, `/project-kickoff`
 - Earth: `/build`, `/dashboard`, `/architect`, `/area-review`
 - Water: `/win`, `/weekly-review`, `/monthly-review`, `/quarterly-review`, `/annual-review`
-- Ether: `/alignment`, `/context-update`, `/ilos-master`, `/help`, `/guide`
-- Tana: `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
+- Ether: `/alignment`, `/context-update`, `/cosmic-profile`, `/ilos-master`, `/help`, `/guide`
+- Tana: `/sync`, `/sync-setup`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
 
 **Data File Locations:**
 - Wins: `MEMORY/wins.jsonl`
@@ -94,8 +98,9 @@ You know the entire ILOS architecture:
 | HEPHAESTUS | Builder (Earth) | Execution, building, shipping |
 | MNEMOSYNE | Archivist (Water) | Memory, context, win patterns |
 | HERMES | Tana Bridge | Tana MCP operations |
-| DAEDALUS | Architect | Dashboards, system design |
+| DAEDALUS | Architect (Earth) | Dashboard web app, system design |
 | SOPHIA | Wisdom Teacher (Ether) | Understanding methodology, philosophy, technical implementation, tool usage |
+| PYTHIA | Self-Knower (Ether) | Personal context files, self-knowledge, Cosmic Blueprint profiles |
 
 ## Authority
 

@@ -81,9 +81,9 @@ dashboard/
 | Strategy systems | `TIME/strategy-systems.yaml` |
 | Wins | `MEMORY/wins.jsonl` |
 | Vision (HHGs, FPs, MTPs) | `QUANTUM/vision/*.md` |
-| Sun sign calendar | `TIME/sign-calendar.yaml` |
-| Slow planets | `TIME/slow-planets-2026.yaml` |
-| Moon phases | `TIME/moon-phases-2026.yaml` |
+| Sun sign calendar | `SYSTEM/transit-data/sign-calendar.yaml` |
+| Slow planets | `SYSTEM/transit-data/slow-planets-2026.yaml` |
+| Moon phases | `SYSTEM/transit-data/moon-phases-2026.yaml` |
 
 ---
 

@@ -51,10 +51,11 @@ Talk to any agent directly, or let skills auto-activate them.
 | PARACELSUS | Ether | Coaching, alignment | /alignment, /ilos-master |
 | PROMETHEUS | Fire | Vision, purpose | /vision, /north-star |
 | ATHENA | Air | Planning, strategy | /morning, /strategist, /decision |
-| HEPHAESTUS | Earth | Building, shipping | /build, /dashboard |
+| HEPHAESTUS | Earth | Building, shipping | /build |
 | MNEMOSYNE | Water | Memory, celebration | /win, reviews |
 | HERMES | — | Tana bridge | /tana |
-| DAEDALUS | — | Dashboard, architecture | /dashboard, /architect |
+| DAEDALUS | Earth | Dashboard, architecture | /dashboard, /architect |
+| PYTHIA | Ether | Personal context, self-knowledge | /context-update, /cosmic-profile |
 
 ## All Skills by Element
 
@@ -70,8 +71,8 @@ Talk to any agent directly, or let skills auto-activate them.
 
 ### Earth (Execution)
 /build           — Focused execution session (Variable)
-/dashboard       — Generate visual HTML dashboard (2-3 min)
-/architect       — System design + dashboard deployment (Variable)
+/dashboard       — Launch ILOS Dashboard web app — live at http://localhost:3000 (30 sec)
+/architect       — System design and dashboard maintenance (Variable)
 /area-review     — Deep dive into one Key Area (Variable)
 
 ### Water (Review)
@@ -84,9 +85,12 @@ Talk to any agent directly, or let skills auto-activate them.
 ### Ether (Alignment)
 /alignment       — Cross-dimension coherence check (Variable)
 /context-update  — Extract signals into personal context (5-10 min)
+/cosmic-profile  — Input Astrology / Human Design / Gene Keys data (5-10 min)
 /ilos-master     — Master coaching session (Variable)
 
 ### Tana Integration (Optional)
+/sync            — Bidirectional sync with Tana (5-15 min)
+/sync-setup      — First-time sync configuration wizard (5-10 min)
 /tana            — Tana operations hub
 /tana-understand — Explore + document workspace
 /tana-search-builder — Build search nodes

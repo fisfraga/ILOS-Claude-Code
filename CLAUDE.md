@@ -182,7 +182,7 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 | Build | `/build` | Variable | Earth | Focused execution session |
 | Context Update | `/context-update` | 5-10 min | Ether | Extract signals from reviews into context |
 | Cosmic Profile | `/cosmic-profile` | 5-10 min | Ether | Input Astrology / Human Design / Gene Keys data — powers Cosmic Blueprint teaser |
-| Dashboard | `/dashboard` | 2-3 min | Earth | Generate visual HTML dashboard |
+| Dashboard | `/dashboard` | 30 sec | Earth | Launch the live ILOS Dashboard web app at http://localhost:3000 — never generates static HTML |
 | Area Review | `/area-review` | Variable | Earth | Deep dive into a single Key Area |
 | Project Kickoff | `/project-kickoff` | 15-30 min | Air→Earth | Structured project initiation |
 | Decision | `/decision` | 15-30 min | Air | Major decision framework with logging |
