@@ -296,7 +296,11 @@ function parseProjects() {
   const projectDir = path.join(ROOT, 'SPACE/projects');
   if (!fs.existsSync(projectDir)) return [];
 
-  const files = fs.readdirSync(projectDir).filter(f => f.endsWith('.md') || f.endsWith('.yaml'));
+  const files = fs.readdirSync(projectDir).filter(f =>
+    (f.endsWith('.md') || f.endsWith('.yaml')) &&
+    f !== 'README.md' &&
+    !f.startsWith('_')
+  );
   const projects = [];
   files.forEach(f => {
     const fullPath = path.join(projectDir, f);
@@ -334,16 +338,29 @@ function parseProjects() {
    ============================================================ */
 
 function parseVision() {
-  const fps  = safeRead(() => parseMarkdownItems(readMarkdown('QUANTUM/vision/favorite-problems.md'))) || [];
-  const mtps = safeRead(() => parseMarkdownItems(readMarkdown('QUANTUM/vision/massively-transformative-purposes.md'))) || [];
+  // FPs: bullets and numbered items only — skip headings (they are category groupers)
+  const fps = safeRead(() =>
+    parseMarkdownItems(readMarkdown('QUANTUM/Vision/favorite-problems.md'),
+      { bulletsOnly: true, stripBold: true })
+  ) || [];
+
+  // MTPs: H2 headings = MTP titles; fall back to H3 if no H2 found
+  const mtps = safeRead(() => {
+    const text = readMarkdown('QUANTUM/Vision/massively-transformative-purposes.md');
+    const lvl2 = parseMarkdownItems(text, { headingLevel: 2, stripBold: true });
+    return lvl2.length ? lvl2 : parseMarkdownItems(text, { headingLevel: 3, stripBold: true });
+  }) || [];
+
+  // HHGs: H3 headings = actual goals (H2 headings are MTP groupers — skip them)
+  // Also extract timeframes from parentheses in title
   const hhgs = safeRead(() => {
-    const text = readMarkdown('QUANTUM/vision/high-hard-goals.md');
-    // HHGs may have timeframes in parentheses
-    return parseMarkdownItems(text).map(item => {
+    const text = readMarkdown('QUANTUM/Vision/high-hard-goals.md');
+    return parseMarkdownItems(text, { headingLevel: 3, stripBold: true }).map(item => {
       const m = item.title.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
       return m ? { title: m[1].trim(), timeframe: m[2].trim() } : item;
     });
   }) || [];
+
   return { fps, mtps, hhgs };
 }
 
@@ -788,6 +805,91 @@ function computeCosmicTeaser() {
 }
 
 /* ============================================================
+   DECISIONS ANALYTICS
+   ============================================================ */
+
+function computeDecisions() {
+  const all = (safeRead(() => readJsonl('MEMORY/decisions.jsonl')) || [])
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const open      = all.filter(d => d.status === 'open');
+  const decided   = all.filter(d => d.status === 'decided');
+  const setAside  = all.filter(d => d.status === 'set_aside');
+
+  const todayStr = today().toISOString().slice(0, 10);
+  const pendingReview = decided.filter(d => d.review_date && d.review_date <= todayStr);
+
+  const confidenceValues = decided.filter(d => typeof d.confidence === 'number').map(d => d.confidence);
+  const avgConfidence = confidenceValues.length
+    ? Math.round(confidenceValues.reduce((s, v) => s + v, 0) / confidenceValues.length * 10) / 10
+    : null;
+
+  const byArea = {};
+  all.forEach(d => {
+    if (d.area) byArea[d.area] = (byArea[d.area] || 0) + 1;
+  });
+
+  return { all, open, decided, setAside, pendingReview, avgConfidence, byArea };
+}
+
+/* ============================================================
+   LESSONS (FAILURES) ANALYTICS
+   ============================================================ */
+
+function computeLessons() {
+  const all = (safeRead(() => readJsonl('MEMORY/failures.jsonl')) || [])
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const bySeverity = { low: 0, medium: 0, high: 0 };
+  const byArea = {};
+  let withPrevention = 0;
+
+  all.forEach(l => {
+    if (l.severity && bySeverity[l.severity] !== undefined) bySeverity[l.severity]++;
+    if (l.area) byArea[l.area] = (byArea[l.area] || 0) + 1;
+    if (l.prevention && l.prevention.trim()) withPrevention++;
+  });
+
+  const topAreas = Object.entries(byArea)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([id, count]) => {
+      const area = KEY_AREAS.find(a => a.id === id);
+      return { id, name: area ? area.name : id, count };
+    });
+
+  return { all, bySeverity, byArea, withPrevention, topAreas };
+}
+
+/* ============================================================
+   EXPERIENCES ANALYTICS
+   ============================================================ */
+
+function computeExperiences() {
+  const all = (safeRead(() => readJsonl('MEMORY/experiences.jsonl')) || [])
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+  const byElement = { fire: 0, air: 0, earth: 0, water: 0, ether: 0 };
+  const byArea = {};
+  const highEmotional = [];
+  const cutoff90 = daysAgo(90);
+
+  all.forEach(e => {
+    if (e.element && byElement[e.element] !== undefined) byElement[e.element]++;
+    if (e.area) byArea[e.area] = (byArea[e.area] || 0) + 1;
+    if (typeof e.emotional_weight === 'number' && e.emotional_weight >= 8) highEmotional.push(e);
+  });
+
+  const recentInsights = all.filter(e => {
+    if (!e.insight || !e.insight.trim()) return false;
+    const d = toDateObj(e.date);
+    return d && d >= cutoff90;
+  });
+
+  return { all, byElement, byArea, highEmotional, recentInsights };
+}
+
+/* ============================================================
    MAIN: buildData()
    ============================================================ */
 
@@ -813,13 +915,19 @@ function buildData() {
   const cosmicTeaser = computeCosmicTeaser();
   const meta         = computeMeta(period, userName);
 
-  // 3. VPER
+  // 3. VPER (include lastReviews for review consistency tracker)
   const vper = period ? {
     phase: period.vper_phase || null,
     phaseStarted: period.phase_started || null,
     elementFocus: period.element_focus || null,
-    elementalBalance: period.elemental_balance || {}
+    elementalBalance: period.elemental_balance || {},
+    lastReviews: period.last_reviews || {}
   } : {};
+
+  // 4. Memory analytics (decisions, lessons, experiences)
+  const decisions    = computeDecisions();
+  const lessons      = computeLessons();
+  const experiences  = computeExperiences();
 
   return {
     meta,
@@ -835,7 +943,10 @@ function buildData() {
     cosmicTeaser,
     systems,
     systemsAnalytics,
-    alignment
+    alignment,
+    decisions,
+    lessons,
+    experiences
   };
 }
 

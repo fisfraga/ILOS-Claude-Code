@@ -33,10 +33,14 @@ function statusColor(s) { return s === 'active' ? 'var(--earth)' : s === 'comple
    ============================================================ */
 const ROUTES = {
   dashboard:           { render: renderDashboard,          icon: '\u25CE', label: 'Dashboard',        nav: true  },
+  vision:              { render: renderVision,             icon: '\u25B3', label: 'Vision',            nav: true  },
   alignment:           { render: renderAlignment,          icon: '\u221E', label: 'Alignment',         nav: true  },
   areas:               { render: renderAreas,              icon: '\u25EB', label: 'Areas',             nav: true  },
   goals:               { render: renderGoals,              icon: '\u25C8', label: 'Goals',             nav: true  },
   wins:                { render: renderWins,               icon: '\u2605', label: 'Wins',              nav: true  },
+  decisions:           { render: renderDecisions,          icon: '\u2696', label: 'Decisions',         nav: true  },
+  lessons:             { render: renderLessons,            icon: '\u25CB', label: 'Lessons',           nav: true  },
+  experiences:         { render: renderExperiences,        icon: '\u2764', label: 'Experiences',       nav: true  },
   learn:               { render: renderLearnHub,           icon: '\u25C9', label: 'Learn',             nav: true  },
   'learn/vper':        { render: renderLearnVper,          icon: '',       label: 'VPER Cycle',        nav: false },
   'learn/elements':    { render: renderLearnElements,      icon: '',       label: 'Elements',          nav: false },
@@ -374,13 +378,41 @@ function renderDashboard(container) {
 
   const vperCard = document.createElement('div');
   vperCard.className = 'card';
-  vperCard.innerHTML = `<div class="card-title">VPER Cycle</div>
+  const phaseCap = (vper.phase || 'execute').charAt(0).toUpperCase() + (vper.phase || 'execute').slice(1).toLowerCase();
+  const vperCoachingNotes = {
+    Vision:  'You\'re in Vision phase. Focus on clarity, not output. Let ideas breathe.',
+    Plan:    'You\'re in Planning phase. Set max 3 goals before executing.',
+    Execute: 'You\'re in Execution phase. Ship, don\'t plan. Trust the groundwork.',
+    Review:  'You\'re in Review phase. Start with wins before analyzing gaps.'
+  };
+  const vperNote = vperCoachingNotes[phaseCap] || '';
+  let vperHTML = `<div class="card-title">VPER Cycle</div>
     <div style="display:flex;justify-content:center">${svgVperWheel(vper.phase || 'execute')}</div>`;
+  if (vper.phaseStarted) vperHTML += `<div style="font-size:.68rem;color:var(--c3);text-align:center;margin-top:4px">Phase started: ${vper.phaseStarted}</div>`;
+  if (vper.elementFocus) vperHTML += `<div style="text-align:center;margin-top:4px"><span style="font-size:.68rem;padding:2px 8px;border-radius:10px;background:var(--ether-soft);color:var(--ether)">Focus: ${vper.elementFocus}</span></div>`;
+  if (vperNote) vperHTML += `<div style="margin-top:10px;padding:8px 10px;border-radius:6px;background:var(--bg3);font-size:.75rem;color:var(--c2);font-style:italic;line-height:1.4">${vperNote}</div>`;
+  vperCard.innerHTML = vperHTML;
   topRow.appendChild(vperCard);
 
   const balCard = document.createElement('div');
   balCard.className = 'card';
-  balCard.innerHTML = `<div class="card-title">Elemental Balance</div>${svgElementalBar(vper.elementalBalance)}`;
+  const balData = vper.elementalBalance || {};
+  const elems = ['fire','air','earth','water'];
+  const elemLabels = { fire: 'Fire', air: 'Air', earth: 'Earth', water: 'Water' };
+  const rawElemColors = { fire: '#ef6c00', air: '#0097a7', earth: '#2e7d32', water: '#1565c0' };
+  let balHTML = `<div class="card-title">Elemental Balance</div>${svgElementalBar(balData)}`;
+  const elemNotes = elems.filter(e => balData[e] && balData[e].notes);
+  if (elemNotes.length) {
+    balHTML += '<div style="margin-top:14px">';
+    elemNotes.forEach(e => {
+      balHTML += `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px">
+        <span style="flex-shrink:0;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px;background:${rawElemColors[e]}22;color:${rawElemColors[e]}">${elemLabels[e]}</span>
+        <span style="font-size:.72rem;color:var(--c2);line-height:1.4">${balData[e].notes}</span>
+      </div>`;
+    });
+    balHTML += '</div>';
+  }
+  balCard.innerHTML = balHTML;
   topRow.appendChild(balCard);
 
   container.appendChild(topRow);
@@ -495,9 +527,38 @@ function renderDashboard(container) {
   statsBar.innerHTML = `
     <div class="stat-item"><div class="number">${wa.total90d || wins.length || 0}</div><div class="label">Wins (90d)</div></div>
     <div class="stat-item"><div class="number">${wa.weeklyAvg != null ? wa.weeklyAvg : (wins.length / 13).toFixed(1)}</div><div class="label">Weekly Avg</div></div>
-    <div class="stat-item"><div class="number">${wa.currentStreak || 0}</div><div class="label">Week Streak</div></div>
+    <div class="stat-item"><div class="number">${wa.currentStreak || 0}</div><div class="label">Win Streak</div></div>
     <div class="stat-item"><div class="number">${totalGoals}</div><div class="label">Active Goals</div></div>`;
   container.appendChild(statsBar);
+
+  /* Review Consistency */
+  const lastReviews = vper.lastReviews || {};
+  const reviewTypes = [
+    { key: 'weekly',    label: 'Weekly',    overdueAfterDays: 8  },
+    { key: 'monthly',   label: 'Monthly',   overdueAfterDays: 35 },
+    { key: 'quarterly', label: 'Quarterly', overdueAfterDays: 95 },
+    { key: 'annual',    label: 'Annual',    overdueAfterDays: 370 }
+  ];
+  const now = new Date();
+  const reviewCards = reviewTypes.map(r => {
+    const dateStr = lastReviews[r.key] || null;
+    const d = dateStr ? new Date(dateStr + 'T00:00:00') : null;
+    const daysSince = d ? Math.floor((now - d) / 86400000) : null;
+    const overdue = daysSince !== null && daysSince > r.overdueAfterDays;
+    const status = !d ? 'never' : overdue ? 'overdue' : 'ok';
+    const statusColor = status === 'ok' ? RAW_ELEM_COLORS.earth : status === 'overdue' ? '#f9a825' : 'var(--c3)';
+    const label2 = status === 'ok' ? `${daysSince}d ago` : status === 'overdue' ? `${daysSince}d ago \u26A0` : 'Never done';
+    return `<div style="text-align:center;padding:8px;border-radius:6px;background:var(--bg3)">
+      <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--c3);margin-bottom:3px">${r.label}</div>
+      <div style="font-size:.8rem;font-weight:600;color:${statusColor}">${label2}</div>
+    </div>`;
+  });
+  const revCard = document.createElement('div');
+  revCard.className = 'card';
+  revCard.style.marginTop = '20px';
+  revCard.innerHTML = `<div class="card-title">Review Consistency</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">${reviewCards.join('')}</div>`;
+  container.appendChild(revCard);
 }
 
 /* ---------- #areas ---------- */
@@ -706,9 +767,22 @@ function renderWins(container) {
       tlHTML += `<div class="week-header">${wk}</div>`;
       wkWins.forEach(w => {
         const area = w.area || '';
+        const scale = w.scale;
+        const ew = w.emotional_weight;
+        const tags = Array.isArray(w.tags) ? w.tags : [];
+        const connGoal = w.connected_goal;
+        let meta = '';
+        if (area) meta += `<span class="win-area-badge" style="background:${elSoft(area)};color:${elColor(area)}">${area}</span>`;
+        if (scale) meta += `<span style="font-size:.6rem;padding:1px 5px;border-radius:4px;background:var(--bg3);color:var(--c3)">${scale}</span>`;
+        if (ew != null) {
+          const ewDots = '●'.repeat(Math.min(ew, 10)) + '○'.repeat(Math.max(0, 10 - Math.min(ew, 10)));
+          meta += `<span style="font-size:.6rem;color:var(--ether);letter-spacing:-1px" title="Emotional weight: ${ew}/10">${ewDots}</span>`;
+        }
+        tags.forEach(t => { meta += `<span style="font-size:.6rem;padding:1px 5px;border-radius:4px;background:var(--ether-soft);color:var(--ether)">${t}</span>`; });
         tlHTML += `<div class="win-timeline-item">
-          ${w.title || w.description || ''}
-          ${area ? `<span class="win-area-badge" style="background:${elSoft(area)};color:${elColor(area)}">${area}</span>` : ''}
+          <div style="font-size:.82rem">${w.title || w.description || ''}</div>
+          ${meta ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;align-items:center">${meta}</div>` : ''}
+          ${connGoal ? `<div style="font-size:.65rem;color:var(--c3);margin-top:2px">\u2192 ${connGoal}</div>` : ''}
           <div class="win-date">${w.date || ''}</div>
         </div>`;
       });
@@ -722,7 +796,15 @@ function renderWins(container) {
   /* Right: Win Analytics */
   const analytics = document.createElement('div');
   analytics.className = 'card';
+  const thisWeekWins = (wa.byWeek || []).slice(-1)[0] ? (wa.byWeek.slice(-1)[0].count || 0) : 0;
+  const lastWeekWins = (wa.byWeek || []).slice(-2)[0] ? (wa.byWeek.slice(-2)[0].count || 0) : 0;
+  const velocityTrend = thisWeekWins > lastWeekWins ? '\u2191' : thisWeekWins < lastWeekWins ? '\u2193' : '\u2192';
+  const velocityColor = thisWeekWins > lastWeekWins ? RAW_ELEM_COLORS.earth : thisWeekWins < lastWeekWins ? '#c1554d' : 'var(--c3)';
   let anHTML = `<div class="card-title">Win Analytics</div>
+    <div style="padding:10px 12px;border-radius:7px;background:var(--earth-soft);border-left:3px solid var(--earth);margin-bottom:14px;font-size:.75rem;color:var(--c2);line-height:1.5">
+      <strong style="color:var(--earth)">Gap to Gain</strong> — You have logged <strong>${wa.total90d || wins.length}</strong> wins in 90 days. This is your evidence of growth.<br>
+      <span style="color:${velocityColor}">${velocityTrend} This week: ${thisWeekWins} wins</span> vs ${lastWeekWins} last week.
+    </div>
     <div class="analytics-big-num">${wa.total90d || wins.length}</div>
     <div class="analytics-label">Total Wins (90 days)</div>
     <div class="analytics-row"><span>Weekly Average</span><strong>${wa.weeklyAvg != null ? wa.weeklyAvg : (wins.length / 13).toFixed(1)}</strong></div>
@@ -1468,6 +1550,7 @@ function renderSystems(container) {
       <div class="system-meta">
         <span class="completion-badge" style="background:${rateColor}22;color:${rateColor}">${rate}% <span style="font-size:.6rem;opacity:.7">monthly</span></span>
         <span class="streak-badge">${(sys.streak || 0) > 0 ? '\uD83D\uDD25 ' + (sys.streak||0) + '-day streak' : '\u26A0 no streak'}</span>
+        ${sys.trend === 'rising' ? '<span style="font-size:.65rem;padding:2px 5px;border-radius:4px;background:#2e7d3222;color:#2e7d32">\u2191 Rising</span>' : sys.trend === 'falling' ? '<span style="font-size:.65rem;padding:2px 5px;border-radius:4px;background:#c1554d22;color:#c1554d">\u2193 Falling</span>' : '<span style="font-size:.65rem;padding:2px 5px;border-radius:4px;background:var(--bg3);color:var(--c3)">\u2192 Flat</span>'}
       </div>
     </div>`;
 
@@ -1697,6 +1780,308 @@ function renderAlignment(container) {
     });
     actCard.innerHTML = actHTML;
     container.appendChild(actCard);
+  }
+}
+
+/* ---------- #decisions ---------- */
+function renderDecisions(container) {
+  const dec = DATA.decisions || { all: [], open: [], decided: [], setAside: [], pendingReview: [], avgConfidence: null, byArea: {} };
+
+  /* Header stats */
+  const statsDiv = document.createElement('div');
+  statsDiv.className = 'stats-bar';
+  statsDiv.style.marginBottom = '16px';
+  statsDiv.innerHTML = `
+    <div class="stat-item"><div class="number" style="color:var(--air)">${dec.open.length}</div><div class="label">Open</div></div>
+    <div class="stat-item"><div class="number">${dec.decided.length}</div><div class="label">Decided</div></div>
+    <div class="stat-item"><div class="number">${dec.setAside.length}</div><div class="label">Set Aside</div></div>
+    ${dec.avgConfidence != null ? `<div class="stat-item"><div class="number">${dec.avgConfidence}</div><div class="label">Avg Confidence</div></div>` : ''}
+    ${dec.pendingReview.length ? `<div class="stat-item"><div class="number" style="color:#f9a825">${dec.pendingReview.length}</div><div class="label">Due Review</div></div>` : ''}`;
+  container.appendChild(statsDiv);
+
+  if (!dec.all.length) {
+    container.innerHTML += '<div class="card"><p style="color:var(--c3);font-size:.85rem">No decisions logged. Use <code>/decision</code> to capture your next major choice.</p></div>';
+    return;
+  }
+
+  /* Filter tabs */
+  const filterDiv = document.createElement('div');
+  filterDiv.className = 'filter-bar';
+  filterDiv.style.marginBottom = '16px';
+  const filters = [
+    { key: 'all',       label: 'All',       items: dec.all      },
+    { key: 'open',      label: 'Open',       items: dec.open     },
+    { key: 'decided',   label: 'Decided',    items: dec.decided  },
+    { key: 'setAside',  label: 'Set Aside',  items: dec.setAside }
+  ];
+  const listDiv = document.createElement('div');
+  listDiv.id = 'dec-list';
+
+  function renderDecList(items) {
+    const STATUS_COLORS = { open: RAW_ELEM_COLORS.air, decided: RAW_ELEM_COLORS.earth, set_aside: 'var(--c3)' };
+    listDiv.innerHTML = items.map(d => {
+      const sc = STATUS_COLORS[d.status] || 'var(--c3)';
+      const conf = typeof d.confidence === 'number' ? `<div style="margin-top:6px;display:flex;align-items:center;gap:6px"><span style="font-size:.65rem;color:var(--c3)">Confidence</span><div style="flex:1;height:5px;border-radius:3px;background:var(--bg3)"><div style="width:${d.confidence*10}%;height:100%;border-radius:3px;background:${RAW_ELEM_COLORS.earth}"></div></div><span style="font-size:.68rem;color:var(--c2)">${d.confidence}/10</span></div>` : '';
+      const alts = Array.isArray(d.alternatives_considered) && d.alternatives_considered.length
+        ? `<div style="margin-top:6px;font-size:.7rem;color:var(--c3)">Alternatives: ${d.alternatives_considered.join(' · ')}</div>` : '';
+      const outcome = d.outcome ? `<div style="margin-top:6px;padding:5px 8px;border-radius:4px;background:var(--earth-soft);font-size:.75rem;color:var(--c2)"><strong>Outcome:</strong> ${d.outcome}</div>` : '';
+      const reviewDue = d.review_date ? `<span style="font-size:.65rem;padding:1px 6px;border-radius:4px;background:var(--bg3);color:var(--c3)">Review: ${d.review_date}</span>` : '';
+      return `<div class="card" style="margin-bottom:10px;border-left:3px solid ${sc}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div style="font-size:.87rem;font-weight:600;flex:1">${d.decision || ''}</div>
+          <div style="display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap">
+            <span style="font-size:.65rem;padding:2px 7px;border-radius:10px;background:${sc}22;color:${sc};font-weight:600;white-space:nowrap">${(d.status||'').replace('_',' ')}</span>
+            ${reviewDue}
+          </div>
+        </div>
+        ${d.reasoning ? `<div style="margin-top:6px;font-size:.75rem;color:var(--c2);line-height:1.4">${d.reasoning}</div>` : ''}
+        ${alts}${conf}${outcome}
+        <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+          ${d.area ? `<span style="font-size:.65rem;padding:1px 6px;border-radius:4px;background:${elSoft(d.area)};color:${elColor(d.area)}">${d.area}</span>` : ''}
+          <span style="font-size:.65rem;color:var(--c3)">${d.date || ''}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  filters.forEach((f, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = `${f.label} (${f.items.length})`;
+    btn.addEventListener('click', () => {
+      filterDiv.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderDecList(f.items);
+    });
+    filterDiv.appendChild(btn);
+  });
+
+  container.appendChild(filterDiv);
+  container.appendChild(listDiv);
+  renderDecList(dec.all);
+}
+
+/* ---------- #lessons ---------- */
+function renderLessons(container) {
+  const les = DATA.lessons || { all: [], bySeverity: {}, byArea: {}, withPrevention: 0, topAreas: [] };
+
+  const statsDiv = document.createElement('div');
+  statsDiv.className = 'stats-bar';
+  statsDiv.style.marginBottom = '16px';
+  statsDiv.innerHTML = `
+    <div class="stat-item"><div class="number">${les.all.length}</div><div class="label">Total Lessons</div></div>
+    <div class="stat-item"><div class="number" style="color:var(--earth)">${les.withPrevention}</div><div class="label">With Prevention</div></div>
+    <div class="stat-item"><div class="number" style="color:#c1554d">${les.bySeverity.high || 0}</div><div class="label">High Severity</div></div>
+    ${les.topAreas.length ? `<div class="stat-item"><div class="number">${les.topAreas[0].name.split(' ')[0]}</div><div class="label">Most Learning</div></div>` : ''}`;
+  container.appendChild(statsDiv);
+
+  const intro = document.createElement('div');
+  intro.style.cssText = 'padding:10px 14px;border-radius:7px;background:var(--water-soft);border-left:3px solid var(--water);margin-bottom:16px;font-size:.78rem;color:var(--c2);line-height:1.5';
+  intro.innerHTML = '<strong style="color:var(--water)">Gap to Gain</strong> — Failures are data. Every entry here is a pattern you\'ve identified and learned from.';
+  container.appendChild(intro);
+
+  if (!les.all.length) {
+    container.innerHTML += '<div class="card"><p style="color:var(--c3);font-size:.85rem">No lessons logged yet. Challenges and failures are worth capturing — they become your most valuable insights.</p></div>';
+    return;
+  }
+
+  const SEV_COLORS = { low: RAW_ELEM_COLORS.earth, medium: '#f9a825', high: '#c1554d' };
+  les.all.forEach(l => {
+    const sc = SEV_COLORS[l.severity] || 'var(--c3)';
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.cssText = `margin-bottom:12px;border-left:3px solid ${sc}`;
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div style="font-size:.87rem;font-weight:600;flex:1">${l.what_happened || ''}</div>
+        <div style="display:flex;gap:4px;flex-shrink:0">
+          ${l.severity ? `<span style="font-size:.65rem;padding:2px 7px;border-radius:10px;background:${sc}22;color:${sc};font-weight:600">${l.severity}</span>` : ''}
+          ${l.area ? `<span style="font-size:.65rem;padding:1px 6px;border-radius:4px;background:${elSoft(l.area)};color:${elColor(l.area)}">${l.area}</span>` : ''}
+        </div>
+      </div>
+      ${l.root_cause ? `<div style="margin-top:6px;font-size:.75rem;color:var(--c3)"><strong>Root cause:</strong> ${l.root_cause}</div>` : ''}
+      ${l.lesson ? `<div style="margin-top:8px;padding:6px 10px;border-radius:5px;background:var(--bg3);font-size:.8rem;color:var(--c1);line-height:1.4"><strong style="color:var(--ether)">Lesson:</strong> ${l.lesson}</div>` : ''}
+      ${l.prevention ? `<div style="margin-top:6px;padding:6px 10px;border-radius:5px;background:var(--earth-soft);font-size:.75rem;color:var(--c2)"><strong>Prevention:</strong> ${l.prevention}</div>` : ''}
+      <div style="margin-top:8px;font-size:.65rem;color:var(--c3)">${l.date || ''}</div>`;
+    container.appendChild(card);
+  });
+}
+
+/* ---------- #experiences ---------- */
+function renderExperiences(container) {
+  const exp = DATA.experiences || { all: [], byElement: {}, byArea: {}, highEmotional: [], recentInsights: [] };
+
+  const statsDiv = document.createElement('div');
+  statsDiv.className = 'stats-bar';
+  statsDiv.style.marginBottom = '16px';
+  statsDiv.innerHTML = `
+    <div class="stat-item"><div class="number">${exp.all.length}</div><div class="label">Total</div></div>
+    <div class="stat-item"><div class="number" style="color:var(--ether)">${exp.highEmotional.length}</div><div class="label">High Impact</div></div>
+    <div class="stat-item"><div class="number" style="color:var(--water)">${exp.recentInsights.length}</div><div class="label">Insights (90d)</div></div>`;
+  container.appendChild(statsDiv);
+
+  if (!exp.all.length) {
+    container.innerHTML += '<div class="card"><p style="color:var(--c3);font-size:.85rem">No experiences logged. Key moments worth capturing emerge from <code>/alignment</code>, <code>/weekly-review</code>, or any significant event.</p></div>';
+    return;
+  }
+
+  /* Element filter */
+  const elems = ['fire','air','earth','water','ether'];
+  const elemLabels2 = { fire: '🔥 Fire', air: '💨 Air', earth: '🌱 Earth', water: '💧 Water', ether: '✨ Ether' };
+  let activeElem = null;
+  const filterDiv = document.createElement('div');
+  filterDiv.className = 'filter-bar';
+  filterDiv.style.marginBottom = '16px';
+  const listDiv2 = document.createElement('div');
+  listDiv2.id = 'exp-list';
+
+  function renderExpList(filterEl) {
+    const items = filterEl ? exp.all.filter(e => e.element === filterEl) : exp.all;
+    listDiv2.innerHTML = items.map(e => {
+      const ec = RAW_ELEM_COLORS[e.element] || 'var(--c3)';
+      const ewFill = typeof e.emotional_weight === 'number' ? Math.round((e.emotional_weight / 10) * 100) : 0;
+      return `<div class="card" style="margin-bottom:10px;border-left:3px solid ${ec}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div style="font-size:.87rem;flex:1">${e.description || ''}</div>
+          <div style="display:flex;gap:4px;flex-shrink:0">
+            ${e.element ? `<span style="font-size:.65rem;padding:2px 7px;border-radius:10px;background:${ec}22;color:${ec};font-weight:600">${e.element}</span>` : ''}
+            ${e.area ? `<span style="font-size:.65rem;padding:1px 6px;border-radius:4px;background:${elSoft(e.area)};color:${elColor(e.area)}">${e.area}</span>` : ''}
+          </div>
+        </div>
+        ${typeof e.emotional_weight === 'number' ? `<div style="margin-top:6px;display:flex;align-items:center;gap:6px"><span style="font-size:.65rem;color:var(--c3)">Impact</span><div style="flex:1;height:4px;border-radius:2px;background:var(--bg3)"><div style="width:${ewFill}%;height:100%;border-radius:2px;background:${ec}"></div></div><span style="font-size:.68rem;color:var(--c2)">${e.emotional_weight}/10</span></div>` : ''}
+        ${e.insight ? `<div style="margin-top:8px;padding:6px 10px;border-radius:5px;background:var(--bg3);font-size:.78rem;color:var(--c1);line-height:1.4"><strong style="color:var(--water)">Insight:</strong> ${e.insight}</div>` : ''}
+        <div style="margin-top:8px;font-size:.65rem;color:var(--c3)">${e.date || ''}</div>
+      </div>`;
+    }).join('') || '<div style="color:var(--c3);font-size:.82rem;padding:12px 0">No experiences for this element.</div>';
+  }
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn active';
+  allBtn.textContent = `All (${exp.all.length})`;
+  allBtn.addEventListener('click', () => {
+    filterDiv.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    allBtn.classList.add('active');
+    renderExpList(null);
+  });
+  filterDiv.appendChild(allBtn);
+
+  elems.forEach(e => {
+    const cnt = exp.byElement[e] || 0;
+    if (!cnt) return;
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = `${elemLabels2[e]} (${cnt})`;
+    btn.style.borderColor = RAW_ELEM_COLORS[e];
+    btn.addEventListener('click', () => {
+      filterDiv.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderExpList(e);
+    });
+    filterDiv.appendChild(btn);
+  });
+
+  container.appendChild(filterDiv);
+  container.appendChild(listDiv2);
+  renderExpList(null);
+}
+
+/* ---------- #vision ---------- */
+function renderVision(container) {
+  const vision = DATA.vision || { fps: [], mtps: [], hhgs: [] };
+  const goals  = DATA.goals  || {};
+  const fps  = vision.fps  || [];
+  const mtps = vision.mtps || [];
+  const hhgs = vision.hhgs || [];
+  const annualGoals = (goals.annual || []).filter(g => g.status === 'active');
+
+  /* Purpose Cascade flow summary */
+  const cascadeCard = document.createElement('div');
+  cascadeCard.className = 'card';
+  cascadeCard.style.marginBottom = '20px';
+  cascadeCard.innerHTML = `
+    <div class="card-title">Purpose Cascade</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0">
+      <div style="text-align:center;padding:10px 16px;border-radius:8px;background:var(--fire-soft);border:2px solid var(--fire)">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--fire)">${fps.length}</div>
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--fire);letter-spacing:.04em">Fav. Problems</div>
+      </div>
+      <div style="font-size:1rem;color:var(--c3)">&rarr;</div>
+      <div style="text-align:center;padding:10px 16px;border-radius:8px;background:var(--air-soft);border:2px solid var(--air)">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--air)">${mtps.length}</div>
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--air);letter-spacing:.04em">MTPs</div>
+      </div>
+      <div style="font-size:1rem;color:var(--c3)">&rarr;</div>
+      <div style="text-align:center;padding:10px 16px;border-radius:8px;background:var(--ether-soft);border:2px solid var(--ether)">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--ether)">${hhgs.length}</div>
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--ether);letter-spacing:.04em">High Hard Goals</div>
+      </div>
+      <div style="font-size:1rem;color:var(--c3)">&rarr;</div>
+      <div style="text-align:center;padding:10px 16px;border-radius:8px;background:var(--earth-soft);border:2px solid var(--earth)">
+        <div style="font-size:1.4rem;font-weight:800;color:var(--earth)">${annualGoals.length}</div>
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:var(--earth);letter-spacing:.04em">Annual Goals</div>
+      </div>
+    </div>
+    ${fps.length === 0 && mtps.length === 0 && hhgs.length === 0 ? '<div style="margin-top:12px;font-size:.78rem;color:var(--c3)">Vision files are empty. Run <code>/vision</code> or <code>/north-star</code> to explore and define your purpose cascade.</div>' : ''}`;
+  container.appendChild(cascadeCard);
+
+  /* Favourite Problems */
+  if (fps.length) {
+    const fpCard = document.createElement('div');
+    fpCard.className = 'card';
+    fpCard.style.cssText = 'margin-bottom:16px;border-left:4px solid var(--fire)';
+    let fpHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fire);margin-bottom:8px">Favourite Problems &mdash; Why You Do What You Do</div>
+      <div style="font-size:.7rem;color:var(--c3);margin-bottom:12px;font-style:italic">These are the burning questions that pull you toward your work.</div>`;
+    fps.forEach((fp, i) => {
+      fpHTML += `<div style="display:flex;align-items:baseline;gap:8px;padding:5px 0${i < fps.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <span style="font-size:.65rem;font-weight:800;color:var(--fire);flex-shrink:0;min-width:16px">${i + 1}</span>
+        <span style="font-size:.82rem">${fp.title}</span>
+      </div>`;
+    });
+    fpCard.innerHTML = fpHTML;
+    container.appendChild(fpCard);
+  }
+
+  /* Massively Transformative Purposes */
+  if (mtps.length) {
+    const mtpCard = document.createElement('div');
+    mtpCard.className = 'card';
+    mtpCard.style.cssText = 'margin-bottom:16px;border-left:4px solid var(--air)';
+    let mtpHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--air);margin-bottom:8px">Massively Transformative Purposes</div>
+      <div style="font-size:.7rem;color:var(--c3);margin-bottom:12px;font-style:italic">The &ldquo;why&rdquo; that unifies your Favourite Problems into a direction.</div>`;
+    mtps.forEach((mtp, i) => {
+      mtpHTML += `<div style="padding:8px 12px;border-radius:6px;background:var(--air-soft);margin-bottom:8px">
+        <span style="font-size:.65rem;font-weight:800;color:var(--air)">MTP ${i + 1}</span>
+        <div style="font-size:.85rem;font-weight:500;margin-top:3px">${mtp.title}</div>
+      </div>`;
+    });
+    mtpCard.innerHTML = mtpHTML;
+    container.appendChild(mtpCard);
+  }
+
+  /* High Hard Goals */
+  if (hhgs.length) {
+    const hhgCard = document.createElement('div');
+    hhgCard.className = 'card';
+    hhgCard.style.cssText = 'margin-bottom:16px;border-left:4px solid var(--ether)';
+    let hhgHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ether);margin-bottom:8px">High Hard Goals &mdash; Your Vision Horizon</div>
+      <div style="font-size:.7rem;color:var(--c3);margin-bottom:12px;font-style:italic">Ambitious, inspiring targets that connect your MTPs to your annual goals.</div>`;
+    hhgs.forEach((h, i) => {
+      hhgHTML += `<div style="display:flex;align-items:baseline;gap:8px;padding:6px 0${i < hhgs.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <span style="font-size:.65rem;font-weight:800;color:var(--ether);flex-shrink:0;min-width:16px">${i + 1}</span>
+        <span style="font-size:.85rem;font-weight:500;flex:1">${h.title}</span>
+        ${h.timeframe ? `<span style="font-size:.65rem;padding:1px 6px;border-radius:4px;background:var(--ether-soft);color:var(--ether);flex-shrink:0">${h.timeframe}</span>` : ''}
+      </div>`;
+    });
+    hhgCard.innerHTML = hhgHTML;
+    container.appendChild(hhgCard);
+  }
+
+  /* Empty state */
+  if (!fps.length && !mtps.length && !hhgs.length) {
+    const emptyCard = document.createElement('div');
+    emptyCard.className = 'card';
+    emptyCard.innerHTML = `<p style="color:var(--c3);font-size:.85rem">Your vision files are empty. Run <code>/vision</code> to explore your purpose, or <code>/north-star</code> for a guided workshop to define your FPs, MTPs, and HHGs (45-90 min).</p>`;
+    container.appendChild(emptyCard);
   }
 }
 

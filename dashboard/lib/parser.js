@@ -59,30 +59,74 @@ function listFiles(relDir, ext) {
 }
 
 /**
- * Parse markdown headings / bullet list items as simple string entries.
- * Used for FPs, MTPs, HHGs.
+ * Parse markdown items with configurable extraction options.
+ * Used for FPs, MTPs, HHGs and any list-style markdown content.
+ *
  * @param {string} text  raw markdown
+ * @param {object} [opts]
+ * @param {boolean} [opts.bulletsOnly=false]   Only capture bullet/numbered items; skip all headings
+ * @param {number|null} [opts.headingLevel=null] Only capture headings at this exact level (1-6); skip all others
+ * @param {boolean} [opts.stripBold=true]      Strip **bold** markers from titles
+ * @param {boolean} [opts.numbered=true]       Capture numbered list items (1. text)
  * @returns {Array<{title: string}>}
  */
-function parseMarkdownItems(text) {
+function parseMarkdownItems(text, opts) {
+  const options = Object.assign(
+    { bulletsOnly: false, headingLevel: null, stripBold: true, numbered: true },
+    opts || {}
+  );
+
+  function clean(str) {
+    let s = str.trim();
+    if (options.stripBold) s = s.replace(/\*\*/g, '');
+    // Strip sync metadata suffixes (e.g. "Tana: `nodeId`")
+    s = s.replace(/\s+Tana:\s*`[^`]+`\s*$/, '').trim();
+    return s;
+  }
+
+  function shouldSkip(trimmed) {
+    if (!trimmed || trimmed === '---') return true;
+    if (trimmed.startsWith('Tana:')) return true;
+    if (trimmed.startsWith('Synced from Tana')) return true;
+    if (trimmed.startsWith('<!--')) return true;
+    // Skip italic-only lines (metadata/descriptions, not titles)
+    if (/^\*[^*]+\*$/.test(trimmed) || /^_[^_]+_$/.test(trimmed)) return true;
+    return false;
+  }
+
   const items = [];
-  const lines = text.split('\n');
+  const lines = text ? text.split('\n') : [];
+
   for (const line of lines) {
     const trimmed = line.trim();
-    // Skip empty lines, YAML frontmatter markers, comment lines
-    if (!trimmed || trimmed === '---') continue;
-    // Headings (## Title)
+    if (shouldSkip(trimmed)) continue;
+
+    // Heading lines
     if (trimmed.startsWith('#')) {
-      const title = trimmed.replace(/^#+\s*/, '').trim();
+      if (options.bulletsOnly) continue;
+      const hashes = (trimmed.match(/^(#+)/) || ['', ''])[1].length;
+      if (options.headingLevel !== null && hashes !== options.headingLevel) continue;
+      const title = clean(trimmed.replace(/^#+\s*/, ''));
       if (title) items.push({ title });
       continue;
     }
-    // Bullet list items (- Title or * Title)
+
+    // Bullet list items
     if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-      const title = trimmed.slice(2).trim();
+      if (options.headingLevel !== null) continue; // headingLevel mode: skip bullets
+      const title = clean(trimmed.slice(2));
+      if (title) items.push({ title });
+      continue;
+    }
+
+    // Numbered list items (1. text, 12. text, etc.)
+    if (options.numbered && /^\d+\.\s+/.test(trimmed)) {
+      if (options.headingLevel !== null) continue; // headingLevel mode: skip numbered
+      const title = clean(trimmed.replace(/^\d+\.\s+/, ''));
       if (title) items.push({ title });
     }
   }
+
   return items;
 }
 
