@@ -33,19 +33,6 @@ Any self-knowledge framework that resonates with you belongs here. Common ones i
 
 ---
 
-## Wisdom Traditions (Optional Deeper Layer)
-
-ILOS optionally integrates three wisdom traditions that provide a remarkably detailed map of your nature. These are not required -- the system works fully without them -- but they add extraordinary depth to self-knowledge.
-
-See `wisdom-traditions/README.md` for details on:
-- **Astrology** -- Your natal chart as a map of archetypal energies
-- **Human Design** -- Your energetic type, strategy, authority, and profile
-- **Gene Keys** -- Your hologenetic profile and the Shadow-Gift-Siddhi frequency spectrum
-
-All three derive from the same celestial data (your birth time, date, and location) and describe different facets of the same underlying pattern.
-
----
-
 ## How to Use This Directory
 
 1. **Create a file for each framework you use** (e.g., `strengths-finder.md`, `enneagram.md`)

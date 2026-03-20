@@ -35,8 +35,9 @@ const ROUTES = {
   dashboard:           { render: renderDashboard,          icon: '\u25CE', label: 'Dashboard',        nav: true  },
   vision:              { render: renderVision,             icon: '\u25B3', label: 'Vision',            nav: true  },
   alignment:           { render: renderAlignment,          icon: '\u221E', label: 'Alignment',         nav: true  },
-  areas:               { render: renderAreas,              icon: '\u25EB', label: 'Areas',             nav: true  },
-  goals:               { render: renderGoals,              icon: '\u25C8', label: 'Goals',             nav: true  },
+  life:                { render: renderLifeOverview,       icon: '\u2B21', label: 'Life Overview',     nav: true  },
+  areas:               { render: renderAreas,              icon: '\u25EB', label: 'Areas',             nav: false },
+  goals:               { render: renderGoals,              icon: '\u25C6', label: 'Goals',             nav: true  },
   wins:                { render: renderWins,               icon: '\u2605', label: 'Wins',              nav: true  },
   decisions:           { render: renderDecisions,          icon: '\u2696', label: 'Decisions',         nav: true  },
   lessons:             { render: renderLessons,            icon: '\u25CB', label: 'Lessons',           nav: true  },
@@ -48,8 +49,8 @@ const ROUTES = {
   'learn/areas':       { render: renderLearnAreas,         icon: '',       label: '12 Key Areas',      nav: false },
   'learn/goals':       { render: renderLearnGoals,         icon: '',       label: 'Goal Setting',      nav: false },
   'learn/planning':    { render: renderLearnPlanning,      icon: '',       label: 'Planning Cycle',    nav: false },
-  'transits':          { render: renderTransitsAndCosmic,  icon: '\u263D', label: 'Transits & Cosmos', nav: true  },
-  'systems':           { render: renderSystems,            icon: '\u21BB', label: 'Systems',           nav: true  }
+  'systems':           { render: renderSystems,            icon: '\u21BB', label: 'Systems',           nav: true  },
+  'cosmic':            { render: renderCosmicTeaser,       icon: '\u2727', label: 'Cosmic Blueprint',  nav: true  }
 };
 
 function buildNav() {
@@ -314,52 +315,6 @@ const RAW_ELEM_COLORS = { fire: '#ef6c00', air: '#0097a7', earth: '#2e7d32', wat
 /* ============================================================
    ILOS TRANSIT CONSTANTS
    ============================================================ */
-const ILOS_KEY_AREAS = [
-  'Health & Vitality','Finances & Resources','Intellectual & Communication','Home & Foundation',
-  'Creative Expression','Routines & Service','Love & Partnership','Emotional Depth',
-  'Vision & Expansion','Career & Legacy','Social & Community','Spiritual & Transcendence'
-];
-const SIGN_TO_HOUSE = {
-  aries:1,taurus:2,gemini:3,cancer:4,leo:5,virgo:6,
-  libra:7,scorpio:8,sagittarius:9,capricorn:10,aquarius:11,pisces:12
-};
-const SIGN_ELEMENT = {
-  aries:'fire',taurus:'earth',gemini:'air',cancer:'water',leo:'fire',virgo:'earth',
-  libra:'air',scorpio:'water',sagittarius:'fire',capricorn:'earth',aquarius:'air',pisces:'water'
-};
-const SIGN_VPER = {
-  aries:'vision',taurus:'execute',gemini:'plan',cancer:'review',leo:'vision',virgo:'execute',
-  libra:'plan',scorpio:'review',sagittarius:'vision',capricorn:'execute',aquarius:'plan',pisces:'review'
-};
-
-function getCosmicVperSummary(positions) {
-  const counts = { vision: 0, plan: 0, execute: 0, review: 0 };
-  const activeAreas = [];
-  positions.forEach(p => {
-    const phase = SIGN_VPER[p.sign] || 'execute';
-    counts[phase]++;
-    const houseNum = SIGN_TO_HOUSE[p.sign] || 1;
-    activeAreas.push({ houseNum, areaName: ILOS_KEY_AREAS[houseNum - 1], planet: p.name, element: SIGN_ELEMENT[p.sign] || 'earth' });
-  });
-  const dominant = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
-  return { dominantPhase: dominant, phaseCounts: counts, activeAreas };
-}
-
-function getElementalWeather(positions) {
-  const counts = { fire: 0, air: 0, earth: 0, water: 0 };
-  positions.forEach(p => { counts[SIGN_ELEMENT[p.sign] || 'earth']++; });
-  const sorted   = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  const dominant = sorted[0][0];
-  const weakest  = sorted[sorted.length - 1][0];
-  const summaries = {
-    fire:  'Strong Fire energy \u2014 ideal for vision, creativity, and bold action',
-    air:   'Strong Air energy \u2014 ideal for planning, communication, and new ideas',
-    earth: 'Strong Earth energy \u2014 ideal for execution, grounding, and building',
-    water: 'Heavy Water energy \u2014 ideal for review, emotional processing, and reflection'
-  };
-  return { ...counts, dominant, weakest, summary: summaries[dominant] };
-}
-
 /* ============================================================
    PAGE RENDERERS
    ============================================================ */
@@ -577,6 +532,85 @@ const AREA_DESC = {
   spiritual:   'Spirituality, solitude, inner wisdom'
 };
 
+/* ---------- #life ---------- */
+function renderLifeOverview(container) {
+  const areas    = DATA.areas    || [];
+  const projects = DATA.projects || [];
+  const rawColors = { fire: '#ef6c00', earth: '#2e7d32', air: '#0097a7', water: '#1565c0' };
+
+  // Section 1: Areas Overview
+  const areasCard = document.createElement('div');
+  areasCard.className = 'card';
+  areasCard.style.marginBottom = '20px';
+  let areasHTML = `<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+    <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c2)">12 Key Areas</div>
+    <a href="#areas" style="font-size:.72rem;color:var(--fire);text-decoration:none;font-weight:500">View detailed grid \u2192</a>
+  </div>`;
+
+  ['fire','earth','air','water'].forEach(elem => {
+    const elemAreas = (ELEMENT_AREAS[elem] || []).map(s => areas.find(a => a.id === s)).filter(Boolean);
+    if (!elemAreas.length) return;
+    areasHTML += `<div style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:${rawColors[elem]};margin:10px 0 4px;letter-spacing:.04em">${elem}</div>`;
+    areasHTML += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:4px">';
+    elemAreas.forEach(a => {
+      const score = a.healthScore || 0;
+      const scoreColor = score >= 60 ? rawColors[elem] : score >= 30 ? '#f9a825' : 'var(--c3)';
+      areasHTML += `<div style="padding:6px 8px;border-radius:4px;background:${rawColors[elem]}0a;border-left:3px solid ${rawColors[elem]}">
+        <div style="font-size:.72rem;font-weight:600;margin-bottom:2px">${a.name}</div>
+        <div style="display:flex;gap:8px;font-size:.6rem;color:var(--c3)">
+          <span style="color:${scoreColor};font-weight:700">${score}%</span>
+          <span>${a.winCount90d || 0} wins</span>
+          <span>${(a.activeGoals || []).length} goals</span>
+        </div>
+      </div>`;
+    });
+    areasHTML += '</div>';
+  });
+  areasCard.innerHTML = areasHTML;
+  container.appendChild(areasCard);
+
+  // Section 2: Active Projects
+  const projCard = document.createElement('div');
+  projCard.className = 'card';
+  projCard.style.marginBottom = '20px';
+  const activeProjects = projects.filter(p => p.status === 'active');
+  let projHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c2);margin-bottom:10px">Active Projects</div>`;
+  if (activeProjects.length) {
+    activeProjects.forEach((p, i) => {
+      const elem = AREA_ELEMENT[p.area] || 'earth';
+      projHTML += `<div style="padding:8px 0${i < activeProjects.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:.85rem;font-weight:600">${p.title}</span>
+          ${p.area ? `<span style="font-size:.6rem;padding:1px 6px;border-radius:3px;background:${ELEMENT_COLORS[elem]}15;color:${ELEMENT_COLORS[elem]}">${p.area}</span>` : ''}
+        </div>
+        ${p.connectedGoal ? `<div style="font-size:.7rem;color:var(--c3);margin-top:2px">\u25C8 ${p.connectedGoal}</div>` : ''}
+      </div>`;
+    });
+  } else {
+    projHTML += `<div style="color:var(--c3);font-size:.85rem">Create project files in <code>SPACE/projects/</code> or run <code>/project-kickoff</code></div>`;
+  }
+  projCard.innerHTML = projHTML;
+  container.appendChild(projCard);
+
+  // Section 3: Topics & Resources
+  const topicsCard = document.createElement('div');
+  topicsCard.className = 'card';
+  topicsCard.style.marginBottom = '20px';
+  topicsCard.style.borderLeft = '4px solid var(--air)';
+  const topics = DATA.topics || [];
+  let topicHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--air);margin-bottom:10px">Topics & Resources</div>`;
+  if (topics.length) {
+    topics.forEach(t => {
+      topicHTML += `<div style="padding:4px 0;font-size:.85rem;border-bottom:1px solid var(--bg3)">${t.title}</div>`;
+    });
+  } else {
+    topicHTML += `<div style="color:var(--c3);font-size:.85rem">Create topic files in <code>SPACE/topics/</code> to track your interests and knowledge areas</div>`;
+  }
+  topicsCard.innerHTML = topicHTML;
+  container.appendChild(topicsCard);
+}
+
+/* ---------- #areas ---------- */
 function renderAreas(container) {
   const areas = DATA.areas || [];
 
@@ -656,6 +690,95 @@ function renderAreas(container) {
   renderAreaGrid(null);
 }
 
+/* ---------- #vision ---------- */
+function renderVision(container) {
+  const vision = DATA.vision || {};
+  const goals  = DATA.goals  || {};
+
+  // Section 1: Favorite Problems (Fire)
+  const fpCard = document.createElement('div');
+  fpCard.className = 'card';
+  fpCard.style.marginBottom = '20px';
+  fpCard.style.borderLeft = '4px solid var(--fire)';
+  let fpHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--fire);margin-bottom:10px">Favorite Problems \u2014 The questions that won\u2019t let you go</div>`;
+  if (vision.fps && vision.fps.length) {
+    vision.fps.forEach((fp, i) => {
+      fpHTML += `<div style="display:flex;gap:8px;padding:4px 0;font-size:.85rem${i < vision.fps.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <span style="font-size:.7rem;font-weight:800;color:var(--fire);flex-shrink:0;min-width:16px">${i + 1}</span>
+        <span>${fp.title}</span>
+      </div>`;
+    });
+  } else {
+    fpHTML += `<div style="color:var(--c3);font-size:.85rem">Run /vision or /north-star to discover your Favorite Problems</div>`;
+  }
+  fpCard.innerHTML = fpHTML;
+  container.appendChild(fpCard);
+
+  // Section 2: MTPs (Ether)
+  const mtpCard = document.createElement('div');
+  mtpCard.className = 'card';
+  mtpCard.style.marginBottom = '20px';
+  mtpCard.style.borderLeft = '4px solid var(--ether)';
+  let mtpHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ether);margin-bottom:10px">Massively Transformative Purposes \u2014 Your guiding stars</div>`;
+  if (vision.mtps && vision.mtps.length) {
+    vision.mtps.forEach((mtp, i) => {
+      const label = mtp.title.replace(/^MTP\s+\d+:\s*/i, '');
+      mtpHTML += `<div style="padding:10px 12px;margin-bottom:8px;background:var(--ether-soft);border-radius:6px;font-size:.88rem;font-weight:500">${label}</div>`;
+    });
+  } else {
+    mtpHTML += `<div style="color:var(--c3);font-size:.85rem">Run /vision to define your MTPs</div>`;
+  }
+  mtpCard.innerHTML = mtpHTML;
+  container.appendChild(mtpCard);
+
+  // Section 3: HHGs (Ether)
+  const hhgCard = document.createElement('div');
+  hhgCard.className = 'card';
+  hhgCard.style.marginBottom = '20px';
+  hhgCard.style.borderLeft = '4px solid var(--ether)';
+  let hhgHTML = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ether);margin-bottom:10px">High Hard Goals \u2014 Your multi-year commitments</div>`;
+  if (vision.hhgs && vision.hhgs.length) {
+    vision.hhgs.forEach((h, i) => {
+      hhgHTML += `<div style="padding:8px 0${i < vision.hhgs.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:.7rem;font-weight:800;color:var(--ether);flex-shrink:0">${i + 1}</span>
+          <span style="font-size:.88rem;font-weight:600">${h.title}</span>
+          ${h.timeframe ? `<span style="font-size:.65rem;color:var(--c3);flex-shrink:0">${h.timeframe}</span>` : ''}
+        </div>
+        ${h.connectedMtp ? `<div style="font-size:.72rem;color:var(--c3);margin-left:20px;margin-top:2px">\u2190 ${h.connectedMtp}</div>` : ''}
+        ${h.milestone ? `<div style="font-size:.72rem;color:var(--c3);margin-left:20px;margin-top:2px">\u25B8 Next: ${h.milestone}</div>` : ''}
+      </div>`;
+    });
+  } else {
+    hhgHTML += `<div style="color:var(--c3);font-size:.85rem">Run /north-star to set your High Hard Goals</div>`;
+  }
+  hhgCard.innerHTML = hhgHTML;
+  container.appendChild(hhgCard);
+
+  // Section 4: Purpose Cascade
+  const cascadeCard = document.createElement('div');
+  cascadeCard.className = 'card';
+  cascadeCard.style.marginBottom = '20px';
+  const fpCount   = (vision.fps  || []).length;
+  const mtpCount  = (vision.mtps || []).length;
+  const hhgCount  = (vision.hhgs || []).length;
+  const annualCount = (goals.annual || []).filter(g => g.status === 'active').length;
+  cascadeCard.innerHTML = `
+    <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--c2);margin-bottom:12px">Purpose Cascade</div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.82rem">
+      <span style="padding:4px 10px;background:var(--fire-soft);border-radius:4px;color:var(--fire);font-weight:600">FPs ${fpCount}</span>
+      <span style="color:var(--c3)">\u2192</span>
+      <span style="padding:4px 10px;background:var(--ether-soft);border-radius:4px;color:var(--ether);font-weight:600">MTPs ${mtpCount}</span>
+      <span style="color:var(--c3)">\u2192</span>
+      <span style="padding:4px 10px;background:var(--ether-soft);border-radius:4px;color:var(--ether);font-weight:600">HHGs ${hhgCount}</span>
+      <span style="color:var(--c3)">\u2192</span>
+      <span style="padding:4px 10px;background:var(--air-soft);border-radius:4px;color:var(--air);font-weight:600">Annual Goals ${annualCount}</span>
+    </div>
+    <div style="margin-top:10px"><a href="#goals" style="font-size:.78rem;color:var(--fire);text-decoration:none;font-weight:500">See your active goals \u2192</a></div>
+  `;
+  container.appendChild(cascadeCard);
+}
+
 /* ---------- #goals ---------- */
 function renderGoals(container) {
   const goals  = DATA.goals  || {};
@@ -668,9 +791,13 @@ function renderGoals(container) {
     sec.style.borderLeft   = '4px solid var(--ether)';
     let html = `<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ether);margin-bottom:10px">High Hard Goals \u2014 Your Vision Horizon</div>`;
     vision.hhgs.forEach((h, i) => {
-      html += `<div style="display:flex;align-items:baseline;gap:8px;padding:5px 0${i < vision.hhgs.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
-        <span style="font-size:.7rem;font-weight:800;color:var(--ether);flex-shrink:0">${i + 1}</span>
-        <span style="font-size:.85rem;font-weight:500">${h.title}</span>
+      html += `<div style="padding:8px 0${i < vision.hhgs.length - 1 ? ';border-bottom:1px solid var(--bg3)' : ''}">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-size:.7rem;font-weight:800;color:var(--ether);flex-shrink:0">${i + 1}</span>
+          <span style="font-size:.85rem;font-weight:600">${h.title}</span>
+          ${h.timeframe ? `<span style="font-size:.65rem;color:var(--c3);flex-shrink:0">${h.timeframe}</span>` : ''}
+        </div>
+        ${h.milestone ? `<div style="font-size:.72rem;color:var(--c3);margin-left:20px;margin-top:3px">\u25B8 Next: ${h.milestone}</div>` : ''}
       </div>`;
     });
     sec.innerHTML = html;
@@ -887,7 +1014,7 @@ function renderLearnHub(container) {
         <code style="font-size:.72rem">/weekly-review</code><span style="font-size:.75rem;color:var(--c2)">Full weekly review + planning cycle</span>
         <code style="font-size:.72rem">/strategist</code><span style="font-size:.75rem;color:var(--c2)">Define and update strategy systems</span>
         <code style="font-size:.72rem">/alignment</code><span style="font-size:.75rem;color:var(--c2)">Cross-dimension coherence check</span>
-        <code style="font-size:.72rem">/cosmic-profile</code><span style="font-size:.75rem;color:var(--c2)">Update self-knowledge for Cosmic Blueprint</span>
+        <code style="font-size:.72rem">/context-update</code><span style="font-size:.75rem;color:var(--c2)">Update personal context and self-knowledge</span>
       </div>
       <div style="font-weight:700;margin:12px 0 6px;color:var(--c1)">Dashboard Architecture</div>
       <p style="font-family:monospace;font-size:.7rem;background:var(--bg3);padding:8px;border-radius:6px;line-height:1.8">dashboard/server.js → /api/data<br>dashboard/lib/analytics.js → buildData()<br>dashboard/public/app.js → render views<br>PORT=3000 (default) | npm start</p>
@@ -1275,201 +1402,39 @@ function renderLearnPlanning(container) {
   container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
 }
 
-/* ---------- #transits (combined with cosmic teaser) ---------- */
-function renderTransitsAndCosmic(container) {
-  renderTransits(container);
-  /* Divider */
-  const div = document.createElement('div');
-  div.style.cssText = 'border-top:2px solid var(--bg3);margin:20px 0 16px;position:relative;text-align:center';
-  div.innerHTML = '<span style="position:relative;background:var(--bg1);padding:0 10px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ether)">\u2727 Cosmic Blueprint</span>';
-  container.appendChild(div);
-  renderCosmicTeaser(container);
-}
-
-function renderTransits(container) {
-  const t    = DATA.transits || {};
-  const vper = DATA.vper     || {};
-
-  if (!t.sunSign && !t.slowPlanets) {
-    container.innerHTML = '<div class="card"><div class="card-title">Transits</div><p style="color:var(--c3);font-size:.85rem">Transit data not configured. Add <code>TIME/sign-calendar.yaml</code> to enable.</p></div>';
-    return;
-  }
-
-  /* Cosmic VPER Summary */
-  const cosmicVper    = t.cosmicVper || {};
-  const dominantPhase = cosmicVper.dominantPhase || 'execute';
-  const phaseCap      = dominantPhase.charAt(0).toUpperCase() + dominantPhase.slice(1);
-  const phaseElem     = VPER_ELEMENT[phaseCap] || 'earth';
-
-  const vperCard = document.createElement('div');
-  vperCard.className = 'transit-card';
-  vperCard.innerHTML = `<div class="transit-card-title">Cosmic VPER Phase</div>
-    <div style="display:flex;justify-content:center;margin-bottom:16px">${svgVperWheel(dominantPhase)}</div>
-    <p style="text-align:center;font-size:.9rem">The cosmos is currently in <strong style="color:${RAW_ELEM_COLORS[phaseElem]}">${phaseCap}</strong> mode</p>`;
-  container.appendChild(vperCard);
-
-  /* Elemental Weather */
-  const ew = t.elementalWeather || {};
-  const ewCard = document.createElement('div');
-  ewCard.className = 'transit-card';
-  let ewHTML = '<div class="transit-card-title">Elemental Weather</div><div class="elemental-weather-summary">';
-  ['fire','air','earth','water'].forEach(e => {
-    const count      = ew[e] || 0;
-    const isDominant = e === ew.dominant;
-    const isWeakest  = e === ew.weakest;
-    ewHTML += `<div class="ew-item" style="background:${RAW_ELEM_COLORS[e]}${isDominant ? '33' : '15'};${isWeakest ? 'border:1px dashed '+RAW_ELEM_COLORS[e] : ''}">
-      <div class="ew-count" style="color:${RAW_ELEM_COLORS[e]}">${count}</div>
-      <div class="ew-label" style="color:${RAW_ELEM_COLORS[e]}">${e}</div>
-      ${isDominant ? '<div style="font-size:.6rem;color:var(--c2)">DOMINANT</div>' : ''}
-      ${isWeakest  ? '<div style="font-size:.6rem;color:var(--c3)">WEAKEST</div>'  : ''}
-    </div>`;
-  });
-  ewHTML += '</div>';
-  if (ew.summary) ewHTML += `<p style="text-align:center;font-size:.82rem;color:var(--c2);margin-top:8px;font-style:italic">${ew.summary}</p>`;
-  ewCard.innerHTML = ewHTML;
-  container.appendChild(ewCard);
-
-  /* Active Areas */
-  const activeAreas = (cosmicVper.activeAreas || []).slice(0, 6);
-  if (activeAreas.length) {
-    const aaCard = document.createElement('div');
-    aaCard.className = 'transit-card';
-    let aaHTML = '<div class="transit-card-title">Active Life Areas</div>';
-    activeAreas.forEach(a => {
-      const elem = a.element || 'earth';
-      aaHTML += `<div class="active-area-card" style="border-left-color:${RAW_ELEM_COLORS[elem]}">
-        <div class="area-info">
-          <div class="name">${a.areaName || 'Area ' + a.houseNum}</div>
-          <div class="planet">Activated by ${a.planet}</div>
-        </div>
-        <span class="sign-badge" style="background:${RAW_ELEM_COLORS[elem]}22;color:${RAW_ELEM_COLORS[elem]}">${elem}</span>
-      </div>`;
-    });
-    aaCard.innerHTML = aaHTML;
-    container.appendChild(aaCard);
-  }
-
-  /* Moon Phase */
-  const moon = t.moonPhase || {};
-  if (moon.name) {
-    const moonCard = document.createElement('div');
-    moonCard.className = 'moon-widget';
-    moonCard.innerHTML = `
-      <div class="moon-emoji">${moon.emoji || '\uD83C\uDF15'}</div>
-      <div class="moon-name">${moon.name}</div>
-      <div class="moon-illumination">${moon.illumination != null ? moon.illumination + '% illumination' : ''}</div>
-      <div class="moon-guidance">${moon.guidance || ''}</div>`;
-    container.appendChild(moonCard);
-  }
-
-  /* Slow Planet Table */
-  const planets = t.slowPlanets || [];
-  if (planets.length) {
-    const ptCard = document.createElement('div');
-    ptCard.className = 'transit-card';
-    let ptHTML = '<div class="transit-card-title">Slow Planet Positions</div>';
-    planets.forEach(p => {
-      const elem  = p.element || SIGN_ELEMENT[p.sign] || 'earth';
-      const phase = p.vperPhase || SIGN_VPER[p.sign] || 'execute';
-      const pCap  = phase.charAt(0).toUpperCase() + phase.slice(1);
-      ptHTML += `<div class="planet-row">
-        <span class="planet-name">${p.name}</span>
-        <span class="sign-badge" style="background:${RAW_ELEM_COLORS[elem]}22;color:${RAW_ELEM_COLORS[elem]}">${(p.sign||'').charAt(0).toUpperCase()+(p.sign||'').slice(1)}</span>
-        <span class="phase-badge" style="background:${RAW_ELEM_COLORS[VPER_ELEMENT[pCap]||'earth']}22;color:${RAW_ELEM_COLORS[VPER_ELEMENT[pCap]||'earth']}">${pCap}</span>
-        <span style="flex:1"></span>
-        <span style="font-size:.72rem;color:var(--c3)">${elem}</span>
-      </div>`;
-    });
-    ptCard.innerHTML = ptHTML;
-    container.appendChild(ptCard);
-  }
-
-  /* Cosmic vs Personal */
-  const userPhase    = vper.phase || 'execute';
-  const userPhaseCap = userPhase.charAt(0).toUpperCase() + userPhase.slice(1);
-  const cosmicElem   = VPER_ELEMENT[phaseCap]     || 'earth';
-  const userElem     = VPER_ELEMENT[userPhaseCap] || 'earth';
-  const aligned      = dominantPhase === userPhase;
-
-  const vsCard = document.createElement('div');
-  vsCard.className = 'cosmic-vs-personal';
-  vsCard.innerHTML = `
-    <div class="vs-side">
-      <div style="font-size:.65rem;text-transform:uppercase;color:var(--c3);margin-bottom:4px">Cosmic Phase</div>
-      <div class="vs-phase" style="color:${RAW_ELEM_COLORS[cosmicElem]}">${phaseCap}</div>
-      <div class="vs-element">${cosmicElem}</div>
-    </div>
-    <div class="vs-label">${aligned ? '\u2713 Aligned' : '\u26A1 Tension'}</div>
-    <div class="vs-side">
-      <div style="font-size:.65rem;text-transform:uppercase;color:var(--c3);margin-bottom:4px">Your Phase</div>
-      <div class="vs-phase" style="color:${RAW_ELEM_COLORS[userElem]}">${userPhaseCap}</div>
-      <div class="vs-element">${userElem}</div>
-    </div>`;
-  container.appendChild(vsCard);
-
-  if (!aligned) {
-    const hint = document.createElement('div');
-    hint.style.cssText = 'text-align:center;font-size:.78rem;color:var(--c2);margin-top:-8px;margin-bottom:16px';
-    hint.textContent = `The cosmos favors ${phaseCap} energy while you're in ${userPhaseCap}. Consider how to bridge these energies.`;
-    container.appendChild(hint);
-  }
-}
-
-/* ---------- #cosmic-teaser ---------- */
+/* ---------- #cosmic (Cosmic Blueprint Copilot teaser) ---------- */
 function renderCosmicTeaser(container) {
-  const ct = DATA.cosmicTeaser || {};
-
+  /* Header */
   const header = document.createElement('div');
   header.className = 'transit-card';
-  header.style.textAlign    = 'center';
+  header.style.textAlign = 'center';
   header.style.borderBottom = '3px solid var(--ether)';
   header.innerHTML = `
     <div style="font-size:2rem;margin-bottom:8px">\u2727</div>
-    <div style="font-size:1.2rem;font-weight:800;margin-bottom:4px">Cosmic Blueprint</div>
+    <div style="font-size:1.2rem;font-weight:800;margin-bottom:4px">Cosmic Blueprint Copilot</div>
     <div style="font-size:.85rem;color:var(--c2)">Your celestial DNA decoded through Astrology, Human Design, and Gene Keys</div>`;
   container.appendChild(header);
 
-  if (ct.hasBirthData && ct.sunSign) {
-    const elem = SIGN_ELEMENT[ct.sunSign] || (ct.dominantElement || 'fire');
-    const profileCard = document.createElement('div');
-    profileCard.className = 'transit-card';
-    profileCard.style.borderLeft = `4px solid ${RAW_ELEM_COLORS[elem]}`;
-    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-    const stat = (label, val, color) => val
-      ? `<div><div style="font-size:.7rem;color:var(--c3);text-transform:uppercase">${label}</div><div style="font-size:1.05rem;font-weight:700${color ? ';color:'+color : ''}">${val}</div></div>`
-      : '';
-    profileCard.innerHTML = `
-      <div class="transit-card-title">Your Cosmic Profile</div>
-      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:${(ct.hdType || ct.gkLifesWork) ? '14px' : '0'}">
-        ${stat('Sun Sign', ct.sunSign ? cap(ct.sunSign) : null, RAW_ELEM_COLORS[elem])}
-        ${stat('Dominant Element', ct.dominantElement ? cap(ct.dominantElement) : null, RAW_ELEM_COLORS[ct.dominantElement])}
-        ${stat('Ascendant', ct.ascendant ? cap(ct.ascendant) : null)}
+  /* Description */
+  const descCard = document.createElement('div');
+  descCard.className = 'transit-card';
+  descCard.innerHTML = `
+    <div style="font-size:.85rem;color:var(--c2);line-height:1.6;max-width:600px;margin:0 auto">
+      <p>The <strong>Cosmic Blueprint Copilot</strong> is a companion project that generates personalized natal chart readings integrating three wisdom traditions:</p>
+      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:16px 0">
+        <div style="text-align:center"><div style="font-size:1.3rem">&#9734;</div><div style="font-size:.75rem;font-weight:600">Astrology</div></div>
+        <div style="text-align:center"><div style="font-size:1.3rem">&#9672;</div><div style="font-size:.75rem;font-weight:600">Human Design</div></div>
+        <div style="text-align:center"><div style="font-size:1.3rem">&#10047;</div><div style="font-size:.75rem;font-weight:600">Gene Keys</div></div>
       </div>
-      ${ct.hdType ? `<div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--bg3)">
-        ${stat('HD Type', ct.hdType)}
-        ${stat('Authority', ct.hdAuthority)}
-        ${stat('Profile', ct.hdProfile)}
-        ${stat('Definition', ct.hdDefinition)}
-      </div>` : ''}
-      ${ct.gkLifesWork ? `<div style="padding-top:10px;border-top:1px solid var(--bg3)">
-        ${stat("Life's Work", 'GK ' + ct.gkLifesWork)}
-      </div>` : ''}`;
-    container.appendChild(profileCard);
-  } else {
-    const noData = document.createElement('div');
-    noData.className = 'transit-card';
-    noData.style.textAlign = 'center';
-    noData.innerHTML = `
-      <div style="font-size:1.5rem;margin-bottom:8px">\uD83D\uDD12</div>
-      <p style="color:var(--c2);font-size:.85rem">Run <code>/cosmic-profile</code> to add your Astrology, Human Design &amp; Gene Keys data</p>
-      <p style="color:var(--c3);font-size:.78rem;margin-top:4px">Saved to <code>QUANTUM/self-knowledge/cosmic-profile.yaml</code> — dashboard refreshes automatically</p>`;
-    container.appendChild(noData);
-  }
+      <p>Your ILOS 12 Key Areas are inspired by the 12 astrological houses, and the elemental system (Fire, Air, Earth, Water) that powers the VPER cycle connects directly to these traditions.</p>
+    </div>`;
+  container.appendChild(descCard);
 
+  /* Teaser cards */
   const teasers = [
-    { title: 'Your Life Purpose Path',    desc: 'Discover the Incarnation Cross and Gene Key sequences that reveal your unique purpose and evolutionary journey.' },
-    { title: 'Your Energy Type',          desc: 'Understand your Human Design Type, Strategy, and Authority \u2014 the blueprint for making correct decisions.'     },
-    { title: 'Your Transformation Keys',  desc: 'Explore the Gene Keys in your profile \u2014 Shadow frequencies to transmute and Gift frequencies to embody.'      }
+    { title: 'Your Life Purpose Path',    desc: 'Discover the archetypal energies and sequences that reveal your unique purpose and evolutionary journey.' },
+    { title: 'Your Energy Type',          desc: 'Understand your energetic type, strategy, and decision-making authority \u2014 how you are designed to operate.'     },
+    { title: 'Your Transformation Keys',  desc: 'Explore the shadow patterns and gift frequencies in your profile \u2014 a map for personal growth.'      }
   ];
 
   const teaserGrid = document.createElement('div');
@@ -1486,22 +1451,13 @@ function renderCosmicTeaser(container) {
   });
   container.appendChild(teaserGrid);
 
-  const connCard = document.createElement('div');
-  connCard.className = 'transit-card';
-  connCard.innerHTML = `
-    <div class="transit-card-title">ILOS Connection</div>
-    <p style="font-size:.85rem;color:var(--c2);line-height:1.6">Your cosmic profile connects directly to your 12 Key Areas. Each planet in your birth chart activates a specific life domain through the zodiac houses. Current transits show which areas are being energized RIGHT NOW \u2014 creating a bridge between celestial patterns and practical life planning.</p>
-    <p style="font-size:.82rem;color:var(--c2);margin-top:8px">The VPER cycle maps to the four elements (Fire/Air/Earth/Water), which are the same elements that govern your chart. Your elemental balance is your cosmic operating system.</p>`;
-  container.appendChild(connCard);
-
+  /* CTA */
   const ctaDiv = document.createElement('div');
   ctaDiv.style.textAlign = 'center';
-  ctaDiv.style.padding   = '20px';
-  if (ct.ctaUrl) {
-    ctaDiv.innerHTML = `<a href="${ct.ctaUrl}" class="cta-button" target="_blank">${ct.ctaText || 'Explore your full Cosmic Blueprint'}</a>`;
-  } else {
-    ctaDiv.innerHTML = `<div class="cta-button" style="opacity:.5;cursor:default">Coming Soon</div>`;
-  }
+  ctaDiv.style.padding = '20px';
+  const ctaUrl  = 'https://cosmicblueprintcopilot.com';
+  const ctaText = 'Explore the Cosmic Blueprint Copilot';
+  ctaDiv.innerHTML = `<a href="${ctaUrl}" class="cta-button" target="_blank">${ctaText}</a>`;
   container.appendChild(ctaDiv);
 }
 

@@ -28,7 +28,7 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Content creation | QUANTUM/ | personal-context/9-voice-profile.yaml, relevant vision files |
 | Project work | SPACE/projects/ | Project-specific files |
 | Decision logging | MEMORY/ | decisions.jsonl (append) |
-| Self-knowledge exploration | QUANTUM/self-knowledge/ | Relevant tradition files |
+| Self-knowledge exploration | QUANTUM/self-knowledge/ | Relevant framework files |
 | Personal context update | QUANTUM/personal-context/ | Specific context file |
 | Understanding ILOS methodology | ILOS-KNOWLEDGE/ | Start with ilos-overview.md |
 | Tana MCP setup | SYSTEM/ | setup-guide.md, tana-reference/ |

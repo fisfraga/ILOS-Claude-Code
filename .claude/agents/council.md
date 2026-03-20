@@ -165,7 +165,7 @@ Each agent has a dedicated file in `.claude/agents/`:
 | Agent | File | Role | Activation |
 |-------|------|------|------------|
 | ILOS Master | `@ilos-master` | System Orchestrator | `/help`, system questions, navigation |
-| PARACELSUS | `@council` / skills | Coach (Ether) | `/alignment`, `/ilos-master`, general conversation |
+| PARACELSUS | skills (no dedicated agent) | Coach (Ether) | `/alignment`, `/ilos-master`, general conversation |
 | PROMETHEUS | `@visionary` | Visionary (Fire) | `/vision`, `/north-star` |
 | ATHENA | `@strategist` | Strategist (Air) | `/morning`, `/strategist`, `/project-kickoff`, `/decision` |
 | HEPHAESTUS | `@builder` | Builder (Earth) | `/build`, `/dashboard`, `/architect` |
@@ -173,6 +173,7 @@ Each agent has a dedicated file in `.claude/agents/`:
 | HERMES | `@tana` | Tana Bridge | `/tana`, `/tana-search-builder`, `/tana-schema-graph`, `/tana-understand` |
 | DAEDALUS | `@architect` | Architect | `/dashboard`, `/architect` |
 | SOPHIA | `@sage` | Wisdom Teacher (Ether) | `/guide`, "explain...", "what is...", "teach me...", "how does...", "I'm new" |
+| PYTHIA | `@personal-context` | Self-Knower (Ether) | `/context-update`, "update my context", self-knowledge queries |
 
 ## Escalation Patterns
 

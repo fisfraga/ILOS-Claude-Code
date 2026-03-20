@@ -47,8 +47,7 @@ Parse the user's request and match:
 | build, create, make, ship | Route to **@builder** | — |
 | plan, goals, strategy, prioritize | Route to **@strategist** | — |
 | dashboard, open dashboard, life dashboard | Execute `/dashboard` skill | — |
-| cosmic profile, astrology, human design, gene keys, birth chart | Route to **PYTHIA** (`/cosmic-profile`) | — |
-| update my context, personal context | Route to **PYTHIA** (`/context-update`) | — |
+| update my context, personal context, self-knowledge | Route to **PYTHIA** (`/context-update`) | — |
 | tana, search tana | Route to **@tana** | — |
 | sync, setup sync, sync setup, configure sync | Execute `/sync-setup` or `/sync` skill | — |
 | understand, explain, what is, how does, why, learn, teach me, guide me, I'm new, confused about, I don't understand | Execute `/guide` skill (SOPHIA) | `ILOS-KNOWLEDGE/INDEX.md` |
@@ -66,12 +65,12 @@ Parse the user's request and match:
 
 You know the entire ILOS architecture:
 
-**28 Skills** in `.claude/commands/`:
+**26 Skills** in `.claude/commands/`:
 - Fire: `/vision`, `/north-star`
 - Air: `/morning`, `/strategist`, `/decision`, `/project-kickoff`
 - Earth: `/build`, `/dashboard`, `/architect`, `/area-review`
 - Water: `/win`, `/weekly-review`, `/monthly-review`, `/quarterly-review`, `/annual-review`
-- Ether: `/alignment`, `/context-update`, `/cosmic-profile`, `/ilos-master`, `/help`, `/guide`
+- Ether: `/alignment`, `/context-update`, `/ilos-master`, `/help`, `/guide`
 - Tana: `/sync`, `/sync-setup`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
 
 **Data File Locations:**
@@ -100,7 +99,7 @@ You know the entire ILOS architecture:
 | HERMES | Tana Bridge | Tana MCP operations |
 | DAEDALUS | Architect (Earth) | Dashboard web app, system design |
 | SOPHIA | Wisdom Teacher (Ether) | Understanding methodology, philosophy, technical implementation, tool usage |
-| PYTHIA | Self-Knower (Ether) | Personal context files, self-knowledge, Cosmic Blueprint profiles |
+| PYTHIA | Self-Knower (Ether) | Personal context files, self-knowledge frameworks |
 
 ## Authority
 

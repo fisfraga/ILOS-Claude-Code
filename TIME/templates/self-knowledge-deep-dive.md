@@ -1,6 +1,6 @@
 # Self-Knowledge Document Template
 
-Use this template for documenting insights from any self-knowledge system (Astrology, Human Design, Gene Keys, personality assessments, etc.).
+Use this template for documenting insights from any self-knowledge system (personality assessments, strengths profiles, values frameworks, etc.).
 
 ---
 
@@ -10,7 +10,7 @@ Use this template for documenting insights from any self-knowledge system (Astro
 *(Brief description of what this system reveals)*
 
 ### My Profile/Chart
-*(Key identifiers — e.g., Sun in Aries, Type: Manifesting Generator, Gate 1 Line 3)*
+*(Key identifiers — e.g., Enneagram Type 5, INTJ, CliftonStrengths Top 5)*
 
 ### Key Insights
 

@@ -25,37 +25,6 @@ const KEY_AREAS = [
 ];
 
 const VPER_ELEMENT = { vision: 'fire', plan: 'air', execute: 'earth', review: 'water' };
-const SIGN_VPER = {
-  aries: 'vision', leo: 'vision', sagittarius: 'vision',
-  gemini: 'plan', libra: 'plan', aquarius: 'plan',
-  taurus: 'execute', virgo: 'execute', capricorn: 'execute',
-  cancer: 'review', scorpio: 'review', pisces: 'review'
-};
-const SIGN_ELEMENT = {
-  aries: 'fire', leo: 'fire', sagittarius: 'fire',
-  gemini: 'air', libra: 'air', aquarius: 'air',
-  taurus: 'earth', virgo: 'earth', capricorn: 'earth',
-  cancer: 'water', scorpio: 'water', pisces: 'water'
-};
-// House number → area ID
-const HOUSE_AREA = {};
-KEY_AREAS.forEach(a => { HOUSE_AREA[a.houseNum] = a.id; });
-
-const MOON_PHASE_NAMES = [
-  'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
-  'Full Moon', 'Waning Gibbous', 'Third Quarter', 'Waning Crescent'
-];
-const MOON_PHASE_EMOJIS = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
-const MOON_GUIDANCE = [
-  'Set intentions for the new cycle — plant seeds of vision',
-  'Take first steps — momentum builds',
-  'Push through resistance — decisive action',
-  'Refinement phase — polish and prepare for completion',
-  'Culmination and clarity — celebrate what has grown',
-  'Harvest insights — share your wisdom',
-  'Release what no longer serves — create space',
-  'Rest and reflect before the next cycle begins'
-];
 
 /* ============================================================
    HELPERS
@@ -334,180 +303,107 @@ function parseProjects() {
 }
 
 /* ============================================================
+   TOPIC PARSING
+   ============================================================ */
+
+function parseTopics() {
+  const topicDir = path.join(ROOT, 'SPACE/topics');
+  if (!fs.existsSync(topicDir)) return [];
+
+  const files = fs.readdirSync(topicDir)
+    .filter(f => (f.endsWith('.md') || f.endsWith('.yaml')) && f.toLowerCase() !== 'readme.md');
+
+  return files.map(f => {
+    const fullPath = path.join(topicDir, f);
+    const content = fs.readFileSync(fullPath, 'utf8');
+
+    let id = path.basename(f, path.extname(f));
+    let title = id;
+
+    const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    if (fmMatch) {
+      try {
+        const fm = require('js-yaml').load(fmMatch[1]);
+        if (fm.title) title = fm.title;
+        if (fm.id) id = fm.id;
+      } catch (_) {}
+    } else {
+      const h1 = content.match(/^#\s+(.+)/m);
+      if (h1) title = h1[1].trim();
+    }
+
+    return { id, title };
+  });
+}
+
+/* ============================================================
    VISION PARSING
    ============================================================ */
 
 function parseVision() {
-  // FPs: bullets and numbered items only — skip headings (they are category groupers)
-  const fps = safeRead(() =>
-    parseMarkdownItems(readMarkdown('QUANTUM/Vision/favorite-problems.md'),
-      { bulletsOnly: true, stripBold: true })
-  ) || [];
+  // Helper: extract only content after "## My ..." heading, stopping at next ## or end
+  function extractMySection(text) {
+    const lines = text.split('\n');
+    let inSection = false;
+    const result = [];
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (/^##\s+My\s/i.test(trimmed)) { inSection = true; continue; }
+      if (inSection && /^##\s/.test(trimmed)) break; // next ## section ends it
+      if (inSection) result.push(line);
+    }
+    return result;
+  }
 
-  // MTPs: H2 headings = MTP titles; fall back to H3 if no H2 found
-  const mtps = safeRead(() => {
-    const text = readMarkdown('QUANTUM/Vision/massively-transformative-purposes.md');
-    const lvl2 = parseMarkdownItems(text, { headingLevel: 2, stripBold: true });
-    return lvl2.length ? lvl2 : parseMarkdownItems(text, { headingLevel: 3, stripBold: true });
+  // FPs: numbered list (1. Question text)
+  const fps = safeRead(() => {
+    const lines = extractMySection(readMarkdown('QUANTUM/vision/favorite-problems.md'));
+    return lines
+      .map(l => l.trim())
+      .filter(l => /^\d+\.\s+.+/.test(l))
+      .map(l => ({ title: l.replace(/^\d+\.\s+/, '').trim() }))
+      .filter(i => i.title);
   }) || [];
 
-  // HHGs: H3 headings = actual goals (H2 headings are MTP groupers — skip them)
-  // Also extract timeframes from parentheses in title
+  // MTPs: ### headings like "### MTP 1: Title"
+  const mtps = safeRead(() => {
+    const lines = extractMySection(readMarkdown('QUANTUM/vision/massively-transformative-purposes.md'));
+    return lines
+      .map(l => l.trim())
+      .filter(l => /^###\s+MTP\s+\d/i.test(l))
+      .map(l => ({ title: l.replace(/^###\s+/, '').trim() }));
+  }) || [];
+
+  // HHGs: ### headings like "### HHG 1: Title" with sub-bullet metadata
   const hhgs = safeRead(() => {
-    const text = readMarkdown('QUANTUM/Vision/high-hard-goals.md');
-    return parseMarkdownItems(text, { headingLevel: 3, stripBold: true }).map(item => {
-      const m = item.title.match(/^(.+?)\s*\(([^)]+)\)\s*$/);
-      return m ? { title: m[1].trim(), timeframe: m[2].trim() } : item;
-    });
+    const lines = extractMySection(readMarkdown('QUANTUM/vision/high-hard-goals.md'));
+    const items = [];
+    let current = null;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (/^###\s+HHG\s+\d/i.test(trimmed)) {
+        if (current) items.push(current);
+        current = { title: trimmed.replace(/^###\s+/, '').replace(/^HHG\s+\d+:\s*/, '').trim() };
+        continue;
+      }
+      if (current && trimmed.startsWith('- **')) {
+        const fm = trimmed.match(/^\-\s+\*\*(.+?)\*\*:?\s*(.*)$/);
+        if (fm) {
+          const key = fm[1].toLowerCase().replace(/\s+/g, '_').replace(/:$/, '');
+          const val = fm[2].trim();
+          if (key === 'time_horizon') current.timeframe = val;
+          else if (key === 'connected_mtp') current.connectedMtp = val;
+          else if (key === 'first_milestone') current.milestone = val;
+        }
+      }
+    }
+    if (current) items.push(current);
+    return items;
   }) || [];
 
   return { fps, mtps, hhgs };
 }
 
-/* ============================================================
-   TRANSIT COMPUTATION
-   ============================================================ */
-
-function computeTransits() {
-  const now = today();
-  const todayMMDD = (now.getMonth() + 1).toString().padStart(2,'0') + '-' + now.getDate().toString().padStart(2,'0');
-  const todayYYYYMM = now.getFullYear() + '-' + (now.getMonth()+1).toString().padStart(2,'0');
-
-  // Sun sign from sign-calendar.yaml
-  let sunSign = null, sunElement = null, sunVperPhase = null;
-  const signCal = safeRead(() => readYaml('SYSTEM/transit-data/sign-calendar.yaml'));
-  if (signCal && signCal.signs) {
-    for (const entry of signCal.signs) {
-      const start = entry.start; // e.g. "03-21"
-      const end = entry.end;     // e.g. "04-19"
-      if (spansDate(start, end, todayMMDD)) {
-        sunSign = entry.sign.toLowerCase();
-        sunElement = SIGN_ELEMENT[sunSign] || null;
-        sunVperPhase = SIGN_VPER[sunSign] || null;
-        break;
-      }
-    }
-  }
-
-  // Slow planets from slow-planets-2026.yaml
-  const slowPlanetsData = safeRead(() => readYaml('SYSTEM/transit-data/slow-planets-2026.yaml'));
-  const slowPlanets = [];
-  if (slowPlanetsData && slowPlanetsData.planets) {
-    slowPlanetsData.planets.forEach(p => {
-      const monthEntry = (p.positions || []).find(pos => pos.month === todayYYYYMM);
-      if (monthEntry) {
-        const sign = monthEntry.sign.toLowerCase();
-        slowPlanets.push({
-          name: p.name,
-          sign,
-          element: SIGN_ELEMENT[sign] || null,
-          vperPhase: SIGN_VPER[sign] || null
-        });
-      }
-    });
-  }
-
-  // Cosmic VPER summary
-  const allPositions = [];
-  if (sunSign) allPositions.push({ name: 'Sun', sign: sunSign, element: sunElement, vperPhase: sunVperPhase });
-  slowPlanets.forEach(p => allPositions.push(p));
-
-  const phaseCounts = { vision: 0, plan: 0, execute: 0, review: 0 };
-  allPositions.forEach(p => { if (p.vperPhase) phaseCounts[p.vperPhase]++; });
-  let dominantPhase = sunVperPhase || 'execute';
-  let maxCount = 0;
-  Object.entries(phaseCounts).forEach(([ph, cnt]) => {
-    if (cnt > maxCount) { maxCount = cnt; dominantPhase = ph; }
-  });
-
-  const activeAreas = allPositions
-    .filter(p => p.sign)
-    .map(p => {
-      // Map sign → house (Aries=1, Taurus=2, ...) → area
-      const signOrder = ['aries','taurus','gemini','cancer','leo','virgo','libra','scorpio','sagittarius','capricorn','aquarius','pisces'];
-      const houseNum = signOrder.indexOf(p.sign) + 1;
-      const areaId = HOUSE_AREA[houseNum];
-      const area = KEY_AREAS.find(a => a.id === areaId);
-      return area ? { houseNum, areaName: area.name, planet: p.name, element: p.element } : null;
-    })
-    .filter(Boolean);
-
-  // Elemental weather
-  const elemCount = { fire: 0, air: 0, earth: 0, water: 0 };
-  allPositions.forEach(p => { if (p.element && elemCount[p.element] !== undefined) elemCount[p.element]++; });
-  let dominant = 'fire', weakest = 'fire';
-  Object.entries(elemCount).forEach(([el, cnt]) => {
-    if (cnt > elemCount[dominant]) dominant = el;
-    if (cnt < elemCount[weakest]) weakest = el;
-  });
-  const weatherSummaries = {
-    fire: 'Strong Fire energy — vision, inspiration, and new beginnings',
-    air: 'Dominant Air — ideas, communication, and strategic planning',
-    earth: 'Earth emphasis — grounding, execution, and tangible progress',
-    water: 'Water dominance — reflection, intuition, and emotional depth'
-  };
-  const elementalWeather = { ...elemCount, dominant, weakest, summary: weatherSummaries[dominant] || '' };
-
-  // Moon phase
-  const moonData = safeRead(() => readYaml('SYSTEM/transit-data/moon-phases-2026.yaml'));
-  let moonPhase = { name: 'Unknown', emoji: '🌕', illumination: 50, element: 'ether', guidance: '' };
-  if (moonData && moonData.phases) {
-    const phases = moonData.phases.map(p => ({ ...p, dateObj: new Date(p.date + 'T00:00:00') }))
-      .sort((a, b) => a.dateObj - b.dateObj);
-    const nowMs = now.getTime();
-    let prev = phases[0], next = phases[phases.length - 1];
-    for (let i = 0; i < phases.length; i++) {
-      if (phases[i].dateObj <= now) prev = phases[i];
-      else { next = phases[i]; break; }
-    }
-    const daysSince = (nowMs - prev.dateObj.getTime()) / 86400000;
-    const cycleLength = (next.dateObj.getTime() - prev.dateObj.getTime()) / 86400000;
-    const isNewMoon = prev.type === 'new';
-    const fullCycle = 29.5;
-    // Determine phase index (0-7)
-    let dayInCycle;
-    if (isNewMoon) {
-      dayInCycle = daysSince;
-    } else {
-      // prev is Full Moon — we're in waning half
-      dayInCycle = 14.75 + daysSince;
-    }
-    dayInCycle = dayInCycle % fullCycle;
-    const phaseIdx = Math.floor((dayInCycle / fullCycle) * 8) % 8;
-    // Illumination: 0% at New, 100% at Full, interpolate
-    let illumination;
-    if (dayInCycle <= 14.75) {
-      illumination = Math.round((dayInCycle / 14.75) * 100);
-    } else {
-      illumination = Math.round((1 - (dayInCycle - 14.75) / 14.75) * 100);
-    }
-    const waxing = dayInCycle <= 14.75;
-    moonPhase = {
-      name: MOON_PHASE_NAMES[phaseIdx],
-      emoji: MOON_PHASE_EMOJIS[phaseIdx],
-      illumination: Math.max(0, Math.min(100, illumination)),
-      element: waxing ? (phaseIdx < 2 ? 'fire' : 'earth') : (phaseIdx < 6 ? 'water' : 'air'),
-      guidance: MOON_GUIDANCE[phaseIdx]
-    };
-  }
-
-  return {
-    date: now.toISOString().slice(0,10),
-    sunSign, sunElement, sunVperPhase,
-    slowPlanets,
-    cosmicVper: { dominantPhase, phaseCounts, activeAreas },
-    moonPhase,
-    elementalWeather
-  };
-}
-
-function spansDate(start, end, mmdd) {
-  // Handle year-wrapping (Capricorn: 12-22 to 01-19)
-  if (start > end) {
-    return mmdd >= start || mmdd <= end;
-  }
-  return mmdd >= start && mmdd <= end;
-}
 
 /* ============================================================
    SYSTEMS ANALYTICS
@@ -906,13 +802,12 @@ function buildData() {
   const goals      = enrichGoals(goalsYaml);
   const winAnalytics = computeWinAnalytics(rawWins);
   const projectList  = safeRead(parseProjects) || [];
+  const topicList    = safeRead(parseTopics) || [];
   const areas        = enrichAreas(winAnalytics, goals, projectList);
   const vision       = parseVision();
-  const transits     = safeRead(computeTransits) || null;
   const { systems, systemsAnalytics } = computeSystems(systemsYaml);
   const alignment    = computeAlignment(goals, areas, systems, rawWins);
   const education    = safeRead(parseEducation) || {};
-  const cosmicTeaser = computeCosmicTeaser();
   const meta         = computeMeta(period, userName);
 
   // 3. VPER (include lastReviews for review consistency tracker)
@@ -937,10 +832,9 @@ function buildData() {
     winAnalytics,
     areas,
     projects: projectList,
+    topics: topicList,
     vision,
     education,
-    transits,
-    cosmicTeaser,
     systems,
     systemsAnalytics,
     alignment,

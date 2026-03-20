@@ -27,8 +27,7 @@ Press `Ctrl+C` to stop.
 | `#goals` | Annual → Weekly goals with key results and progress |
 | `#wins` | Win timeline + analytics (streaks, by area, weekly trend) |
 | `#learn` | Education hub: VPER, Elements, Gap to Gain, 12 Areas, Goals, Planning |
-| `#transits` | Cosmic VPER phase, elemental weather, slow planets, moon phase |
-| `#cosmic-teaser` | Cosmic Blueprint teaser (Astrology / Human Design / Gene Keys) |
+| `#cosmic` | Cosmic Blueprint Copilot teaser and link |
 | `#systems` | Strategy systems tracking grid + completion analytics |
 | `#alignment` | Goal-to-vision coherence, area balance, system-to-goal audit |
 
@@ -43,10 +42,6 @@ All files are read relative to the `ILOS-Template/` root:
 | Strategy systems | `TIME/strategy-systems.yaml` | YAML |
 | Wins | `MEMORY/wins.jsonl` | JSONL |
 | Vision (FPs, MTPs, HHGs) | `QUANTUM/vision/*.md` | Markdown |
-| Transit — sun sign calendar | `TIME/sign-calendar.yaml` | YAML |
-| Transit — slow planets | `TIME/slow-planets-2026.yaml` | YAML |
-| Transit — moon phases | `TIME/moon-phases-2026.yaml` | YAML |
-
 **All files are optional.** Missing files show graceful empty states — no errors.
 
 ## Custom Port

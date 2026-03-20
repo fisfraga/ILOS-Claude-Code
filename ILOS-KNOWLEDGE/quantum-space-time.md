@@ -34,10 +34,8 @@ The Quantum dimension holds everything that is atemporal and aspatial -- truths 
   - Life Manifesto: The overarching narrative of what you stand for, what you are building, and who you are becoming.
 
 - **Self-Knowledge**
-  - Astrology: Your natal chart as a map of archetypal energies, strengths, and growth edges in this life.
-  - Human Design: Your energetic type, strategy, authority, and profile -- how you are designed to make decisions and interact with the world.
-  - Gene Keys: Your hologenetic profile revealing shadow patterns and the gifts that emerge when those shadows are integrated.
-  - Any other self-knowledge frameworks you use for understanding your nature.
+  - Any self-knowledge frameworks you use for understanding your nature -- personality assessments, strengths profiles, values inventories, and more.
+  - The directory is open-ended: add whatever frameworks resonate with you and help you understand your patterns, strengths, and growth edges.
 
 - **Personal Context**
   - Routines and habits (what your days actually look like)
@@ -140,7 +138,7 @@ ILOS is local-first: all data lives in local files (Markdown, YAML, JSONL) and i
 | Dimension | Local Files (Primary) | Tana (Optional Enhancement) |
 |---|---|---|
 | **Quantum: Vision** | `QUANTUM/vision/` -- MTPs, HHGs, Favorite Problems as stable Markdown references | Mirror key vision elements for dashboard views |
-| **Quantum: Self-Knowledge** | `QUANTUM/self-knowledge/` -- Astrology charts, HD reports, Gene Keys profiles | Not typically needed in Tana (stable reference docs) |
+| **Quantum: Self-Knowledge** | `QUANTUM/self-knowledge/` -- Personality frameworks, strengths, values | Not typically needed in Tana (stable reference docs) |
 | **Quantum: Personal Context** | `QUANTUM/personal-context/` -- 9 context files, updated during quarterly reviews | Can mirror for enhanced AI context queries |
 | **Space: Areas, Projects, Topics** | `SPACE/areas/`, `SPACE/projects/` -- Markdown files for each area and project | Tana adds graph linking, saved searches, and visual overviews |
 | **Time: Plans, Reviews, Wins** | `TIME/` for goals + `MEMORY/` for wins (JSONL append-only) | Tana adds calendar integration and time-based queries |
