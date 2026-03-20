@@ -337,8 +337,48 @@ Apply changes in dependency order. **One MCP call at a time.**
 - Update the body with Tana content
 
 **Projects:** Update or create project files in `SPACE/projects/`.
+- Filename: slugified project name (e.g., `website-redesign.md`)
+- Format: YAML frontmatter matching `parseProjects()` expectations, then markdown body:
+  ```markdown
+  ---
+  title: Project Name
+  status: active
+  area: career
+  connected_goal: goal_id_or_null
+  ---
+
+  # Project Name
+  [content from Tana if available]
+  ```
+- Store Tana node ID in `sync-state.yaml` under `projects.tana_node_ids`
 
 **Topics:** Update or create topic files in `SPACE/topics/`.
+- Filename: slugified topic name (e.g., `stoic-philosophy.md`)
+- Format: YAML frontmatter with `title`, then markdown body following the template in `SPACE/topics/README.md`:
+  ```markdown
+  ---
+  title: Topic Name
+  ---
+
+  # Topic Name
+
+  ## Why This Interests Me
+  [content from Tana if available]
+
+  ## Key Ideas
+  [content from Tana if available]
+
+  ## Key Sources
+  [content from Tana if available]
+
+  ## Connections
+  [content from Tana if available]
+
+  ## Open Questions
+  [content from Tana if available]
+  ```
+- For partial sync (metadata only): write frontmatter + heading only, leave sections empty
+- Store Tana node ID in `sync-state.yaml` under `topics.tana_node_ids`
 
 **Vision:** Update vision files in `QUANTUM/vision/` if Tana has newer versions.
 
@@ -362,6 +402,16 @@ import_tana_paste({
   content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
 })
 ```
+Store returned node ID in sync-state.yaml.
+
+**New topics** (local topics not in Tana):
+```
+import_tana_paste({
+  parentNodeId: "[TOPICS_CONTAINER_ID]",
+  content: "- [Topic name] #[[^[TOPIC_TAG_ID]]]"
+})
+```
+Store returned node ID in sync-state.yaml.
 
 **Unsynced wins** (wins after `last_pushed_win_id` in sync-state.yaml):
 ```

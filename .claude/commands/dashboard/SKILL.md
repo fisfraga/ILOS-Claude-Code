@@ -13,8 +13,15 @@ You are DAEDALUS launching and maintaining the ILOS Dashboard web app. The dashb
 
 ## Procedure
 
-### Step 1 — Check if the server is running
+### Step 1 — Pre-flight checks
 
+**Check Node.js is installed:**
+```bash
+node --version
+```
+If Node.js is not installed or the version is below 18, tell the user: "The ILOS Dashboard requires Node.js 18 or later. Install it from https://nodejs.org and try again." Then stop.
+
+**Check if the server is already running:**
 ```bash
 curl -s http://localhost:3000/api/data > /dev/null 2>&1 && echo "RUNNING" || echo "STOPPED"
 ```
@@ -81,9 +88,6 @@ dashboard/
 | Strategy systems | `TIME/strategy-systems.yaml` |
 | Wins | `MEMORY/wins.jsonl` |
 | Vision (HHGs, FPs, MTPs) | `QUANTUM/vision/*.md` |
-| Sun sign calendar | `SYSTEM/transit-data/sign-calendar.yaml` |
-| Slow planets | `SYSTEM/transit-data/slow-planets-2026.yaml` |
-| Moon phases | `SYSTEM/transit-data/moon-phases-2026.yaml` |
 
 ---
 
@@ -93,4 +97,4 @@ dashboard/
 - **Never restart** the server just because data changed — a browser refresh is sufficient.
 - **Edit in place** — Style/logic changes go directly to `public/style.css` or `public/app.js`.
 - **Element colors** — Fire (#ef6c00), Air (#0097a7), Earth (#2e7d32), Water (#1565c0), Ether (#9c27b0).
-- **Works without Tana** — Local files provide full data for all 15 views.
+- **Works without Tana** — Local files provide full data for all views.

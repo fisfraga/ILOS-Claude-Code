@@ -2,6 +2,8 @@
 
 Record your Tana field IDs here. These are required for setting and querying field values via MCP.
 
+> **Setup required:** These IDs are empty by default. Run `/tana-understand` to discover and populate your workspace's tag and field IDs before using `/sync`.
+
 **How to find IDs:** Use `get_tag_schema` for each supertag to discover its fields and their IDs.
 
 ---

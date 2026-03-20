@@ -2,21 +2,38 @@
 
 **Your life, intentionally designed. Powered by Claude Code.**
 
-ILOS is a complete life operating system that runs entirely in Claude Code. 22 AI-powered skills, 8 specialized agent personas, a zero-dependency HTML dashboard, and local-first data architecture -- all in one git repository.
+ILOS is a complete life operating system that runs entirely in Claude Code. 26 AI-powered skills, specialized agent personas, a zero-dependency HTML dashboard, and local-first data architecture -- all in one git repository.
 
 ---
 
 ## What's Included
 
-- **22 Slash Commands** -- from `/morning` (5-min daily planning) to `/annual-review` (full year reflection)
-- **8 Agent Personas** -- PARACELSUS (Coach), PROMETHEUS (Visionary), ATHENA (Strategist), HEPHAESTUS (Builder), MNEMOSYNE (Archivist), HERMES (Tana), DAEDALUS (Dashboard), plus Council meta-system
-- **Zero-Dependency Dashboard** -- 15-view HTML SPA generated on demand: VPER wheel, area health, goals, wins, education, transits, systems, alignment
-- **Progressive Disclosure** -- PARACELSUS loads only what it needs for each task
+- **26 Slash Commands** -- from `/morning` (5-min daily planning) to `/annual-review` (full year reflection)
+- **Specialized Agent Personas** -- PARACELSUS (Coach), PROMETHEUS (Visionary), ATHENA (Strategist), HEPHAESTUS (Builder), MNEMOSYNE (Archivist), SOPHIA (Teacher), PYTHIA (Self-Knowledge), and more
+- **Zero-Dependency Dashboard** -- Multi-view HTML SPA generated on demand: VPER wheel, area health, goals, wins, education, systems, alignment
+- **Smart Context Loading** -- agents load only what they need for each task, keeping sessions fast
 - **Local-First Data** -- YAML configs, JSONL memory, Markdown narrative. Git-tracked. You own everything.
 - **Elemental Wisdom** -- VPER Cycle maps to Fire/Air/Earth/Water/Ether
-- **12 Key Areas** -- Life areas mapped to zodiac houses
-- **Transit Integration** -- Cosmic weather connected to your life areas
+- **12 Key Areas** -- Life areas inspired by archetypal house system, balanced across elements
 - **Gap to Gain** -- Always measure progress against your past self, never against ideals
+
+---
+
+## Your First Week
+
+You don't need to learn 26 commands. Start with these 5:
+
+| Command | What It Does | Time |
+|---------|-------------|------|
+| `/win "Your first win"` | Celebrate something you did | 1 min |
+| `/morning` | Plan your day | 5 min |
+| `/weekly-review` | Close the week, plan the next | 15 min |
+| `/guide` | Understand how ILOS works | Variable |
+| `/dashboard` | See your data visually | 30 sec |
+
+Master these before exploring the rest. Type `/help` to see all available skills.
+
+For a complete setup walkthrough, see `SYSTEM/setup-guide.md`.
 
 ---
 
@@ -117,7 +134,7 @@ PARACELSUS operates through eight specialized modes, each bringing a distinct co
 ```
 QUANTUM/          # Essence -- vision, self-knowledge, personal context
   vision/         #   Manifesto, favorite problems, MTPs, HHGs
-  self-knowledge/ #   Strengths, wisdom traditions (optional)
+  self-knowledge/ #   Personality frameworks, strengths (optional)
   personal-context/ # 9 dimensions of personal context
 
 SPACE/            # Structure -- 12 Key Areas, projects, products
@@ -139,7 +156,7 @@ MEMORY/           # Episodic logs -- wins, decisions, failures, experiences
   experiences.jsonl #  Significant life moments
 
 ILOS-KNOWLEDGE/   # Reference -- methodology, frameworks, philosophy
-SYSTEM/           # Infrastructure -- transit data, Tana reference
+SYSTEM/           # Infrastructure -- Tana reference, sync config
 ```
 
 ---
@@ -180,7 +197,7 @@ Every failure encodes a lesson. Every decision builds judgment. MNEMOSYNE (the A
 
 Built on the shoulders of: Benjamin Hardy (Gap vs. Gain, Future Self), Steven Kotler (MTP, High Hard Goals, Flow), Tiago Forte (Second Brain, PARA), Dan Sullivan (Strategic Coach), Mindvalley (12 Life Areas), Dragon Dreaming (Dream-Plan-Do-Celebrate), and classical elemental philosophy.
 
-Created by [Fis Fraga](https://fisfraga.com) -- M.Sc. Computer Science, Tana Ambassador, 7+ years studying wisdom traditions.
+Created by [Fis Fraga](https://fisfraga.com) -- M.Sc. Computer Science, Tana Ambassador.
 
 ---
 

@@ -1,6 +1,8 @@
 # Life Vision & Manifesto
 
-This is the deepest layer of your personal context — a declaration of what you stand for, a picture of the life you're designing, and a bridge to your actionable vision elements in Tana (Favorite Problems, MTPs, HHGs). This file is numbered 0 because everything else flows from here.
+This is the deepest layer of your personal context — a declaration of what you stand for, a picture of the life you're designing, and a bridge to your actionable vision elements (Favorite Problems, MTPs, HHGs). This file is numbered 0 because everything else flows from here.
+
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
 
 ---
 

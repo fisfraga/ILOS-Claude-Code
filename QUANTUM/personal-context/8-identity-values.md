@@ -2,6 +2,8 @@
 
 Who you are at your core — your values, beliefs, and personal definition of success. This is the deepest layer of personal context, informing everything else.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Core Identity

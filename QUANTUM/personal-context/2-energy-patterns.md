@@ -2,6 +2,8 @@
 
 When you're at your best, what drains you, and what recharges you. This helps PARACELSUS suggest the right activities at the right times.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Daily Energy Map

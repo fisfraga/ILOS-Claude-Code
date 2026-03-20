@@ -2,6 +2,8 @@
 
 Record your Tana supertag IDs here. These are required for all MCP queries.
 
+> **Setup required:** These IDs are empty by default. Run `/tana-understand` to discover and populate your workspace's tag and field IDs before using `/sync`.
+
 **How to find IDs:** Use `list_tags` in your Tana workspace, or inspect the URL when viewing a tag in Tana.
 
 ---

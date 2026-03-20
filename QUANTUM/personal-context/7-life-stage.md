@@ -2,6 +2,8 @@
 
 Your current season of life, active transitions, and bandwidth. This is the most frequently changing personal context file — update it when your circumstances shift.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Current Season

@@ -37,11 +37,16 @@ Output the following formatted catalog:
 
 Welcome. Here is everything available to you.
 
-## Quick Start
-/win "Your first win"     — Log a win (1 min)
+## Start Here (Your First Week)
+/win "Your first win"     — Celebrate something you did (1 min)
 /morning                  — Plan your day (5 min)
-/weekly-review            — Close + plan the week (15 min)
-/help                     — You are here
+/weekly-review            — Close the week (15 min)
+/guide                    — Understand how ILOS works
+/dashboard                — See your data visually (30 sec)
+
+Master these 5 before exploring the rest.
+
+## Full Skill Catalog
 
 ## The PARACELSUS Council
 Talk to any agent directly, or let skills auto-activate them.
@@ -55,7 +60,7 @@ Talk to any agent directly, or let skills auto-activate them.
 | MNEMOSYNE | Water | Memory, celebration | /win, reviews |
 | HERMES | — | Tana bridge | /tana |
 | DAEDALUS | Earth | Dashboard, architecture | /dashboard, /architect |
-| PYTHIA | Ether | Personal context, self-knowledge | /context-update, /cosmic-profile |
+| PYTHIA | Ether | Personal context, self-knowledge | /context-update, "update my context" |
 
 ## All Skills by Element
 
@@ -85,7 +90,6 @@ Talk to any agent directly, or let skills auto-activate them.
 ### Ether (Alignment)
 /alignment       — Cross-dimension coherence check (Variable)
 /context-update  — Extract signals into personal context (5-10 min)
-/cosmic-profile  — Input Astrology / Human Design / Gene Keys data (5-10 min)
 /ilos-master     — Master coaching session (Variable)
 
 ### Tana Integration (Optional)

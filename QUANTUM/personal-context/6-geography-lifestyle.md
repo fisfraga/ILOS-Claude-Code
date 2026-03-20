@@ -2,6 +2,8 @@
 
 Where you live, how you live, and practical constraints that shape your day-to-day reality. This helps PARACELSUS make suggestions grounded in your actual situation.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Location

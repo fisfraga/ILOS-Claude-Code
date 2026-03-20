@@ -2,6 +2,8 @@
 
 Key people in your life and how your social world shapes your planning. This helps PARACELSUS understand your commitments and suggest goals that honor your relationships.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Key People

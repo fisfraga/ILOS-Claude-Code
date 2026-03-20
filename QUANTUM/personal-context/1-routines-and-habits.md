@@ -2,6 +2,8 @@
 
 What your days and weeks actually look like. This helps PARACELSUS plan around your real rhythm rather than suggesting ideals that don't fit your life.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Daily Rhythm

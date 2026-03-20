@@ -2,6 +2,8 @@
 
 Boundaries, commitments, and constraints that any plan must respect. This prevents PARACELSUS from ever suggesting something that conflicts with what you protect.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Daily Non-Negotiables

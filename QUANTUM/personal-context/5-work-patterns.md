@@ -2,6 +2,8 @@
 
 Your professional context, career stage, and work style. This helps PARACELSUS understand how work fits into your larger life design.
 
+*Start with 1-3 sentences per section. You can always expand later. These files are for your AI coach, not for publication — be honest over polished.*
+
 ---
 
 ## Professional Context

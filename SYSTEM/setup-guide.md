@@ -28,7 +28,7 @@ Open `TIME/active-goals.yaml` and replace the example goals with your own.
 **Rules:**
 - Maximum 3 goals per time scale (this is non-negotiable -- Extreme Prioritization)
 - Start with weekly goals if you are new to the system
-- Connect each goal to one of the 12 Key Areas
+- Connect each goal to one of the 12 Key Areas: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`, `love`, `emotional`, `vision`, `career`, `social`, `spiritual`
 - If you have annual or quarterly goals, set those too
 
 Do not overthink this. Goals are directions, not commitments to perfection. You will adjust them during reviews.
@@ -40,7 +40,7 @@ Do not overthink this. Goals are directions, not commitments to perfection. You 
 Open `MEMORY/wins.jsonl` and add your first win after the schema line:
 
 ```json
-{"id": "win_20260101_120000", "date": "2026-01-01", "description": "Set up my Intentional Life OS", "area": "vision", "source": "setup"}
+{"id": "win_20260101_120000", "date": "2026-01-01", "description": "Set up my Intentional Life OS", "area": "vision", "scale": "week", "emotional_weight": 7}
 ```
 
 This is the beginning of your Gain log. Every win you capture compounds into evidence of your capability. Start small. Start now.
@@ -64,7 +64,7 @@ If you are using Claude Code with PARACELSUS, you can simply say "let's do a wee
 Tana integration is **entirely optional**. ILOS works fully with just local files and Claude Code. However, if you use Tana, the MCP integration enables powerful bidirectional data flow — Claude can read your live goals, create wins, mark goals complete, and navigate your workspace directly.
 
 **Prerequisites:**
-- You have a Tana workspace with the ILOS supertag structure installed (see Tana documentation)
+- You have a Tana workspace with the ILOS supertag structure installed (available from the ILOS community)
 - The Tana MCP local server is running and configured in Claude Code
 
 **To set up the integration (5 minutes):**

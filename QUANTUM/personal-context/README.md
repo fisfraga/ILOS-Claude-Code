@@ -31,7 +31,7 @@ Each file covers a different dimension of who you are:
 | 7 | **Life Stage** | Current season, transitions, bandwidth |
 | 8 | **Identity & Values** | Who you are, what success means to you |
 
-Category 0 connects directly to your Favorite Problems, MTPs, and HHGs in Tana — it is the foundation that all other context rests upon.
+Category 0 connects directly to your Favorite Problems, MTPs, and HHGs in `QUANTUM/vision/` — it is the foundation that all other context rests upon.
 
 ---
 
@@ -59,28 +59,24 @@ You don't need to tell PARACELSUS about this information in conversation — it 
 
 ## Where to Start
 
-**Category 0 (Life Vision & Manifesto) is the foundation.** It connects directly to your Favorite Problems, MTPs, and HHGs in Tana. Fill this first — the clarity it provides flows into everything else.
+Start with the files that feel most natural and concrete:
 
-After that, fill whichever categories feel most natural. You don't need to complete everything at once.
+1. **Category 8 (Identity & Values)** — Write your core values and how you see yourself
+2. **Category 7 (Life Stage)** — Describe your current season of life
+3. **Category 1 (Routines & Habits)** — Document your actual daily rhythm
+
+Then fill in the remaining categories (2-6) at your own pace. **Category 0 (Life Vision & Manifesto)** is the deepest one — it is okay if it takes time to emerge. Save it for when you have more clarity.
 
 ---
 
-## Tana Sync
+## Tana Sync (Optional)
 
-Your personal context files can optionally be mirrored in Tana as **#context nodes**. This gives you two ways to access the same information:
+If you use Tana with the ILOS integration, your personal context files can be mirrored as Tana nodes for visual browsing and graph connectivity.
 
 - **Local files** — Read by PARACELSUS during Claude Code sessions (coaching, planning, alignment)
 - **Tana nodes** — Browseable in Tana's visual interface, searchable, connectable to other nodes
 
-### How It Works
-
-PARACELSUS creates a "Personal Context" parent node under your Life Overview Hub, with child nodes for each category. The content mirrors your local files. When you update one, you can ask PARACELSUS to sync the other.
-
-### Setting It Up
-
-Ask Claude Code: "Create my personal context nodes in Tana"
-
-See `SYSTEM/setup-guide.md` Step 7 for details.
+Run `/sync-setup` to configure bidirectional sync, then `/sync` to keep local files and Tana in sync.
 
 ---
 
@@ -105,4 +101,4 @@ This creates a record of your evolution over time — valuable for annual review
 | **Quarterly** | Identity, values, life stage, non-negotiables | "Transitioning from building phase to maintenance" |
 | **Annually** | Life vision, manifesto, deep identity review | Full Category 0 refresh |
 
-After every review (weekly, monthly, quarterly), Workflow 8 (Review-to-Context Extraction) automatically scans for personal context signals and proposes updates. See `SYSTEM/workflows.md` for details.
+After reviews, the `/context-update` skill scans for personal context signals and proposes updates to these files.
