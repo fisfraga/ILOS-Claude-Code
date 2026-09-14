@@ -49,11 +49,12 @@ If the win clearly relates to an active goal in `TIME/active-goals.yaml`, read t
 
 ### Step 3 — Sync to Tana (if available)
 
-**If Tana MCP is available** (test with `list_workspaces`):
+**If Tana MCP is NOT available** (test with `list_workspaces`): Skip to Step 4. The win is already safe in `MEMORY/wins.jsonl` and will push on the next `/sync` when Tana comes online.
 
-Read Tana reference files:
+**If Tana MCP is available**, read the Tana reference files and sync-config:
 !`cat SYSTEM/tana-reference/tag-ids.md`
 !`cat SYSTEM/tana-reference/field-ids.md`
+!`cat SYSTEM/sync-config.yaml`
 
 **Decide: Win or Gratitude?**
 Not every positive moment is a win. Apply this filter:
@@ -62,6 +63,15 @@ Not every positive moment is a win. Apply this filter:
 - **#gratitude** — A small daily task done well, a moment of appreciation, a routine done consistently. Lives under the Daily Gratitude node.
 
 If the moment is too small for a weekly review, suggest capturing it as gratitude instead: "This sounds more like a gratitude moment than a win. Would you like me to capture it under Daily Gratitude instead?"
+
+**Resolve the target container for #win nodes:**
+
+`/win` and `/sync` share the same wins container resolution so they stay consistent and dedup works. In order:
+
+1. If `SYSTEM/sync-config.yaml` has `tana_node_overrides.wins_container_id` set and non-empty → use that node ID.
+2. Otherwise → use the **Wins Log** node ID from `SYSTEM/tana-reference/structure-map.md`.
+
+Do NOT push wins to today's calendar node. That path fragments the wins view across daily nodes and defeats weekly/monthly review dashboards.
 
 **Set Periodicity (required for wins):**
 Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scoped wins are invisible in weekly reviews and all higher-level dashboards.
@@ -73,27 +83,41 @@ Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scope
 | **Quarter** | A breakthrough, launch, or significant life achievement |
 | **Year** | A peak experience, life milestone, major transformation |
 
-**Create the win:**
+**Create the win in Tana:**
 ```
-get_or_create_calendar_node({
-  workspaceId: "[WORKSPACE_ID]",
-  granularity: "day"
-})
-
 import_tana_paste({
-  parentNodeId: TODAY_NODE_ID,
+  parentNodeId: "[WINS_CONTAINER_ID]",  // resolved above
   content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"
 })
 ```
 
 Replace `Week` with `Month`, `Quarter`, or `Year` if the win warrants a higher scope.
 
-Optionally add area or project connection if clearly relevant:
+Optionally add area connection if clearly relevant (look up the area node ID from `SYSTEM/tana-reference/structure-map.md` — Key Area nodes section):
 ```
 content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]"
 ```
 
-**If Tana MCP is NOT available**: Skip this step. The win is already saved in `MEMORY/wins.jsonl`.
+### Step 3b — Record the Tana push in sync-state.yaml
+
+After a successful Tana push, update `SYSTEM/sync-state.yaml` so `/sync` knows this win is already in Tana and won't try to push a duplicate:
+
+1. Read `SYSTEM/sync-state.yaml`.
+2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`).
+3. Set `entities.wins.last_push` to the current ISO timestamp.
+4. Set `entities.wins.last_pushed_win_id` to the win ID you just created.
+5. Write the file back.
+
+Example:
+```yaml
+  wins:
+    last_push: "2026-04-13T19:45:00-03:00"
+    last_pushed_win_id: "win_20260413_193600"
+    tana_node_ids:
+      win_20260413_193600: "GS6_ItYRc2Bm"
+```
+
+**Why this matters:** `/sync`'s Phase 4B skips any win already present in `tana_node_ids`. Without this bookkeeping, running `/sync` after `/win` would push a duplicate win to Tana.
 
 ### Step 4 — Connect and affirm
 
@@ -110,6 +134,8 @@ If you notice this is the Nth win in the same area recently, mention the streak.
 
 - **ALWAYS celebrate before saving** — the tool call is secondary to the human moment
 - **ALWAYS save to MEMORY/wins.jsonl** — this is the canonical local record, regardless of Tana
+- **Wins container is configurable** — read `tana_node_overrides.wins_container_id` from `sync-config.yaml` before falling back to Wins Log. Never hardcode.
+- **Record every Tana push in sync-state.yaml** — `/sync` depends on `entities.wins.tana_node_ids` to dedup. Skipping Step 3b will create duplicate wins on the next `/sync`.
 - **Keep it brief** — 1-2 minutes, not a therapy session
 - **Use the user's words** — don't rephrase their win into corporate language
 - **Connect upward** — briefly link to a goal, project, or pattern if natural

@@ -97,6 +97,30 @@ list_workspaces()
 If this fails → stop and inform:
 > "Tana MCP is not available. Check that your Tana MCP server is running and configured in Claude Code settings (mcp__tana-local). You can still use ILOS locally without Tana."
 
+### Step 0b — Resolve container targets
+
+`/sync` and `/win` push to container nodes inside Tana. Each container has a default (taken from `SYSTEM/tana-reference/structure-map.md`) and an optional override (taken from `SYSTEM/sync-config.yaml` under `tana_node_overrides`).
+
+For each container below, resolve in this order:
+
+1. If `sync-config.yaml`'s `tana_node_overrides.<key>` is present and non-empty → use it.
+2. Otherwise → use the structure-map default.
+
+| Container key | Default (structure-map source) |
+|---|---|
+| `wins_container_id` | **Wins Log** |
+| `decisions_container_id` | **Decisions Log** |
+| `goals_container_id` | **Goals** |
+| `projects_container_id` | **Projects** |
+| `topics_container_id` | **Topics** |
+| `vision_fp_container_id` | **Favorite Problems** |
+| `vision_mtp_container_id` | **Massively Transformative Purposes** |
+| `vision_hhg_container_id` | **High Hard Goals** |
+
+Record the resolved IDs — you'll use them throughout Phase 4 (Apply Changes).
+
+**Why overrides exist:** Recording demos, onboarding sandboxes, and multi-project workspaces sometimes want sync to land in a dedicated subtree instead of the canonical hubs. Overrides keep the skill generic while allowing per-workspace redirection.
+
 ---
 
 ## Phase 1: Determine Scope
@@ -413,22 +437,38 @@ import_tana_paste({
 ```
 Store returned node ID in sync-state.yaml.
 
-**Unsynced wins** (wins after `last_pushed_win_id` in sync-state.yaml):
+**Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
+
+1. Read `MEMORY/wins.jsonl` (skip the schema line on line 1).
+2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`.
+3. Build the push list: every win whose `id` is NOT already a key in `tana_node_ids`.
+4. If the push list is empty, report "Wins already in sync" and skip this block.
+5. For each win in the push list, execute **one** `import_tana_paste` call (sequential — never batch):
+
 ```
 import_tana_paste({
-  parentNodeId: "[WINS_LOG_CONTAINER_ID]",
-  content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[WEEK_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
+  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",  // from Step 0b
+  content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
 })
 ```
-**CRITICAL:** Periodicity for wins MUST be `week` option. NEVER `day`.
 
-**Unsynced decisions** (new open decisions not yet in Tana):
+6. After each successful push, immediately update `sync-state.yaml`:
+   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>`
+   - Update `entities.wins.last_push` to current ISO timestamp
+   - Update `entities.wins.last_pushed_win_id` to this win's ID
+
+**CRITICAL — Dedup contract with `/win`:** `/win` also pushes to Tana and records `tana_node_ids` entries immediately. This filter ensures wins created via `/win` are never re-pushed by `/sync`. If you see a win in `wins.jsonl` that already has an entry in `tana_node_ids`, skip it silently — that is not an error.
+
+**CRITICAL — Periodicity:** For wins, Periodicity MUST be `Week` (or higher). NEVER `Day`. Day-scoped wins are invisible in weekly review dashboards.
+
+**Unsynced decisions** (new open decisions not yet in Tana — use the same dedup pattern as wins, filtering `MEMORY/decisions.jsonl` against `entities.decisions.tana_node_ids`):
 ```
 import_tana_paste({
-  parentNodeId: "[DECISIONS_LOG_CONTAINER_ID]",
+  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",  // from Step 0b
   content: "- [Decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - Context:: [context text]\n  - Reasoning:: [reasoning]"
 })
 ```
+After each push, add the returned node ID to `entities.decisions.tana_node_ids.<decision_id>`.
 
 ### 4C — Update goal statuses in Tana (bidirectional)
 

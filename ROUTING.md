@@ -41,6 +41,9 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Set up sync / configure sync mode | SYSTEM/ + skill | tana-reference/README.md → `.claude/commands/sync-setup/SKILL.md` |
 | Sync status / last synced | SYSTEM/ | sync-state.yaml |
 | System architecture | SYSTEM/ + ILOS-KNOWLEDGE/ | setup-guide.md, schemas.md |
+| AI configuration / agent setup | ILOS-KNOWLEDGE/ | field-intelligence-layer.md |
+| Understanding AI principles | ILOS-KNOWLEDGE/ | field-intelligence-layer.md |
+| What agents can see | ILOS-KNOWLEDGE/ | field-intelligence-layer.md |
 
 ---
 

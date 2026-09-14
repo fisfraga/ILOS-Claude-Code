@@ -33,7 +33,7 @@ Your life data is accessible through multiple interfaces, each suited to differe
 
 Use Claude Code when you want to think, plan, review, or build. Add Tana when you want visual organization and browsing.
 
-### Bidirectional AI Partnership
+### Bidirectional AI Agents
 PARACELSUS does not just read your data -- it writes back. After a review session, wins are captured in local files (and synced to Tana if configured). After planning, goals are created. After building, tasks are checked off. This bidirectional flow means the AI is a true partner in your system, not just a consumer of your notes.
 
 ### Building & Creation

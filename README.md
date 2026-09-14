@@ -157,6 +157,13 @@ MEMORY/           # Episodic logs -- wins, decisions, failures, experiences
 
 ILOS-KNOWLEDGE/   # Reference -- methodology, frameworks, philosophy
 SYSTEM/           # Infrastructure -- Tana reference, sync config
+
+# The FIELD (intelligence layer) is implemented through:
+#   .claude/commands/   -- 26+ skills (slash commands)
+#   .claude/agents/     -- Agent personas (PARACELSUS, PROMETHEUS, etc.)
+#   CLAUDE.md           -- System instructions and behavioral rules
+#   ROUTING.md          -- Context routing for progressive disclosure
+# See ILOS-KNOWLEDGE/field-intelligence-layer.md for the full framework.
 ```
 
 ---

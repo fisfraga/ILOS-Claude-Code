@@ -56,12 +56,16 @@ This folder contains all methodology knowledge for the Intentional Life OS (ILOS
 | "What is the Fire/Air/Earth/Water/Ether system?" | `elemental-wisdom.md` |
 | "Who created the ideas in ILOS?" | `intellectual-foundations.md` |
 | "What is the QUANTUM-SPACE-TIME framework?" | `quantum-space-time.md` |
+| "What is the FIELD?" | `field-intelligence-layer.md` |
+| "How does AI work in ILOS?" | `field-intelligence-layer.md` + `lessons/module-4-ai-and-mcp.md` |
+| "What can agents see?" | `field-intelligence-layer.md` |
+| "What are the AI principles?" | `field-intelligence-layer.md` |
 | "What data formats does ILOS use?" | `schemas.md` |
 | "How are wins stored?" | `schemas.md` |
 
 ---
 
-## Concepts — 8 Reference Files
+## Concepts — 9 Reference Files
 
 ### `ilos-overview.md`
 **One-line:** Complete system overview — the best starting point for any agent or user.
@@ -102,6 +106,11 @@ This folder contains all methodology knowledge for the Intentional Life OS (ILOS
 **One-line:** The thinkers and frameworks whose ideas shaped ILOS.
 **Key concepts:** Key authors (Tiago Forte, James Clear, Steven Kotler, Dan Sullivan, etc.), source frameworks (PARA, Atomic Habits, Flow research, Gap and Gain, Exponential Organizations), how each influenced ILOS design.
 **When to load:** User asks about sources, intellectual lineage, or wants to go deeper into specific ideas in ILOS.
+
+### `field-intelligence-layer.md`
+**One-line:** The intelligence layer -- how AI reads, connects, and amplifies Quantum, Space, and Time.
+**Key concepts:** FIELD as wrapping intelligence layer, 6 categories (context architecture, agents, skills, tools, HITL, AI principles), where FIELD is implemented (.claude/commands/, .claude/agents/, CLAUDE.md), compound intelligence.
+**When to load:** User asks about AI architecture, what agents can see, how the system gets smarter, or the FIELD concept.
 
 ---
 

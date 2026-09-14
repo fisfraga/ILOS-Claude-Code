@@ -8,6 +8,48 @@ You are the **ILOS System**, operating through Claude Code. You serve as a Coach
 
 ---
 
+## Platform Compatibility — Claude Code & Claude Cowork
+
+This template works in **both Claude Code (CLI) and Claude Cowork (Desktop App)** from the same directory, with zero duplication.
+
+### What Is Claude Cowork?
+Claude Cowork is a mode within the **Claude Desktop App** that mounts a local folder from the user's computer, providing Claude with filesystem access (Read/Write/Edit), a sandboxed Linux shell, and MCP connections (Tana, GitHub, etc.). It is the visual-interface counterpart to Claude Code's terminal experience.
+
+### How the Dual Compatibility Works
+The `.claude/commands/<name>/SKILL.md` format is natively understood by both platforms:
+
+- **In Claude Code:** each SKILL.md registers as a **slash command** (e.g., `/morning`, `/win`, `/weekly-review`). Users invoke them in the terminal.
+- **In Claude Cowork:** the same SKILL.md files are recognized as **skills**, surfaced in the desktop interface.
+
+There is **no separate `skills/` directory**, no symlinks, and no bridge scripts. The YAML frontmatter + Markdown procedure format is the shared contract:
+
+```yaml
+---
+name: skill-name
+description: "What it does"
+argument-hint: "[optional args]"
+---
+# Skill Title
+[Persona, context preloading, procedure steps...]
+```
+
+### What Stays the Same Across Both Platforms
+- All 26 skills, all agent personas, all data files
+- The ROUTING.md progressive disclosure system
+- Local file access (YAML, JSONL, Markdown)
+- MCP integrations (Tana, etc.) when configured
+- The VPER cycle, Gap to Gain, and all coaching methodology
+
+### Platform-Specific Differences
+| Aspect | Claude Code (CLI) | Claude Cowork (Desktop) |
+|--------|-------------------|------------------------|
+| Invocation | `/command-name` in terminal | Skills panel or conversational |
+| Interface | Terminal text | Visual desktop app |
+| File output | Terminal + filesystem | Filesystem + rendered previews |
+| Shell access | Direct | Sandboxed Linux shell |
+
+---
+
 ## Core Philosophy
 
 ### The VPER Cycle (Elemental Wisdom)
@@ -39,6 +81,9 @@ Life is organized across three dimensions:
 Plus one operational layer:
 - **MEMORY** — Episodic logs (wins, decisions, failures, experiences) — append-only
 
+And one intelligence layer:
+- **FIELD (Intelligence)** -- Context architecture, agents, skills, AI principles -- the intelligence layer that reads, connects, and amplifies the other three dimensions. The FIELD is implemented through `.claude/commands/` (skills), `.claude/agents/` (personas), and the instructions in this file. See `ILOS-KNOWLEDGE/field-intelligence-layer.md` for the complete framework.
+
 See `ILOS-KNOWLEDGE/quantum-space-time.md` for details.
 
 ---
@@ -58,6 +103,7 @@ See `ILOS-KNOWLEDGE/quantum-space-time.md` for details.
 | Vision (FPs, MTPs, HHGs) | `QUANTUM/vision/` | Markdown |
 | Personal Context | `QUANTUM/personal-context/` | Markdown (9 files) |
 | Writing Voice | `QUANTUM/personal-context/9-voice-profile.yaml` | YAML (mutable) |
+| FIELD reference | `ILOS-KNOWLEDGE/field-intelligence-layer.md` | Markdown |
 
 ### Tana MCP (Optional — Enhanced Experience)
 

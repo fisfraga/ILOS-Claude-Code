@@ -27,6 +27,38 @@ sync_mode: full
 tana_workspace_id: ""
 
 # ─────────────────────────────────────────────
+# TANA NODE OVERRIDES (optional)
+# ─────────────────────────────────────────────
+# By default, /sync and /win push content to the canonical hub containers
+# discovered via /tana-understand and stored in SYSTEM/tana-reference/structure-map.md:
+#
+#   wins       → Wins Log          (Review Hub child)
+#   decisions  → Decisions Log     (Review Hub child)
+#   goals      → Goals             (Planning Hub child)
+#   projects   → Projects          (Life Overview Hub child)
+#   topics     → Topics            (Life Overview Hub child)
+#   vision_fp  → Favorite Problems (Vision Hub child)
+#   vision_mtp → MTPs              (Vision Hub child)
+#   vision_hhg → High Hard Goals   (Vision Hub child)
+#
+# Set any of the overrides below to redirect syncs into a different Tana node.
+# Typical use cases:
+#   - Recording a demo into a clean subtree (instead of cluttering your hubs)
+#   - Onboarding a new workspace where hubs don't exist yet
+#   - Multi-project workspaces where each project has its own "inbox"
+#
+# Leave a key blank to use the default from structure-map.md.
+tana_node_overrides:
+  wins_container_id: ""
+  decisions_container_id: ""
+  goals_container_id: ""
+  projects_container_id: ""
+  topics_container_id: ""
+  vision_fp_container_id: ""
+  vision_mtp_container_id: ""
+  vision_hhg_container_id: ""
+
+# ─────────────────────────────────────────────
 # AUTO-SYNC TRIGGERS
 # ─────────────────────────────────────────────
 auto_sync:
