@@ -125,21 +125,20 @@ Area slugs: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`
 
 ### Step 7 — Sync to Tana (if available)
 
+**If Tana MCP is NOT available:** Skip this step. The decision is saved in `MEMORY/decisions.jsonl` and `/sync` will push it later.
+
 **If Tana MCP is available:**
 
+1. Read `SYSTEM/tana-reference/tag-ids.md`, `SYSTEM/tana-reference/field-ids.md`, `SYSTEM/tana-reference/structure-map.md` and `SYSTEM/sync-config.yaml`.
+2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise **Decisions Log** in `structure-map.md`. Never push decisions to today's calendar node.
+3. Push it (one sequential call). Use `[OPEN_OPTION_ID]` for an open decision and `[DECIDED_OPTION_ID]` for a decided one:
 ```
-get_or_create_calendar_node({
-  workspaceId: "[WORKSPACE_ID]",
-  granularity: "day"
-})
-
 import_tana_paste({
-  parentNodeId: TODAY_NODE_ID,
-  content: "- [Decision description] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [Open or Decided]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
+  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
+  content: "- [Decision description] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
 })
 ```
-
-**If Tana MCP is NOT available:** Skip this step. The decision is saved in `MEMORY/decisions.jsonl`.
+4. Record the push in `SYSTEM/sync-state.yaml`: add `entities.decisions.tana_node_ids.<decision_id>: <returned node id>` (create the map first if the file predates this contract) and set `entities.decisions.last_push` and `entities.decisions.last_pushed_decision_id`. Without this record the next `/sync` pushes the decision again, and a later open-to-decided change cannot update the Tana node.
 
 ### Step 8 — Set Review Date and Close
 
