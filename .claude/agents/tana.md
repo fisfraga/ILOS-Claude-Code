@@ -114,7 +114,7 @@ Map returned nodes to local `active-goals.yaml` using goal description as match 
 **Push** (new local goal not in Tana):
 ```
 import_tana_paste({
-  parentNodeId: "[GOALS_CONTAINER_ID]",
+  parentNodeId: "[GOALS_CONTAINER_ID_RESOLVED]",  // /sync Step 0b: tana_node_overrides.goals_container_id, else Goals in structure-map.md
   content: "- [description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
 })
 ```
@@ -147,33 +147,34 @@ For partial sync: update only the metadata section (title, status, description),
 
 #### Wins (Local → Tana)
 
-Read all entries from `MEMORY/wins.jsonl`. Find wins after `sync-state.entities.wins.last_pushed_win_id`.
+Follow the dedup contract in `.claude/commands/sync/SKILL.md` (Step 0b and Phase 4B). Do not use a cursor.
 
-For each unsynced win, push:
+1. Read `MEMORY/wins.jsonl` (skip the schema line) and `entities.wins.tana_node_ids` from `SYSTEM/sync-state.yaml` (treat a missing map as empty).
+2. Push only wins whose `id` is not a key in `tana_node_ids`, one sequential call each, to the wins container: `tana_node_overrides.wins_container_id` in `SYSTEM/sync-config.yaml` if non-empty, otherwise **Wins Log** in `structure-map.md`:
 ```
 import_tana_paste({
-  parentNodeId: "[WINS_LOG_CONTAINER_ID]",
-  content: "- [description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[WEEK_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
+  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",
+  content: "- [description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
 })
 ```
+3. After each push, record `entities.wins.tana_node_ids.<win_id>: <returned node id>` (create the map first if the file predates this contract) and update `last_push` and `last_pushed_win_id`.
 
-**CRITICAL:** Always set Periodicity to `week` option (ID: `[WEEK_PERIODICITY_OPTION_ID]`). NEVER set to `day`.
-
-After pushing, update `sync-state.entities.wins.last_pushed_win_id` to the ID of the last pushed win.
+**CRITICAL:** Periodicity is `Week` or higher. NEVER `Day`.
 
 #### Decisions (Local → Tana)
 
-For full sync: push all new decisions.
-For partial sync: push only decisions with `status: "open"`.
+Follow the same dedup contract. For full sync: push all decisions not yet recorded. For partial sync: push only decisions with `status: "open"`.
 
+1. Read `entities.decisions.tana_node_ids` from `SYSTEM/sync-state.yaml` (treat a missing map as empty) and push only decisions whose `id` is not a key, one sequential call each, to the decisions container: `tana_node_overrides.decisions_container_id` if non-empty, otherwise **Decisions Log** in `structure-map.md`:
 ```
 import_tana_paste({
-  parentNodeId: "[DECISIONS_LOG_CONTAINER_ID]",
+  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
   content: "- [decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - Context:: [context]\n  - Reasoning:: [reasoning]"
 })
 ```
+2. After each push, record `entities.decisions.tana_node_ids.<decision_id>: <returned node id>` and update `last_push` and `last_pushed_decision_id`.
 
-For status updates on existing Tana decisions (decided/set-aside):
+For status updates on decisions already in Tana (decided/set-aside), look the node up in `entities.decisions.tana_node_ids`:
 ```
 set_field_option({
   nodeId: "[TANA_DECISION_NODE_ID]",
