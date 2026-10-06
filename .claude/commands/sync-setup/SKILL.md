@@ -125,7 +125,7 @@ Ask:
 
 ## Step 5 — Write Configuration
 
-Based on the user's answers, write `SYSTEM/sync-config.yaml`:
+Based on the user's answers, update `SYSTEM/sync-config.yaml` **in place**. Change only the keys shown below and keep everything else in the file: its comments, the `tana_node_overrides` section (never reset or drop it, even when this wizard is re-run) and any other key the user added. Only if the file does not exist, create it from this shape and add the full `tana_node_overrides` block with every key set to `""` (the key list is in `/sync` Step 0b):
 
 **For full sync:**
 ```yaml

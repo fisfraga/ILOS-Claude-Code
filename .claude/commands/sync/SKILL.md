@@ -413,7 +413,7 @@ Apply changes in dependency order. **One MCP call at a time.**
 **New goals** (local goals not found in Tana):
 ```
 import_tana_paste({
-  parentNodeId: "[GOALS_CONTAINER_ID]",  // from structure-map.md
+  parentNodeId: "[GOALS_CONTAINER_ID_RESOLVED]",  // from Step 0b
   content: "- [Goal description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
 })
 ```
@@ -422,7 +422,7 @@ Store returned node ID in sync-state.yaml.
 **New projects** (local projects not in Tana):
 ```
 import_tana_paste({
-  parentNodeId: "[PROJECTS_CONTAINER_ID]",
+  parentNodeId: "[PROJECTS_CONTAINER_ID_RESOLVED]",  // from Step 0b
   content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
 })
 ```
@@ -431,7 +431,7 @@ Store returned node ID in sync-state.yaml.
 **New topics** (local topics not in Tana):
 ```
 import_tana_paste({
-  parentNodeId: "[TOPICS_CONTAINER_ID]",
+  parentNodeId: "[TOPICS_CONTAINER_ID_RESOLVED]",  // from Step 0b
   content: "- [Topic name] #[[^[TOPIC_TAG_ID]]]"
 })
 ```
@@ -440,7 +440,7 @@ Store returned node ID in sync-state.yaml.
 **Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
 
 1. Read `MEMORY/wins.jsonl` (skip the schema line on line 1).
-2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`.
+2. Read `entities.wins.tana_node_ids` from `sync-state.yaml` (treat a missing map as empty).
 3. Build the push list: every win whose `id` is NOT already a key in `tana_node_ids`.
 4. If the push list is empty, report "Wins already in sync" and skip this block.
 5. For each win in the push list, execute **one** `import_tana_paste` call (sequential — never batch):
@@ -453,7 +453,7 @@ import_tana_paste({
 ```
 
 6. After each successful push, immediately update `sync-state.yaml`:
-   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>`
+   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>` (create the `tana_node_ids` map first if the state file predates this contract)
    - Update `entities.wins.last_push` to current ISO timestamp
    - Update `entities.wins.last_pushed_win_id` to this win's ID
 

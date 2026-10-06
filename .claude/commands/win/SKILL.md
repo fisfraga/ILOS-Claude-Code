@@ -86,7 +86,7 @@ Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scope
 **Create the win in Tana:**
 ```
 import_tana_paste({
-  parentNodeId: "[WINS_CONTAINER_ID]",  // resolved above
+  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",  // from the container resolution above
   content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"
 })
 ```
@@ -103,7 +103,7 @@ content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]
 After a successful Tana push, update `SYSTEM/sync-state.yaml` so `/sync` knows this win is already in Tana and won't try to push a duplicate:
 
 1. Read `SYSTEM/sync-state.yaml`.
-2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`).
+2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`). If the file has no `tana_node_ids` map under `entities.wins` (state files created before this contract), create it first.
 3. Set `entities.wins.last_push` to the current ISO timestamp.
 4. Set `entities.wins.last_pushed_win_id` to the win ID you just created.
 5. Write the file back.

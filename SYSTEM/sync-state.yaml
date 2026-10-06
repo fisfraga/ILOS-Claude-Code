@@ -87,9 +87,11 @@ entities:
   wins:
     last_push: null
     last_pushed_win_id: null
-    # The ID of the most recently pushed win from wins.jsonl.
-    # On next push, only wins with IDs after this one will be synced.
-    # Example: "win_20260225_120000"
+    tana_node_ids: {}
+    # Maps local win IDs to Tana node IDs. This map (not last_pushed_win_id) is the dedup
+    # source of truth: /win, /build, /sync and the tana agent skip any win already listed.
+    # last_pushed_win_id is kept for reporting only.
+    # Example: "win_20260225_120000": "TANA_NODE_ID_HERE"
 
   decisions:
     last_push: null
