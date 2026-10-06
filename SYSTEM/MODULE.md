@@ -26,3 +26,9 @@ Configuration and setup: guides for initial setup, Tana MCP integration, and sys
 - Before any Tana MCP operation, always check the tana-reference files for correct IDs.
 - If Tana IDs are missing, use `list_tags` and `get_tag_schema` to discover them, then update the reference files.
 - The setup guide is designed for first-time users -- keep it simple and encouraging.
+
+## Maintainer tools
+
+- `node SYSTEM/tools/skill-lint.js` — checks that skills and agents follow the Tana write contract (resolved containers, dedup bookkeeping, no calendar-node pushes for wins/decisions).
+- `node SYSTEM/tools/check-manifest.js` — checks that every tracked file is classified in `SYSTEM/foundation-manifest.yaml` (foundation, starter or user).
+- Tests: `node --test SYSTEM/tools/skill-lint.test.js` and `node --test SYSTEM/tools/check-manifest.test.js`.

@@ -1,0 +1,49 @@
+_schema: ilos_foundation_manifest
+_version: "1.0"
+_description: >
+  Which paths belong to the template and which belong to you.
+  foundation — shipped by the template and replaced by /update.
+  starter    — blank or example data shipped once; copied only if the path is missing,
+               never overwritten (this is where your own data lives).
+  user       — never shipped, never touched (your extensions and local notes).
+  A pattern is an exact path or "dir/**". The most specific pattern wins.
+  /update only touches paths the template ships; it never deletes files it does not ship.
+  Check with: node SYSTEM/tools/check-manifest.js
+
+foundation:
+  - .claude/**
+  - .gitignore
+  - CLAUDE.md
+  - LICENSE.md
+  - MODULE.md
+  - README.md
+  - ROUTING.md
+  - ILOS-KNOWLEDGE/**
+  - dashboard/**
+  - SYSTEM/**
+  - SYSTEM/tana-reference/README.md
+  - MEMORY/MODULE.md
+  - MEMORY/examples/**
+  - QUANTUM/MODULE.md
+  - QUANTUM/personal-context/README.md
+  - QUANTUM/self-knowledge/README.md
+  - SPACE/MODULE.md
+  - SPACE/areas/README.md
+  - SPACE/products/**
+  - SPACE/projects/README.md
+  - SPACE/topics/README.md
+  - TIME/MODULE.md
+  - TIME/templates/**
+
+starter:
+  - MEMORY/**
+  - QUANTUM/**
+  - SPACE/**
+  - TIME/**
+  - SYSTEM/sync-config.yaml
+  - SYSTEM/sync-state.yaml
+  - SYSTEM/tana-reference/**
+
+user:
+  - CLAUDE.local.md
+  - dashboard/extensions/**
