@@ -57,6 +57,19 @@ function lintText(file, text) {
   let firstPush = null;
   let pushesWin = false;
   for (const block of fencedBlocks(text)) {
+    if (/"id":\s*"win_/.test(block.text)) {
+      for (const key of ['description', 'scale', 'emotional_weight', 'connected_goal', 'tags']) {
+        if (!block.text.includes(`"${key}"`)) {
+          add(block.line, 'win-record-schema',
+            `win record is missing "${key}" (canonical: id, date, description, area, scale, emotional_weight, connected_goal, tags)`);
+        }
+      }
+      for (const key of ['title', 'source']) {
+        if (block.text.includes(`"${key}"`)) {
+          add(block.line, 'win-record-schema', `win record must not use "${key}"; put the origin in "tags" and the text in "description"`);
+        }
+      }
+    }
     if (block.unclosed) add(block.line, 'unclosed-fence', 'fenced block is never closed; the lint cannot tell where it ends');
     const pushes = /import_tana_paste/.test(block.text);
     const kinds = [];
@@ -131,6 +144,10 @@ function skillFiles(root) {
     for (const f of fs.readdirSync(agents)) {
       if (f.endsWith('.md')) files.push(path.join(agents, f));
     }
+  }
+  for (const rel of ['CLAUDE.md', path.join('ILOS-KNOWLEDGE', 'schemas.md')]) {
+    const f = path.join(root, rel);
+    if (fs.existsSync(f) && !files.includes(f)) files.push(f);
   }
   return files;
 }

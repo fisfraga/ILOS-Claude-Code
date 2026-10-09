@@ -150,6 +150,7 @@ For partial sync: update only the metadata section (title, status, description),
 Follow the dedup contract in `.claude/commands/sync/SKILL.md` (Step 0b and Phase 4B). Do not use a cursor.
 
 1. Read `MEMORY/wins.jsonl` (skip the schema line) and `entities.wins.tana_node_ids` from `SYSTEM/sync-state.yaml`. If the map is missing, follow `/sync` Phase 4B step 2 ("Legacy cursor"): create it and seed every win at or before a non-null `last_pushed_win_id` as `pre-map`; never treat a missing map as empty when a cursor is set.
+   The text pushed to Tana is the win's `description`; entries written before the canonical format have `title` instead — use it when `description` is absent.
 2. Push only wins whose `id` is not a key in `tana_node_ids`, one sequential call each, to the wins container: `tana_node_overrides.wins_container_id` in `SYSTEM/sync-config.yaml` if non-empty, otherwise **Wins Log** in `structure-map.md`:
 ```
 import_tana_paste({

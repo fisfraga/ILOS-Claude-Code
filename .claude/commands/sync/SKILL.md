@@ -442,6 +442,7 @@ Store returned node ID in sync-state.yaml.
 1. Read `MEMORY/wins.jsonl` (skip the schema line on line 1).
 2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`. **Legacy cursor:** if the map is missing and `entities.wins.last_pushed_win_id` is not null, the file predates this contract and the cursor was the only dedup. Create the map and seed it with the value `pre-map` for every win in `wins.jsonl` whose `id` sorts at or before the cursor (`win_YYYYMMDD_HHMMSS` ids sort chronologically); those wins were already pushed by the old logic and must not go again. If the map is missing and the cursor is null, create it empty.
 3. Build the push list: every win whose `id` is NOT already a key in `tana_node_ids`.
+   The text pushed to Tana is the win's `description`; entries written before the canonical format have `title` instead — use it when `description` is absent.
 4. If the push list is empty, report "Wins already in sync" and skip this block. If it has more than 10 wins, show the count and ask the user to confirm before pushing.
 5. For each win in the push list, execute **one** `import_tana_paste` call (sequential — never batch):
 

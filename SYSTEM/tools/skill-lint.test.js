@@ -174,3 +174,27 @@ test('lintRepo also scans the root CLAUDE.md', () => {
 test('the template itself is lint-clean (node --test is the single gate)', () => {
   assert.deepStrictEqual(lintRepo(path.resolve(__dirname, '..', '..')), []);
 });
+
+// ---- Phase 1b-1: one canonical win record ----
+
+const GOOD_RECORD =
+  '{"id": "win_20260101_090000", "date": "2026-01-01", "description": "x", "area": "career", "scale": "week", "emotional_weight": 5, "connected_goal": null, "tags": ["manual"]}';
+
+test('a canonical win record produces no violations', () => {
+  assert.deepStrictEqual(lintText('win.md', fence(GOOD_RECORD)), []);
+});
+
+test('a win record using title and source is flagged', () => {
+  const old = '{"id": "win_20260101_090000", "date": "2026-01-01", "title": "x", "area": "career", "connected_goal": null, "source": "manual"}';
+  const vs = lintText('win.md', fence(old));
+  assert.ok(vs.every((v) => v.rule === 'win-record-schema'));
+  const msgs = vs.map((v) => v.message).join(' | ');
+  assert.ok(msgs.includes('"description"'));
+  assert.ok(msgs.includes('"scale"'));
+  assert.ok(msgs.includes('"title"'));
+  assert.ok(msgs.includes('"source"'));
+});
+
+test('text outside a win record block is not checked by the win-record rule', () => {
+  assert.deepStrictEqual(lintText('x.md', fence('{"id": "dec_20260101_090000", "decision": "x"}')), []);
+});

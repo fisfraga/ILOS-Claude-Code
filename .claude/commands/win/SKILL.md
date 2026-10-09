@@ -38,12 +38,14 @@ If `$ARGUMENTS` was provided, use it as the win description. If not, ask what th
 Append the win to `MEMORY/wins.jsonl`:
 
 ```jsonl
-{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "title": "[Win description in user's own words]", "area": "[area slug if clearly relevant]", "connected_goal": "[goal ID from active-goals.yaml if relevant, else null]", "source": "manual"}
+{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "description": "[Win description in user's own words]", "area": "[area slug if clearly relevant, else null]", "scale": "week", "emotional_weight": 5, "connected_goal": "[goal ID from active-goals.yaml if relevant, else null]", "tags": ["manual"]}
 ```
 
 Area slugs: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`, `love`, `emotional`, `vision`, `career`, `social`, `spiritual`
 
 Don't ask the user to classify — infer the area from context. If unclear, omit the area field (set to `null`).
+
+Set "scale" to the scope the user gave ("week" by default; "month", "quarter" or "year" for bigger milestones, matching the Periodicity you push). Set "emotional_weight" from 1 to 10 by how much it meant to the user, judged from their words (default 5). Do not ask.
 
 If the win clearly relates to an active goal in `TIME/active-goals.yaml`, read that file and set `connected_goal` to the matching goal ID.
 

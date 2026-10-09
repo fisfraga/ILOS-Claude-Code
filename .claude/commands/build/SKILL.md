@@ -103,7 +103,7 @@ Create files, write code, run commands. Use the project context to guide decisio
 
 Capture wins in `MEMORY/wins.jsonl`:
 ```jsonl
-{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "title": "[What was built/accomplished]", "area": "[area_slug]", "connected_goal": "[goal_id if relevant]", "source": "build"}
+{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "description": "[What was built/accomplished]", "area": "[area_slug or null]", "scale": "week", "emotional_weight": 5, "connected_goal": "[goal_id if relevant, else null]", "tags": ["build"]}
 ```
 
 If a project file exists in `SPACE/projects/`, update it with progress notes.
