@@ -47,3 +47,30 @@ test('stale foundation and starter patterns are reported, user patterns are not'
   assert.ok(!r.unusedPatterns.includes('dashboard/extensions/**'));
   assert.ok(!r.unusedPatterns.includes('CLAUDE.local.md'));
 });
+
+// Review Focus 5: user data must never be classified as foundation by the real manifest.
+// Skipped when js-yaml is not installed (dashboard/node_modules).
+const realRoot = require('path').resolve(__dirname, '..', '..');
+let realManifest = null;
+try { realManifest = require('./check-manifest').loadManifest(realRoot); } catch (err) { /* js-yaml missing */ }
+
+test('the real manifest never classifies user-written paths as foundation', { skip: !realManifest }, () => {
+  const userPaths = [
+    'MEMORY/wins.jsonl',
+    'MEMORY/decisions.jsonl',
+    'QUANTUM/personal-context/8-identity-values.md',
+    'QUANTUM/vision/favorite-problems.md',
+    'SPACE/areas/health.md',
+    'SPACE/projects/my-project.md',
+    'SPACE/products/dashboards/my-dashboard.html',
+    'SPACE/products/my-product/index.html',
+    'TIME/active-goals.yaml',
+    'SYSTEM/sync-config.yaml',
+    'SYSTEM/sync-state.yaml',
+    'SYSTEM/tana-reference/tag-ids.md',
+    'dashboard/extensions/mine.js',
+  ];
+  const r = classifyAll(userPaths, realManifest);
+  const asFoundation = userPaths.filter((p) => r.classified[p] === 'foundation');
+  assert.deepStrictEqual(asFoundation, []);
+});

@@ -29,7 +29,8 @@ foundation:
   - QUANTUM/self-knowledge/README.md
   - SPACE/MODULE.md
   - SPACE/areas/README.md
-  - SPACE/products/**
+  - SPACE/products/README.md
+  - SPACE/products/dashboards/README.md
   - SPACE/projects/README.md
   - SPACE/topics/README.md
   - TIME/MODULE.md
