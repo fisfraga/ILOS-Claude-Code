@@ -155,7 +155,7 @@ partial_sync:
 
 **For partial sync:** Same structure but with `sync_mode: partial` and the user's custom partial_sync settings.
 
-Also initialize `SYSTEM/sync-state.yaml` with area tana_node_ids populated from `SYSTEM/tana-reference/structure-map.md` (if area node IDs are documented there).
+Also fill `entities.areas.tana_node_ids` in `SYSTEM/sync-state.yaml` from `SYSTEM/tana-reference/structure-map.md` (if area node IDs are documented there). Edit only that key in place. If the file already exists, never rewrite or reset the other keys: `entities.wins` and `entities.decisions` hold the `tana_node_ids` dedup maps, and losing them makes the next `/sync` push everything again.
 
 Confirm:
 > "✅ Sync configuration saved to SYSTEM/sync-config.yaml

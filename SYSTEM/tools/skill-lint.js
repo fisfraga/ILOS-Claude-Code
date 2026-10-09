@@ -5,31 +5,36 @@
 //   node SYSTEM/tools/skill-lint.js [templateRoot]     (exits 1 on violations)
 //
 // The contract: wins and decisions are pushed to the resolved wins/decisions container
-// (never to today's calendar node), every push is recorded in sync-state.yaml so /sync
-// can dedup, container IDs honour tana_node_overrides, and wins always set Periodicity.
+// (never to a calendar node), every push is recorded in sync-state.yaml so /sync can
+// dedup, container IDs honour tana_node_overrides, wins always set Periodicity (never Day),
+// an empty ID skips the push instead of improvising, and nothing selects wins by the
+// legacy last_pushed_win_id cursor.
 
 const fs = require('fs');
 const path = require('path');
 
-const FENCE = /^\s*```/;
-const WIN_TAG = /\bWIN_TAG_ID\b/;
-const DECISION_TAG = /\bDECISION_TAG_ID\b/;
+const FENCE = /^\s*(```|~~~)/;
+const WIN_TAG = /\bWIN_TAG_ID\b|#win\b/;
+const DECISION_TAG = /\bDECISION_TAG_ID\b|#decision\b/;
+const CONTAINER = { win: '[WINS_CONTAINER_ID_RESOLVED]', decision: '[DECISIONS_CONTAINER_ID_RESOLVED]' };
 
+// Returns every fenced block (``` or ~~~). A fence still open at the end of the text is
+// returned too, with unclosed: true, so its content is linted instead of silently dropped.
 function fencedBlocks(text) {
   const blocks = [];
   let open = null;
   text.split('\n').forEach((line, i) => {
-    if (FENCE.test(line)) {
-      if (open === null) {
-        open = { line: i + 1, lines: [] };
-      } else {
-        blocks.push({ line: open.line, text: open.lines.join('\n') });
-        open = null;
-      }
+    const m = line.match(FENCE);
+    if (m && open === null) {
+      open = { line: i + 1, marker: m[1], lines: [] };
+    } else if (m && m[1] === open.marker) {
+      blocks.push({ line: open.line, text: open.lines.join('\n') });
+      open = null;
     } else if (open !== null) {
       open.lines.push(line);
     }
   });
+  if (open !== null) blocks.push({ line: open.line, text: open.lines.join('\n'), unclosed: true });
   return blocks;
 }
 
@@ -43,32 +48,58 @@ function lintText(file, text) {
       add(i + 1, 'unresolved-container',
         `${m[0]} must be written as [..._CONTAINER_ID_RESOLVED] after resolving it from tana_node_overrides or structure-map.md`);
     }
+    if (/\b(after|since|beyond)\s+(?:the\s+)?`?(?:entities\.\w+\.)?last_pushed_(win|decision)_id/i.test(line) && !/\b(never|not)\b/i.test(line)) {
+      add(i + 1, 'cursor-push',
+        'select what to push by the tana_node_ids map, never by the last_pushed_*_id cursor: map-based pushes are not in cursor order');
+    }
   });
 
+  let firstPush = null;
+  let pushesWin = false;
   for (const block of fencedBlocks(text)) {
+    if (block.unclosed) add(block.line, 'unclosed-fence', 'fenced block is never closed; the lint cannot tell where it ends');
     const pushes = /import_tana_paste/.test(block.text);
-    const isWin = pushes && WIN_TAG.test(block.text);
-    const isDecision = pushes && DECISION_TAG.test(block.text);
-    if (!isWin && !isDecision) continue;
+    const kinds = [];
+    if (pushes && WIN_TAG.test(block.text)) kinds.push('win');
+    if (pushes && DECISION_TAG.test(block.text)) kinds.push('decision');
+    if (!kinds.length) continue;
+    if (firstPush === null) firstPush = block.line;
+    if (kinds.includes('win')) pushesWin = true;
 
-    const kind = isWin ? 'win' : 'decision';
-    const map = isWin ? 'entities.wins.tana_node_ids' : 'entities.decisions.tana_node_ids';
-
-    if (/parentNodeId:\s*TODAY_NODE_ID/.test(block.text)) {
+    const allowed = kinds.map((k) => CONTAINER[k]);
+    const parents = [...block.text.matchAll(/parentNodeId:\s*"?([^"\s,]+)"?/g)].map((m) => m[1]);
+    if (!parents.length || parents.some((p) => !allowed.includes(p))) {
       add(block.line, 'no-calendar-push',
-        `${kind}s must be pushed to the resolved ${kind}s container, never to today's calendar node`);
+        `${kinds.join(' and ')} pushes must use parentNodeId: ${allowed.map((c) => `"${c}"`).join(' or ')}, never a calendar node or a literal ID`);
     }
-    if (!text.includes(map)) {
-      add(block.line, 'missing-dedup-record',
-        `this file pushes a ${kind} to Tana but never mentions ${map}; record every push so /sync does not duplicate it`);
+    for (const kind of kinds) {
+      const map = kind === 'win' ? 'entities.wins.tana_node_ids' : 'entities.decisions.tana_node_ids';
+      if (!text.includes(map)) {
+        add(block.line, 'missing-dedup-record',
+          `this file pushes a ${kind} to Tana but never mentions ${map}; record every push so /sync does not duplicate it`);
+      }
+      if (!text.includes('tana_node_overrides')) {
+        add(block.line, 'missing-override',
+          `this file pushes a ${kind} to Tana but never resolves tana_node_overrides`);
+      }
     }
-    if (!text.includes('tana_node_overrides')) {
-      add(block.line, 'missing-override',
-        `this file pushes a ${kind} to Tana but never resolves tana_node_overrides`);
+    if (kinds.includes('win')) {
+      if (!/PERIODICITY_FIELD_ID/.test(block.text)) {
+        add(block.line, 'win-without-periodicity', 'win pushes must set Periodicity (Week by default, never Day)');
+      }
+      if (/::\s*Day\b/.test(block.text)) {
+        add(block.line, 'win-day-periodicity', 'Day-scoped wins are invisible in weekly reviews; use Week or higher');
+      }
     }
-    if (isWin && !/PERIODICITY_FIELD_ID/.test(block.text)) {
-      add(block.line, 'win-without-periodicity', 'win pushes must set Periodicity (Week by default, never Day)');
-    }
+  }
+
+  if (firstPush !== null && !/\bempty\b[\s\S]{0,240}\bunrecorded\b/i.test(text)) {
+    add(firstPush, 'missing-empty-id-guard',
+      'a writer must say what happens when a resolved container, tag or field ID is empty: skip the push and leave it unrecorded, never improvise a target');
+  }
+  if (pushesWin && /\bcreate (?:it|the\b[^.\n]{0,40}\bmap)\b/i.test(text) && !text.includes('pre-map')) {
+    add(firstPush, 'missing-cursor-seed',
+      'creating the wins map on a state file with a last_pushed_win_id cursor must seed earlier wins as pre-map, or /sync re-pushes the whole history');
   }
   return out;
 }
@@ -86,6 +117,8 @@ function lintSyncState(file, text) {
 
 function skillFiles(root) {
   const files = [];
+  const claudeMd = path.join(root, 'CLAUDE.md');
+  if (fs.existsSync(claudeMd)) files.push(claudeMd);
   const commands = path.join(root, '.claude', 'commands');
   if (fs.existsSync(commands)) {
     for (const dir of fs.readdirSync(commands)) {

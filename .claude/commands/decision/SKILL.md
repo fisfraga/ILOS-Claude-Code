@@ -60,7 +60,7 @@ search_nodes({
 If related open decisions exist, surface them:
 > "I see you have an open decision about [X]. Is this the same topic, a related decision, or something entirely new?"
 
-If the user wants to resolve an existing open decision, skip to Step 5.
+If the user wants to resolve an existing open decision, go through Steps 1-5 with it, then continue at **Resolving an Open Decision** below. Do not append a new entry in Step 6 and do not push a second node in Step 7.
 
 ### Step 1 — Frame the Decision
 
@@ -130,7 +130,7 @@ Area slugs: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`
 **If Tana MCP is available:**
 
 1. Read `SYSTEM/tana-reference/tag-ids.md`, `SYSTEM/tana-reference/field-ids.md`, `SYSTEM/tana-reference/structure-map.md` and `SYSTEM/sync-config.yaml`.
-2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise **Decisions Log** in `structure-map.md`. Never push decisions to today's calendar node.
+2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise **Decisions Log** in `structure-map.md`. Never push decisions to today's calendar node. If the container, the decision tag ID, the status field ID or the option ID is empty, skip this step and leave the decision unrecorded (empty ID guard: `/sync` pushes it once the IDs exist) and tell the user which ID is missing.
 3. Push it (one sequential call). Use `[OPEN_OPTION_ID]` for an open decision and `[DECIDED_OPTION_ID]` for a decided one:
 ```
 import_tana_paste({
@@ -166,7 +166,7 @@ When an open decision is being resolved (user came back to it):
    - `reasoning`: Updated with final reasoning
    - `confidence`: Set if now decided
    - `review_date`: Set for outcome follow-up
-6. Sync updated status to Tana if available
+6. Sync the new status to Tana if available: look the decision up in `entities.decisions.tana_node_ids` and, if it has a node ID, call `set_field_option` on that node (`[DECISION_STATUS_FIELD_ID]` with the Decided or Set Aside option ID). If it has no node ID (it never reached Tana), push it once with the current status as in Step 7 and record the node ID. Never create a second node for a decision that already has one.
 
 **Set Aside** is a valid resolution — it means the decision is no longer relevant or has been superseded:
 > "Setting this aside is a decision in itself. Not every open question needs resolution — some resolve themselves."

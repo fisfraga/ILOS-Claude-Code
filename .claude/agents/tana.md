@@ -149,7 +149,7 @@ For partial sync: update only the metadata section (title, status, description),
 
 Follow the dedup contract in `.claude/commands/sync/SKILL.md` (Step 0b and Phase 4B). Do not use a cursor.
 
-1. Read `MEMORY/wins.jsonl` (skip the schema line) and `entities.wins.tana_node_ids` from `SYSTEM/sync-state.yaml` (treat a missing map as empty).
+1. Read `MEMORY/wins.jsonl` (skip the schema line) and `entities.wins.tana_node_ids` from `SYSTEM/sync-state.yaml`. If the map is missing, follow `/sync` Phase 4B step 2 ("Legacy cursor"): create it and seed every win at or before a non-null `last_pushed_win_id` as `pre-map`; never treat a missing map as empty when a cursor is set.
 2. Push only wins whose `id` is not a key in `tana_node_ids`, one sequential call each, to the wins container: `tana_node_overrides.wins_container_id` in `SYSTEM/sync-config.yaml` if non-empty, otherwise **Wins Log** in `structure-map.md`:
 ```
 import_tana_paste({
@@ -157,7 +157,9 @@ import_tana_paste({
   content: "- [description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
 })
 ```
-3. After each push, record `entities.wins.tana_node_ids.<win_id>: <returned node id>` (create the map first if the file predates this contract) and update `last_push` and `last_pushed_win_id`.
+3. After each push, record `entities.wins.tana_node_ids.<win_id>: <returned node id>` (the map exists after step 1) and update `last_push` and `last_pushed_win_id`.
+
+**Empty ID guard:** if the wins or decisions container, the tag ID or a required field ID resolves to empty, skip that push, leave the item unrecorded so `/sync` pushes it later, and say which ID is missing. Never fall back to a calendar node.
 
 **CRITICAL:** Periodicity is `Week` or higher. NEVER `Day`.
 

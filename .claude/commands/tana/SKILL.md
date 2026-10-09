@@ -61,10 +61,7 @@ read_node({ nodeId: "...", maxDepth: 2 })
 ```
 
 ### Sync
-Sync local files with Tana data:
-- Goals: `TIME/active-goals.yaml` ↔ Tana goals
-- Wins: `MEMORY/wins.jsonl` → Tana win nodes
-- Personal context: `QUANTUM/personal-context/` ↔ Tana #context nodes
+Run `/sync`. It owns every push and pull (goals, wins, decisions, personal context) and the dedup contract; do not hand-roll a sync here.
 
 ### Explore
 Discover workspace structure, tags, fields, and patterns. See `/tana-understand` for guided exploration.

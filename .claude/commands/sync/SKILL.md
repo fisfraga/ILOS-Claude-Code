@@ -440,9 +440,9 @@ Store returned node ID in sync-state.yaml.
 **Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
 
 1. Read `MEMORY/wins.jsonl` (skip the schema line on line 1).
-2. Read `entities.wins.tana_node_ids` from `sync-state.yaml` (treat a missing map as empty).
+2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`. **Legacy cursor:** if the map is missing and `entities.wins.last_pushed_win_id` is not null, the file predates this contract and the cursor was the only dedup. Create the map and seed it with the value `pre-map` for every win in `wins.jsonl` whose `id` sorts at or before the cursor (`win_YYYYMMDD_HHMMSS` ids sort chronologically); those wins were already pushed by the old logic and must not go again. If the map is missing and the cursor is null, create it empty.
 3. Build the push list: every win whose `id` is NOT already a key in `tana_node_ids`.
-4. If the push list is empty, report "Wins already in sync" and skip this block.
+4. If the push list is empty, report "Wins already in sync" and skip this block. If it has more than 10 wins, show the count and ask the user to confirm before pushing.
 5. For each win in the push list, execute **one** `import_tana_paste` call (sequential — never batch):
 
 ```
@@ -453,9 +453,11 @@ import_tana_paste({
 ```
 
 6. After each successful push, immediately update `sync-state.yaml`:
-   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>` (create the `tana_node_ids` map first if the state file predates this contract)
+   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>` (the map exists after step 2)
    - Update `entities.wins.last_push` to current ISO timestamp
    - Update `entities.wins.last_pushed_win_id` to this win's ID
+
+**Empty ID guard:** if the wins container, the win tag ID or the Periodicity field ID resolves to empty, skip the wins push, record nothing in `tana_node_ids`, leave the wins unrecorded so a later `/sync` pushes them once `/tana-understand` has filled the IDs, and tell the user which ID is missing. Never fall back to a calendar node or any other target. The same guard applies to decisions (container, decision tag, status field, Open option).
 
 **CRITICAL — Dedup contract with `/win`:** `/win` also pushes to Tana and records `tana_node_ids` entries immediately. This filter ensures wins created via `/win` are never re-pushed by `/sync`. If you see a win in `wins.jsonl` that already has an entry in `tana_node_ids`, skip it silently — that is not an error.
 

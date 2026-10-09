@@ -41,6 +41,7 @@ Record your Tana field IDs here. These are required for setting and querying fie
 |------------|----------|---------|------|
 | Win Area | | #win | Reference |
 | Win Source | | #win | Option |
+| Periodicity | | #win | Option (set Week by default; option IDs below) |
 
 ## Decision Fields
 
@@ -70,6 +71,15 @@ Record your Tana field IDs here. These are required for setting and querying fie
 ## Option Field Values
 
 For option fields (like Status), you also need the option IDs:
+
+### Periodicity Options
+
+| Option | Option ID |
+|--------|-----------|
+| Week | |
+| Month | |
+| Quarter | |
+| Year | |
 
 ### Decision Status Options
 

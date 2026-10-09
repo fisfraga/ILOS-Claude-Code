@@ -167,11 +167,9 @@ get_or_create_calendar_node({
   granularity: "day"  // or "week", "month", "year"
 })
 
-# Create a win in Tana
-import_tana_paste({
-  parentNodeId: "[DAY_OR_WEEK_NODE_ID]",
-  content: "- Win description #[[^[WIN_TAG_ID]]]"
-})
+# Create a win in Tana: use /win (never hand-write the push or send it to a calendar node).
+# /win pushes to the resolved Wins container (tana_node_overrides or Wins Log), sets Periodicity
+# Week and records the node in sync-state.yaml, so /sync never pushes the same win twice.
 ```
 
 All placeholder IDs (`[BRACKETS]`) must be replaced with actual Tana IDs from `SYSTEM/tana-reference/`.

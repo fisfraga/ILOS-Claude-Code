@@ -27,6 +27,21 @@ Record your workspace, hub, and area node IDs here. These are needed for navigat
 | Planning Hub | | Calendar, Plans, Reviews |
 | Personal Context Hub | | Context nodes (if mirrored) |
 
+## Containers (push targets)
+
+Where `/win`, `/build`, `/decision` and `/sync` write. Each can be redirected with `tana_node_overrides` in `SYSTEM/sync-config.yaml`. If one is empty here and not overridden, those skills skip the Tana push and leave the item for a later `/sync`.
+
+| Container | Node ID | Notes |
+|-----------|---------|-------|
+| Wins Log | | Wins (Review Hub child) |
+| Decisions Log | | Decisions (Review Hub child) |
+| Goals | | Planning Hub child |
+| Projects | | Life Overview Hub child |
+| Topics | | Life Overview Hub child |
+| Favorite Problems | | Vision Hub child |
+| Massively Transformative Purposes | | Vision Hub child |
+| High Hard Goals | | Vision Hub child |
+
 ## Key Area Nodes
 
 | # | Area | Node ID |

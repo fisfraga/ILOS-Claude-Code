@@ -73,6 +73,8 @@ If the moment is too small for a weekly review, suggest capturing it as gratitud
 
 Do NOT push wins to today's calendar node. That path fragments the wins view across daily nodes and defeats weekly/monthly review dashboards.
 
+**Empty ID guard:** if the resolved container, the `#win` tag ID or the Periodicity field ID is empty (the reference tables are filled by `/tana-understand`), skip the Tana push, do not touch `sync-state.yaml`, leave the win unrecorded so `/sync` pushes it once the IDs exist, and tell the user which ID is missing. Never improvise another target.
+
 **Set Periodicity (required for wins):**
 Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scoped wins are invisible in weekly reviews and all higher-level dashboards.
 
@@ -103,7 +105,7 @@ content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]
 After a successful Tana push, update `SYSTEM/sync-state.yaml` so `/sync` knows this win is already in Tana and won't try to push a duplicate:
 
 1. Read `SYSTEM/sync-state.yaml`.
-2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`). If the file has no `tana_node_ids` map under `entities.wins` (state files created before this contract), create it first.
+2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`). If the file has no `tana_node_ids` map under `entities.wins` (state files created before this contract), create it first, seeding every win at or before a non-null `last_pushed_win_id` as `pre-map` (see `/sync` Phase 4B, "Legacy cursor").
 3. Set `entities.wins.last_push` to the current ISO timestamp.
 4. Set `entities.wins.last_pushed_win_id` to the win ID you just created.
 5. Write the file back.

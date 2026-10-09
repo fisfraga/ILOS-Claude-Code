@@ -118,7 +118,7 @@ check_node({ nodeId: TASK_NODE_ID })
 Capture wins — a build win goes through the same path as `/win`, so `/sync` never pushes it twice. The win itself was already appended to `MEMORY/wins.jsonl` in Step 5; use that entry's `id` and text.
 
 1. Read `SYSTEM/tana-reference/tag-ids.md`, `SYSTEM/tana-reference/field-ids.md`, `SYSTEM/tana-reference/structure-map.md` and `SYSTEM/sync-config.yaml`.
-2. Resolve the wins container: `tana_node_overrides.wins_container_id` in `sync-config.yaml` if non-empty, otherwise **Wins Log** in `structure-map.md`. Never push wins to today's calendar node.
+2. Resolve the wins container: `tana_node_overrides.wins_container_id` in `sync-config.yaml` if non-empty, otherwise **Wins Log** in `structure-map.md`. Never push wins to today's calendar node. If the container, the win tag ID or the Periodicity field ID is empty, skip this block and leave the win unrecorded (empty ID guard: `/sync` pushes it once the IDs exist) and tell the user which ID is missing.
 3. Push it (one sequential call). Periodicity is `Week` by default, never `Day`:
 ```
 import_tana_paste({
@@ -126,7 +126,7 @@ import_tana_paste({
   content: "- [What was built/accomplished] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"
 })
 ```
-4. Record the push in `SYSTEM/sync-state.yaml`: add `entities.wins.tana_node_ids.<win_id>: <returned node id>` (create the `tana_node_ids` map first if the file predates this contract) and set `entities.wins.last_push` and `entities.wins.last_pushed_win_id`. Skipping this makes the next `/sync` push the win a second time.
+4. Record the push in `SYSTEM/sync-state.yaml`: add `entities.wins.tana_node_ids.<win_id>: <returned node id>` (create the `tana_node_ids` map first if the file predates this contract, seeding every win at or before a non-null `last_pushed_win_id` as `pre-map` (see `/sync` Phase 4B, "Legacy cursor")) and set `entities.wins.last_push` and `entities.wins.last_pushed_win_id`. Skipping this makes the next `/sync` push the win a second time.
 
 If Tana MCP is not available, skip this block; the win is safe in `MEMORY/wins.jsonl` and `/sync` will push it later.
 
