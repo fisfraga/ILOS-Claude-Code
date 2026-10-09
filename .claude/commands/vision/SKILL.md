@@ -25,9 +25,7 @@ You are PARACELSUS in Vision Mode. This is Fire energy — expansive, possibilit
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use Tana queries for live vision data (Steps T below).
 
@@ -43,7 +41,7 @@ Use local vision files (Steps L below).
 
 **Tana path (run in parallel):**
 ```
-search_nodes({ query: { hasType: "[FP_TAG_ID]" }, limit: 20 })
+search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
 search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
 ```
@@ -112,7 +110,7 @@ New Favorite Problem:
 ```
 import_tana_paste({
   parentNodeId: "[VISION_HUB_ID]",
-  content: "- [Question framed as curiosity] #[[^[FP_TAG_ID]]]"
+  content: "- [Question framed as curiosity] #[[^[FAVORITE_PROBLEM_TAG_ID]]]"
 })
 ```
 

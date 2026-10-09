@@ -36,9 +36,7 @@ If the user already has FPs, MTPs, and HHGs and wants to explore them, suggest `
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 ### If Tana MCP is NOT available (file-based mode):
 
@@ -52,7 +50,7 @@ Use local vision files for existing state and save results to local files.
 
 **Tana path (run in parallel):**
 ```
-search_nodes({ query: { hasType: "[FP_TAG_ID]" }, limit: 20 })
+search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
 search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
 ```
@@ -169,7 +167,7 @@ If the workshop revealed a clearer sense of purpose, offer to update `QUANTUM/vi
 ```
 import_tana_paste({
   parentNodeId: "[VISION_HUB_ID]",
-  content: "- [Question framed as curiosity] #[[^[FP_TAG_ID]]]\n  - [[^[ACTIVE_PROBLEM_FIELD_ID]]]:: [X]"
+  content: "- [Question framed as curiosity] #[[^[FAVORITE_PROBLEM_TAG_ID]]]\n  - [[^[ACTIVE_PROBLEM_FIELD_ID]]]:: [X]"
 })
 ```
 
@@ -185,7 +183,7 @@ import_tana_paste({
 ```
 import_tana_paste({
   parentNodeId: "[VISION_HUB_ID]",
-  content: "- [Ambitious multi-year goal] #[[^[HHG_TAG_ID]]]\n  - [[^[MTP_FIELD_ID]]]:: [[^[MTP_NODE_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]"
+  content: "- [Ambitious multi-year goal] #[[^[HHG_TAG_ID]]]\n  - [[^[MTP_FIELD_ID]]]:: [[^[MTP_NODE_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]"
 })
 ```
 

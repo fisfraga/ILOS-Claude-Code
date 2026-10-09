@@ -91,8 +91,7 @@ Create `SPACE/projects/[project-slug].md`:
 ### Step 6 — Sync to Tana (if available)
 
 If Tana MCP is available:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Create the project in Tana and link to the relevant area and goal.
 

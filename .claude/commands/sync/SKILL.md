@@ -19,9 +19,7 @@ You are HERMES running a structured bidirectional sync between local ILOS files 
 !`cat ROUTING.md`
 !`cat SYSTEM/sync-config.yaml`
 !`cat SYSTEM/sync-state.yaml`
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 ---
 
@@ -86,8 +84,8 @@ Read `SYSTEM/sync-config.yaml`:
 - If `tana_workspace_id` is empty → stop and inform:
   > "Tana workspace is not configured. Run `/sync-setup` first to configure your sync settings and connect your Tana workspace."
 
-Read `SYSTEM/tana-reference/tag-ids.md`:
-- If file is empty or contains only placeholder text → stop and inform:
+Read `SYSTEM/tana-ids.yaml`:
+- If all its values are empty → stop and inform:
   > "Tana reference IDs are not set up. Run `/tana-understand` first to discover and document your workspace IDs, then run `/sync-setup`."
 
 **MCP Call 1 of N — Test connectivity:**
@@ -99,23 +97,23 @@ If this fails → stop and inform:
 
 ### Step 0b — Resolve container targets
 
-`/sync` and `/win` push to container nodes inside Tana. Each container has a default (taken from `SYSTEM/tana-reference/structure-map.md`) and an optional override (taken from `SYSTEM/sync-config.yaml` under `tana_node_overrides`).
+`/sync` and `/win` push to container nodes inside Tana. Each container has a default (the matching `*_CONTAINER_ID` key in `SYSTEM/tana-ids.yaml`) and an optional override (taken from `SYSTEM/sync-config.yaml` under `tana_node_overrides`).
 
 For each container below, resolve in this order:
 
 1. If `sync-config.yaml`'s `tana_node_overrides.<key>` is present and non-empty → use it.
-2. Otherwise → use the structure-map default.
+2. Otherwise → use the `tana-ids.yaml` default.
 
-| Container key | Default (structure-map source) |
+| Container key | Default (tana-ids.yaml key) |
 |---|---|
-| `wins_container_id` | **Wins Log** |
-| `decisions_container_id` | **Decisions Log** |
-| `goals_container_id` | **Goals** |
-| `projects_container_id` | **Projects** |
-| `topics_container_id` | **Topics** |
-| `vision_fp_container_id` | **Favorite Problems** |
-| `vision_mtp_container_id` | **Massively Transformative Purposes** |
-| `vision_hhg_container_id` | **High Hard Goals** |
+| `wins_container_id` | `WINS_CONTAINER_ID` |
+| `decisions_container_id` | `DECISIONS_CONTAINER_ID` |
+| `goals_container_id` | `GOALS_CONTAINER_ID` |
+| `projects_container_id` | `PROJECTS_CONTAINER_ID` |
+| `topics_container_id` | `TOPICS_CONTAINER_ID` |
+| `vision_fp_container_id` | `VISION_FP_CONTAINER_ID` |
+| `vision_mtp_container_id` | `VISION_MTP_CONTAINER_ID` |
+| `vision_hhg_container_id` | `VISION_HHG_CONTAINER_ID` |
 
 Record the resolved IDs — you'll use them throughout Phase 4 (Apply Changes).
 
@@ -229,7 +227,7 @@ Compare with corresponding `SPACE/areas/{slug}.md` files.
 search_nodes({
   query: { and: [
     { hasType: "[PROJECT_TAG_ID]" },
-    { not: { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", optionId: "[COMPLETED_OPTION_ID]" } } }
+    { not: { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", optionId: "[PROJECT_COMPLETED_OPTION_ID]" } } }
   ]},
   limit: 50
 })
@@ -414,7 +412,7 @@ Apply changes in dependency order. **One MCP call at a time.**
 ```
 import_tana_paste({
   parentNodeId: "[GOALS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Goal description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
+  content: "- [Goal description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
 })
 ```
 Store returned node ID in sync-state.yaml.
@@ -423,7 +421,7 @@ Store returned node ID in sync-state.yaml.
 ```
 import_tana_paste({
   parentNodeId: "[PROJECTS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
+  content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[PROJECT_ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
 })
 ```
 Store returned node ID in sync-state.yaml.
@@ -468,7 +466,7 @@ import_tana_paste({
 ```
 import_tana_paste({
   parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - Context:: [context text]\n  - Reasoning:: [reasoning]"
+  content: "- [Decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - Context:: [context text]\n  - Reasoning:: [reasoning]"
 })
 ```
 After each push, add the returned node ID to `entities.decisions.tana_node_ids.<decision_id>`.
@@ -481,7 +479,7 @@ For goals where local status differs from Tana status:
 set_field_option({
   nodeId: "[TANA_GOAL_NODE_ID]",
   attributeId: "[GOAL_STATUS_FIELD_ID]",
-  optionId: "[COMPLETED_OPTION_ID | BACKLOG_OPTION_ID | ACTIVE_OPTION_ID]"
+  optionId: "[GOAL_COMPLETED_OPTION_ID | GOAL_BACKLOG_OPTION_ID | GOAL_ACTIVE_OPTION_ID]"
 })
 ```
 - If Tana is more recent: already handled in Phase 4A (written to local)

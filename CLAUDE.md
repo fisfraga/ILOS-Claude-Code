@@ -113,7 +113,7 @@ If Tana MCP is configured, you can also:
 - Sync calendar nodes (day, week, month, year)
 
 **Check availability:** Try `list_workspaces`. If it works, Tana is available.
-**Reference IDs:** See `SYSTEM/tana-reference/` for tag, field, and structure IDs.
+**Reference IDs:** `SYSTEM/tana-ids.yaml` holds every tag, field, option and node ID the skills use (filled by `/tana-understand`).
 
 **Local files are always the canonical source.** Tana is a sync target, not a dependency.
 
@@ -151,7 +151,7 @@ When Tana MCP is available:
 ```
 # Find current goals
 search_nodes({ query: { and: [
-  { hasType: "[GOAL_TAG_ID]" },
+  { hasType: "[ANNUAL_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}})
 
@@ -168,11 +168,12 @@ get_or_create_calendar_node({
 })
 
 # Create a win in Tana: use /win (never hand-write the push or send it to a calendar node).
-# /win pushes to the resolved Wins container (tana_node_overrides or Wins Log), sets Periodicity
+# /win pushes to the resolved Wins container (tana_node_overrides, else WINS_CONTAINER_ID in
+# SYSTEM/tana-ids.yaml), sets Periodicity
 # Week and records the node in sync-state.yaml, so /sync never pushes the same win twice.
 ```
 
-All placeholder IDs (`[BRACKETS]`) must be replaced with actual Tana IDs from `SYSTEM/tana-reference/`.
+Every placeholder ID (`[BRACKETS]`) is a key in `SYSTEM/tana-ids.yaml`; a blank value means the Tana step is skipped and the item stays local.
 
 ---
 

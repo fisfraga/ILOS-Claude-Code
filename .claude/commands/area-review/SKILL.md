@@ -41,8 +41,7 @@ Read area-specific data:
 **If Tana MCP is available** (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Search for area-specific data in Tana as well.
 

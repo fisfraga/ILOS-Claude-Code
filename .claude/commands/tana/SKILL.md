@@ -25,18 +25,15 @@ You are PARACELSUS operating as the Tana MCP specialist. This skill provides a u
 Call `list_workspaces`. If it fails or returns empty, inform the user:
 "Tana MCP is not currently available. I can work with local files instead. Would you like to proceed with file-based operations?"
 
-**Step 2 — Load reference files:**
-Read these three files:
-- `SYSTEM/tana-reference/tag-ids.md`
-- `SYSTEM/tana-reference/field-ids.md`
-- `SYSTEM/tana-reference/structure-map.md`
+**Step 2 — Load the ID file:**
+Read `SYSTEM/tana-ids.yaml`.
 
-**Step 3 — Check if reference files are populated:**
-If the files contain empty table cells (IDs not yet filled in), pause and inform the user:
+**Step 3 — Check if the ID file is populated:**
+If `SYSTEM/tana-ids.yaml` has only empty values (IDs not yet filled in), pause and inform the user:
 
-"Your Tana reference files haven't been populated yet. I recommend running `/tana-understand` first — it will explore your workspace and automatically fill in all the IDs I need to operate effectively. This takes about 5 minutes. Would you like to do that now?"
+"Your Tana ID file (SYSTEM/tana-ids.yaml) hasn't been filled in yet. I recommend running `/tana-understand` first — it will explore your workspace and automatically fill in all the IDs I need to operate effectively. This takes about 5 minutes. Would you like to do that now?"
 
-Do not attempt complex Tana operations with empty reference files. Simple operations like `list_workspaces` or `read_node` on a known ID are still fine.
+Do not attempt complex Tana operations with an empty ID file. Simple operations like `list_workspaces` or `read_node` on a known ID are still fine.
 
 ---
 

@@ -54,8 +54,7 @@ If the win clearly relates to an active goal in `TIME/active-goals.yaml`, read t
 **If Tana MCP is NOT available** (test with `list_workspaces`): Skip to Step 4. The win is already safe in `MEMORY/wins.jsonl` and will push on the next `/sync` when Tana comes online.
 
 **If Tana MCP is available**, read the Tana reference files and sync-config:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
+!`cat SYSTEM/tana-ids.yaml`
 !`cat SYSTEM/sync-config.yaml`
 
 **Decide: Win or Gratitude?**
@@ -71,7 +70,7 @@ If the moment is too small for a weekly review, suggest capturing it as gratitud
 `/win` and `/sync` share the same wins container resolution so they stay consistent and dedup works. In order:
 
 1. If `SYSTEM/sync-config.yaml` has `tana_node_overrides.wins_container_id` set and non-empty → use that node ID.
-2. Otherwise → use the **Wins Log** node ID from `SYSTEM/tana-reference/structure-map.md`.
+2. Otherwise → use `WINS_CONTAINER_ID` from `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the container, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue.
 
 Do NOT push wins to today's calendar node. That path fragments the wins view across daily nodes and defeats weekly/monthly review dashboards.
 
@@ -97,7 +96,7 @@ import_tana_paste({
 
 Replace `Week` with `Month`, `Quarter`, or `Year` if the win warrants a higher scope.
 
-Optionally add area connection if clearly relevant (look up the area node ID from `SYSTEM/tana-reference/structure-map.md` — Key Area nodes section):
+Optionally add area connection if clearly relevant (look up the area node ID in the `areas.<slug>` entry of `SYSTEM/tana-ids.yaml`):
 ```
 content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]"
 ```

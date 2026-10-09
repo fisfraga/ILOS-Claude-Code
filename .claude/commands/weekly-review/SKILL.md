@@ -28,9 +28,7 @@ You are PARACELSUS guiding the core rhythm of intentional living — the weekly 
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use **Tana-powered flow** (Steps T below) alongside local file updates.
 
@@ -122,7 +120,7 @@ Check `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from t
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 10
 })
@@ -160,7 +158,7 @@ Follow this exact order:
 
    **Tana path (if available):**
    ```
-   set_field_option({ nodeId: GOAL_ID, attributeId: "[GOAL_STATUS_FIELD_ID]", optionId: "[BACKLOG_OPTION_ID]" })
+   set_field_option({ nodeId: GOAL_ID, attributeId: "[GOAL_STATUS_FIELD_ID]", optionId: "[GOAL_BACKLOG_OPTION_ID]" })
    ```
 
 6. **REDIRECT (Decisions)** — If open decisions were found in Step 3b, surface them here:
@@ -199,7 +197,7 @@ search_nodes({ query: { and: [
 search_nodes({
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
-    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[WEEKLY_OPTION_ID]" } }
+    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_WEEK_OPTION_ID]" } }
   ]},
   limit: 20
 })
@@ -237,7 +235,7 @@ Update `TIME/current-period.yaml` with the new `current_week` and `last_reviews.
 ```
 import_tana_paste({
   parentNodeId: NEXT_WEEK_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]"
+  content: "- [ ] [Goal 1] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]"
 })
 ```
 
