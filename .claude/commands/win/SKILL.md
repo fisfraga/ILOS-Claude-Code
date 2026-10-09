@@ -70,7 +70,7 @@ If the moment is too small for a weekly review, suggest capturing it as gratitud
 `/win` and `/sync` share the same wins container resolution so they stay consistent and dedup works. In order:
 
 1. If `SYSTEM/sync-config.yaml` has `tana_node_overrides.wins_container_id` set and non-empty → use that node ID.
-2. Otherwise → use `WINS_CONTAINER_ID` from `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the container, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue.
+2. Otherwise → use `WINS_CONTAINER_ID` from `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue.
 
 Do NOT push wins to today's calendar node. That path fragments the wins view across daily nodes and defeats weekly/monthly review dashboards.
 
