@@ -33,20 +33,7 @@ entities:
 
   areas:
     last_pull: null
-    # Areas node IDs — populated from structure-map.md or discovered during sync
-    tana_node_ids:
-      health: ""
-      finances: ""
-      intellectual: ""
-      home: ""
-      creative: ""
-      routines: ""
-      love: ""
-      emotional: ""
-      vision: ""
-      career: ""
-      social: ""
-      spiritual: ""
+    # Area node IDs live in SYSTEM/tana-ids.yaml (areas:).
 
   projects:
     last_pull: null
@@ -63,26 +50,21 @@ entities:
   vision:
     last_pull: null
     last_push: null
-    tana_node_ids:
-      # Tana container node IDs for vision items
-      favorite_problems_container: ""
-      mtps_container: ""
-      hhgs_container: ""
-      # Individual item IDs populated after sync:
-      # fp_1: "TANA_NODE_ID_HERE"
-      # mtp_1: "TANA_NODE_ID_HERE"
-      # hhg_1: "TANA_NODE_ID_HERE"
+    tana_node_ids: {}
+    # Container IDs live in SYSTEM/tana-ids.yaml. Individual item IDs populated after sync:
+    # fp_1: "TANA_NODE_ID_HERE"
+    # mtp_1: "TANA_NODE_ID_HERE"
+    # hhg_1: "TANA_NODE_ID_HERE"
 
   personal_context:
     last_pull: null
     last_push: null
-    tana_node_ids:
-      context_container: ""
-      # Individual context node IDs populated after sync:
-      # context_0_manifesto: "TANA_NODE_ID_HERE"
-      # context_4_non_negotiables: "TANA_NODE_ID_HERE"
-      # context_5_work: "TANA_NODE_ID_HERE"
-      # context_8_identity: "TANA_NODE_ID_HERE"
+    tana_node_ids: {}
+    # Individual context node IDs populated after sync:
+    # context_0_manifesto: "TANA_NODE_ID_HERE"
+    # context_4_non_negotiables: "TANA_NODE_ID_HERE"
+    # context_5_work: "TANA_NODE_ID_HERE"
+    # context_8_identity: "TANA_NODE_ID_HERE"
 
   wins:
     last_push: null

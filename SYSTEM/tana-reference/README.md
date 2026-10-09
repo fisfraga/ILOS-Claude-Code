@@ -46,10 +46,8 @@ Tana is a structured data graph, not a document editor. Every piece of informati
 ## Getting Started
 
 1. Set up your Tana workspace with ILOS supertags
-2. Discover your tag IDs using `list_tags` and record them in `tag-ids.md`
-3. Discover your field IDs using `get_tag_schema` and record them in `field-ids.md`
-4. Map your workspace structure in `structure-map.md`
-5. Ask PARACELSUS to test the connection: "Search for my active goals in Tana"
+2. Run `/tana-understand`: it discovers your tag, field, option and hub IDs and writes them to `SYSTEM/tana-ids.yaml`, and tells you if your workspace lacks something the skills use
+3. Ask PARACELSUS to test the connection: "Search for my active goals in Tana"
 
 ## Periodicity Semantics
 
@@ -65,6 +63,5 @@ If a moment is too small for Week periodicity, it belongs as **#gratitude** (dai
 
 ## Reference Files
 
-- `tag-ids.md` -- All supertag IDs needed for MCP queries
-- `field-ids.md` -- All field IDs needed for MCP queries
-- `structure-map.md` -- Workspace, hub, and area node IDs
+- `../tana-ids.yaml` -- every Tana ID the skills use, in one file. This is the only file you need to maintain.
+- `tag-ids.md`, `field-ids.md`, `structure-map.md` -- the older tables. They are no longer read by any skill; they remain only as input for `node SYSTEM/tools/migrate-ids.js`, which copies your IDs into `tana-ids.yaml` without overwriting anything. You can delete them once you have migrated.

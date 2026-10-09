@@ -70,14 +70,14 @@ Tana integration is **entirely optional**. ILOS works fully with just local file
 **To set up the integration (5 minutes):**
 
 1. Confirm the MCP server is running — type `/tana` and see if Claude can list your workspaces
-2. Type `/tana-understand` — Claude will detect that your reference files are empty and automatically explore your workspace
-3. Claude will populate `SYSTEM/tana-reference/tag-ids.md`, `field-ids.md`, and `structure-map.md` with your real IDs
+2. Type `/tana-understand` — Claude will detect that your ID file is empty and automatically explore your workspace
+3. Claude will fill `SYSTEM/tana-ids.yaml` with your real IDs, and tell you if your workspace lacks something the skills use
 4. All future `/tana`, `/win`, `/decision`, `/morning`, and review skills will use these IDs automatically
 
 **Important MCP constraint:**
 The Tana MCP local server only supports one operation at a time. Claude handles this automatically — you don't need to do anything, but if you see errors about "transport already connected," this is why.
 
-See `SYSTEM/tana-reference/README.md` for details on what each reference file contains.
+See `SYSTEM/tana-reference/README.md` for details, and `SYSTEM/tana-ids.yaml` for the IDs themselves.
 
 ---
 
