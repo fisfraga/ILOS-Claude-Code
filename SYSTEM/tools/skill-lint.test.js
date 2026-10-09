@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { lintText, lintSyncState, lintRepo } = require('./skill-lint');
+const { lintText, lintSyncState, lintRepo, idKeys } = require('./skill-lint');
 
 const F = '```';
 const fence = (body) => `${F}\n${body}\n${F}`;
@@ -197,4 +197,59 @@ test('a win record using title and source is flagged', () => {
 
 test('text outside a win record block is not checked by the win-record rule', () => {
   assert.deepStrictEqual(lintText('x.md', fence('{"id": "dec_20260101_090000", "decision": "x"}')), []);
+});
+
+// ---- Phase 1b-1: tana-ids.yaml keys ----
+
+const KNOWN = new Set(['WIN_TAG_ID', 'PERIODICITY_FIELD_ID', 'GOAL_ACTIVE_OPTION_ID', 'GOAL_STATUS_FIELD_ID', 'WINS_CONTAINER_ID', 'DECISION_TAG_ID']);
+
+test('idKeys reads the UPPER_SNAKE_ID keys of the ids file', () => {
+  const keys = idKeys('workspace:\n  WORKSPACE_ID: ""\ntags:\n  WIN_TAG_ID: "abc"\nareas:\n  health: ""\ncapabilities:\n  decision_supertag: unknown\n');
+  assert.deepStrictEqual([...keys].sort(), ['WIN_TAG_ID', 'WORKSPACE_ID']);
+});
+
+test('a placeholder with no key in the ids file is flagged with its line', () => {
+  const vs = lintText('s.md', 'ok [WIN_TAG_ID]\nbad [MYSTERY_FIELD_ID]\n', { knownIds: KNOWN });
+  assert.deepStrictEqual(rules(vs), ['undefined-id-key']);
+  assert.strictEqual(vs[0].line, 2);
+});
+
+test('known keys, resolved containers and runtime node IDs are accepted', () => {
+  const text = '[WIN_TAG_ID] [WINS_CONTAINER_ID_RESOLVED] [TANA_GOAL_NODE_ID] [AREA_NODE_ID] [GOAL_ID]\n';
+  assert.deepStrictEqual(lintText('s.md', text, { knownIds: KNOWN }), []);
+});
+
+test('a retired name is flagged with the name to use instead', () => {
+  const vs = lintText('s.md', '"[ACTIVE_OPTION_ID]"\n', { knownIds: KNOWN });
+  assert.deepStrictEqual(rules(vs), ['undefined-id-key']);
+  assert.ok(vs[0].message.includes('GOAL_ACTIVE_OPTION_ID'));
+});
+
+test('a pipe list of placeholders is checked item by item', () => {
+  const vs = lintText('s.md', '"[GOAL_ACTIVE_OPTION_ID | BOGUS_OPTION_ID]"\n', { knownIds: KNOWN });
+  assert.deepStrictEqual(rules(vs), ['undefined-id-key']);
+  assert.ok(vs[0].message.includes('BOGUS_OPTION_ID'));
+});
+
+test('references to the retired reference tables are flagged once the ids file exists', () => {
+  const text = 'Read `SYSTEM/tana-reference/tag-ids.md`.\n';
+  assert.deepStrictEqual(rules(lintText('s.md', text, { knownIds: KNOWN })), ['stale-reference-table']);
+  assert.deepStrictEqual(lintText('s.md', text), []);
+});
+
+test('a win or decision push must read tana-ids.yaml', () => {
+  const push = fence('import_tana_paste({\n  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",\n  content: "- x #[[^[WIN_TAG_ID]]]\\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"\n})');
+  const base = 'tana_node_overrides entities.wins.tana_node_ids ' + GUARD + '\n' + push;
+  assert.ok(rules(lintText('w.md', base, { knownIds: KNOWN })).includes('missing-ids-source'));
+  assert.deepStrictEqual(lintText('w.md', 'Read SYSTEM/tana-ids.yaml. ' + base, { knownIds: KNOWN }), []);
+});
+
+test('lintRepo uses SYSTEM/tana-ids.yaml when it exists', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ilos-lint-ids-'));
+  fs.mkdirSync(path.join(root, '.claude', 'commands', 'x'), { recursive: true });
+  fs.mkdirSync(path.join(root, 'SYSTEM'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.claude', 'commands', 'x', 'SKILL.md'), '[NOT_A_KEY_ID]\n');
+  assert.deepStrictEqual(lintRepo(root), []);
+  fs.writeFileSync(path.join(root, 'SYSTEM', 'tana-ids.yaml'), 'tags:\n  WIN_TAG_ID: ""\n');
+  assert.deepStrictEqual(rules(lintRepo(root)), ['undefined-id-key']);
 });
