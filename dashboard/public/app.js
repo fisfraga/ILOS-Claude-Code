@@ -427,7 +427,7 @@ function renderDashboard(container) {
     const dotColor = (a.healthScore || 0) >= 50 ? (rawColors[elem] || '#a8a29e') : (a.healthScore || 0) >= 15 ? '#f9a825' : '#c1554d';
     areaHTML += `<div style="text-align:center;padding:6px 4px;border-radius:6px;background:var(--bg3)">
       <div style="width:8px;height:8px;border-radius:50%;background:${dotColor};margin:0 auto 3px"></div>
-      <div style="font-size:.65rem;font-weight:600;color:var(--c2)">${(a.name || a.id || '').slice(0,10)}</div>
+      <div title="${a.name || a.id || ''}" style="font-size:.65rem;font-weight:600;color:var(--c2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(a.name || a.id || '').split(' & ')[0]}</div>
     </div>`;
   });
   areaHTML += '</div>';

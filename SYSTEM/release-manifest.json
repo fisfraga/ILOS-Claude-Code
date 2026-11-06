@@ -583,7 +583,7 @@
     },
     "dashboard/public/app.js": {
       "class": "foundation",
-      "sha256": "190fcc8573369fac366a64a50a300729230c7b58c9e967504ae2a3423db30463"
+      "sha256": "2ff788e29d1a959250c61bacaafca89f5d382f2255d690a43cd0f49e241c7c97"
     },
     "dashboard/public/index.html": {
       "class": "foundation",
