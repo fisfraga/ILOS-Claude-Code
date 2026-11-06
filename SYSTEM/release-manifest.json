@@ -1,0 +1,601 @@
+{
+  "version": "1.0.0",
+  "files": {
+    ".claude/agents/architect.md": {
+      "class": "foundation",
+      "sha256": "8a4c9ed4cfd764ebcb7d631758c93c638fcf729e65a1cf5f79cda379d01d98d1"
+    },
+    ".claude/agents/builder.md": {
+      "class": "foundation",
+      "sha256": "2d5511b0427e333e47fc2462b98b973d929d2b807fc7165be640687b4fe1df40"
+    },
+    ".claude/agents/council.md": {
+      "class": "foundation",
+      "sha256": "1477e514b62cac2105d933d76f2e460ab66c5d8795c43cb5f4b5c8e352f1bc79"
+    },
+    ".claude/agents/ilos-master.md": {
+      "class": "foundation",
+      "sha256": "7ffc48389c37aeb5c88bef014d20d3963e67cfa69d903e5234d8b241d44a6a9f"
+    },
+    ".claude/agents/personal-context.md": {
+      "class": "foundation",
+      "sha256": "c5e3655846b6039debb410884b1455367d07cc3b5d5823e3b209a76be0659cea"
+    },
+    ".claude/agents/reviewer.md": {
+      "class": "foundation",
+      "sha256": "db18115c022d4f0d0746d550308f73cc48259f1c304762ad8a9d397cac556b15"
+    },
+    ".claude/agents/sage.md": {
+      "class": "foundation",
+      "sha256": "5959b426cafd6e1e7f7a18540a771cd32b372993ca2e87b166428f21c61a17dd"
+    },
+    ".claude/agents/strategist.md": {
+      "class": "foundation",
+      "sha256": "000aa4170005b5a7d4ac4065da30f4d00940a04fd21ebd3082c8be372bbd9bea"
+    },
+    ".claude/agents/tana.md": {
+      "class": "foundation",
+      "sha256": "24016557c80350347e9816b953fa25f967385b3c2eb0013bbba7abbc249461e4"
+    },
+    ".claude/agents/visionary.md": {
+      "class": "foundation",
+      "sha256": "481f35db9edc24a76c21bdabc9a3dd2cf67db5fdc70c9e60154d35558d7ff644"
+    },
+    ".claude/commands/alignment/SKILL.md": {
+      "class": "foundation",
+      "sha256": "c6fb90fc6be903d316326752eb252c054e3a0794435d5300e7e38297223ddbbe"
+    },
+    ".claude/commands/annual-review/SKILL.md": {
+      "class": "foundation",
+      "sha256": "14265fa5d3e7e9468cd9c2d7b58bdd5c243d781ccfe8b45eec6a825704dc6c74"
+    },
+    ".claude/commands/architect/SKILL.md": {
+      "class": "foundation",
+      "sha256": "2384a71c7e62cf5ec8a561a25e2a9b8da2c8c285c452652773400a784ddd4d16"
+    },
+    ".claude/commands/area-review/SKILL.md": {
+      "class": "foundation",
+      "sha256": "a17aa99fd3270f853da317f2daf911b7c62a5cab188fa395c8b677214f09c3ca"
+    },
+    ".claude/commands/build/SKILL.md": {
+      "class": "foundation",
+      "sha256": "0f976394f20837a16a90b9f43d63836340d3970caeaaf8193040376f243ff175"
+    },
+    ".claude/commands/context-update/SKILL.md": {
+      "class": "foundation",
+      "sha256": "e589290b951f0c0d0b37da0f94be7ba5cc21dacf3b449cc0b491e4a8be2fee52"
+    },
+    ".claude/commands/dashboard/SKILL.md": {
+      "class": "foundation",
+      "sha256": "5495cb8bd96f0b8315a889c5f57e3659e151b50e1a60310d302935d246a7492d"
+    },
+    ".claude/commands/decision/SKILL.md": {
+      "class": "foundation",
+      "sha256": "a0be0fbe01c6b384cd83d493752c4bcdb6a1dbf2dc1dc4c3a89972be320b0bba"
+    },
+    ".claude/commands/guide/SKILL.md": {
+      "class": "foundation",
+      "sha256": "5dda19316fa0248f3d70ded8c230619b4ee33179f5508c399a834ed3734dc1ba"
+    },
+    ".claude/commands/help/SKILL.md": {
+      "class": "foundation",
+      "sha256": "15042ae03bbb55340c3aefb21cd962a8728f5b124c2891ea6093a045478da818"
+    },
+    ".claude/commands/ilos-master/SKILL.md": {
+      "class": "foundation",
+      "sha256": "29aec10510f4460aad5055763785b5422f88a62cab0f428c9adb6015a1c30b2b"
+    },
+    ".claude/commands/monthly-review/SKILL.md": {
+      "class": "foundation",
+      "sha256": "03a54ec7b4c8f38263d2494917523ac59451375d86ca665f18d6f803db55c095"
+    },
+    ".claude/commands/morning/SKILL.md": {
+      "class": "foundation",
+      "sha256": "43d319c5f0c528c0e863b38ab653a9025083eff076583f09073ea7e844cdc443"
+    },
+    ".claude/commands/north-star/SKILL.md": {
+      "class": "foundation",
+      "sha256": "8cd33992d4f71ce9f936a87422c884a4619205a63a624b63da436903417d498b"
+    },
+    ".claude/commands/project-kickoff/SKILL.md": {
+      "class": "foundation",
+      "sha256": "a5bf2067b3786561e3961db4bf3950d0e70e34dc92a18d176e912b931266a0cb"
+    },
+    ".claude/commands/quarterly-review/SKILL.md": {
+      "class": "foundation",
+      "sha256": "2bd919f245f5a0fe9504215e9be44e04114d3e5b30b1c431c42479e55d0f0bc2"
+    },
+    ".claude/commands/strategist/SKILL.md": {
+      "class": "foundation",
+      "sha256": "1ab0dcce0569e708730cd59fa0a08292895c432f46d132bdd8ca2e662d929164"
+    },
+    ".claude/commands/sync-setup/SKILL.md": {
+      "class": "foundation",
+      "sha256": "839f6c3d41db5facba59069e839dfe6124f4cce07511b88d68895d5a64939e37"
+    },
+    ".claude/commands/sync/SKILL.md": {
+      "class": "foundation",
+      "sha256": "a9f13e1fb7f68c95d9c3fde2b2f2ae00638ceb160904472917c3b6803c194a40"
+    },
+    ".claude/commands/tana-schema-graph/SKILL.md": {
+      "class": "foundation",
+      "sha256": "1079f899b1e4e5e14c591e7430fd70a41dd98c187bf658d156fa6ac7d92bc190"
+    },
+    ".claude/commands/tana-schema-graph/html-template.md": {
+      "class": "foundation",
+      "sha256": "579c8f8ca657b2f719a2c36caf0c849b76d157e10cc55bbea57d303fbb9ec592"
+    },
+    ".claude/commands/tana-schema-graph/schema-format.md": {
+      "class": "foundation",
+      "sha256": "15025c02396169a2b5620bfdba227415b6a9889e1ddd3578c1b695891c9a70c1"
+    },
+    ".claude/commands/tana-search-builder/SKILL.md": {
+      "class": "foundation",
+      "sha256": "7e50ebc8c089abe00df48dfae1ceedfb32691e70f4d4984fff27f5e32442f685"
+    },
+    ".claude/commands/tana-search-builder/examples.md": {
+      "class": "foundation",
+      "sha256": "b74d5b473f06b9e8e20866b1ca690d3bf92b89befcb861ea33bfd0f3866b6d29"
+    },
+    ".claude/commands/tana-search-builder/syntax.md": {
+      "class": "foundation",
+      "sha256": "cbbb9a53cb9eab477ce115bb0a1c2b7c32138dbcd22508a286f789aad0089595"
+    },
+    ".claude/commands/tana-search-builder/system-ids.md": {
+      "class": "foundation",
+      "sha256": "93bedcdcd2c3b41056e3ac0f628a174f77135f363974c28e8bc27439a65cca83"
+    },
+    ".claude/commands/tana-understand/SKILL.md": {
+      "class": "foundation",
+      "sha256": "5d7d345f8434eee4b36b1924934a7c84b3cf42de8efdbfd580ecc425e749df7e"
+    },
+    ".claude/commands/tana/SKILL.md": {
+      "class": "foundation",
+      "sha256": "29ea6b78d9c60a38d14cebd700825c97ec65d2727844dc17135988c287b0044b"
+    },
+    ".claude/commands/update/SKILL.md": {
+      "class": "foundation",
+      "sha256": "b3d9015f9b916ca03e84fa543ba2d3af6b3855e845467a63f54f01ff4246daea"
+    },
+    ".claude/commands/vision/SKILL.md": {
+      "class": "foundation",
+      "sha256": "b33ce962d1350ca96350887fbea037ee1a07760802cfc505b646b8b90c47610c"
+    },
+    ".claude/commands/weekly-review/SKILL.md": {
+      "class": "foundation",
+      "sha256": "7a33f65f3216c6539574446fb4407f45b4d985733e26391a5c8e0dce55ec9316"
+    },
+    ".claude/commands/win/SKILL.md": {
+      "class": "foundation",
+      "sha256": "1f97046bfc5048bd2d546b860b722c3a679d295c6c32017bc9eea63f2386a439"
+    },
+    ".gitignore": {
+      "class": "foundation",
+      "sha256": "05c09e38988ef654cb9d1c94455839ab7c23c9fa7512cfafe184a5ac6dada042"
+    },
+    "AGENTS.md": {
+      "class": "foundation",
+      "sha256": "ac97f6c16b2f9e75e41a4ea366ad8940ab5df19ffa901326f22da2813a11f173"
+    },
+    "CHANGELOG.md": {
+      "class": "foundation",
+      "sha256": "8c536833243cf16a6a1a270e469c92334e396ac0ab0db73bcca1e6d7bc3dbe5f"
+    },
+    "CLAUDE.md": {
+      "class": "foundation",
+      "sha256": "f656ca2d79d31f4edf5aef0d5e06375f5d5c4b693d69a05eac149daec424d4ab"
+    },
+    "ILOS-KNOWLEDGE/INDEX.md": {
+      "class": "foundation",
+      "sha256": "444afec835e815d0499703bdbcfc5644754047ac78187cf1d0b0e58a47dca5c0"
+    },
+    "ILOS-KNOWLEDGE/MODULE.md": {
+      "class": "foundation",
+      "sha256": "f135330a593f56e086e96e4ebaf4eaab99e6bb29dcfa2cedee819cd9f8247762"
+    },
+    "ILOS-KNOWLEDGE/aligned-goal-setting.md": {
+      "class": "foundation",
+      "sha256": "77a39159063e742528fd350be2a1f62ec6701a1ce086022c05e610cc9724abe4"
+    },
+    "ILOS-KNOWLEDGE/elemental-wisdom.md": {
+      "class": "foundation",
+      "sha256": "e031b3b40ac035eb583c6b6182fad9340569489b328434271536fe088524d135"
+    },
+    "ILOS-KNOWLEDGE/field-intelligence-layer.md": {
+      "class": "foundation",
+      "sha256": "9fb6a99931f0bec29750e1fcdc0770179347956b57b2830fa11540565266bb2f"
+    },
+    "ILOS-KNOWLEDGE/gap-to-gain.md": {
+      "class": "foundation",
+      "sha256": "37bb06b9890a1d42cfd1b35fe2a2b4fcac96d3d5b1e665628d92c22105cadfd2"
+    },
+    "ILOS-KNOWLEDGE/ilos-overview.md": {
+      "class": "foundation",
+      "sha256": "6f959ee6d2edb31630daf3671a472c7a37b4fa98d5de370b6f3b01ce63a15351"
+    },
+    "ILOS-KNOWLEDGE/intellectual-foundations.md": {
+      "class": "foundation",
+      "sha256": "334ffbccba0ac71fb606db86ba8c7d0ce516b0597d9635536a34be92788be613"
+    },
+    "ILOS-KNOWLEDGE/intentional-planning-cycle.md": {
+      "class": "foundation",
+      "sha256": "849e6d5c10823822593f9943e79347ec610480b13a583217c9dca03ff146653b"
+    },
+    "ILOS-KNOWLEDGE/lessons/module-1-life-vision.md": {
+      "class": "foundation",
+      "sha256": "18d5f9c4f0129a278d20d6459b8b0d14c9e596c4c1c5538c321cd29ec53e726a"
+    },
+    "ILOS-KNOWLEDGE/lessons/module-2-plan-and-review.md": {
+      "class": "foundation",
+      "sha256": "b0eb306d4f494494bb4b4867a0e0482d61fa53e6fc74a51de94081d5cdd25a20"
+    },
+    "ILOS-KNOWLEDGE/lessons/module-3-execution.md": {
+      "class": "foundation",
+      "sha256": "c1066a13ca7e73ca495fde3c625ed2de73a156cb9fe5f07040968641ac04bf8d"
+    },
+    "ILOS-KNOWLEDGE/lessons/module-4-ai-and-mcp.md": {
+      "class": "foundation",
+      "sha256": "21fa4c0e9a43ff7101481227a356653c393bceae713cd452371a0c9b81e67331"
+    },
+    "ILOS-KNOWLEDGE/quantum-space-time.md": {
+      "class": "foundation",
+      "sha256": "0d36a94336cebd134c6e11c4271079c9b47fd7407f6b20a4c908b5de90a984df"
+    },
+    "ILOS-KNOWLEDGE/schemas.md": {
+      "class": "foundation",
+      "sha256": "ffa71bf3c428c72655e8949ea93bcd33cb135382b542a56b71ecd438744c79e8"
+    },
+    "ILOS-KNOWLEDGE/videos/README.md": {
+      "class": "foundation",
+      "sha256": "e2b5c23ee9e79990735c609d23064f420dfb8b817fbf7683faf96eb62025644d"
+    },
+    "ILOS-KNOWLEDGE/vper-cycle.md": {
+      "class": "foundation",
+      "sha256": "13592f70dc644f1103b56459e553887faa600bef54b21c87e4c270c27add51d2"
+    },
+    "LICENSE.md": {
+      "class": "foundation",
+      "sha256": "a1ae23d1c3b7e792fad4490230fb31ddb05560abda15f4dc883a5522f324019f"
+    },
+    "MEMORY/MODULE.md": {
+      "class": "foundation",
+      "sha256": "e3ed4946d3c258095e49145133e53397d6f1030031328059c29582205fb7ee25"
+    },
+    "MEMORY/decisions.jsonl": {
+      "class": "starter",
+      "sha256": "6c3157cebccaeef54268c1dd3e96e6e12e41a3eb58ff4ac27eae55ffd1ca20e9"
+    },
+    "MEMORY/examples/README.md": {
+      "class": "foundation",
+      "sha256": "d262082e284d020ec7639f3f8491ba277dd6b08c60e8c544ba23c678c0dd9b3e"
+    },
+    "MEMORY/examples/sample-decisions.jsonl": {
+      "class": "foundation",
+      "sha256": "8aa48a5baed132cda07c344406bd9c156aa42578020ebac79e68a762e10a51ed"
+    },
+    "MEMORY/examples/sample-failures.jsonl": {
+      "class": "foundation",
+      "sha256": "3a01b614bb47e25aa5b75c9c26a0063226f53e9045b78dfd2c3a28da55d0d1be"
+    },
+    "MEMORY/examples/sample-wins.jsonl": {
+      "class": "foundation",
+      "sha256": "fc569107df5f62c1e53ebc48a5a043c4d6498bae1b726bb0a5c0fb6686bceb77"
+    },
+    "MEMORY/experiences.jsonl": {
+      "class": "starter",
+      "sha256": "06c2603c3a2d028d95bdf55e7203bb73027754d2ebedf4df08c9b3d5edd66220"
+    },
+    "MEMORY/failures.jsonl": {
+      "class": "starter",
+      "sha256": "e374651a1dd241c5de2a408cd3949b972de9b1ef09b12e1238899f41294075c0"
+    },
+    "MEMORY/wins.jsonl": {
+      "class": "starter",
+      "sha256": "3d9e735d5a956cca334ad214a522e140587485da9cfbf9e5613bf1d428038c2e"
+    },
+    "MODULE.md": {
+      "class": "foundation",
+      "sha256": "b95089dfbb519eafd7c5732f5bf40c2d753b9c569f0117781f5c6bd9d292791c"
+    },
+    "QUANTUM/MODULE.md": {
+      "class": "foundation",
+      "sha256": "8f98298a5bf6ece68dcadb54d78a29267d6c965cba08c0e3e625ed511dde9de0"
+    },
+    "QUANTUM/personal-context/0-life-vision-manifesto.md": {
+      "class": "starter",
+      "sha256": "8e0c59a82d12c612da491cdde0f1b168b1d79de4c128bac8349846f7ea1d6d47"
+    },
+    "QUANTUM/personal-context/1-routines-and-habits.md": {
+      "class": "starter",
+      "sha256": "e7e684b7b1e16cac5c1dfff35f80da10eebc5605b732ebc0a4e196f567303bd0"
+    },
+    "QUANTUM/personal-context/2-energy-patterns.md": {
+      "class": "starter",
+      "sha256": "11736fb3e33c507fa9506f6f465dd6604f383f5fed1461a161d4e734e351b54c"
+    },
+    "QUANTUM/personal-context/3-relationships.md": {
+      "class": "starter",
+      "sha256": "fd43fcdd4895b1133bfca9d4fc2936a9e03e8e4648da3b3e9b8033fabf77bde5"
+    },
+    "QUANTUM/personal-context/4-non-negotiables.md": {
+      "class": "starter",
+      "sha256": "37a51319ab77b5f86113ede41315099827dbb56be28088e369bd5974e670cc90"
+    },
+    "QUANTUM/personal-context/5-work-patterns.md": {
+      "class": "starter",
+      "sha256": "be2b5a52f6dfee7ed124fb49b1bb03a29dd6cf5f8d2062270754028b50e53ff6"
+    },
+    "QUANTUM/personal-context/6-geography-lifestyle.md": {
+      "class": "starter",
+      "sha256": "fe4d18941a461d558d4925e7115790a6fddbf515e2aa2e7f55cb46f6f56bfc81"
+    },
+    "QUANTUM/personal-context/7-life-stage.md": {
+      "class": "starter",
+      "sha256": "ed077db21648e9c8e59c0e61d44925e43f424ed37d9cad7a6092073ad7302e0f"
+    },
+    "QUANTUM/personal-context/8-identity-values.md": {
+      "class": "starter",
+      "sha256": "e96e0c5b07b3a0804b72fd3c4162498a79f3dc8c1688943752371f4885e38632"
+    },
+    "QUANTUM/personal-context/9-voice-profile.yaml": {
+      "class": "starter",
+      "sha256": "6cd32da28014e6752e3cc10f087b49d5918f20cc94b9b0071e04086a3b777b0c"
+    },
+    "QUANTUM/personal-context/README.md": {
+      "class": "foundation",
+      "sha256": "9b4ab03fae4752098b0b6b3f53d431ab64956d5c3a637f1e099733e36bd4d682"
+    },
+    "QUANTUM/personal-context/archive/.gitkeep": {
+      "class": "starter",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "QUANTUM/self-knowledge/README.md": {
+      "class": "foundation",
+      "sha256": "53a304594f06eb9dda01869a52fe2e53e826664e28983ea07842c6b452e49b0c"
+    },
+    "QUANTUM/vision/favorite-problems.md": {
+      "class": "starter",
+      "sha256": "4c868549ee3e5362896af7a44739d257dfa82cd7c4cf109849e066889435d034"
+    },
+    "QUANTUM/vision/high-hard-goals.md": {
+      "class": "starter",
+      "sha256": "b5b34f7979f7684e445acc42ce8d37ca6415e1d7131d562f0753a50a20f43eea"
+    },
+    "QUANTUM/vision/life-manifesto.md": {
+      "class": "starter",
+      "sha256": "402fffa204c2f2c672a242ae2fc31d78fecad6eb4f243ab3a69abcc9fbc3418b"
+    },
+    "QUANTUM/vision/massively-transformative-purposes.md": {
+      "class": "starter",
+      "sha256": "bc9692c11fe17e0a7ef7e63a051b876ee5b8699458afed5264a9ee703cb2973f"
+    },
+    "README.md": {
+      "class": "foundation",
+      "sha256": "2ba8b6b7bcd04981537c3a99864054c45cb58da09b39567475ebc4f9cfed40e4"
+    },
+    "ROUTING.md": {
+      "class": "foundation",
+      "sha256": "b11d7affdccca3f7c8c60ba3f47a6fb26e8b3e9ace05b9690f56352b0ff82e28"
+    },
+    "SECURITY.md": {
+      "class": "foundation",
+      "sha256": "4ff6711ec0cc94ab9fbfe6ca5bd0f32ac881ea1d71c044c4b4c8d6bd1954df74"
+    },
+    "SPACE/MODULE.md": {
+      "class": "foundation",
+      "sha256": "3083924b957e1332157969be61b4fdc28b0719f1831c1b830ede2af9cd3f4a02"
+    },
+    "SPACE/areas/01-health.md": {
+      "class": "starter",
+      "sha256": "20ae4b793d3f88a8251c9659f3c72822f321e08013efb0871882958cbe4a8d91"
+    },
+    "SPACE/areas/02-finances.md": {
+      "class": "starter",
+      "sha256": "65de021df2a1e2583ed99995132870beb5aced2cd426c9cb59f2b1624ba73bf4"
+    },
+    "SPACE/areas/03-intellectual.md": {
+      "class": "starter",
+      "sha256": "09172200845eded5d6068b8ebe0ff33a5cbb04100e1e8896f8ab6d473e5115e1"
+    },
+    "SPACE/areas/04-home.md": {
+      "class": "starter",
+      "sha256": "81d5c3c1932f251d4bb47c57ce44f4de20f275b7028659a4d9c97cd00248ac52"
+    },
+    "SPACE/areas/05-creative.md": {
+      "class": "starter",
+      "sha256": "54886b5f4a29ded84a28f5791154bee21e70d42fb430ebf68e08dce55b10ab7e"
+    },
+    "SPACE/areas/06-routines.md": {
+      "class": "starter",
+      "sha256": "fe9b4de2e2cc4f8cf0bbfbf7ddde13c2564fe4c4459c0236077d76ad1e13500e"
+    },
+    "SPACE/areas/07-love.md": {
+      "class": "starter",
+      "sha256": "752446c04d70a38487f2166426339d7f6ebfd44a65c8537110052894f39c1d6f"
+    },
+    "SPACE/areas/08-emotional.md": {
+      "class": "starter",
+      "sha256": "ea9aa226745d556c4080154cf224ede49d7739f1fcba54ca216d2678c78bb140"
+    },
+    "SPACE/areas/09-vision.md": {
+      "class": "starter",
+      "sha256": "960087c8b385538a11d809fff90a9be8db28351072b37d833406e17f8c384ee3"
+    },
+    "SPACE/areas/10-career.md": {
+      "class": "starter",
+      "sha256": "291115fd40d84715e60e66faa12edf9df8cded8fd81e44cf6c160f5f51aa637f"
+    },
+    "SPACE/areas/11-social.md": {
+      "class": "starter",
+      "sha256": "38ffb13eb9461b8f9340189f242a21d59386e1ecb2ef9a4518086c73d8c2c731"
+    },
+    "SPACE/areas/12-spiritual.md": {
+      "class": "starter",
+      "sha256": "f8bfb3985bee7c3b844c3839c255576a4c1f9da367b310c7c15ad1b3329f692b"
+    },
+    "SPACE/areas/README.md": {
+      "class": "foundation",
+      "sha256": "62979c4a745f9d6cec5cd4628adcacbd25cc4003935d8a812df1af9dd5896bcc"
+    },
+    "SPACE/products/README.md": {
+      "class": "foundation",
+      "sha256": "7bd98de8fa1ed83dc543b3238466750bbd9574db6477d3286156a42f8bb9140c"
+    },
+    "SPACE/products/dashboards/README.md": {
+      "class": "foundation",
+      "sha256": "b580a210875740f6e232c210b983ffe308a6b4e63295a1455b54999a5697a422"
+    },
+    "SPACE/projects/README.md": {
+      "class": "foundation",
+      "sha256": "e18fd8bf0690e3f8a058e34d9e3c3fd37cae2da32aec2e1ac5e32d46063f6d53"
+    },
+    "SPACE/topics/README.md": {
+      "class": "foundation",
+      "sha256": "1546b1f7d3d86f327418dfd412cb92578281565e4fc55c89497dcf80e55a9c43"
+    },
+    "SYSTEM/MODULE.md": {
+      "class": "foundation",
+      "sha256": "d349031ef49f0828a2d9a948f242cb9797c5bbe04ad08ea7414562d9742d5f4a"
+    },
+    "SYSTEM/foundation-manifest.yaml": {
+      "class": "foundation",
+      "sha256": "ec5d3e03b38fb71e489a1eb0794ae65b3fc876935221e823d6e9728ef4c78d23"
+    },
+    "SYSTEM/setup-guide.md": {
+      "class": "foundation",
+      "sha256": "61cbdbf2ee3e281633655ed392a140fbc570399942bdfe2abf305f6b639bcab5"
+    },
+    "SYSTEM/sync-config.yaml": {
+      "class": "starter",
+      "sha256": "d954d0e00090491bc11a584cc535b709f2eb898883e61760e3be35eee53593d3"
+    },
+    "SYSTEM/sync-state.yaml": {
+      "class": "starter",
+      "sha256": "e25f1dd3449a2793504c438dd7c2eba9490b38dc8fc807b8d70edc07edeb073a"
+    },
+    "SYSTEM/tana-ids.yaml": {
+      "class": "starter",
+      "sha256": "f49dfbec28f92258d907d233c1d2a88bf46ef287267b17a2788485ac4468e240"
+    },
+    "SYSTEM/tana-reference/README.md": {
+      "class": "foundation",
+      "sha256": "9a8006cc46ef5a98d479808afd6c48807918f5130ba7be052c3b85bb093e06f3"
+    },
+    "SYSTEM/tools/check-manifest.js": {
+      "class": "foundation",
+      "sha256": "15d53e3a43589b233e51cdeefe1eef90ac81ec75ae417b6f213b766d7abce92c"
+    },
+    "SYSTEM/tools/check-manifest.test.js": {
+      "class": "foundation",
+      "sha256": "4d4c96b72db99b5a06aaa228c3e7030fb199104e124b1eb5ef2c34f7e7220f7b"
+    },
+    "SYSTEM/tools/migrate-ids.js": {
+      "class": "foundation",
+      "sha256": "877db23fb5ba4de21ffc9d94f5c3fb8750ff64861cfd8471ea31b80e105ba109"
+    },
+    "SYSTEM/tools/migrate-ids.test.js": {
+      "class": "foundation",
+      "sha256": "dad18e343eed90dcbbb59fcdbafed062e04dd933c89807788a05cd0e21ed1df4"
+    },
+    "SYSTEM/tools/skill-lint.js": {
+      "class": "foundation",
+      "sha256": "503cd8673175a4ffb9c336801d5bd6fb222478ced63f3ee59c5ba5c89ce4170f"
+    },
+    "SYSTEM/tools/skill-lint.test.js": {
+      "class": "foundation",
+      "sha256": "092a08314bead15ba92cd02be2098f3b83942b6c58b0d1e8c12992719c3c2203"
+    },
+    "SYSTEM/tools/update.js": {
+      "class": "foundation",
+      "sha256": "a0edbba797a34c6038939f24d70924a41c6ba4e07d9ae4d9f062eedec9eda58d"
+    },
+    "SYSTEM/tools/update.test.js": {
+      "class": "foundation",
+      "sha256": "4e638ec6450830891a2c23a98a5bdf6a00f0160ca7a7a13e3aca532c935b310a"
+    },
+    "TIME/MODULE.md": {
+      "class": "foundation",
+      "sha256": "dbb1933ba9c2fdaad453017e53a1263b6d02fafc8b2f83c4bff7a91d3b94300a"
+    },
+    "TIME/active-goals.yaml": {
+      "class": "starter",
+      "sha256": "6516895163a8c07adb5c52e04522aeaf64be8cf0575f8b91987e5080b5f175b1"
+    },
+    "TIME/current-period.yaml": {
+      "class": "starter",
+      "sha256": "35ac37442633b80a188496c1a78f262c5443eae5cb38ece5440c868d7f509a20"
+    },
+    "TIME/strategy-systems.yaml": {
+      "class": "starter",
+      "sha256": "dbbda57c8192147cc5455117b35a1369453acf8d411925dc42394bf3385b94d6"
+    },
+    "TIME/templates/annual-review.md": {
+      "class": "foundation",
+      "sha256": "a953cf0ca044f421e35f840ade1fb7936a0d052b50973e7d0d5bfef067ecb2a9"
+    },
+    "TIME/templates/major-decision.md": {
+      "class": "foundation",
+      "sha256": "a396cd538ad3f8d3b546ae50c6ef0a84e66092fc9bcc591c79d47a145408782e"
+    },
+    "TIME/templates/monthly-review.md": {
+      "class": "foundation",
+      "sha256": "07eb7d9922efbbcd7a88df47999dee3baa8587d613ef8c35b8cc425c4cbc831d"
+    },
+    "TIME/templates/quarterly-review.md": {
+      "class": "foundation",
+      "sha256": "5dbc84dce9453b1ee3241066152a96ae1376e5b73d885ec3b2ba430ad966145c"
+    },
+    "TIME/templates/self-knowledge-deep-dive.md": {
+      "class": "foundation",
+      "sha256": "9288d833c2eba27b9d19e9907dd0f1c70634bd1ab8099cf468783212d7280afd"
+    },
+    "TIME/templates/weekly-review.md": {
+      "class": "foundation",
+      "sha256": "9aef8c17b13e64f9b9ac7f92f815946a20beaf12b5257f828c529479b7ee8053"
+    },
+    "VERSION": {
+      "class": "foundation",
+      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03"
+    },
+    "dashboard/README.md": {
+      "class": "foundation",
+      "sha256": "beb019f6ae12beefce64782f013eadce638c063336cb30bf5996d6c889ba43ad"
+    },
+    "dashboard/lib/analytics.js": {
+      "class": "foundation",
+      "sha256": "687949b4f11070fc18074e0699d5980507e85c47e10eccacdc3747cf45b6c997"
+    },
+    "dashboard/lib/graceful.js": {
+      "class": "foundation",
+      "sha256": "3daf7e8679dbd84e8adba3320b4cc0a99675806a4609b032658040dda4272555"
+    },
+    "dashboard/lib/parser.js": {
+      "class": "foundation",
+      "sha256": "926bd41908bbf6bfa94cb0e8917525aa57defc4f8fd643b5641bd3555b24da51"
+    },
+    "dashboard/package-lock.json": {
+      "class": "foundation",
+      "sha256": "d7fc41805bcfa3f8b5e962c1d84176df4f752732bd814c7353368164010bba85"
+    },
+    "dashboard/package.json": {
+      "class": "foundation",
+      "sha256": "8bee1c504b0f3f2f05ce1c5611a20097e3949002d158ab94e14b4feaf6e10927"
+    },
+    "dashboard/public/app.js": {
+      "class": "foundation",
+      "sha256": "190fcc8573369fac366a64a50a300729230c7b58c9e967504ae2a3423db30463"
+    },
+    "dashboard/public/index.html": {
+      "class": "foundation",
+      "sha256": "c16ef54bf56dd88b88905421200c86efdcd90e0a8ceb6aa4c527835b98d1fcd5"
+    },
+    "dashboard/public/style.css": {
+      "class": "foundation",
+      "sha256": "cb7d5626370fdb11f89c5f92666767ff5241355426fd3427580650deac8947b1"
+    },
+    "dashboard/server.js": {
+      "class": "foundation",
+      "sha256": "961088d87fa965c785c959d140f48128209b8515677c863a2673c9f619fad509"
+    }
+  }
+}
