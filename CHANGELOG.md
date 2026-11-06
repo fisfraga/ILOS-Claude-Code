@@ -5,7 +5,7 @@ All notable changes to the ILOS template. Run `/update` to move to a newer relea
 ## 1.0.0 — first public release
 
 ### Added
-- `/update`: shows what would change, applies only on confirmation, keeps a `.bak` copy of any template file you edited, never touches your data, and logs to `SYSTEM/update-log.md`.
+- `/update`: shows what would change, applies only on confirmation, keeps a `.bak` copy of any template file you edited (never overwriting an earlier `.bak`), never touches your data, and logs to `SYSTEM/update-log.md`. The local tool decides what is your data whatever a download says, checks every downloaded file before the first write, refuses a malformed release, does not write through symlinks, and only runs inside an ILOS folder.
 - `AGENTS.md` as the operating contract for any agent (`CLAUDE.md` loads it). Put personal instructions in `CLAUDE.local.md`.
 - `SYSTEM/foundation-manifest.yaml`: which paths are template files and which are yours.
 - `SYSTEM/tana-ids.yaml`: one file for every Tana ID the skills use, filled by `/tana-understand`, which also reports what your workspace is missing (for example no `#decision` tag) instead of failing mid-sync.

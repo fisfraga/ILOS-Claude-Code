@@ -155,7 +155,7 @@
     },
     ".claude/commands/update/SKILL.md": {
       "class": "foundation",
-      "sha256": "b3d9015f9b916ca03e84fa543ba2d3af6b3855e845467a63f54f01ff4246daea"
+      "sha256": "5f78ccd2ab2cfa1ff5ff4303582eca8463d55f3cf4b73371c5f33323e05bb940"
     },
     ".claude/commands/vision/SKILL.md": {
       "class": "foundation",
@@ -179,7 +179,7 @@
     },
     "CHANGELOG.md": {
       "class": "foundation",
-      "sha256": "0245abe927d6d6177461bb01e10c3cad3790d08cf5a0cc00ffd845ee1c35b996"
+      "sha256": "7af8c7d8759b68287e6a0fe7777e7a4abec22665edfeaf0227cd6ef20a8eb36e"
     },
     "CLAUDE.md": {
       "class": "foundation",
@@ -507,11 +507,11 @@
     },
     "SYSTEM/tools/update.js": {
       "class": "foundation",
-      "sha256": "d833fe9c68ba43450766a04f1b9cad18347fade1394036a7fc5f7fbb66f0c290"
+      "sha256": "271b772fd1695bdf2293a5f7f92ca1152b6376596227db21a52a8311cac06b58"
     },
     "SYSTEM/tools/update.test.js": {
       "class": "foundation",
-      "sha256": "06c8236b3d102f862a8262694ff501cf1c0c2795d838eac547502421306d3f5e"
+      "sha256": "b02213781b9fe4e19f74cf99623289d85c6d607f7bbf5a1b10eca3739ddc0f06"
     },
     "TIME/MODULE.md": {
       "class": "foundation",
