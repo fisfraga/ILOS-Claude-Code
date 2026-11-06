@@ -179,7 +179,7 @@
     },
     "CHANGELOG.md": {
       "class": "foundation",
-      "sha256": "8e2f307603855b821f7e86fedb7f4f881fb9e6810124d8d3fac9ac98f3843e22"
+      "sha256": "0245abe927d6d6177461bb01e10c3cad3790d08cf5a0cc00ffd845ee1c35b996"
     },
     "CLAUDE.md": {
       "class": "foundation",
@@ -467,7 +467,7 @@
     },
     "SYSTEM/sync-config.yaml": {
       "class": "starter",
-      "sha256": "d954d0e00090491bc11a584cc535b709f2eb898883e61760e3be35eee53593d3"
+      "sha256": "01be49f2e56f26581dc0b068dab3a2e87ff26fadee2cced78f1edd299b29305d"
     },
     "SYSTEM/sync-state.yaml": {
       "class": "starter",

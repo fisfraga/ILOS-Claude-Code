@@ -29,6 +29,16 @@ All notable changes to the ILOS template. Run `/update` to move to a newer relea
 ### Migrating from a pre-1.0 copy
 `/update` recognises template files from any earlier download, so only files you edited are replaced with a `.bak` copy kept. It then offers to move your IDs from the old `SYSTEM/tana-reference/` tables into `SYSTEM/tana-ids.yaml`.
 
+**Your first update from a pre-1.0 copy** (older copies don't have `/update` yet): download and unzip 1.0, then from your existing ILOS folder ask Claude to run, or run yourself:
+
+```bash
+node <path-to-unzipped-1.0>/SYSTEM/tools/update.js plan  <path-to-unzipped-1.0>   # shows what would change
+node <path-to-unzipped-1.0>/SYSTEM/tools/update.js apply <path-to-unzipped-1.0>   # applies it
+node SYSTEM/tools/migrate-ids.js --write                                          # moves your Tana IDs
+```
+
+After that, `/update` is installed and handles every later release.
+
 ### Planned (not in 1.0)
 - Dashboard redesign and an extension API (`dashboard/extensions/`).
 - Video transcripts with timestamps.

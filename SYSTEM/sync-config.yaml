@@ -47,7 +47,7 @@ tana_workspace_id: ""
 #   - Onboarding a new workspace where hubs don't exist yet
 #   - Multi-project workspaces where each project has its own "inbox"
 #
-# Leave a key blank to use the default from structure-map.md.
+# Leave a key blank to use the matching *_CONTAINER_ID in SYSTEM/tana-ids.yaml.
 tana_node_overrides:
   wins_container_id: ""
   decisions_container_id: ""
