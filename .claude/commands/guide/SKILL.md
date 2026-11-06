@@ -65,8 +65,8 @@ Based on the user's response, consult the Quick Lookup table in `ILOS-KNOWLEDGE/
 | Technical (file structure, memory, schemas) | `ROUTING.md` + `ILOS-KNOWLEDGE/schemas.md` |
 | Technical (agent architecture) | Read `.claude/agents/council.md` + `.claude/agents/ilos-master.md` |
 | Technical (skill structure) | Read `.claude/commands/win/SKILL.md` (simple example) |
-| Tool Usage — Claude Code | Read `CLAUDE.md` + `.claude/commands/help/SKILL.md` |
-| Tool Usage — Tana + MCP | `ILOS-KNOWLEDGE/lessons/module-4-ai-and-mcp.md` |
+| Tool Usage — Claude Code | Read `AGENTS.md` + `.claude/commands/help/SKILL.md` |
+| Tool Usage — Tana + MCP | `ILOS-KNOWLEDGE/lessons/module-4-ai-and-mcp.md` + `ILOS-KNOWLEDGE/videos/README.md` (cite the matching video) |
 | PARACELSUS / AI coaching | `ILOS-KNOWLEDGE/lessons/module-4-ai-and-mcp.md` |
 
 Load only what's needed. Start with the most targeted file, then go broader if the question requires it.

@@ -13,11 +13,15 @@ _description: >
 foundation:
   - .claude/**
   - .gitignore
+  - AGENTS.md
+  - CHANGELOG.md
   - CLAUDE.md
   - LICENSE.md
   - MODULE.md
   - README.md
   - ROUTING.md
+  - SECURITY.md
+  - VERSION
   - ILOS-KNOWLEDGE/**
   - dashboard/**
   - SYSTEM/**
@@ -44,8 +48,12 @@ starter:
   - SYSTEM/sync-config.yaml
   - SYSTEM/sync-state.yaml
   - SYSTEM/tana-ids.yaml
-  - SYSTEM/tana-reference/**
 
 user:
   - CLAUDE.local.md
+  - SYSTEM/update-log.md
+  # pre-1.0 ID tables: no longer shipped, kept as input for migrate-ids.js
+  - SYSTEM/tana-reference/tag-ids.md
+  - SYSTEM/tana-reference/field-ids.md
+  - SYSTEM/tana-reference/structure-map.md
   - dashboard/extensions/**

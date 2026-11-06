@@ -8,7 +8,7 @@ AI serves as an ally for alignment. It augments your intelligence with the abili
 
 ## The FIELD: The Intelligence Layer
 
-The intelligence layer in ILOS is called the FIELD. It wraps around Quantum, Space, and Time -- reading your identity, traversing your structure, following your rhythm, and coaching you through it all. The FIELD is implemented through the skills in `.claude/commands/`, the agent personas in `.claude/agents/`, and the instructions in `CLAUDE.md`. See `field-intelligence-layer.md` for the complete framework.
+The intelligence layer in ILOS is called the FIELD. It wraps around Quantum, Space, and Time -- reading your identity, traversing your structure, following your rhythm, and coaching you through it all. The FIELD is implemented through the skills in `.claude/commands/`, the agent personas in `.claude/agents/`, and the instructions in `AGENTS.md`. See `field-intelligence-layer.md` for the complete framework.
 
 The FIELD encompasses six categories: Context Management (how data is organized for AI retrieval), Agents and Personas (your coaching entities), Skills and Capabilities (what AI can do), Tools and Integrations (external systems), Human in the Loop (your authority over all decisions), and AI Principles (the foundational mindsets). The more you use the system, the smarter the FIELD becomes -- not because the AI model improves, but because the context it reads gets richer.
 

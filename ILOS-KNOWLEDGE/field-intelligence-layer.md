@@ -15,7 +15,7 @@ The FIELD encompasses everything about how AI operates within ILOS: what context
 ## The Six Categories
 
 ### 1. Context Management
-How your life data is organized for AI retrieval. The schemas, routing rules, and segmentation that make your context accessible to each agent. Defined in `ROUTING.md` and `CLAUDE.md`.
+How your life data is organized for AI retrieval. The schemas, routing rules, and segmentation that make your context accessible to each agent. Defined in `ROUTING.md` and `AGENTS.md`.
 
 ### 2. Agents and Personas
 Your AI coaching entities. PARACELSUS (primary coach) and the specialized agents (PROMETHEUS, ATHENA, HEPHAESTUS, MNEMOSYNE, SOPHIA, PYTHIA). Each has a distinct element, domain, and coaching posture. Defined in `.claude/agents/`.
@@ -42,7 +42,7 @@ The FIELD is not a single directory. It is distributed across the system:
 |-----------|----------|-------------|
 | Skills | `.claude/commands/` | 26+ slash commands -- the action surface |
 | Agent personas | `.claude/agents/` | Elemental coaching entities and their behaviors |
-| System instructions | `CLAUDE.md` | Behavioral rules, data sources, coaching methodology |
+| System instructions | `AGENTS.md` (loaded through `CLAUDE.md`) | Behavioral rules, data sources, coaching methodology |
 | Context routing | `ROUTING.md` | Progressive disclosure -- what to load for each task |
 | Tool config | `SYSTEM/` | Tana MCP, sync configuration, setup guides |
 

@@ -102,9 +102,9 @@ test('running on already-migrated text changes nothing', () => {
   assert.deepStrictEqual(twice.filled, []);
 });
 
-test('the shipped blank tables and the shipped ids file migrate to nothing', () => {
+test('a fresh copy (no old tables) and the shipped ids file migrate to nothing', () => {
   const root = path.resolve(__dirname, '..', '..');
-  const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
+  const read = (p) => (fs.existsSync(path.join(root, p)) ? fs.readFileSync(path.join(root, p), 'utf8') : '');
   const ids = read('SYSTEM/tana-ids.yaml');
   const r = buildIds({
     idsText: ids,

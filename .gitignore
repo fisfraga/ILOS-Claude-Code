@@ -22,3 +22,8 @@ node_modules/
 
 # Cache
 .cache/
+
+# Yours, never shipped
+CLAUDE.local.md
+SYSTEM/update-log.md
+*.bak

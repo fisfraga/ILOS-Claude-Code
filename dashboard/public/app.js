@@ -1017,7 +1017,7 @@ function renderLearnHub(container) {
         <code style="font-size:.72rem">/context-update</code><span style="font-size:.75rem;color:var(--c2)">Update personal context and self-knowledge</span>
       </div>
       <div style="font-weight:700;margin:12px 0 6px;color:var(--c1)">Dashboard Architecture</div>
-      <p style="font-family:monospace;font-size:.7rem;background:var(--bg3);padding:8px;border-radius:6px;line-height:1.8">dashboard/server.js → /api/data<br>dashboard/lib/analytics.js → buildData()<br>dashboard/public/app.js → render views<br>PORT=3000 (default) | npm start</p>
+      <p style="font-family:monospace;font-size:.7rem;background:var(--bg3);padding:8px;border-radius:6px;line-height:1.8">dashboard/server.js → /api/data<br>dashboard/lib/analytics.js → buildData()<br>dashboard/public/app.js → render views<br>PORT=3100 (default) | npm start</p>
     </div>`,
     RAW_ELEM_COLORS.ether, false);
   container.appendChild(sysGuide);
@@ -2058,11 +2058,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* Update header meta */
   const meta = DATA.meta || {};
-  if (meta.userName) {
-    document.getElementById('header-meta').textContent =
-      meta.userName + (meta.generatedAt ? ' \u00B7 ' + meta.generatedAt : '');
-    document.title = 'ILOS Dashboard \u2014 ' + meta.userName;
-  }
+  document.getElementById('header-meta').textContent =
+    'Read-only overview of your local ILOS files (including what you sync from Tana) \u2014 not a replacement for Tana' +
+    (meta.generatedAt ? ' \u00B7 ' + meta.generatedAt : '');
 
   buildNav();
   initTheme();

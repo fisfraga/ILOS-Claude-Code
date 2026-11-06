@@ -64,4 +64,4 @@ If a moment is too small for Week periodicity, it belongs as **#gratitude** (dai
 ## Reference Files
 
 - `../tana-ids.yaml` -- every Tana ID the skills use, in one file. This is the only file you need to maintain.
-- `tag-ids.md`, `field-ids.md`, `structure-map.md` -- the older tables. They are no longer read by any skill; they remain only as input for `node SYSTEM/tools/migrate-ids.js`, which copies your IDs into `tana-ids.yaml` without overwriting anything. You can delete them once you have migrated.
+- `tag-ids.md`, `field-ids.md`, `structure-map.md` -- the older tables, present only if your copy predates 1.0 (new copies don't ship them). They are no longer read by any skill; they remain only as input for `node SYSTEM/tools/migrate-ids.js`, which copies your IDs into `tana-ids.yaml` without overwriting anything. You can delete them once you have migrated.

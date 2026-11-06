@@ -1,13 +1,13 @@
 ---
 name: dashboard
-description: Open the ILOS Dashboard — a live web app that reads your data files and serves an always-fresh dashboard at http://localhost:3000
+description: Open the ILOS Dashboard — a live web app that reads your data files and serves an always-fresh dashboard at http://localhost:3100
 ---
 
 # Dashboard
 
 **Duration:** 30 seconds | **Mode:** Building (Earth) | **Agent:** DAEDALUS
 
-You are DAEDALUS launching and maintaining the ILOS Dashboard web app. The dashboard is a self-contained Node.js server that reads your YAML/JSONL files on every request and serves an always-fresh interactive SPA at `http://localhost:3000`. No static HTML generation needed.
+You are DAEDALUS launching and maintaining the ILOS Dashboard web app. The dashboard is a self-contained Node.js server that reads your YAML/JSONL files on every request and serves an always-fresh interactive SPA at `http://localhost:3100`. No static HTML generation needed.
 
 ---
 
@@ -23,7 +23,7 @@ If Node.js is not installed or the version is below 18, tell the user: "The ILOS
 
 **Check if the server is already running:**
 ```bash
-curl -s http://localhost:3000/api/data > /dev/null 2>&1 && echo "RUNNING" || echo "STOPPED"
+curl -s http://localhost:3100/api/data > /dev/null 2>&1 && echo "RUNNING" || echo "STOPPED"
 ```
 
 **If STOPPED**, start it:
@@ -31,23 +31,23 @@ curl -s http://localhost:3000/api/data > /dev/null 2>&1 && echo "RUNNING" || ech
 ```bash
 cd dashboard && npm install --silent && npm start &
 # Wait a moment, then verify
-sleep 2 && curl -s http://localhost:3000/api/data > /dev/null 2>&1 && echo "Server started" || echo "Failed to start"
+sleep 2 && curl -s http://localhost:3100/api/data > /dev/null 2>&1 && echo "Server started" || echo "Failed to start"
 ```
 
 **If the port is in use by another process:**
 
 ```bash
-PORT=3001 npm start &
+PORT=3101 npm start &
 ```
 
 ### Step 2 — Open the browser
 
 ```bash
-open http://localhost:3000
+open http://localhost:3100
 ```
 
 Tell the user:
-> "Your ILOS Dashboard is live at http://localhost:3000. Data is always fresh — just refresh the page after editing any YAML or JSONL file."
+> "Your ILOS Dashboard is live at http://localhost:3100. Data is always fresh — just refresh the page after editing any YAML or JSONL file."
 
 ### Step 3 — Maintain mode
 

@@ -76,7 +76,7 @@ Talk to any agent directly, or let skills auto-activate them.
 
 ### Earth (Execution)
 /build           — Focused execution session (Variable)
-/dashboard       — Launch ILOS Dashboard web app — live at http://localhost:3000 (30 sec)
+/dashboard       — Launch ILOS Dashboard web app — live at http://localhost:3100 (30 sec)
 /architect       — System design and dashboard maintenance (Variable)
 /area-review     — Deep dive into one Key Area (Variable)
 
@@ -92,16 +92,23 @@ Talk to any agent directly, or let skills auto-activate them.
 /context-update  — Extract signals into personal context (5-10 min)
 /ilos-master     — Master coaching session (Variable)
 
-### Tana Integration (Optional)
-/sync            — Bidirectional sync with Tana (5-15 min)
-/sync-setup      — First-time sync configuration wizard (5-10 min)
+### Tana Sync (Optional)
+/tana-understand — Step 1: map your workspace into SYSTEM/tana-ids.yaml (10-20 min, once)
+/sync-setup      — Step 2: choose full or partial sync (5-10 min, once)
+/sync            — Sync local files and Tana (5-15 min)
 /tana            — Tana operations hub
-/tana-understand — Explore + document workspace
-/tana-search-builder — Build search nodes
-/tana-schema-graph — Visualize tag schemas
+
+### Tana Tools (Optional, not part of sync)
+/tana-search-builder — Build search nodes from plain language
+/tana-schema-graph   — Visualize tag schemas
+
+## Learn
+Video course for the Tana template: ILOS-KNOWLEDGE/videos/README.md
+/guide           — Ask how anything in ILOS works
 
 ## System
 /help            — This menu
+/update          — Update the template files to the latest release (your data is never touched)
 ```
 
 ### Step 3 — "What Should I Do Next?"
@@ -123,6 +130,9 @@ Apply these rules to generate 2-3 suggestions:
 
 **If Tana MCP is available (`list_workspaces` succeeds) AND `SYSTEM/tana-ids.yaml` has only empty values:**
 - Suggest: `/tana-understand` — "Your Tana workspace is connected but the ID file hasn't been filled in yet. Run this to map your workspace automatically (5 min) — it unlocks full Tana integration for all other skills."
+
+**If the user asks how something works in Tana (calendar, hubs, supertags, the Paracelsus agent, routines):**
+- Read `ILOS-KNOWLEDGE/videos/README.md` and point to the video that covers it.
 
 **If `QUANTUM/personal-context/0-life-vision-manifesto.md` is empty or contains only template text:**
 - Suggest: filling in personal context — "Your personal context files are empty. Start with `QUANTUM/personal-context/0-life-vision-manifesto.md` to help PARACELSUS understand who you are."

@@ -2,7 +2,7 @@
 
 const fs   = require('fs');
 const path = require('path');
-const { readYaml, readJsonl, readMarkdown, listFiles, parseMarkdownItems, extractName, ROOT } = require('./parser');
+const { readYaml, readJsonl, readMarkdown, listFiles, parseMarkdownItems, ROOT } = require('./parser');
 const { safeRead } = require('./graceful');
 
 /* ============================================================
@@ -795,8 +795,7 @@ function buildData() {
   const goalsYaml = safeRead(() => readYaml('TIME/active-goals.yaml'));
   const systemsYaml = safeRead(() => readYaml('TIME/strategy-systems.yaml'));
   const rawWins   = safeRead(() => readJsonl('MEMORY/wins.jsonl')) || [];
-  const manifestoText = safeRead(() => readMarkdown('QUANTUM/personal-context/0-life-vision-manifesto.md'));
-  const userName  = extractName(manifestoText) || 'ILOS User';
+  const userName  = null; // the header states what the dashboard is; no name is guessed from file headings
 
   // 2. Compute derived data
   const goals      = enrichGoals(goalsYaml);

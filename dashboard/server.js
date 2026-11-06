@@ -5,7 +5,7 @@ const fs   = require('fs');
 const path = require('path');
 const { buildData } = require('./lib/analytics');
 
-const PORT   = process.env.PORT || 3000;
+const PORT   = process.env.PORT || 3100;
 const PUBLIC = path.join(__dirname, 'public');
 
 /* ============================================================
@@ -90,7 +90,7 @@ server.listen(PORT, '127.0.0.1', () => {
 
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use. Try: PORT=3001 npm start`);
+    console.error(`Port ${PORT} is already in use. Try: PORT=3101 npm start`);
   } else {
     console.error('Server error:', err);
   }

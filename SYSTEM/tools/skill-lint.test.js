@@ -171,6 +171,12 @@ test('lintRepo also scans the root CLAUDE.md', () => {
   assert.deepStrictEqual(lintRepo(root).map((v) => v.file), ['CLAUDE.md']);
 });
 
+test('lintRepo also scans the root AGENTS.md', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ilos-lint-'));
+  fs.writeFileSync(path.join(root, 'AGENTS.md'), 'parentNodeId: "[WINS_CONTAINER_ID]"\n');
+  assert.deepStrictEqual(lintRepo(root).map((v) => v.file), ['AGENTS.md']);
+});
+
 test('the template itself is lint-clean (node --test is the single gate)', () => {
   assert.deepStrictEqual(lintRepo(path.resolve(__dirname, '..', '..')), []);
 });

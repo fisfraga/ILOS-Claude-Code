@@ -74,7 +74,7 @@ If `$ARGUMENTS` specifies an operation, use it. Otherwise, ask:
 
 ### Step 2 — Execute
 
-Run the appropriate MCP operations. Always reference tag/field IDs from `SYSTEM/tana-reference/`.
+Run the appropriate MCP operations. Always reference tag/field IDs from `SYSTEM/tana-ids.yaml`.
 
 ### Step 3 — Present Results
 

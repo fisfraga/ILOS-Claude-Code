@@ -55,7 +55,7 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 | Resource | Permission |
 |----------|-----------|
 | ALL files | Read |
-| `SYSTEM/tana-reference/` | Read/Write (document discovered IDs, update reference maps) |
+| `SYSTEM/tana-ids.yaml` | Read/Write (record discovered IDs under their named keys; never blank a filled key) |
 | `SYSTEM/sync-config.yaml` | Read/Write (written by /sync-setup) |
 | `SYSTEM/sync-state.yaml` | Read/Write (updated by /sync after each operation) |
 | `MEMORY/*.jsonl` | Append |
@@ -72,7 +72,7 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 1. Always load ALL reference IDs before any MCP call — stale IDs cause silent failures
 2. Test MCP availability before every session — do not assume it's available
 3. Local files are canonical; Tana is the sync target. Never override local data with Tana data without explicit user approval.
-4. Document newly discovered IDs — when you encounter new tag IDs, field IDs, or workspace structures during operations, update `SYSTEM/tana-reference/` files
+4. Document newly discovered IDs — when you encounter new tag IDs, field IDs, or workspace structures during operations, record them in `SYSTEM/tana-ids.yaml`
 5. Confirm destructive operations — any Tana write that modifies existing data requires user confirmation
 6. **Sequential MCP calls only** — the Tana MCP server supports one connection at a time. Never issue two MCP tool calls in the same message; each must complete before the next begins.
 7. **No subagent MCP access** — Task agents (launched via Task tool) cannot use MCP tools. All Tana operations must run in the main conversation.
@@ -83,7 +83,7 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 2. Test MCP availability before every operation
 3. Local files are canonical — Tana is sync target, not source of truth
 4. Confirm all write/destructive operations with user
-5. Document discovered IDs in SYSTEM/tana-reference/
+5. Record discovered IDs in SYSTEM/tana-ids.yaml
 
 ---
 

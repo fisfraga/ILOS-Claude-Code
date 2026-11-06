@@ -109,7 +109,7 @@ This folder contains all methodology knowledge for the Intentional Life OS (ILOS
 
 ### `field-intelligence-layer.md`
 **One-line:** The intelligence layer -- how AI reads, connects, and amplifies Quantum, Space, and Time.
-**Key concepts:** FIELD as wrapping intelligence layer, 6 categories (context architecture, agents, skills, tools, HITL, AI principles), where FIELD is implemented (.claude/commands/, .claude/agents/, CLAUDE.md), compound intelligence.
+**Key concepts:** FIELD as wrapping intelligence layer, 6 categories (context architecture, agents, skills, tools, HITL, AI principles), where FIELD is implemented (.claude/commands/, .claude/agents/, AGENTS.md), compound intelligence.
 **When to load:** User asks about AI architecture, what agents can see, how the system gets smarter, or the FIELD concept.
 
 ---
@@ -189,6 +189,10 @@ This folder contains all methodology knowledge for the Intentional Life OS (ILOS
 **When to load:** User asks about PARACELSUS, what AI can do in ILOS, how the AI is personalized, what MCP is, how Tana integration works, or how ILOS AI differs from generic AI.
 
 ---
+
+## Videos
+
+`videos/README.md` — the six Tana template videos, with what each teaches and the related skills and files. Load it for "how does X work in Tana?" questions.
 
 ## Schemas
 

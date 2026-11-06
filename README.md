@@ -2,15 +2,17 @@
 
 **Your life, intentionally designed. Powered by Claude Code.**
 
-ILOS is a complete life operating system that runs entirely in Claude Code. 26 AI-powered skills, specialized agent personas, a zero-dependency HTML dashboard, and local-first data architecture -- all in one git repository.
+ILOS is a complete life operating system that runs in Claude Code (and Claude Cowork). 27 AI-powered skills, specialized agent personas, a local read-only dashboard, and local-first data -- all plain files in one folder.
+
+It is the Claude Code companion to the **ILOS Tana template**, and it also works on its own: you can read the methodology and run the whole VPER workflow locally without Tana.
 
 ---
 
 ## What's Included
 
-- **26 Slash Commands** -- from `/morning` (5-min daily planning) to `/annual-review` (full year reflection)
+- **27 Slash Commands** -- from `/morning` (5-min daily planning) to `/annual-review` (full year reflection)
 - **Specialized Agent Personas** -- PARACELSUS (Coach), PROMETHEUS (Visionary), ATHENA (Strategist), HEPHAESTUS (Builder), MNEMOSYNE (Archivist), SOPHIA (Teacher), PYTHIA (Self-Knowledge), and more
-- **Zero-Dependency Dashboard** -- Multi-view HTML SPA generated on demand: VPER wheel, area health, goals, wins, education, systems, alignment
+- **Local Dashboard** -- a read-only overview of your files at http://localhost:3100 (one small Node server, loopback only): VPER wheel, area health, goals, wins, systems, alignment
 - **Smart Context Loading** -- agents load only what they need for each task, keeping sessions fast
 - **Local-First Data** -- YAML configs, JSONL memory, Markdown narrative. Git-tracked. You own everything.
 - **Elemental Wisdom** -- VPER Cycle maps to Fire/Air/Earth/Water/Ether
@@ -21,7 +23,7 @@ ILOS is a complete life operating system that runs entirely in Claude Code. 26 A
 
 ## Your First Week
 
-You don't need to learn 26 commands. Start with these 5:
+You don't need to learn 27 commands. Start with these 5:
 
 | Command | What It Does | Time |
 |---------|-------------|------|
@@ -39,26 +41,32 @@ For a complete setup walkthrough, see `SYSTEM/setup-guide.md`.
 
 ## Prerequisites
 
-- [Claude Code CLI](https://claude.ai/code) installed and authenticated
-- Git
+- [Claude Code](https://claude.ai/code) (or the Claude desktop app with Cowork)
+- [Node.js](https://nodejs.org) 18 or later -- only for `/dashboard` and `/update`
+- Optional: Tana with an MCP server configured, for sync
 
 ---
 
 ## Quick Start
 
+1. Download the latest release ZIP from [Releases](https://github.com/fisfraga/ILOS-Claude-Code/releases) and unzip it where you keep your projects. This folder is now **yours** -- your data lives in it.
+   *(Cloning works too; then run `rm -rf .git` so your life data is never tied to this repo. Use `git init` if you want your own history.)*
+2. Open it:
+
 ```bash
-# Clone the repository
-git clone https://github.com/fisfraga/ILOS-Claude-Code.git
 cd ILOS-Claude-Code
-
-# Open in Claude Code
 claude
+```
 
-# Try your first commands:
+3. Try your first commands:
+
+```
 /win "Set up ILOS"        # Celebrate your first win
 /morning                  # Plan your day
-/dashboard                # Generate your visual dashboard
+/dashboard                # See your data at http://localhost:3100
 ```
+
+**Updating later:** run `/update`. It shows what would change, asks before applying, and never touches your data (`QUANTUM/`, `SPACE/`, `TIME/`, `MEMORY/`, your Tana settings, `CLAUDE.local.md`). Put personal instructions in `CLAUDE.local.md` rather than editing the template files.
 
 ---
 
@@ -83,7 +91,7 @@ This cycle repeats fractally: Year > Quarter > Month > Week > Day.
 
 ---
 
-## All 22 Skills
+## All Skills
 
 | Skill | Command | Duration | Element | What It Does |
 |-------|---------|----------|---------|-------------|
@@ -98,17 +106,22 @@ This cycle repeats fractally: Year > Quarter > Month > Week > Day.
 | North Star | `/north-star` | 45-90 min | Fire | Guided workshop for FPs/MTPs/HHGs |
 | Build | `/build` | Variable | Earth | Focused execution session |
 | Context Update | `/context-update` | 5-10 min | Ether | Extract signals from reviews into context |
-| Dashboard | `/dashboard` | 2-3 min | Earth | Generate visual HTML dashboard |
+| Dashboard | `/dashboard` | 30 sec | Earth | Open the local dashboard at http://localhost:3100 |
 | Area Review | `/area-review` | Variable | Earth | Deep dive into a single Key Area |
 | Project Kickoff | `/project-kickoff` | 15-30 min | Air>Earth | Structured project initiation |
 | Decision | `/decision` | 15-30 min | Air | Major decision framework with logging |
 | ILOS Master | `/ilos-master` | Variable | Ether | Master coaching orchestration |
 | Strategist | `/strategist` | Variable | Air | Deep planning and strategy session |
 | Architect | `/architect` | Variable | Earth | System design and dashboard deployment |
+| ILOS Guide | `/guide` | Variable | Ether | Understand how ILOS works |
+| Help | `/help` | Instant | System | Skill catalog + what to do next |
+| Update | `/update` | 2-5 min | System | Update the template files; your data is never touched |
 | Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
+| Tana Understand | `/tana-understand` | 10-20 min | Air | Map your Tana workspace into `SYSTEM/tana-ids.yaml` (sync step 1) |
+| Sync Setup | `/sync-setup` | 5-10 min | Ether | Choose full or partial sync (sync step 2) |
+| Tana Sync | `/sync` | 5-15 min | Ether | Sync local files and Tana |
 | Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
 | Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
-| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore and document Tana system |
 
 ---
 
@@ -156,12 +169,12 @@ MEMORY/           # Episodic logs -- wins, decisions, failures, experiences
   experiences.jsonl #  Significant life moments
 
 ILOS-KNOWLEDGE/   # Reference -- methodology, frameworks, philosophy
-SYSTEM/           # Infrastructure -- Tana reference, sync config
+SYSTEM/           # Infrastructure -- sync config, Tana IDs, tools, update manifest
 
 # The FIELD (intelligence layer) is implemented through:
-#   .claude/commands/   -- 26+ skills (slash commands)
+#   .claude/commands/   -- 27 skills (slash commands)
 #   .claude/agents/     -- Agent personas (PARACELSUS, PROMETHEUS, etc.)
-#   CLAUDE.md           -- System instructions and behavioral rules
+#   AGENTS.md           -- Operating contract: system instructions and rules (CLAUDE.md loads it)
 #   ROUTING.md          -- Context routing for progressive disclosure
 # See ILOS-KNOWLEDGE/field-intelligence-layer.md for the full framework.
 ```
@@ -173,15 +186,19 @@ SYSTEM/           # Infrastructure -- Tana reference, sync config
 - **YAML** = Configuration (mutable state)
 - **JSONL** = Memory (append-only, never delete)
 - **Markdown** = Narrative (human-readable context)
-- **Git** = Version control for your life data
+- **Git** (optional) = version control for your life data, in your own repo
 
-All data lives in plain text files you can read, edit, and track with git. No database, no server, no vendor lock-in.
+All data lives in plain text files you can read and edit. No database, no cloud, no vendor lock-in.
 
 ---
 
 ## Tana Integration (Optional)
 
-If you use [Tana](https://tana.inc), ILOS connects to it via MCP (Model Context Protocol). The `/tana` family of skills syncs goals, wins, and projects between your local files and your Tana workspace. HERMES handles all Tana operations.
+If you use [Tana](https://tana.inc), ILOS connects to it via MCP (Model Context Protocol). Set it up in two steps: `/tana-understand` (maps your workspace) then `/sync-setup` (chooses full or partial sync); after that, `/sync`. HERMES handles all Tana operations.
+
+New to the Tana template? The six-video course is listed in [`ILOS-KNOWLEDGE/videos/README.md`](ILOS-KNOWLEDGE/videos/README.md).
+
+Running other Tana tools side by side (for example `tana-voice-note-agent` in a sibling folder) is fine: the Tana MCP server takes one call at a time, so don't sync from two tools in the same minute.
 
 But Tana is optional -- everything works locally with plain files. Local files are always the canonical source; Tana is a sync target, not a dependency.
 
@@ -205,6 +222,10 @@ Every failure encodes a lesson. Every decision builds judgment. MNEMOSYNE (the A
 Built on the shoulders of: Benjamin Hardy (Gap vs. Gain, Future Self), Steven Kotler (MTP, High Hard Goals, Flow), Tiago Forte (Second Brain, PARA), Dan Sullivan (Strategic Coach), Mindvalley (12 Life Areas), Dragon Dreaming (Dream-Plan-Do-Celebrate), and classical elemental philosophy.
 
 Created by [Fis Fraga](https://fisfraga.com) -- M.Sc. Computer Science, Tana Ambassador.
+
+## License
+
+Personal use. See [LICENSE.md](LICENSE.md). This repository is a read-only distribution: see [SECURITY.md](SECURITY.md) for how to report a problem.
 
 ---
 

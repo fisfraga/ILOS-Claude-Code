@@ -7,7 +7,7 @@ A live, always-fresh web dashboard for your ILOS data. No build step. No framewo
 ```bash
 cd dashboard
 npm install      # installs js-yaml (only dependency)
-npm start        # → http://localhost:3000  (opens automatically)
+npm start        # → http://localhost:3100  (opens automatically)
 ```
 
 Press `Ctrl+C` to stop.
@@ -47,7 +47,7 @@ All files are read relative to the `ILOS-Template/` root:
 ## Custom Port
 
 ```bash
-PORT=3001 npm start
+PORT=3101 npm start
 ```
 
 ## Updating the Dashboard

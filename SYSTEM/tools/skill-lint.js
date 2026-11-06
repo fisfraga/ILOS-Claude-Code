@@ -176,8 +176,10 @@ function lintSyncState(file, text) {
 
 function skillFiles(root) {
   const files = [];
-  const claudeMd = path.join(root, 'CLAUDE.md');
-  if (fs.existsSync(claudeMd)) files.push(claudeMd);
+  for (const rel of ['AGENTS.md', 'CLAUDE.md']) {
+    const f = path.join(root, rel);
+    if (fs.existsSync(f)) files.push(f);
+  }
   const commands = path.join(root, '.claude', 'commands');
   if (fs.existsSync(commands)) {
     for (const dir of fs.readdirSync(commands)) {
@@ -191,7 +193,7 @@ function skillFiles(root) {
       if (f.endsWith('.md')) files.push(path.join(agents, f));
     }
   }
-  for (const rel of ['CLAUDE.md', path.join('ILOS-KNOWLEDGE', 'schemas.md')]) {
+  for (const rel of [path.join('ILOS-KNOWLEDGE', 'schemas.md')]) {
     const f = path.join(root, rel);
     if (fs.existsSync(f) && !files.includes(f)) files.push(f);
   }
