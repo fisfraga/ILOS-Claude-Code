@@ -22,8 +22,12 @@ All notable changes to the ILOS template. Run `/update` to move to a newer relea
 - Unresolved placeholder IDs in `/sync`; a blank ID now skips the Tana step and keeps the item local.
 - `/sync-setup` no longer erases your Tana node overrides when it rewrites `sync-config.yaml`.
 
+### Removed
+- The Cosmic Blueprint teaser view in the dashboard.
+- The blank Markdown ID tables in `SYSTEM/tana-reference/` (older copies keep theirs for the migration).
+
 ### Migrating from a pre-1.0 copy
-`/update` from an unversioned copy treats every template file that differs as edited, so you get a `.bak` for each; delete the ones you don't need. It then offers to move your IDs from the old `SYSTEM/tana-reference/` tables into `SYSTEM/tana-ids.yaml`.
+`/update` recognises template files from any earlier download, so only files you edited are replaced with a `.bak` copy kept. It then offers to move your IDs from the old `SYSTEM/tana-reference/` tables into `SYSTEM/tana-ids.yaml`.
 
 ### Planned (not in 1.0)
 - Dashboard redesign and an extension API (`dashboard/extensions/`).
