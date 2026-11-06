@@ -21,6 +21,7 @@ const crypto = require('crypto');
 
 const MANIFEST = 'SYSTEM/release-manifest.json';
 const LOG = 'SYSTEM/update-log.md';
+const LEGACY_TAG = 'pre-1.0'; // last commit before 1.0; its history is what older copies came from
 
 function sha256(buf) {
   return crypto.createHash('sha256').update(buf).digest('hex');
@@ -37,6 +38,12 @@ function planUpdate({ oldManifest, newManifest, localHash }) {
   const plan = { add: [], update: [], updateWithBackup: [], unchanged: [], keepStarter: [], remove: [], keepRemovedModified: [] };
   const oldFiles = (oldManifest && oldManifest.files) || {};
   const newFiles = newManifest.files || {};
+  // A copy without a release manifest predates 1.0: a file counts as unedited if it matches
+  // any version the template ever shipped (newManifest.legacy).
+  const legacy = (!oldManifest && newManifest.legacy) || {};
+  const shippedBefore = (f, local) => (oldManifest
+    ? Boolean(oldFiles[f] && oldFiles[f].class === 'foundation' && oldFiles[f].sha256 === local)
+    : (legacy[f] || []).includes(local));
 
   for (const f of Object.keys(newFiles).sort()) {
     assertSafe(f);
@@ -49,7 +56,7 @@ function planUpdate({ oldManifest, newManifest, localHash }) {
     if (entry.class !== 'foundation') continue;
     if (local === null) plan.add.push(f);
     else if (local === entry.sha256) plan.unchanged.push(f);
-    else if (oldFiles[f] && oldFiles[f].class === 'foundation' && oldFiles[f].sha256 === local) plan.update.push(f);
+    else if (shippedBefore(f, local)) plan.update.push(f);
     else plan.updateWithBackup.push(f);
   }
 
@@ -100,7 +107,7 @@ function applyUpdate({ plan, root, sourceRoot, fromVersion, toVersion, now = new
   fs.appendFileSync(logPath, `${head}\n## ${date} · ${fromVersion} → ${toVersion}\n\n${summarize(plan)}\n`);
 }
 
-function buildRelease({ version, files, classify, read }) {
+function buildRelease({ version, files, classify, read, legacy = null }) {
   const out = { version, files: {} };
   for (const f of files) {
     if (f === MANIFEST) continue;
@@ -108,10 +115,36 @@ function buildRelease({ version, files, classify, read }) {
     if (cls !== 'foundation' && cls !== 'starter') continue;
     out.files[f] = { class: cls, sha256: sha256(read(f)) };
   }
+  if (legacy) {
+    out.legacy = {};
+    for (const f of Object.keys(out.files).sort()) {
+      if (out.files[f].class !== 'foundation' || !legacy[f]) continue;
+      const hashes = [...new Set(legacy[f])].filter((x) => x !== out.files[f].sha256);
+      if (hashes.length) out.legacy[f] = hashes;
+    }
+  }
   return out;
 }
 
-module.exports = { planUpdate, applyUpdate, buildRelease, summarize, sha256 };
+// Every version of every path in the commits reachable from `rev` (the pre-1.0 history),
+// as sha256 lists, so an unversioned copy can be matched against what was actually shipped.
+function legacyHashes(root, rev) {
+  const { execFileSync } = require('child_process');
+  const git = (...a) => execFileSync('git', a, { cwd: root, maxBuffer: 1 << 28 });
+  const byPath = {};
+  const blobHash = {};
+  for (const commit of git('rev-list', rev).toString().split('\n').filter(Boolean)) {
+    for (const line of git('ls-tree', '-r', commit).toString().split('\n').filter(Boolean)) {
+      const [meta, file] = line.split('\t');
+      const blob = meta.split(' ')[2];
+      if (!blobHash[blob]) blobHash[blob] = sha256(git('cat-file', 'blob', blob));
+      (byPath[file] = byPath[file] || new Set()).add(blobHash[blob]);
+    }
+  }
+  return Object.fromEntries(Object.entries(byPath).map(([f, set]) => [f, [...set]]));
+}
+
+module.exports = { planUpdate, applyUpdate, buildRelease, legacyHashes, summarize, sha256 };
 
 if (require.main === module) {
   const args = process.argv.slice(2);
@@ -129,14 +162,20 @@ if (require.main === module) {
     const { classifyAll, loadManifest } = require('./check-manifest');
     const files = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' }).split('\n').filter(Boolean);
     const r = classifyAll(files, loadManifest(root));
+    let legacy = null;
+    try {
+      execFileSync('git', ['rev-parse', '--verify', '--quiet', `${LEGACY_TAG}^{commit}`], { cwd: root, stdio: 'ignore' });
+      legacy = legacyHashes(root, LEGACY_TAG);
+    } catch (err) { /* no pre-1.0 tag: no legacy matching */ }
     const m = buildRelease({
       version: readVersion(root),
       files,
       classify: (f) => r.classified[f],
       read: (f) => fs.readFileSync(path.join(root, f)),
+      legacy,
     });
     fs.writeFileSync(path.join(root, MANIFEST), `${JSON.stringify(m, null, 2)}\n`);
-    console.log(`wrote ${MANIFEST}: version ${m.version}, ${Object.keys(m.files).length} files`);
+    console.log(`wrote ${MANIFEST}: version ${m.version}, ${Object.keys(m.files).length} files, legacy versions for ${Object.keys(m.legacy || {}).length} files`);
   } else if ((cmd === 'plan' || cmd === 'apply') && source) {
     const src = path.resolve(source);
     const newPath = path.join(src, MANIFEST);

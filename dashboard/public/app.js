@@ -49,8 +49,7 @@ const ROUTES = {
   'learn/areas':       { render: renderLearnAreas,         icon: '',       label: '12 Key Areas',      nav: false },
   'learn/goals':       { render: renderLearnGoals,         icon: '',       label: 'Goal Setting',      nav: false },
   'learn/planning':    { render: renderLearnPlanning,      icon: '',       label: 'Planning Cycle',    nav: false },
-  'systems':           { render: renderSystems,            icon: '\u21BB', label: 'Systems',           nav: true  },
-  'cosmic':            { render: renderCosmicTeaser,       icon: '\u2727', label: 'Cosmic Blueprint',  nav: true  }
+  'systems':           { render: renderSystems,            icon: '\u21BB', label: 'Systems',           nav: true  }
 };
 
 function buildNav() {
@@ -1400,65 +1399,6 @@ function renderLearnPlanning(container) {
   quotesHTML += renderQuoteCard('Plans are nothing; planning is everything.', 'Dwight D. Eisenhower');
   quotesHTML += renderQuoteCard('99% of people aim for "realistic" goals, paradoxically making them the most competitive.', 'Tim Ferriss');
   container.appendChild(renderEduSection('Key Quotes', quotesHTML, RAW_ELEM_COLORS.ether, false));
-}
-
-/* ---------- #cosmic (Cosmic Blueprint Copilot teaser) ---------- */
-function renderCosmicTeaser(container) {
-  /* Header */
-  const header = document.createElement('div');
-  header.className = 'transit-card';
-  header.style.textAlign = 'center';
-  header.style.borderBottom = '3px solid var(--ether)';
-  header.innerHTML = `
-    <div style="font-size:2rem;margin-bottom:8px">\u2727</div>
-    <div style="font-size:1.2rem;font-weight:800;margin-bottom:4px">Cosmic Blueprint Copilot</div>
-    <div style="font-size:.85rem;color:var(--c2)">Your celestial DNA decoded through Astrology, Human Design, and Gene Keys</div>`;
-  container.appendChild(header);
-
-  /* Description */
-  const descCard = document.createElement('div');
-  descCard.className = 'transit-card';
-  descCard.innerHTML = `
-    <div style="font-size:.85rem;color:var(--c2);line-height:1.6;max-width:600px;margin:0 auto">
-      <p>The <strong>Cosmic Blueprint Copilot</strong> is a companion project that generates personalized natal chart readings integrating three wisdom traditions:</p>
-      <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:16px 0">
-        <div style="text-align:center"><div style="font-size:1.3rem">&#9734;</div><div style="font-size:.75rem;font-weight:600">Astrology</div></div>
-        <div style="text-align:center"><div style="font-size:1.3rem">&#9672;</div><div style="font-size:.75rem;font-weight:600">Human Design</div></div>
-        <div style="text-align:center"><div style="font-size:1.3rem">&#10047;</div><div style="font-size:.75rem;font-weight:600">Gene Keys</div></div>
-      </div>
-      <p>Your ILOS 12 Key Areas are inspired by the 12 astrological houses, and the elemental system (Fire, Air, Earth, Water) that powers the VPER cycle connects directly to these traditions.</p>
-    </div>`;
-  container.appendChild(descCard);
-
-  /* Teaser cards */
-  const teasers = [
-    { title: 'Your Life Purpose Path',    desc: 'Discover the archetypal energies and sequences that reveal your unique purpose and evolutionary journey.' },
-    { title: 'Your Energy Type',          desc: 'Understand your energetic type, strategy, and decision-making authority \u2014 how you are designed to operate.'     },
-    { title: 'Your Transformation Keys',  desc: 'Explore the shadow patterns and gift frequencies in your profile \u2014 a map for personal growth.'      }
-  ];
-
-  const teaserGrid = document.createElement('div');
-  teaserGrid.className = 'grid-3';
-  teaserGrid.style.marginBottom = '20px';
-  teasers.forEach(t => {
-    const card = document.createElement('div');
-    card.className = 'teaser-card';
-    card.innerHTML = `
-      <div class="lock-icon">\uD83D\uDD12</div>
-      <div class="teaser-title">${t.title}</div>
-      <div class="teaser-desc">${t.desc}</div>`;
-    teaserGrid.appendChild(card);
-  });
-  container.appendChild(teaserGrid);
-
-  /* CTA */
-  const ctaDiv = document.createElement('div');
-  ctaDiv.style.textAlign = 'center';
-  ctaDiv.style.padding = '20px';
-  const ctaUrl  = 'https://cosmicblueprintcopilot.com';
-  const ctaText = 'Explore the Cosmic Blueprint Copilot';
-  ctaDiv.innerHTML = `<a href="${ctaUrl}" class="cta-button" target="_blank">${ctaText}</a>`;
-  container.appendChild(ctaDiv);
 }
 
 /* ---------- #systems ---------- */

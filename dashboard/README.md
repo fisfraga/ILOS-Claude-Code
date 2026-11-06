@@ -27,7 +27,6 @@ Press `Ctrl+C` to stop.
 | `#goals` | Annual → Weekly goals with key results and progress |
 | `#wins` | Win timeline + analytics (streaks, by area, weekly trend) |
 | `#learn` | Education hub: VPER, Elements, Gap to Gain, 12 Areas, Goals, Planning |
-| `#cosmic` | Cosmic Blueprint Copilot teaser and link |
 | `#systems` | Strategy systems tracking grid + completion analytics |
 | `#alignment` | Goal-to-vision coherence, area balance, system-to-goal audit |
 

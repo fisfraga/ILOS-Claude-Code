@@ -675,32 +675,6 @@ function parseEducation() {
 }
 
 /* ============================================================
-   COSMIC TEASER
-   ============================================================ */
-
-function computeCosmicTeaser() {
-  const profile = safeRead(() => readYaml('QUANTUM/self-knowledge/cosmic-profile.yaml'));
-  const hasBirthData = !!(profile && profile.birth_data);
-  const astro = profile && profile.astrology || {};
-  const hd   = profile && profile.human_design || {};
-  const gk   = profile && profile.gene_keys || {};
-  return {
-    hasBirthData,
-    sunSign:         astro.sun_sign        || null,
-    moonSign:        astro.moon_sign       || null,
-    ascendant:       astro.ascendant       || null,
-    dominantElement: astro.dominant_element || null,
-    hdType:          hd.type               || null,
-    hdAuthority:     hd.authority          || null,
-    hdProfile:       hd.profile            || null,
-    hdDefinition:    hd.definition         || null,
-    gkLifesWork:     gk.lifes_work         || null,
-    ctaUrl:  'https://cosmicblueprint.app',
-    ctaText: 'Explore your full Cosmic Blueprint'
-  };
-}
-
-/* ============================================================
    DECISIONS ANALYTICS
    ============================================================ */
 

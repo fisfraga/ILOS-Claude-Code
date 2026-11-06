@@ -507,11 +507,11 @@
     },
     "SYSTEM/tools/update.js": {
       "class": "foundation",
-      "sha256": "a0edbba797a34c6038939f24d70924a41c6ba4e07d9ae4d9f062eedec9eda58d"
+      "sha256": "d833fe9c68ba43450766a04f1b9cad18347fade1394036a7fc5f7fbb66f0c290"
     },
     "SYSTEM/tools/update.test.js": {
       "class": "foundation",
-      "sha256": "4e638ec6450830891a2c23a98a5bdf6a00f0160ca7a7a13e3aca532c935b310a"
+      "sha256": "06c8236b3d102f862a8262694ff501cf1c0c2795d838eac547502421306d3f5e"
     },
     "TIME/MODULE.md": {
       "class": "foundation",
@@ -559,11 +559,11 @@
     },
     "dashboard/README.md": {
       "class": "foundation",
-      "sha256": "beb019f6ae12beefce64782f013eadce638c063336cb30bf5996d6c889ba43ad"
+      "sha256": "7bb05622df018a03ada9066b16e92c08c986b2e60ab3cca17c8966cb144d5d9a"
     },
     "dashboard/lib/analytics.js": {
       "class": "foundation",
-      "sha256": "687949b4f11070fc18074e0699d5980507e85c47e10eccacdc3747cf45b6c997"
+      "sha256": "800131fad7b75d76ff96ae0c9e440cb8cad2011c25a63d0599613cfffa03de15"
     },
     "dashboard/lib/graceful.js": {
       "class": "foundation",
@@ -583,7 +583,7 @@
     },
     "dashboard/public/app.js": {
       "class": "foundation",
-      "sha256": "2ff788e29d1a959250c61bacaafca89f5d382f2255d690a43cd0f49e241c7c97"
+      "sha256": "599809e2f27f4c7b5c3260f9738d9f3b44f47cd168d69d8d1357f77dcb9a572b"
     },
     "dashboard/public/index.html": {
       "class": "foundation",
@@ -597,5 +597,268 @@
       "class": "foundation",
       "sha256": "961088d87fa965c785c959d140f48128209b8515677c863a2673c9f619fad509"
     }
+  },
+  "legacy": {
+    ".claude/agents/architect.md": [
+      "81e68de982975e6216b6fe8e436ac63f097d9c49ea72c09c930e04fc0e9b24da",
+      "e9164baf7fb7585b3705dd76d91c233499e2440be1a0e5b2bd097c095c1e9f74",
+      "d9b17b8a99095a9d5b096b611a3cdc29b63966e69180c7b29f421f19f8e35a85"
+    ],
+    ".claude/agents/builder.md": [
+      "0e5c15b25f40a882240723d4a42ce95b01c5ae0b96907b30fa750e98a9c16d7b"
+    ],
+    ".claude/agents/council.md": [
+      "3158ff5d1dc09acd9777d968dec7b884ccc862461a1f1b07842c2b7e4b54209d",
+      "dfe4d259179b6ca2e919d41b81e175d674805a9583b8b4f49b0d551c33512f7c",
+      "d799c08653c536bae33b4fb9761b2701aab58d297e84be91b028dce1e6749274",
+      "9981b169e60b3e989c829ac8db172dcf9d65990c6c7824206dd6de9095e0e1b4",
+      "b26f4a7b685fea87bbeccd958d396a53e77db385d08717d84c07a43495a99fd3"
+    ],
+    ".claude/agents/ilos-master.md": [
+      "deb171757516556eb52ae00c2a99f747fb6c3da870547e7f598c0a18efba9ec8",
+      "dfecd36010f82736b7758f9c2faa6d0d232b88b10d7fa1cb6c16ef554af05847",
+      "dfe3a0963984fd64333634475eee66de7538ff96e262eb3edc44b5e94fc46bc2",
+      "d4b9a466581c57cc98c1eb5b6206f47c40d7fd6a658abe5eb0b39afb3f391dc5",
+      "b734755550703cd449072877a54968afb22bc7d210167087b3a205a632c26879"
+    ],
+    ".claude/agents/personal-context.md": [
+      "e7289bce6c88c9e21a1273dedce3bef1f557aab7340db10203f4ed4712dd56ac"
+    ],
+    ".claude/agents/reviewer.md": [
+      "ce353864d45cf2566792d31d8a643d41831d7ecbc340891e1a0a8229abc5cbbc"
+    ],
+    ".claude/agents/sage.md": [
+      "39a47cb64f13af4337afcbe64c4ab866353c8e3f983fc05595e6b64dbbc250b5"
+    ],
+    ".claude/agents/strategist.md": [
+      "6e2ac4a9f2e8f06b77781ed50e662454a83d2478a70fcaeb82e087c8a6d50e95"
+    ],
+    ".claude/agents/tana.md": [
+      "0b7298c2f1b9866f88b7922af443845511a548394768369f9e4725b58d7533d0",
+      "e9bbe33fa02c8fabb72545f33404b99d89684460408764a087029cbb50247b02",
+      "bb5fb1b23950cec343f4890855ffcd7726828c380b0fb46af73e7124b0d8398e",
+      "668b4aafe03c5d866977791c4a32fb26a52628c4154cd8478a613491968a98a7"
+    ],
+    ".claude/agents/visionary.md": [
+      "566531cb27289d71fbd9ae47eef89735c1dd0ceae54d9a4a985476ed6662fd1d"
+    ],
+    ".claude/commands/alignment/SKILL.md": [
+      "525e776f05cd25e6b5182c758cb0c33f0096c74cc8297560a88521a84480082a",
+      "c871448cea1f69f833b0a96034996b016904f1fa03befb319ead1ff7892ff95c",
+      "e393b83962b8f52f694939368886e23cc9874199481177beadee6d97cf9770e2"
+    ],
+    ".claude/commands/annual-review/SKILL.md": [
+      "e9158df25b3dbf73814db3d38ccfccc165b6be75e0b05b92a5198c00edb1c0d5",
+      "5a068ffca014020bfeb33c882f15383525205ea7d435409aebba02429a9c37bf",
+      "d44fc506aae2787513b81c675b04cf5d2f6795fddc1e418e29c1a542b0212c1c"
+    ],
+    ".claude/commands/architect/SKILL.md": [
+      "499181aae6cac59cc669b191a549206f205ad9ef1ac3d7431f77edb78b20a82e",
+      "ba0145055ee738ababa3b70153f0132f22f52caa8c5b961399d308eb84c1b6cf"
+    ],
+    ".claude/commands/area-review/SKILL.md": [
+      "6a14f9f73508abde914de9a9387f48417d938c44c87b1ddf8979650e3d11426a"
+    ],
+    ".claude/commands/build/SKILL.md": [
+      "7ab987a4f619879ebdc0fa3d5324c7dd0913b93bde2470b68a763b778974410b",
+      "480b34d7350fbcb33f1bd46317a54c6445f98febedde61f55906e5e0358d8375"
+    ],
+    ".claude/commands/context-update/SKILL.md": [
+      "84480e9cc771d2a73ddd87d587e35495c4f468df901e907aaa8b25ab1c112774"
+    ],
+    ".claude/commands/dashboard/SKILL.md": [
+      "8b70654d153e8ea38c8827da5d87ed0d678b8e12768ec08bccbc080555a0fb01",
+      "4e9879a25b695f6611475f7b59af517163b7c61be83c2eeb901772225948777a",
+      "a5265133041464aaaca7ea9a32216dabad64a61d0527a8ac059648a9f166b399",
+      "b8e275d91b6d43f724f9ac88bc76f430777c7ccd49ed29ecd1e821cbe64955a6",
+      "cf875c97279622b39f5de62f8ec7477b9abda061250a47f31b88fed45713d73e",
+      "7ef552bfb2bfed7b3cebc690acaa257c2be055474c07292ea1be475e14a508b2",
+      "646f456ea76baf9f62e4733238a02b689a685b6f7fd3444839b4a389ad9fd8cb",
+      "b29ff3272ac33aec3e50be640a1b0b52129f4e78acb24a83b9ea0c3249d01cc4"
+    ],
+    ".claude/commands/decision/SKILL.md": [
+      "d60cb228c8e8bfaf89f6ff279dbe844eba77f51dd55d5c4b5c7095f479eca798",
+      "dafbfc36b4af9c9ec80141ab163628e9428507b9279c3790dde82f20434f69f4"
+    ],
+    ".claude/commands/guide/SKILL.md": [
+      "59246a33b87cf57188b777cdaf480b7d730a6aad1e9294eca570d6301e57ffa4"
+    ],
+    ".claude/commands/help/SKILL.md": [
+      "b6be19f569f324679e9fe6ff58d96a7b6efd5e89980575cd5ee32a7764a3af13",
+      "f38b1a6e1736c6b53e4e645c567b1ea401affffbe38d98a667d59b0ffd4e5ef1",
+      "7569e7d87bfecbcb57e56fdf1743bf07d4c440399aaf8b8815e0a50b99b5edcc",
+      "97b6a0908540a55d7fe0745464e4e69f0448d3996ebbb65e071b2f9457cd54dc"
+    ],
+    ".claude/commands/monthly-review/SKILL.md": [
+      "5ba8eae46e60ab46b9d649018b892cd44b6d59a7b38f0c28677501e25a76cfb4",
+      "80107350bbfd430a2a220cb9ed7096e2c75f011b336f07a9860431303fedd8c7",
+      "625003706b1838e220db9a3268d0f2a2bf9dc128005c5cf271dc550305ff094e"
+    ],
+    ".claude/commands/morning/SKILL.md": [
+      "dd901871be40285fa88edc09419027415aabd07b936bc95c1f0b970e47a6dbb1",
+      "ade7fe59b9b41fb3019da09b89d15dcc48a0c63c3a768e47cbf070110edc0580",
+      "d9acd2c40df9ba48387881acef113e705e29ebebedf32c140472bbdc349f7750"
+    ],
+    ".claude/commands/north-star/SKILL.md": [
+      "8a033205478584397365ec755da94e5ce3830cfc2e76903f5ccf9d34804bdb9d",
+      "e141ebabfa920800bb99f113dce7eafac3923091e78ab084958038e3ef5d1e70"
+    ],
+    ".claude/commands/project-kickoff/SKILL.md": [
+      "8c31faeae6f984223b40947d6b770f654305266ce996c0a102efeb60148bbbfe"
+    ],
+    ".claude/commands/quarterly-review/SKILL.md": [
+      "89c35633b6bf9fb2010452b0daae4badac393c9a74d00638e0770f111cdc1c5e",
+      "ac27132b6d68d5c7e6da4572cb78017d3755d26083361b41402b46d335dc23ec",
+      "9a68b694fc26604609c65504919aeb0282bea4eb4c69b08ae1ab7799ae275942"
+    ],
+    ".claude/commands/sync-setup/SKILL.md": [
+      "39498cf0b257f90383e6bc6989f0caeaab18176eb46f5218367542684ab431c9",
+      "7f3f09ed28e9feebc6bfd9cd0787a400eef7ca5be5f495d750635d6ba5b42815"
+    ],
+    ".claude/commands/sync/SKILL.md": [
+      "d0cc65f0d5b21b67fe9397d32cf3dd177cd471af778e4d86a4ce7a19b8962d12",
+      "6ce877af9369f68020a6a72e8f1c0c141cfd8a75375ef984cba32c0522bf1c26"
+    ],
+    ".claude/commands/tana-schema-graph/SKILL.md": [
+      "4c570a758e31592b92175b511b28b46f382a287598ec03b32fdb99738ee19c24"
+    ],
+    ".claude/commands/tana-search-builder/SKILL.md": [
+      "a98138f8dc1ac9562f75036a53d659ba2a3e824feff0f478161009485eafd5d1"
+    ],
+    ".claude/commands/tana-understand/SKILL.md": [
+      "2efed3863c3c874e4cbf8740f6a575871123e0e41ab470fbcb6a73a746df567b",
+      "871e1b314a66904e414b5a7d152088d06c61000419ccf922cc0081d4fb49473c"
+    ],
+    ".claude/commands/tana/SKILL.md": [
+      "044b8361cc08b04076369b1a8d0e2232aa395e4e78cc887d3eaf3d894b713401",
+      "c702236bba3ef78481854dbf646dddf4a69299fe24728a3a2d6cb177726afaef"
+    ],
+    ".claude/commands/vision/SKILL.md": [
+      "2bdf974731860a4d7af58ffef62ea48afe5e45e8953d9ba4c3c227fd2b187489"
+    ],
+    ".claude/commands/weekly-review/SKILL.md": [
+      "cce5afd311d9ff8c8172b64bcd5a73add8ef29c7ce2d68c4f1bda433a4d46653",
+      "7d281f4a4960e3fb08d51c1c058bb4911282dc5c99eea596c704f99b169635ef",
+      "29b0f266055e56e4ffc4c5a3592e65d68e65c46bc330bd3a7218ab6adb6d8361",
+      "2514e91dd4ff56e47e7ed1a6ae9adb6072f622a3f31bcc1cf9d06b1aef0eef85"
+    ],
+    ".claude/commands/win/SKILL.md": [
+      "6f0f38a80b1e4b3af6bcfec95b93b2658278752f312cd570e445917c1741e0a9",
+      "cb84f1e34fc2576b84c3c58a1eefc1149e7743ce77608064a5fafa78621c8f03"
+    ],
+    ".gitignore": [
+      "93874b47595f52b61d61e8f301b0e6e6cc4dc587c0d4d308e3d893ffdc15e661"
+    ],
+    "CLAUDE.md": [
+      "2ca23aa5710827658efb674c3e424c7a3eb570e2845c708ceead427a95c91422",
+      "0f34d9909c218747af68d73dd13bd5b8d05ebe336dc89312cd28d03a32dd09e2",
+      "7f1774c40746ef2daf228f88596f444240c5e3462a28a9bb0575208706a05b39",
+      "46fbd7ebd5a8301d24f87a11413b9adbce136b5fe78d4a10bfd061c4a3b696ca",
+      "b34e4abdc57a0eb0d8fd70db40b76e5009ac8b0e53d7b851527a4bb77084538d",
+      "844c1595475a0d418f5960792441b606df359c7e0bf43f65ff3fc652bb278858",
+      "98bdcd46afa753d444795cbdcf82c31125e67e3f28f2b953466eaaa823929195",
+      "2b29c497be92b5645ba7ec2c2990250c7695380f6246e57759449c7dd7a6ee5a",
+      "9520cb6fec1844da36037ffd80ed700631aa26e55803085cc5345dbbab3cd757",
+      "9bf18f46363a7bc7921b39348b99a110f7110bcb6994b8efb551aca319426b80"
+    ],
+    "ILOS-KNOWLEDGE/INDEX.md": [
+      "2f3786d42acc278f2eb34b1589964901e91729b3408b4a7b9a22023a3e151b4b"
+    ],
+    "ILOS-KNOWLEDGE/MODULE.md": [
+      "a2a8f1a5de869891a2f6c65b2eff491bfb7dead4e9d51ae1220bbd5989a6d0f8"
+    ],
+    "ILOS-KNOWLEDGE/ilos-overview.md": [
+      "958f0a9d95bd3d296ee979835997c5dcc20914e8deaa0347ab3ec851fe786660",
+      "5eaabe794e316185e41b8791a46455d58cd0be8a83bed53bb600f0f3024e39f8"
+    ],
+    "ILOS-KNOWLEDGE/intellectual-foundations.md": [
+      "9877c89bff3e2306173d8150d86457763e4247c2b58d665bf6d46cc2ed89b9a1"
+    ],
+    "ILOS-KNOWLEDGE/intentional-planning-cycle.md": [
+      "a12f8a89691ec719324ad726ab473035672306195bd2d83207d6680b96ae4c76"
+    ],
+    "ILOS-KNOWLEDGE/lessons/module-4-ai-and-mcp.md": [
+      "b200259358d7b436009183db1779122bee3b2112c28addf4c7ba13a806c4cad9"
+    ],
+    "ILOS-KNOWLEDGE/quantum-space-time.md": [
+      "ac62aa99f3e8cd76c04c7507fda7ce3ee1f7b5a666fee98e12d432fed2e22586",
+      "d40b4becb730bb271795ec7e62bbb6b8aad96bc6e86b68b72294247333356cd0"
+    ],
+    "ILOS-KNOWLEDGE/schemas.md": [
+      "e3b08cc13c9329b84cb795043d51690337c2426bfbb7e53745ea3e695a5c58a2",
+      "0bcc4c0fe338dc931f7a1119b03c8e46678f9b3a7b849ecd564ef1fb9062dc39"
+    ],
+    "MODULE.md": [
+      "541f79696088c8f93429caedcaf27814156c21f0b6e5a59faacd72a8736c10ed",
+      "fb503e44d5efc00db4809b3e9b8d95909d835187bff1676d0e22d0b81698d219"
+    ],
+    "QUANTUM/MODULE.md": [
+      "072b3fb250e81f8db1f2610d08bf9dce96b62c76c7a82df6861a778710711fcb",
+      "b293bb673f4e65a9498b84217af1b4c8b51c5f585dae1a35086661d2e991e445"
+    ],
+    "QUANTUM/personal-context/README.md": [
+      "99904b3b3b5e9955252e287480bdabcdc80ccdb469818457b24f39fb7aa06351"
+    ],
+    "QUANTUM/self-knowledge/README.md": [
+      "f4828a7a24aa1cb333c3b6c38b8fabfd51c28850b5317c61b20b3e9f293f59d3"
+    ],
+    "README.md": [
+      "f3daa8096c2b8631d48aae56f0b418326ac809e0ae63b72690269706fa9b608c",
+      "83c8bcc9a3aab098e593ebf7d28c67da722ceb18f5f909271545223ea48472c2",
+      "73b4ebf2765ae5ffc3b028583238bb716b3ac6229419913721acf799b6b03697",
+      "ceb0012e865cfb19e939d626f14fdcea69d64166564412c8aedff1353a424188",
+      "85651cce53266dd7f2fafceec7fc1529432e9b69d417f74dc4038924226340e5"
+    ],
+    "ROUTING.md": [
+      "b092b5cd55402e730354d0a04f20cba87ab4d09c43ddef66414df9588af66bc7",
+      "8c307e406ae5d2adc3d575c627a02c0bd1b36c47619f0ef37f454c8e89014006",
+      "91d2773048eacf234ba8c1240ea5d7050f93093615ca992ad1405b6ccee5d3e5",
+      "f4d49d964ac258a25a0f8b399fa14c228848026dcde17385b6f019eede6376ea",
+      "9e6b9e2595420304fb4bc71daf678399bc5c5ad68942220c684ce4cd901d8a9b",
+      "7a3f6d5868e460289e20a78dd594a03bc143d43a902d333f3e7ca2a6fcdd32cd",
+      "6d844b20a62356d8f28d005c67bcc4dc6ab0d2fd9c2f193933d93165c41f3936"
+    ],
+    "SYSTEM/MODULE.md": [
+      "b6c299a4206612c213c7089f793e7ad0d3c45e478f401c7c102f0879804ce5cf",
+      "84e5f37fee8ddef0ab299ce4977e0fa8723e5fc8f1dcdaa174f084d8bb88e3ad"
+    ],
+    "SYSTEM/setup-guide.md": [
+      "67d1abda50c79c43b228bd3e34308715afe7e8387a98ece3741e4b6e4bdcc07a",
+      "2a4889c92128638c0bd5f1b0612a95d0f0b3a8549135a4785b48561f4eaf59cf",
+      "81c8ea79366143eac2959ee85d0407efb649772b6fdb5e62c8862fc037fd6fc7",
+      "949dc05e093304f2b332c04cb26b739040389fc632e8039b064a09c57d3e7d32"
+    ],
+    "SYSTEM/tana-reference/README.md": [
+      "2691ad146cdb7cc074f6129e43a8a23a08fc01241d33fae1e1dc60910a517f0c",
+      "3d8f4e42cc190d604041844df0a9de1e98c477eb850a44e4261fefd9d712404a",
+      "84f7ad2f636e0c7832e1ca900bb547771c746c9733a8dad97d01667dab7dcfef",
+      "528d932159f1e9b0e6ceef1574d88d68c5e1463d6a9b7a013090738fc11ecedc"
+    ],
+    "TIME/templates/self-knowledge-deep-dive.md": [
+      "31badd51f600df6900363fe0a0ce2b658cb9cf0a2928e75f0f023fc83c6e5274"
+    ],
+    "dashboard/README.md": [
+      "e3b903a2fca142218fcf3194e4f6f4e6543fd07667d3d1f4cdb17961a59d1201",
+      "37a5a7ce3afe77f09be1d68566b6a6c6cad750f1152b0db69956d349b8ce9848"
+    ],
+    "dashboard/lib/analytics.js": [
+      "e1927635a60b207720e4c735aa7bd11be49011df85df1eef34e50995c97ddd62",
+      "d62972e911bb147a67121b37041ce1fa49480e2f25e66266e29072eade7eb8f6",
+      "1ed0161f72a8887c09ac921b64827d211b6f93128c891293a0e9a32bf4e9f426"
+    ],
+    "dashboard/lib/parser.js": [
+      "1a848acf35941a6fc95096c97bb7f073ab29a9a78e5fadd45d5673b08c4194c2"
+    ],
+    "dashboard/public/app.js": [
+      "d7c4a19b09ee9dd1679488ff631d0a1fbeadc578aefda95b541c305ccba808d3",
+      "5b2e7b53b7c9559789ac11fc5c65d1c3fc365fb477d1d4d3a9e55d92717f28fb",
+      "c746251e79a41de97ddb3a5df3e475cd30ccfb446759366162e7859828207b82"
+    ],
+    "dashboard/public/style.css": [
+      "575cf9c028cb540c3eb020baf79559d7587ea3d7b5e9629b70a69cf2cf0de296"
+    ],
+    "dashboard/server.js": [
+      "aba38deb88a7ab8840412d4fa9d5a37b8dc9fecab1841a0af897f7f562cfc407"
+    ]
   }
 }

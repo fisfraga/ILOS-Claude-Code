@@ -37,6 +37,36 @@ test('without an old manifest every differing foundation file is treated as modi
   assert.deepStrictEqual(p.updateWithBackup, ['a.md']);
 });
 
+test('a pre-1.0 copy: files matching any earlier shipped version update cleanly, edited ones get a .bak', () => {
+  const newM = {
+    version: '1.0.0',
+    files: { 'a.md': { class: 'foundation', sha256: h('a2') }, 'b.md': { class: 'foundation', sha256: h('b2') } },
+    legacy: { 'a.md': [h('a0'), h('a1')], 'b.md': [h('b1')] },
+  };
+  const local = { 'a.md': h('a0'), 'b.md': h('my edit') };
+  const p = planUpdate({ oldManifest: null, newManifest: newM, localHash: (f) => local[f] || null });
+  assert.deepStrictEqual(p.update, ['a.md']);
+  assert.deepStrictEqual(p.updateWithBackup, ['b.md']);
+});
+
+test('legacy hashes are ignored once the copy has a release manifest', () => {
+  const oldM = rel('1.0.0', { 'a.md': { class: 'foundation', sha256: h('a1') } });
+  const newM = { version: '1.1.0', files: { 'a.md': { class: 'foundation', sha256: h('a2') } }, legacy: { 'a.md': [h('a0')] } };
+  const p = planUpdate({ oldManifest: oldM, newManifest: newM, localHash: () => h('a0') });
+  assert.deepStrictEqual(p.updateWithBackup, ['a.md']);
+});
+
+test('buildRelease keeps legacy hashes only for shipped foundation files', () => {
+  const m = buildRelease({
+    version: '1.0.0',
+    files: ['README.md', 'MEMORY/wins.jsonl'],
+    classify: (f) => ({ 'README.md': 'foundation', 'MEMORY/wins.jsonl': 'starter' })[f],
+    read: (f) => Buffer.from(f),
+    legacy: { 'README.md': [h('old readme'), h('README.md')], 'MEMORY/wins.jsonl': [h('x')], 'gone.md': [h('g')] },
+  });
+  assert.deepStrictEqual(m.legacy, { 'README.md': [h('old readme')] });
+});
+
 test('starter files are only added when missing, never overwritten', () => {
   const newM = rel('1.1.0', {
     'MEMORY/wins.jsonl': { class: 'starter', sha256: h('') },
