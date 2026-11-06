@@ -31,12 +31,12 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Self-knowledge exploration | QUANTUM/self-knowledge/ | Relevant framework files |
 | Personal context update | QUANTUM/personal-context/ | Specific context file |
 | Understanding ILOS methodology | ILOS-KNOWLEDGE/ | Start with ilos-overview.md |
-| Tana MCP setup | SYSTEM/ | setup-guide.md, tana-reference/ |
+| Tana MCP setup | SYSTEM/ | setup-guide.md, tana-ids.yaml |
 | Routines, habits, execution tracking | TIME/ | strategy-systems.yaml |
 | Area deep dive | SPACE/ + MEMORY/ | areas/[area].md, wins.jsonl, active-goals.yaml |
 | Project initiation | SPACE/ + TIME/ | projects/README.md, active-goals.yaml |
 | Major decision | TIME/ + MEMORY/ | templates/major-decision.md, decisions.jsonl |
-| Tana operations | SYSTEM/ | tana-reference/, relevant SPACE/ or TIME/ files |
+| Tana operations | SYSTEM/ | tana-ids.yaml, relevant SPACE/ or TIME/ files |
 | Sync with Tana / run sync | SYSTEM/ + skill | sync-config.yaml → `.claude/commands/sync/SKILL.md` |
 | Set up sync / configure sync mode | SYSTEM/ + skill | tana-reference/README.md → `.claude/commands/sync-setup/SKILL.md` |
 | Sync status / last synced | SYSTEM/ | sync-state.yaml |
@@ -83,7 +83,7 @@ Reference links between files:
 
 ## Tana MCP Integration (Optional)
 
-If Tana MCP is configured (see `SYSTEM/tana-reference/`):
+If Tana MCP is configured (see `SYSTEM/tana-ids.yaml`):
 - Skills can query Tana for live data (goals, wins, tasks)
 - Skills can write back to Tana (wins, goals, plans)
 - Local YAML/JSONL files serve as the canonical source; Tana is the sync target

@@ -14,9 +14,9 @@ User asks to understand, explore, document, or analyze a specific tag, workflow,
 
 ## Initial Setup Mode (Auto-Trigger)
 
-**Check `SYSTEM/tana-reference/tag-ids.md` before asking the user for a focus.**
+**Check `SYSTEM/tana-ids.yaml` before asking the user for a focus.**
 
-If the file exists but contains empty table cells (IDs not yet filled in), this is an **Initial Setup session**. Skip the focus question and proceed directly to full workspace exploration:
+If the file exists but its values are still empty (`""`), this is an **Initial Setup session**. Skip the focus question and proceed directly to full workspace exploration:
 
 1. `list_workspaces` → identify the primary workspace
 2. `list_tags` → get all tags (up to 200)
@@ -25,9 +25,16 @@ If the file exists but contains empty table cells (IDs not yet filled in), this 
 5. `get_tag_schema` (sequentially, one at a time) for all key tags: goal types, win, key area, day, week, month, task, context, voice review
 6. `get_or_create_calendar_node` for day, week, month, year → capture current calendar IDs
 
-Then populate all three reference files (`tag-ids.md`, `field-ids.md`, `structure-map.md`) and confirm to the user.
+Before exploring, if the old Markdown ID tables in `SYSTEM/tana-reference/` (`tag-ids.md`, `field-ids.md`, `structure-map.md`) hold IDs, run `node SYSTEM/tools/migrate-ids.js` (dry run), show the user the report, and on their yes run it with `--write`. That keeps their existing IDs; exploration then only fills what is still blank.
 
-**Do not ask "what part do you want to explore?" when the reference files are empty.** The answer is always "all of it."
+Then fill `SYSTEM/tana-ids.yaml`. Rules:
+- Write only blank (`""`) values, plus any value you discover that differs from a filled one after you tell the user and they confirm. Never blank a filled key, and never touch `SYSTEM/sync-config.yaml`'s `tana_node_overrides`.
+- Keys are the placeholder names the skills use (`WIN_TAG_ID`, `PERIODICITY_FIELD_ID`, `PERIODICITY_WEEK_OPTION_ID`, `WINS_CONTAINER_ID`, …). Get option IDs from `get_tag_schema` on the tag that owns the field (for example the `#win` tag's Periodicity options).
+- **Verify the workspace supports the skills, and record it under `capabilities`:** set `decision_supertag` to `true` if a `#decision` supertag exists, else `false`; set `win_area_field` to `true` if the `#win` tag has an Area field, else `false`. Then tell the user plainly what is missing and what that means, for example: "Your workspace has no #decision supertag, so decisions will stay in MEMORY/decisions.jsonl and /decision will skip the Tana step."
+- Leave a key blank if the workspace has no such item; do not guess.
+Confirm to the user which keys were filled, which stay blank, and the capabilities result.
+
+**Do not ask "what part do you want to explore?" when the ID file is empty.** The answer is always "all of it."
 
 ---
 
@@ -105,16 +112,10 @@ Present findings clearly in conversation:
 - Key fields and their purposes
 - How the system is meant to be used
 
-**For ILOS workspaces (when `SYSTEM/tana-reference/` exists):**
-After exploration, always update the three reference files rather than saving to a generic markdown file:
+**For ILOS workspaces (when `SYSTEM/tana-ids.yaml` exists):**
+After exploration, update `SYSTEM/tana-ids.yaml` as described in Initial Setup Mode (add a comment at the top with the workspace name and date), rather than saving to a generic markdown file.
 
-1. **`SYSTEM/tana-reference/tag-ids.md`** — populate all supertag IDs grouped by category (Vision, Goals, Review, Execution, Calendar, AI/System)
-2. **`SYSTEM/tana-reference/field-ids.md`** — populate all field IDs with types, and all option IDs for option fields
-3. **`SYSTEM/tana-reference/structure-map.md`** — populate workspace ID, home node ID, hub node IDs, key area node IDs, and current calendar nodes
-
-Add a comment at the top of each file with the workspace name and date updated.
-
-After updating, confirm to the user: "Reference files are now populated. All `/tana` operations will use these IDs automatically."
+After updating, confirm to the user: "SYSTEM/tana-ids.yaml is updated. All Tana skills read these IDs automatically."
 
 **For non-ILOS workspaces:**
 Offer to save documentation to a new markdown file in `SYSTEM/` or another appropriate location.

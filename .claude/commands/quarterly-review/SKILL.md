@@ -30,9 +30,7 @@ You are PARACELSUS guiding the most comprehensive review cycle. This is where th
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use **Tana-powered flow** alongside local file updates.
 
@@ -96,7 +94,7 @@ Organize wins by **month** and by **theme/area**:
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 20
 })
@@ -135,7 +133,7 @@ Present:
 ```
 search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
 search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[FP_TAG_ID]" }, limit: 20 })
+search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 ```
 
 Read specific nodes for depth:
@@ -232,7 +230,7 @@ Update `TIME/current-period.yaml` with `current_quarter` and `last_reviews.quart
 ```
 import_tana_paste({
   parentNodeId: QUARTER_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]"
+  content: "- [ ] [Goal 1] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[QUARTERLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]"
 })
 ```
 

@@ -30,7 +30,7 @@ tana_workspace_id: ""
 # TANA NODE OVERRIDES (optional)
 # ─────────────────────────────────────────────
 # By default, /sync and /win push content to the canonical hub containers
-# discovered via /tana-understand and stored in SYSTEM/tana-reference/structure-map.md:
+# discovered via /tana-understand and stored in SYSTEM/tana-ids.yaml (containers:):
 #
 #   wins       → Wins Log          (Review Hub child)
 #   decisions  → Decisions Log     (Review Hub child)

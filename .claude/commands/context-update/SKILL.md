@@ -39,8 +39,7 @@ If triggered after a review, use the conversation context. Otherwise, check for 
 **If Tana MCP is available:**
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 ```
 search_nodes({

@@ -24,9 +24,9 @@ You are HERMES guiding the user through sync configuration. This is a one-time s
 
 ### 1A: Is Tana reference data available?
 
-Check `SYSTEM/tana-reference/tag-ids.md` and `SYSTEM/tana-reference/structure-map.md`.
+Check `SYSTEM/tana-ids.yaml`.
 
-**If the files are empty or still contain placeholder text:**
+**If all its values are empty:**
 
 > "⚠️ Tana reference IDs haven't been populated yet. You can configure your sync preferences now, but actual syncing will require running `/tana-understand` first to map your workspace.
 >
@@ -155,7 +155,7 @@ partial_sync:
 
 **For partial sync:** Same structure but with `sync_mode: partial` and the user's custom partial_sync settings.
 
-Also fill `entities.areas.tana_node_ids` in `SYSTEM/sync-state.yaml` from `SYSTEM/tana-reference/structure-map.md` (if area node IDs are documented there). Edit only that key in place. If the file already exists, never rewrite or reset the other keys: `entities.wins` and `entities.decisions` hold the `tana_node_ids` dedup maps, and losing them makes the next `/sync` push everything again.
+If `SYSTEM/sync-state.yaml` already exists, never rewrite or reset its keys: `entities.wins` and `entities.decisions` hold the `tana_node_ids` dedup maps, and losing them makes the next `/sync` push everything again.
 
 Confirm:
 > "✅ Sync configuration saved to SYSTEM/sync-config.yaml

@@ -86,7 +86,7 @@ Present what was built and ask for feedback. Refine as needed.
 
 Append a win to `MEMORY/wins.jsonl`:
 ```jsonl
-{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "title": "Built [what was created]", "area": "creative", "connected_goal": null, "source": "architect", "tags": ["system", "build"]}
+{"id": "win_YYYYMMDD_HHMMSS", "date": "YYYY-MM-DD", "description": "Built [what was created]", "area": "creative", "scale": "week", "emotional_weight": 5, "connected_goal": null, "tags": ["system", "build", "architect"]}
 ```
 
 ---

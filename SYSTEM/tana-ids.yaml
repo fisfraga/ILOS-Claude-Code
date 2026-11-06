@@ -1,0 +1,105 @@
+_schema: ilos_tana_ids
+_version: "1.0"
+_description: >
+  Every Tana ID the ILOS skills use, in one place. Skills write placeholders such as
+  [WIN_TAG_ID]; each placeholder is a key in this file. Run /tana-understand to fill it
+  in for your workspace (one time). Existing users: node SYSTEM/tools/migrate-ids.js
+  copies your old tag-ids.md / field-ids.md / structure-map.md values here.
+  An empty "" means unknown: the skills then skip that Tana step and keep the item
+  locally until /sync can push it. Your own tana_node_overrides in sync-config.yaml
+  always win over the container IDs below.
+
+workspace:
+  WORKSPACE_ID: ""
+  HOME_NODE_ID: ""
+
+hubs:
+  VISION_HUB_ID: ""
+  LIFE_OVERVIEW_HUB_ID: ""
+  PLANNING_HUB_ID: ""
+  PERSONAL_CONTEXT_HUB_ID: ""
+
+# Push targets. [WINS_CONTAINER_ID_RESOLVED] = the sync-config.yaml override if set, else this value.
+containers:
+  WINS_CONTAINER_ID: ""
+  DECISIONS_CONTAINER_ID: ""
+  GOALS_CONTAINER_ID: ""
+  PROJECTS_CONTAINER_ID: ""
+  TOPICS_CONTAINER_ID: ""
+  VISION_FP_CONTAINER_ID: ""
+  VISION_MTP_CONTAINER_ID: ""
+  VISION_HHG_CONTAINER_ID: ""
+
+tags:
+  WIN_TAG_ID: ""
+  DECISION_TAG_ID: ""
+  ANNUAL_GOAL_TAG_ID: ""
+  QUARTERLY_GOAL_TAG_ID: ""
+  MONTHLY_GOAL_TAG_ID: ""
+  WEEKLY_GOAL_TAG_ID: ""
+  DAILY_GOAL_TAG_ID: ""
+  PROJECT_TAG_ID: ""
+  TOPIC_TAG_ID: ""
+  KEY_AREA_TAG_ID: ""
+  FAVORITE_PROBLEM_TAG_ID: ""
+  MTP_TAG_ID: ""
+  HHG_TAG_ID: ""
+  SYSTEM_TAG_ID: ""
+  NOTE_TAG_ID: ""
+  CONTEXT_TAG_ID: ""
+  TASK_TAG_ID: ""
+  VOICE_REVIEW_TAG_ID: ""
+  VOICE_PLAN_TAG_ID: ""
+
+fields:
+  GOAL_STATUS_FIELD_ID: ""
+  PROJECT_STATUS_FIELD_ID: ""
+  DECISION_STATUS_FIELD_ID: ""
+  PERIODICITY_FIELD_ID: ""
+  AREA_FIELD_ID: ""
+  DESIRED_OUTCOME_FIELD_ID: ""
+  CONTEXT_FIELD_ID: ""
+  CONFIDENCE_FIELD_ID: ""
+  REVIEW_DATE_FIELD_ID: ""
+  MTP_FIELD_ID: ""
+  FP_FIELD_ID: ""
+  ACTIVE_PROBLEM_FIELD_ID: ""
+
+options:
+  GOAL_ACTIVE_OPTION_ID: ""
+  GOAL_COMPLETED_OPTION_ID: ""
+  GOAL_BACKLOG_OPTION_ID: ""
+  GOAL_ABANDONED_OPTION_ID: ""
+  PROJECT_ACTIVE_OPTION_ID: ""
+  PROJECT_COMPLETED_OPTION_ID: ""
+  PROJECT_BACKLOG_OPTION_ID: ""
+  PROJECT_ABANDONED_OPTION_ID: ""
+  DECISION_OPEN_OPTION_ID: ""
+  DECISION_DECIDED_OPTION_ID: ""
+  DECISION_SET_ASIDE_OPTION_ID: ""
+  PERIODICITY_DAY_OPTION_ID: ""
+  PERIODICITY_WEEK_OPTION_ID: ""
+  PERIODICITY_MONTH_OPTION_ID: ""
+  PERIODICITY_QUARTER_OPTION_ID: ""
+  PERIODICITY_YEAR_OPTION_ID: ""
+
+# Node IDs of your 12 Key Areas. A skill's [AREA_NODE_ID] means the entry for the win/goal's area slug.
+areas:
+  health: ""
+  finances: ""
+  intellectual: ""
+  home: ""
+  creative: ""
+  routines: ""
+  love: ""
+  emotional: ""
+  vision: ""
+  career: ""
+  social: ""
+  spiritual: ""
+
+# Written by /tana-understand after it inspects your workspace. "unknown" until then.
+# false = your workspace lacks it, so the skills that need it skip their Tana step.
+capabilities:
+  decision_supertag: unknown
+  win_area_field: unknown

@@ -45,11 +45,12 @@ Append-only log of wins, achievements, and positive outcomes.
 {
   "id": "win_YYYYMMDD_HHMMSS",
   "date": "YYYY-MM-DD",
-  "title": "Short win title",
+  "description": "What was accomplished",
   "area": "career",
+  "scale": "week",
+  "emotional_weight": 8,
   "connected_goal": "Goal description or null",
-  "source": "review | conversation | capture",
-  "tags": ["shipping", "consistency"]
+  "tags": ["manual", "shipping"]
 }
 ```
 
@@ -57,11 +58,14 @@ Append-only log of wins, achievements, and positive outcomes.
 |-------|------|----------|-------------|
 | `id` | string | Yes | Unique ID: `win_YYYYMMDD_HHMMSS` |
 | `date` | string | Yes | ISO date: `YYYY-MM-DD` |
-| `title` | string | Yes | Short description of the win |
-| `area` | string | Yes | One of the 12 area slugs |
+| `description` | string | Yes | What was accomplished, in the user's words |
+| `area` | string/null | No | One of the 12 area slugs |
+| `scale` | string | Yes | `week` (default), `month`, `quarter` or `year`; matches the Tana Periodicity |
+| `emotional_weight` | number | Yes | 1-10, how much it meant (default 5) |
 | `connected_goal` | string/null | No | Related goal text or null |
-| `source` | string | No | How the win was captured |
-| `tags` | string[] | No | Freeform tags for pattern recognition |
+| `tags` | string[] | Yes | Origin and themes. Origins: `manual`, `build`, `architect`, `review` |
+
+Entries written before 2026-10 may use `title` instead of `description` and `source` instead of a tag. Readers use `description` and fall back to `title`; never rewrite old entries.
 
 ---
 

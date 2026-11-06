@@ -25,9 +25,7 @@ You are PARACELSUS facilitating a major decision. This is ATHENA-led (Air) — s
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use Tana queries alongside local file updates.
 
@@ -51,7 +49,7 @@ Read `MEMORY/decisions.jsonl` and filter for entries where `status` is `"open"` 
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 10
 })
@@ -129,13 +127,13 @@ Area slugs: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`
 
 **If Tana MCP is available:**
 
-1. Read `SYSTEM/tana-reference/tag-ids.md`, `SYSTEM/tana-reference/field-ids.md`, `SYSTEM/tana-reference/structure-map.md` and `SYSTEM/sync-config.yaml`.
-2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise **Decisions Log** in `structure-map.md`. Never push decisions to today's calendar node. If the container, the decision tag ID, the status field ID or the option ID is empty, skip this step and leave the decision unrecorded (empty ID guard: `/sync` pushes it once the IDs exist) and tell the user which ID is missing.
-3. Push it (one sequential call). Use `[OPEN_OPTION_ID]` for an open decision and `[DECIDED_OPTION_ID]` for a decided one:
+1. Read `SYSTEM/tana-ids.yaml` and `SYSTEM/sync-config.yaml`.
+2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise `DECISIONS_CONTAINER_ID` in `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue. Never push decisions to today's calendar node. If the container, the decision tag ID, the status field ID or the option ID is empty, skip this step and leave the decision unrecorded (empty ID guard: `/sync` pushes it once the IDs exist) and tell the user which ID is missing.
+3. Push it (one sequential call). Use `[DECISION_OPEN_OPTION_ID]` for an open decision and `[DECISION_DECIDED_OPTION_ID]` for a decided one:
 ```
 import_tana_paste({
   parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
-  content: "- [Decision description] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[OPEN_OPTION_ID]]]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
+  content: "- [Decision description] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
 })
 ```
 4. Record the push in `SYSTEM/sync-state.yaml`: add `entities.decisions.tana_node_ids.<decision_id>: <returned node id>` (create the map first if the file predates this contract) and set `entities.decisions.last_push` and `entities.decisions.last_pushed_decision_id`. Without this record the next `/sync` pushes the decision again, and a later open-to-decided change cannot update the Tana node.

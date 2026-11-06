@@ -43,6 +43,7 @@ starter:
   - TIME/**
   - SYSTEM/sync-config.yaml
   - SYSTEM/sync-state.yaml
+  - SYSTEM/tana-ids.yaml
   - SYSTEM/tana-reference/**
 
 user:

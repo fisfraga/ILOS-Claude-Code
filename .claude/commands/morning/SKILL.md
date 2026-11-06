@@ -27,9 +27,7 @@ Read ROUTING.md for module locations, then load:
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files for IDs:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Then proceed with **Tana-powered flow** (Steps 1T-6T below).
 
@@ -69,7 +67,7 @@ search_nodes({
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 5
 })
@@ -96,7 +94,7 @@ search_nodes({
 search_nodes({
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
-    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[DAILY_OPTION_ID]" } }
+    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_DAY_OPTION_ID]" } }
   ]},
   limit: 20
 })

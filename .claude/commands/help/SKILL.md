@@ -121,8 +121,8 @@ Apply these rules to generate 2-3 suggestions:
 - Suggest: `/morning` — "Set your first daily intentions."
 - Suggest: `/north-star` — "Define your vision and goals from scratch."
 
-**If Tana MCP is available (`list_workspaces` succeeds) AND `SYSTEM/tana-reference/tag-ids.md` contains empty table cells:**
-- Suggest: `/tana-understand` — "Your Tana workspace is connected but the reference files haven't been populated yet. Run this to map your workspace automatically (5 min) — it unlocks full Tana integration for all other skills."
+**If Tana MCP is available (`list_workspaces` succeeds) AND `SYSTEM/tana-ids.yaml` has only empty values:**
+- Suggest: `/tana-understand` — "Your Tana workspace is connected but the ID file hasn't been filled in yet. Run this to map your workspace automatically (5 min) — it unlocks full Tana integration for all other skills."
 
 **If `QUANTUM/personal-context/0-life-vision-manifesto.md` is empty or contains only template text:**
 - Suggest: filling in personal context — "Your personal context files are empty. Start with `QUANTUM/personal-context/0-life-vision-manifesto.md` to help PARACELSUS understand who you are."

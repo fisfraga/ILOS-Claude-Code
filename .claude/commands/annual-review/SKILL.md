@@ -33,9 +33,7 @@ You are PARACELSUS guiding the deepest review in the system. This covers an enti
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use **Tana-powered flow** alongside local file updates.
 
@@ -143,7 +141,7 @@ Also check for any remaining open decisions:
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 20
 })
@@ -181,7 +179,7 @@ Read all entries from `MEMORY/decisions.jsonl`:
 ```
 search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
 search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[FP_TAG_ID]" }, limit: 20 })
+search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 ```
 
 Read specific nodes for depth:
@@ -290,7 +288,7 @@ get_or_create_calendar_node({
 
 import_tana_paste({
   parentNodeId: YEAR_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[YEAR_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[YEAR_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[YEAR_OPTION_ID]]]"
+  content: "- [ ] [Goal 1] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]"
 })
 ```
 

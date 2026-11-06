@@ -29,9 +29,7 @@ You are PARACELSUS guiding a monthly review. Same structure as weekly but at a h
 ### If Tana MCP is available (test with `list_workspaces`):
 
 Read Tana reference files:
-!`cat SYSTEM/tana-reference/tag-ids.md`
-!`cat SYSTEM/tana-reference/field-ids.md`
-!`cat SYSTEM/tana-reference/structure-map.md`
+!`cat SYSTEM/tana-ids.yaml`
 
 Use **Tana-powered flow** alongside local file updates.
 
@@ -111,7 +109,7 @@ Read `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from th
 search_nodes({
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
-    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[OPEN_OPTION_ID]" } }
+    { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
   ]},
   limit: 15
 })
@@ -188,7 +186,7 @@ search_nodes({ query: { and: [
 search_nodes({
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
-    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[MONTHLY_OPTION_ID]" } }
+    { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_MONTH_OPTION_ID]" } }
   ]},
   limit: 20
 })
@@ -226,7 +224,7 @@ Update `TIME/current-period.yaml` with `current_month` and `last_reviews.monthly
 ```
 import_tana_paste({
   parentNodeId: NEXT_MONTH_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[ACTIVE_OPTION_ID]]]"
+  content: "- [ ] [Goal 1] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]"
 })
 ```
 
