@@ -35,7 +35,7 @@
     },
     ".claude/agents/tana.md": {
       "class": "foundation",
-      "sha256": "3e376c6a32b450cd4f19914b526a742730804647d8d6d3320146fcf646a1bcfa"
+      "sha256": "6ce40b151ddf60dc27e8485514a1c802ccb5f02ff32c633b755f8bd54245e6e5"
     },
     ".claude/agents/visionary.md": {
       "class": "foundation",
@@ -71,7 +71,7 @@
     },
     ".claude/commands/decision/SKILL.md": {
       "class": "foundation",
-      "sha256": "a0be0fbe01c6b384cd83d493752c4bcdb6a1dbf2dc1dc4c3a89972be320b0bba"
+      "sha256": "246528634c3c086383c2a94ea8dcc441ce52e9ac09abb873fc3f09ae233ef39b"
     },
     ".claude/commands/guide/SKILL.md": {
       "class": "foundation",
@@ -115,7 +115,7 @@
     },
     ".claude/commands/sync/SKILL.md": {
       "class": "foundation",
-      "sha256": "7e356176dfdacf1ad44f8d1ed27de2b5e86eac402c83856569e916ceccd51fdf"
+      "sha256": "cfbb923e5dbf4bf4a3ec037d440c899b918ec81da0a3d29385e08f3b946f33f9"
     },
     ".claude/commands/tana-schema-graph/SKILL.md": {
       "class": "foundation",
@@ -487,7 +487,7 @@
     },
     "SYSTEM/tana-write-contract.md": {
       "class": "foundation",
-      "sha256": "ec87a655c15603176d60edf22260a8dd6aeb46da4272b8bae88ee6b2b499aed4"
+      "sha256": "97ba28de06377ae3353a45480eb4542011c456f89f459b996c8cf0fa4b40bc43"
     },
     "SYSTEM/tools/check-manifest.js": {
       "class": "foundation",

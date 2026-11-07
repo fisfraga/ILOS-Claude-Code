@@ -444,16 +444,7 @@ Store returned node ID in sync-state.yaml.
 4. If the push list is empty, report "Wins already in sync" and skip this block. If it has more than 10 wins, show the count and ask the user to confirm before pushing.
 5. Push each win in the list, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `win` (target, the IDs it needs and the empty-ID guard, Periodicity, and recording each push in `entities.wins.tana_node_ids` right after it succeeds). Wins created by `/win` or `/build` are already in the map, so step 3 never lists them.
 
-**Empty ID guard (decisions):** if the decisions container, the decision tag ID, the status field ID or the Open option ID is empty, skip the push, leave the decision unrecorded so a later `/sync` pushes it once the IDs exist, and say which ID is missing.
-
-**Unsynced decisions** (new open decisions not yet in Tana — use the same dedup pattern as wins, filtering `MEMORY/decisions.jsonl` against `entities.decisions.tana_node_ids`):
-```
-import_tana_paste({
-  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - Context:: [context text]\n  - Reasoning:: [reasoning]"
-})
-```
-After each push, add the returned node ID to `entities.decisions.tana_node_ids.<decision_id>`.
+**Unsynced decisions:** every decision in `MEMORY/decisions.jsonl` whose `id` is not in `entities.decisions.tana_node_ids` (partial sync: only `status: "open"`). Push each one, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `decision`. Decisions already in the map whose local status changed get the contract's **Status change** instead.
 
 ### 4C — Update goal statuses in Tana (bidirectional)
 

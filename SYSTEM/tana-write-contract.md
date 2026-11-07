@@ -39,3 +39,39 @@ Drop the Area line when the capability rule above says so.
 **Record:** add `entities.wins.tana_node_ids.<win_id>: <returned node ID>`; set `entities.wins.last_push` to the current ISO timestamp. Set `entities.wins.last_pushed_win_id` to this win's ID **only if it sorts later than the current value** (pushing an older win must not move it backwards; it is a report, not the dedup).
 
 **Never:** a calendar node as the target; a win pushed without its map entry recorded.
+
+## Recipe: `decision`
+**Writers:** `.claude/commands/decision/SKILL.md`, `.claude/commands/sync/SKILL.md`, `.claude/agents/tana.md`
+
+**Local record:** one line in `MEMORY/decisions.jsonl` (`id`, `date`, `decision`, `status`, `context`, `alternatives_considered`, `reasoning`, `outcome`, `outcome_date`, `review_date`, `confidence`, `area`, `tags`).
+
+**Target:** `[DECISIONS_CONTAINER_ID_RESOLVED]` — `tana_node_overrides.decisions_container_id` if non-empty, else `DECISIONS_CONTAINER_ID`.
+
+**Needs:** the resolved decisions container, `DECISION_TAG_ID`, `DECISION_STATUS_FIELD_ID`, and the option for the decision's status (`DECISION_OPEN_OPTION_ID`, `DECISION_DECIDED_OPTION_ID` or `DECISION_SET_ASIDE_OPTION_ID`). If any is empty, the empty-ID guard applies: skip the push and leave the decision unrecorded.
+
+**Capabilities:** `capabilities.decision_supertag` must be `true`. When it is `false` (the workspace has no `#decision` tag) or still `unknown` with `DECISION_TAG_ID` blank, decisions stay in `MEMORY/decisions.jsonl`: say so once ("your workspace has no #decision tag, so decisions stay local") and continue.
+
+**Dedup:** `entities.decisions.tana_node_ids` (create it empty if missing). A decision already listed is never pushed again; change its status instead (below).
+
+**Push** (one call per decision; use the option that matches `status`):
+```
+import_tana_paste({
+  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
+  content: "- [Decision] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
+})
+```
+Leave out each of the last four lines when its field ID (or, for Area, `areas.<slug>`) is empty or the decision has no value for it.
+
+**Record:** add `entities.decisions.tana_node_ids.<decision_id>: <returned node ID>`; set `entities.decisions.last_push`. Set `entities.decisions.last_pushed_decision_id` only if this ID sorts later than the current value.
+
+**Status change** (a decision already in the map moves to decided or set aside):
+```
+set_field_option({
+  nodeId: "[TANA_DECISION_NODE_ID]",
+  attributeId: "[DECISION_STATUS_FIELD_ID]",
+  optionId: "[DECISION_DECIDED_OPTION_ID | DECISION_SET_ASIDE_OPTION_ID]"
+})
+```
+`[TANA_DECISION_NODE_ID]` is the decision's entry in `entities.decisions.tana_node_ids`. If it has no entry, it never reached Tana: push it once (above) with its current status. Never create a second node for a decision that has one.
+
+**Never:** a calendar node as the target; a decision pushed without its map entry recorded.

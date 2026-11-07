@@ -44,7 +44,7 @@ Before starting a new decision, check if there are already open decisions that m
 **Local path:**
 Read `MEMORY/decisions.jsonl` and filter for entries where `status` is `"open"` or where `outcome` is `null` and no `status` field exists (legacy entries).
 
-**Tana path (if available):**
+**Tana path (if available):** skip it when `DECISION_TAG_ID` in `SYSTEM/tana-ids.yaml` is blank or `capabilities.decision_supertag` is `false` — then the local file is the only source. Otherwise:
 ```
 search_nodes({
   query: { and: [
@@ -127,16 +127,7 @@ Area slugs: `health`, `finances`, `intellectual`, `home`, `creative`, `routines`
 
 **If Tana MCP is available:**
 
-1. Read `SYSTEM/tana-ids.yaml` and `SYSTEM/sync-config.yaml`.
-2. Resolve the decisions container: `tana_node_overrides.decisions_container_id` in `sync-config.yaml` if non-empty, otherwise `DECISIONS_CONTAINER_ID` in `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue. Never push decisions to today's calendar node. If the container, the decision tag ID, the status field ID or the option ID is empty, skip this step and leave the decision unrecorded (empty ID guard: `/sync` pushes it once the IDs exist) and tell the user which ID is missing.
-3. Push it (one sequential call). Use `[DECISION_OPEN_OPTION_ID]` for an open decision and `[DECISION_DECIDED_OPTION_ID]` for a decided one:
-```
-import_tana_paste({
-  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
-  content: "- [Decision description] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - [[^[CONTEXT_FIELD_ID]]]:: [Context]\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]\n  - [[^[CONFIDENCE_FIELD_ID]]]:: [1-10]\n  - [[^[REVIEW_DATE_FIELD_ID]]]:: [YYYY-MM-DD]"
-})
-```
-4. Record the push in `SYSTEM/sync-state.yaml`: add `entities.decisions.tana_node_ids.<decision_id>: <returned node id>` (create the map first if the file predates this contract) and set `entities.decisions.last_push` and `entities.decisions.last_pushed_decision_id`. Without this record the next `/sync` pushes the decision again, and a later open-to-decided change cannot update the Tana node.
+Read `SYSTEM/tana-write-contract.md` and follow the contract for `decision`: it checks that your workspace has a `#decision` tag and the IDs the push needs (otherwise the decision stays local and you say so once), pushes it with the option that matches its status, and records it in `SYSTEM/sync-state.yaml` so `/sync` never pushes it twice and a later status change updates the same node.
 
 ### Step 8 — Set Review Date and Close
 
@@ -164,7 +155,7 @@ When an open decision is being resolved (user came back to it):
    - `reasoning`: Updated with final reasoning
    - `confidence`: Set if now decided
    - `review_date`: Set for outcome follow-up
-6. Sync the new status to Tana if available: look the decision up in `entities.decisions.tana_node_ids` and, if it has a node ID, call `set_field_option` on that node (`[DECISION_STATUS_FIELD_ID]` with the Decided or Set Aside option ID). If it has no node ID (it never reached Tana), push it once with the current status as in Step 7 and record the node ID. Never create a second node for a decision that already has one.
+6. Sync the new status to Tana if available: follow the contract for `decision`, **Status change** (`SYSTEM/tana-write-contract.md`). It updates the existing node, or pushes the decision once if it never reached Tana.
 
 **Set Aside** is a valid resolution — it means the decision is no longer relevant or has been superseded:
 > "Setting this aside is a decision in itself. Not every open question needs resolution — some resolve themselves."

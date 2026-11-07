@@ -147,31 +147,9 @@ For partial sync: update only the metadata section (title, status, description),
 
 Push only wins not yet in `entities.wins.tana_node_ids` (build the list as `/sync` Phase 4B "Unsynced wins" does; never by a cursor). For each one, read `SYSTEM/tana-write-contract.md` and follow the contract for `win`.
 
-**Empty ID guard:** if the wins or decisions container, the tag ID or a required field ID resolves to empty, skip that push, leave the item unrecorded so `/sync` pushes it later, and say which ID is missing. Never fall back to a calendar node.
-
-**CRITICAL:** Periodicity is `Week` or higher. NEVER `Day`.
-
 #### Decisions (Local → Tana)
 
-Follow the same dedup contract. For full sync: push all decisions not yet recorded. For partial sync: push only decisions with `status: "open"`.
-
-1. Read `entities.decisions.tana_node_ids` from `SYSTEM/sync-state.yaml` (treat a missing map as empty) and push only decisions whose `id` is not a key, one sequential call each, to the decisions container: `tana_node_overrides.decisions_container_id` if non-empty, otherwise `DECISIONS_CONTAINER_ID` in `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue. The push:
-```
-import_tana_paste({
-  parentNodeId: "[DECISIONS_CONTAINER_ID_RESOLVED]",
-  content: "- [decision title] #[[^[DECISION_TAG_ID]]]\n  - [[^[DECISION_STATUS_FIELD_ID]]]:: [[^[DECISION_OPEN_OPTION_ID]]]\n  - Context:: [context]\n  - Reasoning:: [reasoning]"
-})
-```
-2. After each push, record `entities.decisions.tana_node_ids.<decision_id>: <returned node id>` and update `last_push` and `last_pushed_decision_id`.
-
-For status updates on decisions already in Tana (decided/set-aside), look the node up in `entities.decisions.tana_node_ids`:
-```
-set_field_option({
-  nodeId: "[TANA_DECISION_NODE_ID]",
-  attributeId: "[DECISION_STATUS_FIELD_ID]",
-  optionId: "[DECISION_DECIDED_OPTION_ID | DECISION_SET_ASIDE_OPTION_ID]"
-})
-```
+For full sync: push every decision not yet in `entities.decisions.tana_node_ids`; for partial sync, only `status: "open"`. For each one, and for status changes on decisions already in Tana, read `SYSTEM/tana-write-contract.md` and follow the contract for `decision`.
 
 #### Vision (Tana → Local, with local push for new items)
 
