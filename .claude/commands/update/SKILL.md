@@ -82,6 +82,7 @@ Report key names and counts only — never print IDs.
 - List any `.bak` files created so the user can carry their edits over to `CLAUDE.local.md` or `dashboard/extensions/` — the supported places for personal changes.
 - Remove the temporary folder: `rm -rf "$RELEASE_DIR"` (only the folder created in Step 2).
 - Tell the user the update is recorded in `SYSTEM/update-log.md`.
+- If any skill or agent file changed, tell the user to start Claude again in this folder: a skill already used in this conversation can keep running its old text until then.
 
 ---
 
