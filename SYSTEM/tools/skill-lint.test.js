@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { lintText, lintSyncState, lintRepo, idKeys } = require('./skill-lint');
+const { lintText, lintSyncState, lintRepo, idKeys, parseContract, CONTRACT_PATH } = require('./skill-lint');
 
 const F = '```';
 const fence = (body) => `${F}\n${body}\n${F}`;
@@ -264,4 +264,80 @@ test('a skill naming an MCP server or tool prefix is flagged', () => {
   assert.ok(rules(lintText('s.md', 'configured in Claude Code settings (mcp__tana-local).')).includes('hardcoded-mcp-server'));
   assert.ok(rules(lintText('s.md', 'call mcp__tana__list_workspaces')).includes('hardcoded-mcp-server'));
   assert.deepStrictEqual(lintText('s.md', 'Check that your Tana MCP server is connected.'), []);
+});
+
+// ---- 1.1: one Tana write contract ----
+
+const CONTRACT = '## Recipe: `win`\n**Writers:** `.claude/commands/win/SKILL.md`, `.claude/agents/tana.md`\n\n## Recipe: `decision`\n**Writers:** `.claude/commands/decision/SKILL.md`\n';
+
+test('parseContract maps each recipe to its writers', () => {
+  assert.deepStrictEqual(parseContract(CONTRACT), {
+    win: ['.claude/commands/win/SKILL.md', '.claude/agents/tana.md'],
+    decision: ['.claude/commands/decision/SKILL.md'],
+  });
+});
+
+test('a push template for a contract entity outside the contract is flagged', () => {
+  const vs = lintText('.claude/commands/win/SKILL.md', GOOD_WIN_FILE, { contract: parseContract(CONTRACT) });
+  assert.ok(rules(vs).includes('restated-push-template'));
+});
+
+test('the same push template inside the contract is allowed', () => {
+  const vs = lintText(CONTRACT_PATH, GOOD_WIN_FILE, { contract: parseContract(CONTRACT), isContract: true });
+  assert.ok(!rules(vs).includes('restated-push-template'));
+});
+
+test('an entity with no recipe yet is not protected', () => {
+  const goal = fence('import_tana_paste({\n  parentNodeId: NEXT_WEEK_NODE_ID,\n  content: "- [ ] g #[[^[WEEKLY_GOAL_TAG_ID]]]"\n})');
+  assert.deepStrictEqual(lintText('weekly.md', goal, { contract: parseContract(CONTRACT) }), []);
+});
+
+test('a goal push template is protected once the goal recipe exists', () => {
+  const goal = fence('import_tana_paste({\n  parentNodeId: NEXT_WEEK_NODE_ID,\n  content: "- [ ] g #[[^[WEEKLY_GOAL_TAG_ID]]]"\n})');
+  const c = parseContract(CONTRACT + '\n## Recipe: `goal`\n**Writers:** `weekly.md`\n');
+  assert.ok(rules(lintText('weekly.md', goal, { contract: c })).includes('restated-push-template'));
+});
+
+test('citing a contract entity that has no recipe, or from an unlisted file, is flagged', () => {
+  const c = { contract: parseContract(CONTRACT) };
+  assert.ok(rules(lintText('.claude/commands/win/SKILL.md', 'follow the contract for `topic` in SYSTEM/tana-write-contract.md', c)).includes('unlisted-contract-ref'));
+  assert.ok(rules(lintText('.claude/commands/sync/SKILL.md', 'follow the contract for `win` in SYSTEM/tana-write-contract.md', c)).includes('unlisted-contract-ref'));
+  assert.deepStrictEqual(lintText('.claude/commands/win/SKILL.md', 'Read SYSTEM/tana-write-contract.md and follow the contract for `win`.', c), []);
+});
+
+function contractRepo(contract, files) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ilos-lint-contract-'));
+  fs.mkdirSync(path.join(root, 'SYSTEM'), { recursive: true });
+  fs.writeFileSync(path.join(root, CONTRACT_PATH), contract);
+  for (const [rel, text] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
+    fs.writeFileSync(path.join(root, rel), text);
+  }
+  return root;
+}
+
+const CITES_WIN = 'Read SYSTEM/tana-write-contract.md and follow the contract for `win`.\n';
+const ONE_WRITER = '## Recipe: `win`\n**Writers:** `.claude/commands/win/SKILL.md`\n';
+
+test('a listed writer that does not cite the contract is flagged', () => {
+  const root = contractRepo(ONE_WRITER, { '.claude/commands/win/SKILL.md': 'Push the win.\n' });
+  assert.ok(rules(lintRepo(root)).includes('writer-missing-contract-ref'));
+});
+
+test('a listed writer that cites the contract is clean', () => {
+  const root = contractRepo(ONE_WRITER, { '.claude/commands/win/SKILL.md': CITES_WIN });
+  assert.deepStrictEqual(lintRepo(root), []);
+});
+
+test('a listed writer path that does not exist is flagged', () => {
+  const root = contractRepo(ONE_WRITER, {});
+  assert.ok(rules(lintRepo(root)).includes('missing-writer-file'));
+});
+
+test('the contract itself is linted by the push rules', () => {
+  const noPeriodicity = GOOD_WIN_FILE.replace('\\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week', '');
+  const root = contractRepo(ONE_WRITER + noPeriodicity, { '.claude/commands/win/SKILL.md': CITES_WIN });
+  const vs = lintRepo(root);
+  assert.ok(vs.some((v) => v.file === CONTRACT_PATH && v.rule === 'win-without-periodicity'));
+  assert.ok(!rules(vs).includes('restated-push-template'));
 });

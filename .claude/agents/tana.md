@@ -145,18 +145,7 @@ For partial sync: update only the metadata section (title, status, description),
 
 #### Wins (Local → Tana)
 
-Follow the dedup contract in `.claude/commands/sync/SKILL.md` (Step 0b and Phase 4B). Do not use a cursor.
-
-1. Read `MEMORY/wins.jsonl` (skip the schema line) and `entities.wins.tana_node_ids` from `SYSTEM/sync-state.yaml`. If the map is missing, follow `/sync` Phase 4B step 2 ("Legacy cursor"): create it and seed every win at or before a non-null `last_pushed_win_id` as `pre-map`; never treat a missing map as empty when a cursor is set.
-   The text pushed to Tana is the win's `description`; entries written before the canonical format have `title` instead — use it when `description` is absent.
-2. Push only wins whose `id` is not a key in `tana_node_ids`, one sequential call each, to the wins container: `tana_node_overrides.wins_container_id` in `SYSTEM/sync-config.yaml` if non-empty, otherwise `WINS_CONTAINER_ID` in `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue. The push:
-```
-import_tana_paste({
-  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",
-  content: "- [description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
-})
-```
-3. After each push, record `entities.wins.tana_node_ids.<win_id>: <returned node id>` (the map exists after step 1) and update `last_push` and `last_pushed_win_id`.
+Push only wins not yet in `entities.wins.tana_node_ids` (build the list as `/sync` Phase 4B "Unsynced wins" does; never by a cursor). For each one, read `SYSTEM/tana-write-contract.md` and follow the contract for `win`.
 
 **Empty ID guard:** if the wins or decisions container, the tag ID or a required field ID resolves to empty, skip that push, leave the item unrecorded so `/sync` pushes it later, and say which ID is missing. Never fall back to a calendar node.
 

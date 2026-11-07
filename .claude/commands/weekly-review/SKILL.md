@@ -48,7 +48,7 @@ Read `SYSTEM/sync-config.yaml` (if it exists):
 > "📡 Quick sync before we begin — pushing this week's wins and goals to Tana so both systems are current."
 
 Run a **goals-only + wins push** (not a full sync):
-1. Run the wins push of `/sync` (Phase 4B, "Unsynced wins": container resolution from Step 0b, the `entities.wins.tana_node_ids` dedup map and the legacy-cursor seed). Choose what to push from the map, never from `last_pushed_win_id`
+1. Push the wins not yet in Tana: build the list as `/sync` Phase 4B "Unsynced wins" does (every win not in `entities.wins.tana_node_ids`), then read `SYSTEM/tana-write-contract.md` and follow the contract for `win` for each one
 2. Update goal statuses in Tana for any goals completed this week
 3. Update `sync-state.yaml` with new timestamps
 

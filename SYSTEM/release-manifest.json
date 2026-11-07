@@ -35,7 +35,7 @@
     },
     ".claude/agents/tana.md": {
       "class": "foundation",
-      "sha256": "24016557c80350347e9816b953fa25f967385b3c2eb0013bbba7abbc249461e4"
+      "sha256": "3e376c6a32b450cd4f19914b526a742730804647d8d6d3320146fcf646a1bcfa"
     },
     ".claude/agents/visionary.md": {
       "class": "foundation",
@@ -59,7 +59,7 @@
     },
     ".claude/commands/build/SKILL.md": {
       "class": "foundation",
-      "sha256": "0f976394f20837a16a90b9f43d63836340d3970caeaaf8193040376f243ff175"
+      "sha256": "096e9ce81c47f7bbed4a0b230f3ddc895e2d2062687240dd3b387ddf3551c4fc"
     },
     ".claude/commands/context-update/SKILL.md": {
       "class": "foundation",
@@ -115,7 +115,7 @@
     },
     ".claude/commands/sync/SKILL.md": {
       "class": "foundation",
-      "sha256": "bc12d1f45f6e91dbbbc681b6c24d267e8346a2c21e33f1b0185750a50b5cbf55"
+      "sha256": "7e356176dfdacf1ad44f8d1ed27de2b5e86eac402c83856569e916ceccd51fdf"
     },
     ".claude/commands/tana-schema-graph/SKILL.md": {
       "class": "foundation",
@@ -163,11 +163,11 @@
     },
     ".claude/commands/weekly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "7a33f65f3216c6539574446fb4407f45b4d985733e26391a5c8e0dce55ec9316"
+      "sha256": "e403571997f0431d99946fc7b32c8bb878d64cbcaf417deb41a18feed9452d25"
     },
     ".claude/commands/win/SKILL.md": {
       "class": "foundation",
-      "sha256": "1f97046bfc5048bd2d546b860b722c3a679d295c6c32017bc9eea63f2386a439"
+      "sha256": "fee9e1174da88ab97947191d8b9f26c9b6b29c889e0f42de34be4c8c2a6f157f"
     },
     ".gitignore": {
       "class": "foundation",
@@ -485,6 +485,10 @@
       "class": "foundation",
       "sha256": "9a8006cc46ef5a98d479808afd6c48807918f5130ba7be052c3b85bb093e06f3"
     },
+    "SYSTEM/tana-write-contract.md": {
+      "class": "foundation",
+      "sha256": "ec87a655c15603176d60edf22260a8dd6aeb46da4272b8bae88ee6b2b499aed4"
+    },
     "SYSTEM/tools/check-manifest.js": {
       "class": "foundation",
       "sha256": "15d53e3a43589b233e51cdeefe1eef90ac81ec75ae417b6f213b766d7abce92c"
@@ -503,11 +507,11 @@
     },
     "SYSTEM/tools/skill-lint.js": {
       "class": "foundation",
-      "sha256": "e718a774cd5736df57f86740f4a8832831402b1e573d308ff091d64bf4707889"
+      "sha256": "b91f813d31b4d35b983e1517838bd258c06e8c7f3b8c53d97226b5094a47869e"
     },
     "SYSTEM/tools/skill-lint.test.js": {
       "class": "foundation",
-      "sha256": "75d5ed7e7c5d902590a9e3fca09ec88235df29af8b43830e8661718048d013e0"
+      "sha256": "edc2ea53b3d5320d4250f10dca1d9b46e7a17b313453a7185a686b0ed169396a"
     },
     "SYSTEM/tools/update.js": {
       "class": "foundation",

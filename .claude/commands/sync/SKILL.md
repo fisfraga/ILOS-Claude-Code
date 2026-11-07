@@ -438,29 +438,13 @@ Store returned node ID in sync-state.yaml.
 **Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
 
 1. Read `MEMORY/wins.jsonl` (skip the schema line on line 1).
-2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`. **Legacy cursor:** if the map is missing and `entities.wins.last_pushed_win_id` is not null, the file predates this contract and the cursor was the only dedup. Create the map and seed it with the value `pre-map` for every win in `wins.jsonl` whose `id` sorts at or before the cursor (`win_YYYYMMDD_HHMMSS` ids sort chronologically); those wins were already pushed by the old logic and must not go again. If the map is missing and the cursor is null, create it empty.
+2. Read `entities.wins.tana_node_ids` from `sync-state.yaml`. If the map is missing, create it as the contract for `win` says under **Dedup** (an older state file with a `last_pushed_win_id` cursor gets its earlier wins seeded as `pre-map`, so they are not pushed again).
 3. Build the push list: every win whose `id` is NOT already a key in `tana_node_ids`.
    The text pushed to Tana is the win's `description`; entries written before the canonical format have `title` instead — use it when `description` is absent.
 4. If the push list is empty, report "Wins already in sync" and skip this block. If it has more than 10 wins, show the count and ask the user to confirm before pushing.
-5. For each win in the push list, execute **one** `import_tana_paste` call (sequential — never batch):
+5. Push each win in the list, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `win` (target, the IDs it needs and the empty-ID guard, Periodicity, and recording each push in `entities.wins.tana_node_ids` right after it succeeds). Wins created by `/win` or `/build` are already in the map, so step 3 never lists them.
 
-```
-import_tana_paste({
-  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
-})
-```
-
-6. After each successful push, immediately update `sync-state.yaml`:
-   - Add `entities.wins.tana_node_ids.<win_id>: <returned_tana_node_id>` (the map exists after step 2)
-   - Update `entities.wins.last_push` to current ISO timestamp
-   - Update `entities.wins.last_pushed_win_id` to this win's ID
-
-**Empty ID guard:** if the wins container, the win tag ID or the Periodicity field ID resolves to empty, skip the wins push, record nothing in `tana_node_ids`, leave the wins unrecorded so a later `/sync` pushes them once `/tana-understand` has filled the IDs, and tell the user which ID is missing. Never fall back to a calendar node or any other target. The same guard applies to decisions (container, decision tag, status field, Open option).
-
-**CRITICAL — Dedup contract with `/win`:** `/win` also pushes to Tana and records `tana_node_ids` entries immediately. This filter ensures wins created via `/win` are never re-pushed by `/sync`. If you see a win in `wins.jsonl` that already has an entry in `tana_node_ids`, skip it silently — that is not an error.
-
-**CRITICAL — Periodicity:** For wins, Periodicity MUST be `Week` (or higher). NEVER `Day`. Day-scoped wins are invisible in weekly review dashboards.
+**Empty ID guard (decisions):** if the decisions container, the decision tag ID, the status field ID or the Open option ID is empty, skip the push, leave the decision unrecorded so a later `/sync` pushes it once the IDs exist, and say which ID is missing.
 
 **Unsynced decisions** (new open decisions not yet in Tana — use the same dedup pattern as wins, filtering `MEMORY/decisions.jsonl` against `entities.decisions.tana_node_ids`):
 ```
@@ -493,8 +477,7 @@ After all changes are applied, update `SYSTEM/sync-state.yaml`:
 1. Set `last_full_sync` or `last_partial_sync` to current ISO timestamp
 2. Update `entities.goals.last_pull` and `last_push` timestamps
 3. Update `entities.areas.last_pull` timestamp
-4. Update `entities.wins.last_push` and `last_pushed_win_id`
-5. Update `entities.decisions.last_push` and `last_pushed_decision_id`
+4. Wins and decisions were recorded push by push (contract **Record** steps); nothing more to write for them here
 6. Store any new Tana node IDs returned from import operations
 
 Write the updated state to `SYSTEM/sync-state.yaml`.

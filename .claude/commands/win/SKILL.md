@@ -53,9 +53,7 @@ If the win clearly relates to an active goal in `TIME/active-goals.yaml`, read t
 
 **If Tana MCP is NOT available** (test with `list_workspaces`): Skip to Step 4. The win is already safe in `MEMORY/wins.jsonl` and will push on the next `/sync` when Tana comes online.
 
-**If Tana MCP is available**, read the Tana reference files and sync-config:
-!`cat SYSTEM/tana-ids.yaml`
-!`cat SYSTEM/sync-config.yaml`
+**If Tana MCP is available:**
 
 **Decide: Win or Gratitude?**
 Not every positive moment is a win. Apply this filter:
@@ -65,62 +63,7 @@ Not every positive moment is a win. Apply this filter:
 
 If the moment is too small for a weekly review, suggest capturing it as gratitude instead: "This sounds more like a gratitude moment than a win. Would you like me to capture it under Daily Gratitude instead?"
 
-**Resolve the target container for #win nodes:**
-
-`/win` and `/sync` share the same wins container resolution so they stay consistent and dedup works. In order:
-
-1. If `SYSTEM/sync-config.yaml` has `tana_node_overrides.wins_container_id` set and non-empty → use that node ID.
-2. Otherwise → use `WINS_CONTAINER_ID` from `SYSTEM/tana-ids.yaml`. If `tana-ids.yaml` has a blank value for a key this push needs (the resolved container — an override in `sync-config.yaml` counts —, `WIN_TAG_ID`/`DECISION_TAG_ID`, `PERIODICITY_FIELD_ID`), or `capabilities.decision_supertag` is `false` for a decision, do not push: tell the user once which key is missing (for example "no DECISION_TAG_ID — decisions stay local until /tana-understand finds one"), keep the item in the local file, and continue.
-
-Do NOT push wins to today's calendar node. That path fragments the wins view across daily nodes and defeats weekly/monthly review dashboards.
-
-**Empty ID guard:** if the resolved container, the `#win` tag ID or the Periodicity field ID is empty (the reference tables are filled by `/tana-understand`), skip the Tana push, do not touch `sync-state.yaml`, leave the win unrecorded so `/sync` pushes it once the IDs exist, and tell the user which ID is missing. Never improvise another target.
-
-**Set Periodicity (required for wins):**
-Always set Periodicity on wins. **Default to Week.** Never use Day — Day-scoped wins are invisible in weekly reviews and all higher-level dashboards.
-
-| Periodicity | When to use |
-|-------------|-------------|
-| **Week** | Default — something notable that happened this week |
-| **Month** | A meaningful milestone in a monthly goal or project |
-| **Quarter** | A breakthrough, launch, or significant life achievement |
-| **Year** | A peak experience, life milestone, major transformation |
-
-**Create the win in Tana:**
-```
-import_tana_paste({
-  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",  // from the container resolution above
-  content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week"
-})
-```
-
-Replace `Week` with `Month`, `Quarter`, or `Year` if the win warrants a higher scope.
-
-Optionally add area connection if clearly relevant (look up the area node ID in the `areas.<slug>` entry of `SYSTEM/tana-ids.yaml`):
-```
-content: "- [Win description] #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week\n  - [[^[AREA_FIELD_ID]]]:: [[^AREA_NODE_ID]]"
-```
-
-### Step 3b — Record the Tana push in sync-state.yaml
-
-After a successful Tana push, update `SYSTEM/sync-state.yaml` so `/sync` knows this win is already in Tana and won't try to push a duplicate:
-
-1. Read `SYSTEM/sync-state.yaml`.
-2. Under `entities.wins`, add the mapping `tana_node_ids.<win_id>: <tana_node_id>` (the returned main node ID from `import_tana_paste`). If the file has no `tana_node_ids` map under `entities.wins` (state files created before this contract), create it first, seeding every win at or before a non-null `last_pushed_win_id` as `pre-map` (see `/sync` Phase 4B, "Legacy cursor").
-3. Set `entities.wins.last_push` to the current ISO timestamp.
-4. Set `entities.wins.last_pushed_win_id` to the win ID you just created.
-5. Write the file back.
-
-Example:
-```yaml
-  wins:
-    last_push: "2026-04-13T19:45:00-03:00"
-    last_pushed_win_id: "win_20260413_193600"
-    tana_node_ids:
-      win_20260413_193600: "GS6_ItYRc2Bm"
-```
-
-**Why this matters:** `/sync`'s Phase 4B skips any win already present in `tana_node_ids`. Without this bookkeeping, running `/sync` after `/win` would push a duplicate win to Tana.
+**Push the win:** Read `SYSTEM/tana-write-contract.md` and follow the contract for `win` — it says where the win goes, which IDs it needs (and what to do when one is empty), the Periodicity to set (Week by default, Month/Quarter/Year when the user's scope is bigger, never Day), and how to record the push in `SYSTEM/sync-state.yaml` so `/sync` never pushes it twice.
 
 ### Step 4 — Connect and affirm
 
@@ -137,8 +80,8 @@ If you notice this is the Nth win in the same area recently, mention the streak.
 
 - **ALWAYS celebrate before saving** — the tool call is secondary to the human moment
 - **ALWAYS save to MEMORY/wins.jsonl** — this is the canonical local record, regardless of Tana
-- **Wins container is configurable** — read `tana_node_overrides.wins_container_id` from `sync-config.yaml` before falling back to Wins Log. Never hardcode.
-- **Record every Tana push in sync-state.yaml** — `/sync` depends on `entities.wins.tana_node_ids` to dedup. Skipping Step 3b will create duplicate wins on the next `/sync`.
+- **Tana pushes follow the write contract** — `SYSTEM/tana-write-contract.md`, recipe `win`. Never hardcode a container or push to a calendar node.
+- **Record every Tana push** — the contract's Record step writes `entities.wins.tana_node_ids`; `/sync` depends on it to never push the same win twice.
 - **Keep it brief** — 1-2 minutes, not a therapy session
 - **Use the user's words** — don't rephrase their win into corporate language
 - **Connect upward** — briefly link to a goal, project, or pattern if natural
