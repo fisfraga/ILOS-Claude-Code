@@ -51,10 +51,10 @@ For a complete setup walkthrough, see `SYSTEM/setup-guide.md`.
 
 1. Download the latest release ZIP from [Releases](https://github.com/fisfraga/ILOS-Claude-Code/releases) and unzip it where you keep your projects. This folder is now **yours** -- your data lives in it.
    *(Cloning works too; then run `rm -rf .git` so your life data is never tied to this repo. Use `git init` if you want your own history.)*
-2. Open it:
+2. Open it in Claude Code (the unzipped folder is named after the release, for example `ILOS-Claude-Code-1.0.0`; rename it if you like):
 
 ```bash
-cd ILOS-Claude-Code
+cd ILOS-Claude-Code-1.0.0
 claude
 ```
 
