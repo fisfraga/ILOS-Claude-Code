@@ -22,6 +22,7 @@ All notable changes to the ILOS template. Run `/update` to move to a newer relea
 - `/sync` stopped when the workspace ID was only in `tana-ids.yaml`.
 - Pushing an older win no longer moves `last_pushed_win_id` backwards.
 - `/decision` skips its Tana search when your workspace has no `#decision` tag.
+- Setup now finds the Active Problem, Favorite Problems and Massive Transformative Purpose field IDs that `/north-star` writes (the old setup left them blank). If you set up Tana in 1.0, run `/tana-setup` once to fill them.
 - The "Tana MCP is not available" message named one particular server; it now points to `/mcp` and the guide.
 
 ### Deprecated
