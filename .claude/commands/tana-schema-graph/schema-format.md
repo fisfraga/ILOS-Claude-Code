@@ -180,7 +180,7 @@ Use MCP tools to build the schema:
 
 3. **To find child tags**:
    ```javascript
-   search_nodes({ "and": [{"hasType": "<tag-id>"}, {"is": "template"}] })
+   search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { "and": [{"hasType": "<tag-id>"}, {"is": "template"}] } })
    ```
 
 ## Visual Behavior

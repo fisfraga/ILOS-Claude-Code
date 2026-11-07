@@ -47,6 +47,7 @@ Read `MEMORY/decisions.jsonl` and filter for entries where `status` is `"open"` 
 **Tana path (if available):** skip it when `DECISION_TAG_ID` in `SYSTEM/tana-ids.yaml` is blank or `capabilities.decision_supertag` is `false` — then the local file is the only source. Otherwise:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }

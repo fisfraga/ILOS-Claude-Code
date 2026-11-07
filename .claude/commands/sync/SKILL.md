@@ -163,6 +163,7 @@ Execute sequential MCP calls in dependency order. After each call, note what cha
 **MCP Call — Annual goals:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] },
   limit: 10
 })
@@ -172,6 +173,7 @@ Compare results with `annual` section of `TIME/active-goals.yaml`. Note any goal
 **MCP Call — Quarterly goals:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }] },
   limit: 20
 })
@@ -181,6 +183,7 @@ Compare with `quarterly` section of `TIME/active-goals.yaml`.
 **MCP Call — Monthly goals:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }] },
   limit: 20
 })
@@ -189,6 +192,7 @@ search_nodes({
 **MCP Call — Weekly goals:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }] },
   limit: 20
 })
@@ -199,6 +203,7 @@ search_nodes({
 **MCP Call — Key areas:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[KEY_AREA_TAG_ID]" }] },
   limit: 20
 })
@@ -222,6 +227,7 @@ Compare with corresponding `SPACE/areas/{slug}.md` files.
 **MCP Call — Projects:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[PROJECT_TAG_ID]" },
     { not: { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", optionId: "[PROJECT_COMPLETED_OPTION_ID]" } } }
@@ -240,6 +246,7 @@ Compare with `SPACE/projects/` directory.
 **MCP Call — Topics:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[TOPIC_TAG_ID]" }] },
   limit: 50
 })
@@ -252,6 +259,7 @@ Compare with `SPACE/topics/` directory.
 **MCP Call — Favorite Problems:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[FAVORITE_PROBLEM_TAG_ID]" }] },
   limit: 20
 })
@@ -260,6 +268,7 @@ search_nodes({
 **MCP Call — MTPs:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[MTP_TAG_ID]" }] },
   limit: 10
 })
@@ -268,6 +277,7 @@ search_nodes({
 **MCP Call — HHGs:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[HHG_TAG_ID]" }] },
   limit: 20
 })
@@ -280,6 +290,7 @@ Compare with `QUANTUM/vision/` files.
 **MCP Call — Context nodes:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [{ hasType: "[CONTEXT_TAG_ID]" }] },
   limit: 20
 })

@@ -153,6 +153,20 @@ function lintText(file, text, opts = {}) {
     });
   }
 
+  // Every search_nodes( call, to its closing paren, must pass workspaceIds: without it both Tana
+  // servers search a default workspace and return nothing for the user's tags (seen live in 1.1).
+  for (const m of text.matchAll(/\bsearch_nodes\(/g)) {
+    let depth = 0, end = m.index + m[0].length - 1;
+    for (; end < text.length; end++) {
+      if (text[end] === '(') depth++;
+      else if (text[end] === ')' && --depth === 0) break;
+    }
+    if (!text.slice(m.index, end + 1).includes('workspaceIds')) {
+      add(text.slice(0, m.index).split('\n').length, 'search-without-workspace',
+        'search_nodes must pass workspaceIds: ["[WORKSPACE_ID]"]; without it Tana searches another workspace and returns nothing');
+    }
+  }
+
   let firstPush = null;
   let pushesWin = false;
   for (const block of fencedBlocks(text)) {

@@ -70,6 +70,7 @@ get_or_create_calendar_node({
 })
 
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WIN_TAG_ID]" },
     { created: { last: 7 } }
@@ -86,6 +87,7 @@ Read `MEMORY/wins.jsonl` and filter entries from the last 7 days.
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WEEKLY_GOAL_TAG_ID]" },
     { created: { last: 10 } }
@@ -102,6 +104,7 @@ Read `TIME/active-goals.yaml` — review the `weekly` section goals and their st
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[NOTE_TAG_ID]" },
     { created: { last: 7 } }
@@ -118,6 +121,7 @@ Check `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from t
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -184,17 +188,18 @@ get_or_create_calendar_node({
   date: "YYYY-MM-DD"   // next Monday's date
 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[MONTHLY_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}, limit: 10 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[QUARTERLY_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}, limit: 10 })
 
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
     { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_WEEK_OPTION_ID]" } }

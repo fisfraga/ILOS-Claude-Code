@@ -35,7 +35,7 @@
     },
     ".claude/agents/tana.md": {
       "class": "foundation",
-      "sha256": "b0641c82e3bec89207e11b6154c7bd0ccfc21de025ac2fab01823e910b76c33c"
+      "sha256": "d6a60faaf239b98de77197b3d1ce90f36df71354bd3a68ff5bdefdd17acf2976"
     },
     ".claude/agents/visionary.md": {
       "class": "foundation",
@@ -43,11 +43,11 @@
     },
     ".claude/commands/alignment/SKILL.md": {
       "class": "foundation",
-      "sha256": "c6fb90fc6be903d316326752eb252c054e3a0794435d5300e7e38297223ddbbe"
+      "sha256": "0e6dafbc43a4888f524ebd134519bfebfa623e21be6c3bebe8c2c38e563ac81f"
     },
     ".claude/commands/annual-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "5b7fca2232341f6ad9a89ee23ea02324186ab447f232d6a708196024ad5ee7a1"
+      "sha256": "1b86deb8906a974fd12b467a036957de4bc998dfa17a9672e58bfa2e9a2878c8"
     },
     ".claude/commands/architect/SKILL.md": {
       "class": "foundation",
@@ -59,11 +59,11 @@
     },
     ".claude/commands/build/SKILL.md": {
       "class": "foundation",
-      "sha256": "096e9ce81c47f7bbed4a0b230f3ddc895e2d2062687240dd3b387ddf3551c4fc"
+      "sha256": "eca81e0308aa67cca77b1c226374d348895ff99c390e932e109812d271c6e161"
     },
     ".claude/commands/context-update/SKILL.md": {
       "class": "foundation",
-      "sha256": "e589290b951f0c0d0b37da0f94be7ba5cc21dacf3b449cc0b491e4a8be2fee52"
+      "sha256": "f5efa21ed1b9b9d12b2124e8b53ff145e1a212714d416a679da9ff22b18d88eb"
     },
     ".claude/commands/dashboard/SKILL.md": {
       "class": "foundation",
@@ -71,7 +71,7 @@
     },
     ".claude/commands/decision/SKILL.md": {
       "class": "foundation",
-      "sha256": "246528634c3c086383c2a94ea8dcc441ce52e9ac09abb873fc3f09ae233ef39b"
+      "sha256": "a5daeeedd2f5f81c38646205b68e2cd7d853417f81d610e657d4b68943876242"
     },
     ".claude/commands/guide/SKILL.md": {
       "class": "foundation",
@@ -87,15 +87,15 @@
     },
     ".claude/commands/monthly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "e737750b6415ce7bb87afafbe9276c063ee13b20ab0c373b9033dbdd257f6653"
+      "sha256": "3a2a83fe0b434584ec76a13005cabb3f6b4e2c847254c335f82f684b77803f2a"
     },
     ".claude/commands/morning/SKILL.md": {
       "class": "foundation",
-      "sha256": "acba73b89d556bfde3fc98dec06a3147a7e8bb4d16c61e4b8ea3c5724ee71620"
+      "sha256": "4f90e27a2ce51087e569c9bcbff6fc10f9136e11160bce170ac2364f1843618f"
     },
     ".claude/commands/north-star/SKILL.md": {
       "class": "foundation",
-      "sha256": "8cd33992d4f71ce9f936a87422c884a4619205a63a624b63da436903417d498b"
+      "sha256": "93cf92fc0415c14d7a02fa943fe75dc8618581e227b6d8fd0dcdc9f551b61e76"
     },
     ".claude/commands/project-kickoff/SKILL.md": {
       "class": "foundation",
@@ -103,7 +103,7 @@
     },
     ".claude/commands/quarterly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "52050a9495a73bae11db70620e5f6cb9a0ccdef0ebdf735a2bad6c606100899b"
+      "sha256": "f58f10f09c038f42a42f25410bf7a889330c0bcdb40ec32ca15cb2642838a512"
     },
     ".claude/commands/strategist/SKILL.md": {
       "class": "foundation",
@@ -115,11 +115,11 @@
     },
     ".claude/commands/sync/SKILL.md": {
       "class": "foundation",
-      "sha256": "32862552ef0be48ed344410a99860ef0029a484330288a8cfddfc44e8c228f91"
+      "sha256": "7519bbb95fa71aea4146a85433dc86a3a0d03a0760fa3a4be3f891a35e5fe938"
     },
     ".claude/commands/tana-schema-graph/SKILL.md": {
       "class": "foundation",
-      "sha256": "1079f899b1e4e5e14c591e7430fd70a41dd98c187bf658d156fa6ac7d92bc190"
+      "sha256": "d642d89eaffb0f34d5365c1d84456bda7a3b03203f98bb49c4594da544affa83"
     },
     ".claude/commands/tana-schema-graph/html-template.md": {
       "class": "foundation",
@@ -127,7 +127,7 @@
     },
     ".claude/commands/tana-schema-graph/schema-format.md": {
       "class": "foundation",
-      "sha256": "15025c02396169a2b5620bfdba227415b6a9889e1ddd3578c1b695891c9a70c1"
+      "sha256": "317626d84770cf40f41a37aa33915fa13fe97e62e9fcf0f1b8a75f0c936fa4bd"
     },
     ".claude/commands/tana-search-builder/SKILL.md": {
       "class": "foundation",
@@ -163,11 +163,11 @@
     },
     ".claude/commands/vision/SKILL.md": {
       "class": "foundation",
-      "sha256": "b33ce962d1350ca96350887fbea037ee1a07760802cfc505b646b8b90c47610c"
+      "sha256": "dad61dfff0be9466686fe80fa0c71645b721f1c5232ca1c702a908696ef3a7a0"
     },
     ".claude/commands/weekly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "99ee3d9b3295498a32a7065bc70c486f89914328fa678e17fb75a1880712b5b4"
+      "sha256": "caa860ecc508133beb19073e0b99fc6d8b29d24caebd8a25d46374dab493c9a7"
     },
     ".claude/commands/win/SKILL.md": {
       "class": "foundation",
@@ -179,11 +179,11 @@
     },
     "AGENTS.md": {
       "class": "foundation",
-      "sha256": "93f90bd658a8a39888fed5b8de3eaea8ac38e00993a657733fc6e824e33e583d"
+      "sha256": "797c0aba9a46e9ae7aa3867cf640bf8965092ffd36d77bf28e20550f91b412c3"
     },
     "CHANGELOG.md": {
       "class": "foundation",
-      "sha256": "71cc04ca90b32f3e866ac8c8abee28b9e71d32d6937edde9877c6ecf5b9f94e8"
+      "sha256": "8b3c77725cf141c6a075d8ff85959afd672543f4873843d5197dbbc00a623f81"
     },
     "CLAUDE.md": {
       "class": "foundation",
@@ -491,7 +491,7 @@
     },
     "SYSTEM/tana-write-contract.md": {
       "class": "foundation",
-      "sha256": "9879133b48c77556c673fb66f41d644e318b985db5ed7949d57927c16741d990"
+      "sha256": "bd5c3d474c6e9e158ab04193e63511f5301a0433d8fe27433076651f7c95514b"
     },
     "SYSTEM/tools/check-manifest.js": {
       "class": "foundation",
@@ -511,11 +511,11 @@
     },
     "SYSTEM/tools/skill-lint.js": {
       "class": "foundation",
-      "sha256": "70713a5773f2638286b944c1fc23ed2627652e7c81c461f831f202ec14f4908a"
+      "sha256": "cf82388e37e3d67ab30ca77367f977a6e6d278cd0077672e82d53ea8510009b1"
     },
     "SYSTEM/tools/skill-lint.test.js": {
       "class": "foundation",
-      "sha256": "04b2ee39552208baf469741573dfb65d64d37f24e38b4af472defb61ba1c1928"
+      "sha256": "1947736fa0b8a93f383f467834aca91c8ff0c5256642b2955037d9f624aa89d1"
     },
     "SYSTEM/tools/update.js": {
       "class": "foundation",
@@ -734,7 +734,11 @@
       "6ce877af9369f68020a6a72e8f1c0c141cfd8a75375ef984cba32c0522bf1c26"
     ],
     ".claude/commands/tana-schema-graph/SKILL.md": [
+      "1079f899b1e4e5e14c591e7430fd70a41dd98c187bf658d156fa6ac7d92bc190",
       "4c570a758e31592b92175b511b28b46f382a287598ec03b32fdb99738ee19c24"
+    ],
+    ".claude/commands/tana-schema-graph/schema-format.md": [
+      "15025c02396169a2b5620bfdba227415b6a9889e1ddd3578c1b695891c9a70c1"
     ],
     ".claude/commands/tana-search-builder/SKILL.md": [
       "a98138f8dc1ac9562f75036a53d659ba2a3e824feff0f478161009485eafd5d1"

@@ -47,6 +47,7 @@ Use **local file flow** with data from YAML/JSONL/MD files.
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WIN_TAG_ID]" },
     { created: { last: 90 } }
@@ -62,12 +63,12 @@ Read `MEMORY/wins.jsonl` and filter entries from the last 90 days.
 
 **Tana path:**
 ```
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[QUARTERLY_GOAL_TAG_ID]" },
   { created: { last: 100 } }
 ]}, limit: 10 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[ANNUAL_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}, limit: 10 })
@@ -92,6 +93,7 @@ Organize wins by **month** and by **theme/area**:
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -103,6 +105,7 @@ search_nodes({
 Also search for all decisions from the quarter:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { created: { last: 90 } }
@@ -131,9 +134,9 @@ Present:
 
 **Tana path:**
 ```
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
-search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 ```
 
 Read specific nodes for depth:
@@ -165,7 +168,7 @@ Update `TIME/current-period.yaml` with new elemental balance scores and notes.
 
 **Tana path:**
 ```
-search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
 ```
 
 **Local path:**
@@ -180,12 +183,12 @@ For each key area, assess: Which areas got attention? Which were neglected? Whic
 
 **Tana path:**
 ```
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[PROJECT_TAG_ID]" },
   { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", stringValue: "Active" } }
 ]}, limit: 30 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[PROJECT_TAG_ID]" },
   { done: { last: 90 } }
 ]}, limit: 20 })

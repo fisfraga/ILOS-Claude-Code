@@ -56,6 +56,7 @@ Is this a new project?
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[PROJECT_TAG_ID]" },
     { textContains: "[project name from $ARGUMENTS]" }

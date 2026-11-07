@@ -53,6 +53,7 @@ get_or_create_calendar_node({
 
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[TASK_TAG_ID]" },
     { onDate: "YYYY-MM-DD" },
@@ -65,6 +66,7 @@ search_nodes({
 
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -80,6 +82,7 @@ If open decisions exist, mention them briefly in the landscape (Step 5T):
 
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WEEKLY_GOAL_TAG_ID]" },
     { not: { is: "done" } }
@@ -92,6 +95,7 @@ search_nodes({
 
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
     { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_DAY_OPTION_ID]" } }

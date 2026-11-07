@@ -95,7 +95,7 @@ set_field_option({
 
 **Dedup:** `entities.goals.tana_node_ids` (create it empty if missing). Before pushing a goal:
 1. Its `<period>/<goal_id>` key is listed → never push it again; change its status instead (below).
-2. Not listed, but Tana already has it: a goal node with the level's tag and the goal's `description` as its name (ignore case and surrounding spaces). Where to look: `/sync` and the agent use the goals their pull just returned; the review skills and `/morning` use the children of the period node (one `get_children` call before the first push). Found → record that node under the key (see **Record**) instead of pushing. This is how goals created in Tana, and goals pushed by ILOS 1.0 (which kept no map), get their entry.
+2. Not listed, but Tana already has it: a goal node with the level's tag and the goal's `description` as its name (ignore case and surrounding spaces). Where to look: `/sync` and the agent use the goals their pull just returned; the review skills and `/morning` use the children of the period node (one `get_children` call before the first push). If the pull returned as many goals as its `limit`, it may have cut the match off: search once more for this goal (`search_nodes` with `workspaceIds: ["[WORKSPACE_ID]"]`, the level's tag and `textContains` the description). Found → record that node under the key (see **Record**) instead of pushing. This is how goals created in Tana, and goals pushed by ILOS 1.0 (which kept no map), get their entry.
 3. Otherwise push it once (below).
 
 **Push** (one call per goal, so each returned node ID can be recorded):

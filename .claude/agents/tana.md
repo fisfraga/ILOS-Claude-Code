@@ -107,7 +107,7 @@ Reference for executing bidirectional sync. Called by `/sync`. Every write to Ta
 
 **Pull:**
 ```
-search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] }, limit: 10 })
 ```
 Map returned nodes to local `active-goals.yaml` using goal description as match key. Update `status` if different. Add any new Tana goals to local file. Record every match and every added goal in `entities.goals.tana_node_ids` under `<period>/<goal_id>` (the contract for `goal`, **Dedup**), so nothing Tana already has is pushed back.
 
@@ -121,7 +121,7 @@ Push only items not yet in `entities.projects.tana_node_ids` / `entities.topics.
 
 **Pull:**
 ```
-search_nodes({ query: { and: [{ hasType: "[KEY_AREA_TAG_ID]" }] }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[KEY_AREA_TAG_ID]" }] }, limit: 20 })
 ```
 Match returned areas to `SPACE/areas/{slug}.md` by area name.
 
@@ -145,9 +145,9 @@ For full sync: push every decision not yet in `entities.decisions.tana_node_ids`
 
 **Pull FPs, MTPs, HHGs:**
 ```
-search_nodes({ query: { and: [{ hasType: "[FAVORITE_PROBLEM_TAG_ID]" }] }, limit: 20 })
-search_nodes({ query: { and: [{ hasType: "[MTP_TAG_ID]" }] }, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[HHG_TAG_ID]" }] }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[FAVORITE_PROBLEM_TAG_ID]" }] }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[MTP_TAG_ID]" }] }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[HHG_TAG_ID]" }] }, limit: 20 })
 ```
 Compare with `QUANTUM/vision/` files. Update local files if Tana has newer versions.
 
@@ -157,7 +157,7 @@ Compare with `QUANTUM/vision/` files. Update local files if Tana has newer versi
 
 **Pull:**
 ```
-search_nodes({ query: { and: [{ hasType: "[CONTEXT_TAG_ID]" }] }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[CONTEXT_TAG_ID]" }] }, limit: 20 })
 ```
 
 For each context node, match to local file by title. If Tana version is newer, update local file (prompting user for confirmation since this is sensitive identity data).

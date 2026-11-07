@@ -45,19 +45,19 @@ Use local file data exclusively.
 
 Active goals at all levels:
 ```
-search_nodes({ query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
-search_nodes({ query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[WEEKLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[MONTHLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[QUARTERLY_GOAL_TAG_ID]" }, { not: { is: "done" } }]}, limit: 10 })
 ```
 
 Recent wins:
 ```
-search_nodes({ query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 14 } }]}, limit: 30 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [{ hasType: "[WIN_TAG_ID]" }, { created: { last: 14 } }]}, limit: 30 })
 ```
 
 Active projects:
 ```
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[PROJECT_TAG_ID]" },
   { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", stringValue: "Active" } }
 ]}, limit: 20 })
@@ -66,6 +66,7 @@ search_nodes({ query: { and: [
 Open decisions:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -76,8 +77,8 @@ search_nodes({
 
 Vision elements (if relevant):
 ```
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 5 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[HHG_TAG_ID]" }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[MTP_TAG_ID]" }, limit: 5 })
 ```
 
 **Local path:**

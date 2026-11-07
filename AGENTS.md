@@ -163,13 +163,13 @@ When Tana MCP is available:
 
 ```
 # Find current goals
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[ANNUAL_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}})
 
 # Find recent wins
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[WIN_TAG_ID]" },
   { created: { last: 7 } }
 ]}})

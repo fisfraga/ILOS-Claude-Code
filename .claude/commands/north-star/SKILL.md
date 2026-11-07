@@ -50,9 +50,9 @@ Use local vision files for existing state and save results to local files.
 
 **Tana path (run in parallel):**
 ```
-search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
-search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
 ```
 
 **Local path:**

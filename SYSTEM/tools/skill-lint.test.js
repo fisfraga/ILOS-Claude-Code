@@ -389,3 +389,12 @@ test('support files next to a skill are linted too', () => {
   fs.writeFileSync(path.join(root, '.claude', 'commands', 'x', 'notes.md'), 'call mcp__tana__read_node\n');
   assert.ok(rules(lintRepo(root)).includes('hardcoded-mcp-server'));
 });
+
+test('search_nodes calls name the workspace (live: without workspaceIds both Tana servers return nothing)', () => {
+  const bare = fence('search_nodes({\n  query: { and: [{ hasType: "[WIN_TAG_ID]" }] },\n  limit: 10\n})');
+  assert.ok(rules(lintText('s.md', bare)).includes('search-without-workspace'));
+  assert.ok(rules(lintText('s.md', 'search_nodes({ query: { and: [{ hasType: "[NOTE_TAG_ID]" }] }, limit: 10 })')).includes('search-without-workspace'));
+  const scoped = fence('search_nodes({\n  workspaceIds: ["[WORKSPACE_ID]"],\n  query: { and: [{ hasType: "[WIN_TAG_ID]" }] }\n})');
+  assert.deepStrictEqual(lintText('s.md', scoped), []);
+  assert.deepStrictEqual(lintText('s.md', 'Use `search_nodes` with the tag ID.'), []);
+});

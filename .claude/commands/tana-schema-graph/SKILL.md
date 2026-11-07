@@ -65,7 +65,7 @@ Steps:
 
 To find tags that extend a parent:
 ```json
-search_nodes({ "and": [{"hasType": "<parent-tag-id>"}, {"is": "template"}] })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { "and": [{"hasType": "<parent-tag-id>"}, {"is": "template"}] } })
 ```
 
 ### Field Types

@@ -50,6 +50,7 @@ Use **local file flow** with data from YAML/JSONL/MD files.
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WIN_TAG_ID]" },
     { created: { last: 365 } }
@@ -67,12 +68,12 @@ Read all entries from `MEMORY/wins.jsonl`. For an annual review, read the entire
 
 **Tana path:**
 ```
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[ANNUAL_GOAL_TAG_ID]" },
   { created: { last: 400 } }
 ]}, limit: 10 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[QUARTERLY_GOAL_TAG_ID]" },
   { created: { last: 400 } }
 ]}, limit: 20 })
@@ -98,7 +99,7 @@ Which Key Areas received the most attention? Which were neglected? This reveals 
 
 **Tana path:**
 ```
-search_nodes({ query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[KEY_AREA_TAG_ID]" }, limit: 12 })
 ```
 
 **Local path:**
@@ -128,6 +129,7 @@ Read `QUANTUM/personal-context/8-identity-values.md` and `QUANTUM/personal-conte
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { created: { last: 365 } }
@@ -139,6 +141,7 @@ search_nodes({
 Also check for any remaining open decisions:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -177,9 +180,9 @@ Read all entries from `MEMORY/decisions.jsonl`:
 
 **Tana path:**
 ```
-search_nodes({ query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
-search_nodes({ query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
-search_nodes({ query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[HHG_TAG_ID]" }, limit: 20 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[MTP_TAG_ID]" }, limit: 10 })
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { hasType: "[FAVORITE_PROBLEM_TAG_ID]" }, limit: 20 })
 ```
 
 Read specific nodes for depth:
@@ -224,12 +227,12 @@ For each Key Area, assess the year:
 
 **Tana path:**
 ```
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[PROJECT_TAG_ID]" },
   { field: { fieldId: "[PROJECT_STATUS_FIELD_ID]", stringValue: "Active" } }
 ]}, limit: 30 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[PROJECT_TAG_ID]" },
   { done: { last: 365 } }
 ]}, limit: 30 })

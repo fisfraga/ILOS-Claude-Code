@@ -51,6 +51,7 @@ get_or_create_calendar_node({
 })
 
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[WIN_TAG_ID]" },
     { created: { last: 30 } }
@@ -67,6 +68,7 @@ Read `MEMORY/wins.jsonl` and filter entries from the last 30 days.
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[MONTHLY_GOAL_TAG_ID]" },
     { not: { is: "done" } }
@@ -75,6 +77,7 @@ search_nodes({
 })
 
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[MONTHLY_GOAL_TAG_ID]" },
     { done: { last: 30 } }
@@ -91,6 +94,7 @@ Read `TIME/active-goals.yaml` — review the `monthly` section goals and their s
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[NOTE_TAG_ID]" },
     { created: { last: 30 } }
@@ -107,6 +111,7 @@ Read `MEMORY/decisions.jsonl` and `MEMORY/experiences.jsonl` for entries from th
 **Tana path:**
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { field: { fieldId: "[DECISION_STATUS_FIELD_ID]", optionId: "[DECISION_OPEN_OPTION_ID]" } }
@@ -118,6 +123,7 @@ search_nodes({
 Also search for decisions made this month to check outcomes:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[DECISION_TAG_ID]" },
     { created: { last: 30 } }
@@ -178,12 +184,13 @@ get_or_create_calendar_node({
   date: "YYYY-MM-DD"   // first of next month
 })
 
-search_nodes({ query: { and: [
+search_nodes({ workspaceIds: ["[WORKSPACE_ID]"], query: { and: [
   { hasType: "[QUARTERLY_GOAL_TAG_ID]" },
   { not: { is: "done" } }
 ]}, limit: 10 })
 
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[SYSTEM_TAG_ID]" },
     { field: { fieldId: "[PERIODICITY_FIELD_ID]", nodeId: "[PERIODICITY_MONTH_OPTION_ID]" } }

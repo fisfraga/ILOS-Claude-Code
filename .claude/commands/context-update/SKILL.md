@@ -43,6 +43,7 @@ Read Tana reference files:
 
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { or: [
       { hasType: "[VOICE_REVIEW_TAG_ID]" },
@@ -98,6 +99,7 @@ Update the local markdown files using the Edit tool.
 **If Tana MCP is available** and Tana personal context nodes exist (tagged with #context), also update those:
 ```
 search_nodes({
+  workspaceIds: ["[WORKSPACE_ID]"],
   query: { and: [
     { hasType: "[CONTEXT_TAG_ID]" },
     { textContains: "[category name]" }
