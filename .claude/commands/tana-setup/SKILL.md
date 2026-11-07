@@ -51,7 +51,7 @@ Calls, one at a time:
 1. `list_tags` on the workspace (up to 200).
 2. `read_node` on the home node (`maxDepth: 2`) to map the hubs.
 3. `read_node` on each hub that exists (Vision, Life Overview, Planning, Personal Context, Review) to find the containers (Wins Log, Decisions Log, Goals, Projects, Topics, Favorite Problems, MTPs, High Hard Goals).
-4. `get_tag_schema` for each key tag that exists: win, decision, the five goal levels, project, key area, task, context, voice review. Option IDs (goal and project status, decision status, Periodicity Day…Year) come from the schema of the tag that owns the field.
+4. `get_tag_schema` for each tag that owns a field ILOS writes, if it exists: win (Periodicity; Area → `capabilities.win_area_field`), decision (status, Context, Confidence, Review date), one goal level (Goal Status, Area; the goal levels usually extend one parent tag, so read another level only if its schema says it extends a different one), project (Project Status, Desired Outcome), favorite problem (Active Problem → `ACTIVE_PROBLEM_FIELD_ID`), massively transformative purpose (Favorite Problems → `FP_FIELD_ID`), high hard goal (Massive Transformative Purpose → `MTP_FIELD_ID`). Option IDs (goal and project status, decision status, Periodicity Day…Year) come from the schema of the tag that owns the field. Tags such as task, context or voice review need only their tag ID, which `list_tags` already gave.
 
 Fill `SYSTEM/tana-ids.yaml`:
 - Write only blank (`""`) values. If you find a value that differs from a filled one, tell the user and change it only on their yes. Never blank a filled key.
