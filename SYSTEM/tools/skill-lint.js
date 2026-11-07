@@ -77,6 +77,11 @@ function lintText(file, text, opts = {}) {
       add(i + 1, 'cursor-push',
         'select what to push by the tana_node_ids map, never by the last_pushed_*_id cursor: map-based pushes are not in cursor order');
     }
+    const server = line.match(/\bmcp__tana[\w-]*/);
+    if (server) {
+      add(i + 1, 'hardcoded-mcp-server',
+        `${server[0]} names one MCP server; buyers name theirs differently (see SYSTEM/tana-mcp-setup.md) — say "Tana MCP" and call tools by their bare name`);
+    }
   });
 
   if (opts.knownIds) {

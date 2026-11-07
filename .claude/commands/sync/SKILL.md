@@ -93,7 +93,7 @@ Read `SYSTEM/tana-ids.yaml`:
 list_workspaces()
 ```
 If this fails → stop and inform:
-> "Tana MCP is not available. Check that your Tana MCP server is running and configured in Claude Code settings (mcp__tana-local). You can still use ILOS locally without Tana."
+> "Tana MCP is not available. Check that your Tana server is connected (`/mcp`); setup steps are in `SYSTEM/tana-mcp-setup.md`. You can still use ILOS locally without Tana."
 
 ### Step 0b — Resolve container targets
 

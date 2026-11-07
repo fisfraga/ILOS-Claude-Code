@@ -259,3 +259,9 @@ test('lintRepo uses SYSTEM/tana-ids.yaml when it exists', () => {
   fs.writeFileSync(path.join(root, 'SYSTEM', 'tana-ids.yaml'), 'tags:\n  WIN_TAG_ID: ""\n');
   assert.deepStrictEqual(rules(lintRepo(root)), ['undefined-id-key']);
 });
+
+test('a skill naming an MCP server or tool prefix is flagged', () => {
+  assert.ok(rules(lintText('s.md', 'configured in Claude Code settings (mcp__tana-local).')).includes('hardcoded-mcp-server'));
+  assert.ok(rules(lintText('s.md', 'call mcp__tana__list_workspaces')).includes('hardcoded-mcp-server'));
+  assert.deepStrictEqual(lintText('s.md', 'Check that your Tana MCP server is connected.'), []);
+});

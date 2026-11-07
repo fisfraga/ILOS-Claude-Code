@@ -115,7 +115,7 @@
     },
     ".claude/commands/sync/SKILL.md": {
       "class": "foundation",
-      "sha256": "a9f13e1fb7f68c95d9c3fde2b2f2ae00638ceb160904472917c3b6803c194a40"
+      "sha256": "bc12d1f45f6e91dbbbc681b6c24d267e8346a2c21e33f1b0185750a50b5cbf55"
     },
     ".claude/commands/tana-schema-graph/SKILL.md": {
       "class": "foundation",
@@ -477,6 +477,10 @@
       "class": "starter",
       "sha256": "f49dfbec28f92258d907d233c1d2a88bf46ef287267b17a2788485ac4468e240"
     },
+    "SYSTEM/tana-mcp-setup.md": {
+      "class": "foundation",
+      "sha256": "4a90e5cda5510ba9c8252f712b6f15f17ab94d32a4a8b1d8e9e8331afe055d9a"
+    },
     "SYSTEM/tana-reference/README.md": {
       "class": "foundation",
       "sha256": "9a8006cc46ef5a98d479808afd6c48807918f5130ba7be052c3b85bb093e06f3"
@@ -499,11 +503,11 @@
     },
     "SYSTEM/tools/skill-lint.js": {
       "class": "foundation",
-      "sha256": "503cd8673175a4ffb9c336801d5bd6fb222478ced63f3ee59c5ba5c89ce4170f"
+      "sha256": "e718a774cd5736df57f86740f4a8832831402b1e573d308ff091d64bf4707889"
     },
     "SYSTEM/tools/skill-lint.test.js": {
       "class": "foundation",
-      "sha256": "092a08314bead15ba92cd02be2098f3b83942b6c58b0d1e8c12992719c3c2203"
+      "sha256": "75d5ed7e7c5d902590a9e3fca09ec88235df29af8b43830e8661718048d013e0"
     },
     "SYSTEM/tools/update.js": {
       "class": "foundation",
