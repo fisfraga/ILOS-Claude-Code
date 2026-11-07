@@ -220,13 +220,7 @@ monthly:
 
 Update `TIME/current-period.yaml` with `current_month` and `last_reviews.monthly` date.
 
-**Tana sync (if available):**
-```
-import_tana_paste({
-  parentNodeId: NEXT_MONTH_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[MONTHLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]"
-})
-```
+**Tana sync (if available):** for each new goal, Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `NEXT_MONTH_NODE_ID`, tag `MONTHLY_GOAL_TAG_ID`). It records each goal under its `id` in `entities.goals.tana_node_ids`, so `/sync` never pushes it a second time.
 
 ---
 

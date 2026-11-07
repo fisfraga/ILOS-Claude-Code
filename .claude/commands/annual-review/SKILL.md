@@ -285,12 +285,9 @@ get_or_create_calendar_node({
   workspaceId: "[WORKSPACE_ID]",
   granularity: "year"
 })
-
-import_tana_paste({
-  parentNodeId: YEAR_NODE_ID,
-  content: "- [ ] [Goal 1] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]\n- [ ] [Goal 2] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]\n- [ ] [Goal 3] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]"
-})
 ```
+
+Then, for each new annual goal, read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `YEAR_NODE_ID`, tag `ANNUAL_GOAL_TAG_ID`, with Periodicity Year). It records each goal under its `id` in `entities.goals.tana_node_ids`.
 
 ### Step 11 — Define Q1 focus
 

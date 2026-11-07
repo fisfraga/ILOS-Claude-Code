@@ -35,7 +35,7 @@
     },
     ".claude/agents/tana.md": {
       "class": "foundation",
-      "sha256": "6ce40b151ddf60dc27e8485514a1c802ccb5f02ff32c633b755f8bd54245e6e5"
+      "sha256": "63e12e2eb2bab0e7c2c7b7d7256c8b06999601418faf871a3800025ebba4c795"
     },
     ".claude/agents/visionary.md": {
       "class": "foundation",
@@ -47,7 +47,7 @@
     },
     ".claude/commands/annual-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "14265fa5d3e7e9468cd9c2d7b58bdd5c243d781ccfe8b45eec6a825704dc6c74"
+      "sha256": "2f32421c3db93d072330444f7f7ee4112e3119b7083a2318579f75128695e4e0"
     },
     ".claude/commands/architect/SKILL.md": {
       "class": "foundation",
@@ -87,11 +87,11 @@
     },
     ".claude/commands/monthly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "03a54ec7b4c8f38263d2494917523ac59451375d86ca665f18d6f803db55c095"
+      "sha256": "6802077f087be470351b0ecab541b24cd1cd908a7fbf09e3f9572d29f609553f"
     },
     ".claude/commands/morning/SKILL.md": {
       "class": "foundation",
-      "sha256": "43d319c5f0c528c0e863b38ab653a9025083eff076583f09073ea7e844cdc443"
+      "sha256": "acba73b89d556bfde3fc98dec06a3147a7e8bb4d16c61e4b8ea3c5724ee71620"
     },
     ".claude/commands/north-star/SKILL.md": {
       "class": "foundation",
@@ -103,7 +103,7 @@
     },
     ".claude/commands/quarterly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "2bd919f245f5a0fe9504215e9be44e04114d3e5b30b1c431c42479e55d0f0bc2"
+      "sha256": "c91de991400de855c82fc0bef19a9b744c50fdd772d570089c34b8fde7b1afec"
     },
     ".claude/commands/strategist/SKILL.md": {
       "class": "foundation",
@@ -115,7 +115,7 @@
     },
     ".claude/commands/sync/SKILL.md": {
       "class": "foundation",
-      "sha256": "cfbb923e5dbf4bf4a3ec037d440c899b918ec81da0a3d29385e08f3b946f33f9"
+      "sha256": "5fb286fdc792822983a92eac68117c1057939928036025795d14486e56ab59e5"
     },
     ".claude/commands/tana-schema-graph/SKILL.md": {
       "class": "foundation",
@@ -163,7 +163,7 @@
     },
     ".claude/commands/weekly-review/SKILL.md": {
       "class": "foundation",
-      "sha256": "e403571997f0431d99946fc7b32c8bb878d64cbcaf417deb41a18feed9452d25"
+      "sha256": "c156c96deca9915a58c0237180ab0fd82eb738557ef6b240cb3f3dff691699b5"
     },
     ".claude/commands/win/SKILL.md": {
       "class": "foundation",
@@ -487,7 +487,7 @@
     },
     "SYSTEM/tana-write-contract.md": {
       "class": "foundation",
-      "sha256": "97ba28de06377ae3353a45480eb4542011c456f89f459b996c8cf0fa4b40bc43"
+      "sha256": "b249997d45ad7db5ed4414c772eb923e0d576d4220dd2561461b375148d4c97d"
     },
     "SYSTEM/tools/check-manifest.js": {
       "class": "foundation",

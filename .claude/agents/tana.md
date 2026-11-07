@@ -109,23 +109,11 @@ search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] }, limit: 10 
 ```
 Map returned nodes to local `active-goals.yaml` using goal description as match key. Update `status` if different. Add any new Tana goals to local file.
 
-**Push** (new local goal not in Tana):
-```
-import_tana_paste({
-  parentNodeId: "[GOALS_CONTAINER_ID_RESOLVED]",  // /sync Step 0b: tana_node_overrides.goals_container_id, else `GOALS_CONTAINER_ID` in `SYSTEM/tana-ids.yaml`
-  content: "- [description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
-})
-```
-Store returned node ID as `sync-state.entities.goals.tana_node_ids.[local_goal_id]`.
+**Push and status updates** (new local goal not in Tana, or a status changed locally): read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container; **Status change** for goals already in `entities.goals.tana_node_ids`).
 
-**Status update** (existing Tana node, status changed locally):
-```
-set_field_option({
-  nodeId: "[TANA_GOAL_NODE_ID]",
-  attributeId: "[GOAL_STATUS_FIELD_ID]",
-  optionId: "[GOAL_COMPLETED_OPTION_ID | GOAL_BACKLOG_OPTION_ID | GOAL_ACTIVE_OPTION_ID]"
-})
-```
+#### Projects and topics (new local items → Tana)
+
+Push only items not yet in `entities.projects.tana_node_ids` / `entities.topics.tana_node_ids`: follow the contract for `project` or the contract for `topic` in `SYSTEM/tana-write-contract.md`.
 
 #### Areas (Tana → Local)
 

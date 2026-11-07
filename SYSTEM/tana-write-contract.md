@@ -75,3 +75,84 @@ set_field_option({
 `[TANA_DECISION_NODE_ID]` is the decision's entry in `entities.decisions.tana_node_ids`. If it has no entry, it never reached Tana: push it once (above) with its current status. Never create a second node for a decision that has one.
 
 **Never:** a calendar node as the target; a decision pushed without its map entry recorded.
+
+## Recipe: `goal`
+**Writers:** `.claude/commands/sync/SKILL.md`, `.claude/agents/tana.md`, `.claude/commands/morning/SKILL.md`, `.claude/commands/weekly-review/SKILL.md`, `.claude/commands/monthly-review/SKILL.md`, `.claude/commands/quarterly-review/SKILL.md`, `.claude/commands/annual-review/SKILL.md`
+
+**Local record:** the goal in `TIME/active-goals.yaml` under its level (`annual`, `quarterly`, `monthly`, `weekly`), with its `id` (for example `w08_1`). Daily goals from `/morning` are conversational and have no local record.
+
+**Placement** — the calling skill says which:
+- **Period node** (the review skills and `/morning`): `[PERIOD_NODE_ID]` is the calendar node the skill already resolved for that period — `TODAY_NODE_ID` (daily), `NEXT_WEEK_NODE_ID` (weekly), `NEXT_MONTH_NODE_ID` (monthly), `QUARTER_NODE_ID` (quarterly), `YEAR_NODE_ID` (annual). Goals are the one entity that belongs on calendar nodes.
+- **Goals container** (`/sync`, the agent): `[GOALS_CONTAINER_ID_RESOLVED]` — `tana_node_overrides.goals_container_id` if non-empty, else `GOALS_CONTAINER_ID`.
+
+**Tag per level:** `DAILY_GOAL_TAG_ID`, `WEEKLY_GOAL_TAG_ID`, `MONTHLY_GOAL_TAG_ID`, `QUARTERLY_GOAL_TAG_ID`, `ANNUAL_GOAL_TAG_ID`.
+
+**Needs:** the target (the period node, or the resolved goals container) and the level's tag ID. If either is empty, the empty-ID guard applies: skip the push and leave the goal unrecorded.
+
+**Optional lines** — add each only when its IDs are filled: Status (`GOAL_STATUS_FIELD_ID` + `GOAL_ACTIVE_OPTION_ID`; not on daily goals); Periodicity Year on annual goals (`PERIODICITY_FIELD_ID` + `PERIODICITY_YEAR_OPTION_ID`); Area (`AREA_FIELD_ID` + `areas.<slug>`).
+
+**Dedup:** `entities.goals.tana_node_ids` (create it empty if missing). A goal whose `id` is already listed is never pushed again; change its status instead (below).
+
+**Push** (one call per goal, so each returned node ID can be recorded):
+```
+import_tana_paste({
+  parentNodeId: "[PERIOD_NODE_ID]",
+  content: "- [ ] [Goal description] #[[^[WEEKLY_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [[^[AREA_NODE_ID]]]"
+})
+```
+Use the level's tag; for an annual goal add `\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]`. In the goals-container placement, `parentNodeId` is `[GOALS_CONTAINER_ID_RESOLVED]`.
+
+**Record:** add `entities.goals.tana_node_ids.<goal_id>: <returned node ID>` and set `entities.goals.last_push` (daily goals: nothing to record).
+
+**Status change** (a goal already in the map changed status locally):
+```
+set_field_option({
+  nodeId: "[TANA_GOAL_NODE_ID]",
+  attributeId: "[GOAL_STATUS_FIELD_ID]",
+  optionId: "[GOAL_COMPLETED_OPTION_ID | GOAL_BACKLOG_OPTION_ID | GOAL_ACTIVE_OPTION_ID]"
+})
+```
+
+## Recipe: `project`
+**Writers:** `.claude/commands/sync/SKILL.md`, `.claude/agents/tana.md`
+
+**Local record:** the project's folder or file in `SPACE/projects/` (its slug is the local ID).
+
+**Target:** `[PROJECTS_CONTAINER_ID_RESOLVED]` — `tana_node_overrides.projects_container_id` if non-empty, else `PROJECTS_CONTAINER_ID`.
+
+**Needs:** the resolved projects container and `PROJECT_TAG_ID`. If either is empty, the empty-ID guard applies: skip the push and leave the project unrecorded.
+
+**Optional lines** — only when their IDs are filled: Status (`PROJECT_STATUS_FIELD_ID` + the option matching the local status), Desired outcome (`DESIRED_OUTCOME_FIELD_ID`).
+
+**Dedup:** `entities.projects.tana_node_ids`, keyed by slug (create it empty if missing).
+
+**Push** (one call per project):
+```
+import_tana_paste({
+  parentNodeId: "[PROJECTS_CONTAINER_ID_RESOLVED]",
+  content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[PROJECT_ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
+})
+```
+
+**Record:** add `entities.projects.tana_node_ids.<slug>: <returned node ID>`; set `entities.projects.last_push`.
+
+## Recipe: `topic`
+**Writers:** `.claude/commands/sync/SKILL.md`, `.claude/agents/tana.md`
+
+**Local record:** the topic's file in `SPACE/topics/` (its slug is the local ID).
+
+**Target:** `[TOPICS_CONTAINER_ID_RESOLVED]` — `tana_node_overrides.topics_container_id` if non-empty, else `TOPICS_CONTAINER_ID`.
+
+**Needs:** the resolved topics container and `TOPIC_TAG_ID`. If either is empty, the empty-ID guard applies: skip the push and leave the topic unrecorded.
+
+**Dedup:** `entities.topics.tana_node_ids`, keyed by slug (create it empty if missing).
+
+**Push** (one call per topic):
+```
+import_tana_paste({
+  parentNodeId: "[TOPICS_CONTAINER_ID_RESOLVED]",
+  content: "- [Topic name] #[[^[TOPIC_TAG_ID]]]"
+})
+```
+
+**Record:** add `entities.topics.tana_node_ids.<slug>: <returned node ID>`; set `entities.topics.last_push`.

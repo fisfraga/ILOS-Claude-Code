@@ -116,14 +116,7 @@ Keep it warm but concise — this is a 5-minute workflow.
 
 ### Step 6T (Optional) — Create daily goals
 
-If the user wants to set daily goals:
-
-```
-import_tana_paste({
-  parentNodeId: TODAY_NODE_ID,
-  content: "- [ ] [Daily goal] #[[^[DAILY_GOAL_TAG_ID]]]"
-})
-```
+If the user wants to set daily goals, push each one to today's calendar node: Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `TODAY_NODE_ID`, tag `DAILY_GOAL_TAG_ID`). Daily goals have no local record, so nothing is recorded.
 
 Maximum 3 daily goals. Connect to weekly goals when relevant.
 

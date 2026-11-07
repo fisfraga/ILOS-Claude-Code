@@ -408,32 +408,7 @@ Apply changes in dependency order. **One MCP call at a time.**
 
 ### 4B — Push local items to Tana
 
-**New goals** (local goals not found in Tana):
-```
-import_tana_paste({
-  parentNodeId: "[GOALS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Goal description] #[[^[ANNUAL_GOAL_TAG_ID]]]\n  - [[^[GOAL_STATUS_FIELD_ID]]]:: [[^[GOAL_ACTIVE_OPTION_ID]]]\n  - [[^[AREA_FIELD_ID]]]:: [area_name]"
-})
-```
-Store returned node ID in sync-state.yaml.
-
-**New projects** (local projects not in Tana):
-```
-import_tana_paste({
-  parentNodeId: "[PROJECTS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Project name] #[[^[PROJECT_TAG_ID]]]\n  - [[^[PROJECT_STATUS_FIELD_ID]]]:: [[^[PROJECT_ACTIVE_OPTION_ID]]]\n  - [[^[DESIRED_OUTCOME_FIELD_ID]]]:: [outcome]"
-})
-```
-Store returned node ID in sync-state.yaml.
-
-**New topics** (local topics not in Tana):
-```
-import_tana_paste({
-  parentNodeId: "[TOPICS_CONTAINER_ID_RESOLVED]",  // from Step 0b
-  content: "- [Topic name] #[[^[TOPIC_TAG_ID]]]"
-})
-```
-Store returned node ID in sync-state.yaml.
+**New goals, projects and topics** — every local item whose ID is not yet in its `entities.<goals|projects|topics>.tana_node_ids` map. Push each one, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container), the contract for `project`, or the contract for `topic`. Each push is recorded in its map, so goals created by the review skills are never pushed twice.
 
 **Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
 
@@ -449,14 +424,7 @@ Store returned node ID in sync-state.yaml.
 ### 4C — Update goal statuses in Tana (bidirectional)
 
 For goals where local status differs from Tana status:
-- If local is more recent: push status update to Tana
-```
-set_field_option({
-  nodeId: "[TANA_GOAL_NODE_ID]",
-  attributeId: "[GOAL_STATUS_FIELD_ID]",
-  optionId: "[GOAL_COMPLETED_OPTION_ID | GOAL_BACKLOG_OPTION_ID | GOAL_ACTIVE_OPTION_ID]"
-})
-```
+- If local is more recent: push the status update — follow the contract for `goal`, **Status change**.
 - If Tana is more recent: already handled in Phase 4A (written to local)
 
 ---
