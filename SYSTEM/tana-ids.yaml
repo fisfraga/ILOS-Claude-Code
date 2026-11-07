@@ -2,8 +2,8 @@ _schema: ilos_tana_ids
 _version: "1.0"
 _description: >
   Every Tana ID the ILOS skills use, in one place. Skills write placeholders such as
-  [WIN_TAG_ID]; each placeholder is a key in this file. Run /tana-understand to fill it
-  in for your workspace (one time). Existing users: node SYSTEM/tools/migrate-ids.js
+  [WIN_TAG_ID]; each placeholder is a key in this file. Run /tana-setup to fill it
+  in for your workspace (one time). WORKSPACE_ID here is the one workspace ID ILOS uses. Existing users: node SYSTEM/tools/migrate-ids.js
   copies your old tag-ids.md / field-ids.md / structure-map.md values here.
   An empty "" means unknown: the skills then skip that Tana step and keep the item
   locally until /sync can push it. Your own tana_node_overrides in sync-config.yaml
@@ -98,7 +98,7 @@ areas:
   social: ""
   spiritual: ""
 
-# Written by /tana-understand after it inspects your workspace. "unknown" until then.
+# Written by /tana-setup after it inspects your workspace. "unknown" until then.
 # false = your workspace lacks it, so the skills that need it skip their Tana step.
 capabilities:
   decision_supertag: unknown

@@ -12,29 +12,11 @@ Explore a **specific part** of a user's Tana system—a tag, workflow, or subsys
 
 User asks to understand, explore, document, or analyze a specific tag, workflow, or subsystem in Tana.
 
-## Initial Setup Mode (Auto-Trigger)
+## First-time setup is `/tana-setup`
 
-**Check `SYSTEM/tana-ids.yaml` before asking the user for a focus.**
+This skill explores one part of a Tana workspace. Connecting ILOS to Tana (filling `SYSTEM/tana-ids.yaml`, checking capabilities, choosing a sync mode) is `/tana-setup`. If `SYSTEM/tana-ids.yaml` is still blank, suggest running `/tana-setup` first, then continue here with the focus question if the user still wants to explore.
 
-If the file exists but its values are still empty (`""`), this is an **Initial Setup session**. Skip the focus question and proceed directly to full workspace exploration:
-
-1. `list_workspaces` → identify the primary workspace
-2. `list_tags` → get all tags (up to 200)
-3. `read_node` on the home node (maxDepth: 2) → map the hub structure
-4. `read_node` on each hub → get all child node IDs
-5. `get_tag_schema` (sequentially, one at a time) for all key tags: goal types, win, key area, day, week, month, task, context, voice review
-6. `get_or_create_calendar_node` for day, week, month, year → capture current calendar IDs
-
-Before exploring, if the old Markdown ID tables in `SYSTEM/tana-reference/` (`tag-ids.md`, `field-ids.md`, `structure-map.md`) hold IDs, run `node SYSTEM/tools/migrate-ids.js` (dry run), show the user the report, and on their yes run it with `--write`. That keeps their existing IDs; exploration then only fills what is still blank.
-
-Then fill `SYSTEM/tana-ids.yaml`. Rules:
-- Write only blank (`""`) values, plus any value you discover that differs from a filled one after you tell the user and they confirm. Never blank a filled key, and never touch `SYSTEM/sync-config.yaml`'s `tana_node_overrides`.
-- Keys are the placeholder names the skills use (`WIN_TAG_ID`, `PERIODICITY_FIELD_ID`, `PERIODICITY_WEEK_OPTION_ID`, `WINS_CONTAINER_ID`, …). Get option IDs from `get_tag_schema` on the tag that owns the field (for example the `#win` tag's Periodicity options).
-- **Verify the workspace supports the skills, and record it under `capabilities`:** set `decision_supertag` to `true` if a `#decision` supertag exists, else `false`; set `win_area_field` to `true` if the `#win` tag has an Area field, else `false`. Then tell the user plainly what is missing and what that means, for example: "Your workspace has no #decision supertag, so decisions will stay in MEMORY/decisions.jsonl and /decision will skip the Tana step."
-- Leave a key blank if the workspace has no such item; do not guess.
-Confirm to the user which keys were filled, which stay blank, and the capabilities result.
-
-**Do not ask "what part do you want to explore?" when the ID file is empty.** The answer is always "all of it."
+This skill never writes `SYSTEM/tana-ids.yaml` or `SYSTEM/sync-config.yaml`.
 
 ---
 

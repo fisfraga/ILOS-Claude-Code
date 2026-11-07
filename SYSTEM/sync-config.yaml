@@ -2,7 +2,7 @@ _schema: ilos_sync_config
 _version: "1.0"
 _description: >
   ILOS sync configuration. Controls how local files stay in sync with your Tana workspace.
-  Edit manually or run /sync-setup to reconfigure interactively.
+  Edit manually or run /tana-setup to reconfigure interactively.
   Run /sync to execute sync based on these settings.
 
 # ─────────────────────────────────────────────
@@ -19,18 +19,15 @@ _description: >
 #
 sync_mode: full
 
-# ─────────────────────────────────────────────
-# TANA WORKSPACE
-# ─────────────────────────────────────────────
-# Populated automatically by /tana-understand.
-# Required before running /sync.
-tana_workspace_id: ""
+# The Tana workspace ID lives in SYSTEM/tana-ids.yaml (workspace.WORKSPACE_ID),
+# filled by /tana-setup. (ILOS 1.0 kept it here as tana_workspace_id; an old value
+# still works as a fallback until /tana-setup moves it.)
 
 # ─────────────────────────────────────────────
 # TANA NODE OVERRIDES (optional)
 # ─────────────────────────────────────────────
 # By default, /sync and /win push content to the canonical hub containers
-# discovered via /tana-understand and stored in SYSTEM/tana-ids.yaml (containers:):
+# discovered via /tana-setup and stored in SYSTEM/tana-ids.yaml (containers:):
 #
 #   wins       → Wins Log          (Review Hub child)
 #   decisions  → Decisions Log     (Review Hub child)

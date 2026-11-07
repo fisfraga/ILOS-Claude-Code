@@ -341,3 +341,8 @@ test('the contract itself is linted by the push rules', () => {
   assert.ok(vs.some((v) => v.file === CONTRACT_PATH && v.rule === 'win-without-periodicity'));
   assert.ok(!rules(vs).includes('restated-push-template'));
 });
+
+test('reading tana_workspace_id is only allowed as the legacy fallback', () => {
+  assert.ok(rules(lintText('s.md', 'If `tana_workspace_id` is empty, stop.')).includes('workspace-id-source'));
+  assert.deepStrictEqual(lintText('s.md', 'Legacy fallback: a 1.0 sync-config.yaml may still hold `tana_workspace_id`.'), []);
+});

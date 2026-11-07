@@ -52,7 +52,7 @@ If invoked as `/sync status`:
 📊 ILOS Sync Status
 
 Mode: [full | partial] (from sync-config.yaml)
-Workspace: [tana_workspace_id or "not configured"]
+Workspace: [WORKSPACE_ID from tana-ids.yaml (legacy fallback: sync-config.yaml's tana_workspace_id) or "not configured — run /tana-setup"]
 
 Last full sync:    [timestamp or "never"]
 Last partial sync: [timestamp or "never"]
@@ -80,13 +80,10 @@ Stop here. Do not proceed to sync phases.
 
 ### Step 0 — Verify Tana is configured
 
-Read `SYSTEM/sync-config.yaml`:
-- If `tana_workspace_id` is empty → stop and inform:
-  > "Tana workspace is not configured. Run `/sync-setup` first to configure your sync settings and connect your Tana workspace."
-
-Read `SYSTEM/tana-ids.yaml`:
-- If all its values are empty → stop and inform:
-  > "Tana reference IDs are not set up. Run `/tana-understand` first to discover and document your workspace IDs, then run `/sync-setup`."
+The workspace ID lives in `SYSTEM/tana-ids.yaml` as `workspace.WORKSPACE_ID`.
+- If it is empty, use the legacy fallback: a `sync-config.yaml` from ILOS 1.0 may still hold `tana_workspace_id` (legacy). If that is filled, use it and say once: "Run `/tana-setup` once to move your workspace ID into `SYSTEM/tana-ids.yaml`."
+- If both are empty, or every value in `tana-ids.yaml` is empty → stop and inform:
+  > "Tana isn't set up for ILOS yet. Run `/tana-setup` first (one time, 10-20 minutes)."
 
 **MCP Call 1 of N — Test connectivity:**
 ```
@@ -474,7 +471,7 @@ Everything is in sync.
 - Goals: compare timestamps, Tana wins on tie
 - Always show conflicts to user before applying
 
-**If tana_workspace_id or tag IDs are missing:**
+**If the workspace ID or tag IDs are missing:**
 - Stop sync for that entity type
 - Inform user which IDs are missing
-- Suggest running `/tana-understand` to discover missing IDs
+- Suggest running `/tana-setup` (safe to re-run) to discover missing IDs

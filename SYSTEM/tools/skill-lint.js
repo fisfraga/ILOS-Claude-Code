@@ -116,6 +116,10 @@ function lintText(file, text, opts = {}) {
         }
       }
     }
+    if (/\btana_workspace_id\b/.test(line) && !/legacy/i.test(line)) {
+      add(i + 1, 'workspace-id-source',
+        'the workspace ID lives in SYSTEM/tana-ids.yaml (WORKSPACE_ID); read sync-config.yaml\'s tana_workspace_id only as the legacy fallback, and say so');
+    }
     const server = line.match(/\bmcp__tana[\w-]*/);
     if (server) {
       add(i + 1, 'hardcoded-mcp-server',
