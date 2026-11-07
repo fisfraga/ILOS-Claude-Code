@@ -301,7 +301,7 @@ After all pulls are complete, present a clear diff summary to the user:
 GOALS:
   ✅ N goals match (no changes needed)
   📥 N goals in Tana not yet in local files (will pull)
-  📤 N local goals not yet in Tana (will push)
+  📤 N local goals not yet in Tana (will push: no map entry and no matching goal in the pull)
   ⚡ N goals with status differences (Tana wins)
 
 AREAS:
@@ -347,6 +347,7 @@ Apply changes in dependency order. **One MCP call at a time.**
 ### 4A — Write Tana changes to local files
 
 **Goals:** If Tana has goal updates not in local file, update `TIME/active-goals.yaml`.
+- Match each pulled goal to a local goal of the same level by name (the contract for `goal`, **Dedup** step 2). Record every match, and every new Tana goal you add locally, in `entities.goals.tana_node_ids` under `<period>/<goal_id>`, so 4B never pushes a goal Tana already has.
 - For new Tana goals: add entry under the correct time scale section
 - For status updates: update the `status` field of the matching local goal
 - For completed goals: update status to `completed`, preserve entry
@@ -369,7 +370,7 @@ Apply changes in dependency order. **One MCP call at a time.**
   # Project Name
   [content from Tana if available]
   ```
-- Store Tana node ID in `sync-state.yaml` under `projects.tana_node_ids`
+- Store the Tana node ID in `sync-state.yaml` under `entities.projects.tana_node_ids.<slug>` (also for projects that already have a local file)
 
 **Topics:** Update or create topic files in `SPACE/topics/`.
 - Filename: slugified topic name (e.g., `stoic-philosophy.md`)
@@ -397,7 +398,7 @@ Apply changes in dependency order. **One MCP call at a time.**
   [content from Tana if available]
   ```
 - For partial sync (metadata only): write frontmatter + heading only, leave sections empty
-- Store Tana node ID in `sync-state.yaml` under `topics.tana_node_ids`
+- Store the Tana node ID in `sync-state.yaml` under `entities.topics.tana_node_ids.<slug>` (also for topics that already have a local file)
 
 **Vision:** Update vision files in `QUANTUM/vision/` if Tana has newer versions.
 
@@ -405,7 +406,7 @@ Apply changes in dependency order. **One MCP call at a time.**
 
 ### 4B — Push local items to Tana
 
-**New goals, projects and topics** — every local item whose ID is not yet in its `entities.<goals|projects|topics>.tana_node_ids` map. Push each one, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container), the contract for `project`, or the contract for `topic`. Each push is recorded in its map, so goals created by the review skills are never pushed twice.
+**New goals, projects and topics** — every local item whose key is not yet in its `entities.<goals|projects|topics>.tana_node_ids` map after 4A (goals are keyed `<period>/<goal_id>`; a goal the pull found in Tana is recorded, not pushed — the contract for `goal`, **Dedup**). Push each one, one call at a time: read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container), the contract for `project`, or the contract for `topic`. Each push is recorded in its map, so goals created by the review skills are never pushed twice.
 
 **Unsynced wins** (wins in `MEMORY/wins.jsonl` that are NOT already tracked in `SYSTEM/sync-state.yaml` under `entities.wins.tana_node_ids`):
 

@@ -226,7 +226,7 @@ quarterly:
 
 Update `TIME/current-period.yaml` with `current_quarter` and `last_reviews.quarterly` date.
 
-**Tana sync (if available):** for each new goal, Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `QUARTER_NODE_ID`, tag `QUARTERLY_GOAL_TAG_ID`). It records each goal under its `id` in `entities.goals.tana_node_ids`, so `/sync` never pushes it a second time.
+**Tana sync (if available):** for each new goal, Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `QUARTER_NODE_ID`, tag `QUARTERLY_GOAL_TAG_ID`). It records each goal under `<period>/<goal_id>` in `entities.goals.tana_node_ids` (and records instead of pushing a goal the period node already has), so `/sync` never pushes it a second time.
 
 ---
 

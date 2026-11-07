@@ -31,7 +31,7 @@ If no Tana tool is available or the call fails, write nothing and say:
 
 Stop here.
 
-**Re-run?** If `WORKSPACE_ID` in `tana-ids.yaml` is already filled, this is a re-run: say so, keep every filled value, and in Step 4 only fill what is still blank (report what changed). In Step 5, show the current mode and change it only if the user asks.
+**Re-run?** If `WORKSPACE_ID` or any tag ID in `tana-ids.yaml` is already filled, or the legacy `tana_workspace_id` in `sync-config.yaml` is filled (an ILOS 1.0 setup), this is a re-run: say so, keep every filled value, and in Step 4 only fill what is still blank (report what changed). In Step 5, show the current mode and change it only if the user asks.
 
 ## Step 2 — Choose the workspace
 
@@ -57,7 +57,7 @@ Fill `SYSTEM/tana-ids.yaml`:
 - Write only blank (`""`) values. If you find a value that differs from a filled one, tell the user and change it only on their yes. Never blank a filled key.
 - Never touch `SYSTEM/sync-config.yaml`'s `tana_node_overrides`: those are the user's choices and always win over the containers.
 - Leave a key blank when the workspace has no such item. Do not guess.
-- **Capabilities:** set `capabilities.decision_supertag` to `true` if a `#decision` tag exists, else `false`; set `capabilities.win_area_field` to `true` if the `#win` tag has an Area field, else `false`.
+- **Capabilities** are re-checked on every run, re-runs included (they are not IDs): set `capabilities.decision_supertag` to `true` if a `#decision` tag exists, else `false`; set `capabilities.win_area_field` to `true` if the `#win` tag has an Area field, else `false`.
 
 Report in plain words, for example:
 > "Filled 31 IDs. Still blank: the Wins Log and Decisions Log containers (your workspace has no Review Hub), so wins wait locally until you create one or set `tana_node_overrides.wins_container_id`. Your workspace has no #decision tag, so decisions stay in `MEMORY/decisions.jsonl`."
@@ -66,7 +66,7 @@ Never show raw IDs unless the user asks.
 
 ## Step 5 — How much to sync
 
-Present the two modes:
+On a re-run, show the current mode and settings and ask whether to change anything; keep them unless the user asks. On a first run, present the two modes:
 
 **🔄 Full Sync (Recommended)** — everything mirrored: all 12 Key Areas with content, projects and topics with notes, complete win and decision history, all 9 personal context files, strategy systems. Best for using Tana as a complete life mirror.
 

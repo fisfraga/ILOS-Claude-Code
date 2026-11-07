@@ -49,7 +49,7 @@ Read `SYSTEM/sync-config.yaml` (if it exists):
 
 Run a **goals-only + wins push** (not a full sync):
 1. Push the wins not yet in Tana: build the list as `/sync` Phase 4B "Unsynced wins" does (every win not in `entities.wins.tana_node_ids`), then read `SYSTEM/tana-write-contract.md` and follow the contract for `win` for each one
-2. Update goal statuses in Tana for any goals completed this week
+2. Update goal statuses in Tana for any goals completed this week: read `SYSTEM/tana-write-contract.md` and follow the contract for `goal`, **Status change**
 3. Update `sync-state.yaml` with new timestamps
 
 This takes < 1 minute and ensures the Tana review data is current.
@@ -231,7 +231,7 @@ weekly:
 
 Update `TIME/current-period.yaml` with the new `current_week` and `last_reviews.weekly` date.
 
-**Tana sync (if available):** for each new goal, Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `NEXT_WEEK_NODE_ID`, tag `WEEKLY_GOAL_TAG_ID`). It records each goal under its `id` in `entities.goals.tana_node_ids`, so `/sync` never pushes it a second time.
+**Tana sync (if available):** for each new goal, Read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `NEXT_WEEK_NODE_ID`, tag `WEEKLY_GOAL_TAG_ID`). It records each goal under `<period>/<goal_id>` in `entities.goals.tana_node_ids` (and records instead of pushing a goal the period node already has), so `/sync` never pushes it a second time.
 
 ---
 

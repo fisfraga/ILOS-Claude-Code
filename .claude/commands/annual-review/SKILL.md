@@ -287,7 +287,7 @@ get_or_create_calendar_node({
 })
 ```
 
-Then, for each new annual goal, read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `YEAR_NODE_ID`, tag `ANNUAL_GOAL_TAG_ID`, with Periodicity Year). It records each goal under its `id` in `entities.goals.tana_node_ids`.
+Then, for each new annual goal, read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: period node `YEAR_NODE_ID`, tag `ANNUAL_GOAL_TAG_ID`, with Periodicity Year). It records each goal under `<period>/<goal_id>` in `entities.goals.tana_node_ids` (and records instead of pushing a goal the period node already has).
 
 ### Step 11 — Define Q1 focus
 

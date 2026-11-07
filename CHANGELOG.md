@@ -29,7 +29,7 @@ All notable changes to the ILOS template. Run `/update` to move to a newer relea
 - `/sync-setup` now runs `/tana-setup`'s sync-mode step. It will be removed in a later release.
 
 ### Updating from 1.0
-Run `/update`. It adds `/tana-setup`, the connection guide and the write contract, and updates the Tana skills; your data, `sync-config.yaml` and `tana-ids.yaml` are kept as they are. Then run `/tana-setup` once: it keeps every ID you already have and moves your workspace ID into `tana-ids.yaml`.
+Run `/update`. It adds `/tana-setup`, the connection guide and the write contract, and updates the Tana skills; your data, `sync-config.yaml` and `tana-ids.yaml` are kept as they are. Then run `/tana-setup` once: it keeps every ID you already have and moves your workspace ID into `tana-ids.yaml`. Until then only `/sync` reads the old workspace ID; the review skills and `/morning` skip their Tana steps. Your first `/sync` matches the goals already in Tana by name and records them instead of pushing them again.
 
 ## 1.0.0 — first public release
 

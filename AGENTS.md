@@ -126,7 +126,7 @@ If Tana MCP is configured, you can also:
 - Sync calendar nodes (day, week, month, year)
 
 **Check availability:** Try `list_workspaces`. If it works, Tana is available.
-**Reference IDs:** `SYSTEM/tana-ids.yaml` holds every tag, field, option and node ID the skills use (filled by `/tana-setup`; the workspace ID lives there too, as `WORKSPACE_ID`). Every Tana write follows `SYSTEM/tana-write-contract.md`.
+**Reference IDs:** `SYSTEM/tana-ids.yaml` holds every tag, field, option and node ID the skills use (filled by `/tana-setup`; the workspace ID lives there too, as `WORKSPACE_ID`). Every win, decision, goal, project or topic written to Tana follows `SYSTEM/tana-write-contract.md`.
 
 **Local files are always the canonical source.** Tana is a sync target, not a dependency.
 

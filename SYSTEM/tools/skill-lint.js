@@ -16,8 +16,8 @@ const fs = require('fs');
 const path = require('path');
 
 const FENCE = /^\s*(```|~~~)/;
-const WIN_TAG = /\bWIN_TAG_ID\b|#win\b/;
-const DECISION_TAG = /\bDECISION_TAG_ID\b|#decision\b/;
+const WIN_TAG = /\bWIN_TAG_ID\b|#win\b|#\[\[win\]\]/i;
+const DECISION_TAG = /\bDECISION_TAG_ID\b|#decision\b|#\[\[decision\]\]/i;
 const ID_PLACEHOLDER = /\[((?:[A-Z][A-Z0-9_]*_ID(?:_RESOLVED)?)(?:\s*\|\s*[A-Z][A-Z0-9_]*_ID(?:_RESOLVED)?)*)\]/g;
 const RETIRED_IDS = {
   ACTIVE_OPTION_ID: 'GOAL_ACTIVE_OPTION_ID (goal status) or PROJECT_ACTIVE_OPTION_ID (project status)',
@@ -49,9 +49,9 @@ const CONTRACT_PATH = 'SYSTEM/tana-write-contract.md';
 const ENTITY_TAGS = {
   win: WIN_TAG,
   decision: DECISION_TAG,
-  goal: /\b(?:ANNUAL|QUARTERLY|MONTHLY|WEEKLY|DAILY)_GOAL_TAG_ID\b/,
-  project: /\bPROJECT_TAG_ID\b/,
-  topic: /\bTOPIC_TAG_ID\b/,
+  goal: /\b(?:ANNUAL|QUARTERLY|MONTHLY|WEEKLY|DAILY)_GOAL_TAG_ID\b|#\[\[(?:annual|quarterly|monthly|weekly|daily) goal\]\]/i,
+  project: /\bPROJECT_TAG_ID\b|#\[\[project\]\]/i,
+  topic: /\bTOPIC_TAG_ID\b|#\[\[topic\]\]/i,
 };
 const CONTRACT_REF = /contract for `([a-z_]+)`/g;
 
@@ -116,14 +116,22 @@ function lintText(file, text, opts = {}) {
         }
       }
     }
-    if (/\btana_workspace_id\b/.test(line) && !/legacy/i.test(line)) {
+    if (/\btana_workspace_id\b/.test(line) && (!/legacy/i.test(line) || /\bnot\s+(?:the\s+)?legacy|non-legacy/i.test(line))) {
       add(i + 1, 'workspace-id-source',
         'the workspace ID lives in SYSTEM/tana-ids.yaml (WORKSPACE_ID); read sync-config.yaml\'s tana_workspace_id only as the legacy fallback, and say so');
     }
-    const server = line.match(/\bmcp__tana[\w-]*/);
+    const server = line.match(/\bmcp__\w*tana[\w-]*|\btana-outliner-local\b|\btana-local\b/i);
     if (server) {
       add(i + 1, 'hardcoded-mcp-server',
         `${server[0]} names one MCP server; buyers name theirs differently (see SYSTEM/tana-mcp-setup.md) — say "Tana MCP" and call tools by their bare name`);
+    }
+    const map = line.match(/(?<!entities\.)\b(goals|projects|topics|wins|decisions|vision|personal_context|strategy_systems|weekly_reviews)\.tana_node_ids/);
+    if (map) {
+      add(i + 1, 'map-path', `name the map by its full path, entities.${map[1]}.tana_node_ids, so every writer and reader uses the same one`);
+    }
+    if (/entities\.goals\.tana_node_ids/.test(line) && /<goal_id>|its `id`/.test(line) && !/<period>\//.test(line)) {
+      add(i + 1, 'goal-map-key',
+        'goal IDs repeat every period (w04_1 next year too): key the goals map by <period>/<goal_id>, as the contract for `goal` says');
     }
   });
 
@@ -162,7 +170,7 @@ function lintText(file, text, opts = {}) {
       }
     }
     if (block.unclosed) add(block.line, 'unclosed-fence', 'fenced block is never closed; the lint cannot tell where it ends');
-    const pushes = /import_tana_paste/.test(block.text);
+    const pushes = /import_tana_paste|%%tana%%/.test(block.text);
     if (pushes && opts.contract && !opts.isContract) {
       for (const entity of Object.keys(opts.contract)) {
         if (ENTITY_TAGS[entity] && ENTITY_TAGS[entity].test(block.text)) {
@@ -238,10 +246,15 @@ function skillFiles(root) {
   }
   const commands = path.join(root, '.claude', 'commands');
   if (fs.existsSync(commands)) {
-    for (const dir of fs.readdirSync(commands)) {
-      const f = path.join(commands, dir, 'SKILL.md');
-      if (fs.existsSync(f)) files.push(f);
-    }
+    // Every Markdown file under a skill folder: SKILL.md and its support files.
+    const walk = (dir) => {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const f = path.join(dir, e.name);
+        if (e.isDirectory()) { if (!e.name.startsWith('_')) walk(f); } // _archive: kept for reference, not run
+        else if (e.name.endsWith('.md')) files.push(f);
+      }
+    };
+    walk(commands);
   }
   const agents = path.join(root, '.claude', 'agents');
   if (fs.existsSync(agents)) {

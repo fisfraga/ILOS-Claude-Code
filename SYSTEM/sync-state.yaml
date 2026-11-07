@@ -25,11 +25,11 @@ entities:
     last_pull: null
     last_push: null
     tana_node_ids: {}
-    # Example entries after first sync:
-    # annual_2026_1: "TANA_NODE_ID_HERE"
-    # q1_2026_1: "TANA_NODE_ID_HERE"
-    # m01_2026_1: "TANA_NODE_ID_HERE"
-    # w08_2026_1: "TANA_NODE_ID_HERE"
+    # Keyed "<period>/<goal_id>" (goal IDs repeat every period). Example entries:
+    # "2026/annual_1": "TANA_NODE_ID_HERE"
+    # "2026-Q1/q1_1": "TANA_NODE_ID_HERE"
+    # "2026-01/m01_1": "TANA_NODE_ID_HERE"
+    # "2026-W08/w08_1": "TANA_NODE_ID_HERE"
 
   areas:
     last_pull: null

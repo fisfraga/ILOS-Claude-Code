@@ -109,9 +109,9 @@ Reference for executing bidirectional sync. Called by `/sync`. Every write to Ta
 ```
 search_nodes({ query: { and: [{ hasType: "[ANNUAL_GOAL_TAG_ID]" }] }, limit: 10 })
 ```
-Map returned nodes to local `active-goals.yaml` using goal description as match key. Update `status` if different. Add any new Tana goals to local file.
+Map returned nodes to local `active-goals.yaml` using goal description as match key. Update `status` if different. Add any new Tana goals to local file. Record every match and every added goal in `entities.goals.tana_node_ids` under `<period>/<goal_id>` (the contract for `goal`, **Dedup**), so nothing Tana already has is pushed back.
 
-**Push and status updates** (new local goal not in Tana, or a status changed locally): read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container; **Status change** for goals already in `entities.goals.tana_node_ids`).
+**Push and status updates** (new local goal not in Tana, or a status changed locally): read `SYSTEM/tana-write-contract.md` and follow the contract for `goal` (placement: goals container; **Status change** for goals already in Tana).
 
 #### Projects and topics (new local items → Tana)
 

@@ -51,7 +51,7 @@ If the win clearly relates to an active goal in `TIME/active-goals.yaml`, read t
 
 ### Step 3 — Sync to Tana (if available)
 
-**If Tana MCP is NOT available** (test with `list_workspaces`): Skip to Step 4. The win is already safe in `MEMORY/wins.jsonl` and will push on the next `/sync` when Tana comes online.
+**If Tana MCP is NOT available** (test with `list_workspaces`): Skip to Step 4. The win is already safe in `MEMORY/wins.jsonl` and will push on the next `/sync` when Tana comes online. If `WORKSPACE_ID` in `SYSTEM/tana-ids.yaml` is blank too, add once: "Want your wins in Tana as well? `SYSTEM/tana-mcp-setup.md` shows how to connect it."
 
 **If Tana MCP is available:**
 

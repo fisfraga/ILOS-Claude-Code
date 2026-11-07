@@ -346,3 +346,46 @@ test('reading tana_workspace_id is only allowed as the legacy fallback', () => {
   assert.ok(rules(lintText('s.md', 'If `tana_workspace_id` is empty, stop.')).includes('workspace-id-source'));
   assert.deepStrictEqual(lintText('s.md', 'Legacy fallback: a 1.0 sync-config.yaml may still hold `tana_workspace_id`.'), []);
 });
+
+// ---- 1.1 review fixes ----
+
+const FULL_CONTRACT = CONTRACT + '\n## Recipe: `goal`\n**Writers:** `weekly.md`\n';
+
+test('a push template using named tags or a raw Tana Paste block is still a restated template', () => {
+  const c = parseContract(FULL_CONTRACT);
+  const named = fence('import_tana_paste({\n  parentNodeId: "[WINS_CONTAINER_ID_RESOLVED]",\n  content: "- x #[[win]]"\n})');
+  assert.ok(rules(lintText('s.md', named, { contract: c })).includes('restated-push-template'));
+  const paste = fence('%%tana%%\n- x #[[^[WIN_TAG_ID]]]\n  - [[^[PERIODICITY_FIELD_ID]]]:: Week');
+  assert.ok(rules(lintText('s.md', paste, { contract: c })).includes('restated-push-template'));
+  const goal = fence('import_tana_paste({\n  parentNodeId: NEXT_WEEK_NODE_ID,\n  content: "- [ ] g #[[weekly goal]]"\n})');
+  assert.ok(rules(lintText('weekly.md', goal, { contract: c })).includes('restated-push-template'));
+});
+
+test('connector-style and bare server names are flagged', () => {
+  assert.ok(rules(lintText('s.md', 'call mcp__claude_ai_Tana__list_workspaces')).includes('hardcoded-mcp-server'));
+  assert.ok(rules(lintText('s.md', 'use the tana-outliner-local server')).includes('hardcoded-mcp-server'));
+  assert.deepStrictEqual(lintText('s.md', 'Your Tana server can be local or remote.'), []);
+});
+
+test('"not legacy" does not excuse reading tana_workspace_id', () => {
+  assert.ok(rules(lintText('s.md', 'Read `tana_workspace_id` (not legacy) and stop if empty.')).includes('workspace-id-source'));
+});
+
+test('a node-ID map is always named by its entities. path', () => {
+  assert.ok(rules(lintText('s.md', 'Store Tana node ID in `sync-state.yaml` under `projects.tana_node_ids`')).includes('map-path'));
+  assert.deepStrictEqual(lintText('s.md', 'Record it in `entities.projects.tana_node_ids.<slug>`.'), []);
+});
+
+test('goal map keys carry the period, so next year\'s goals are not mistaken for this year\'s', () => {
+  assert.ok(rules(lintText('s.md', 'add `entities.goals.tana_node_ids.<goal_id>: <node ID>`')).includes('goal-map-key'));
+  assert.ok(rules(lintText('s.md', 'It records each goal under its `id` in `entities.goals.tana_node_ids`.')).includes('goal-map-key'));
+  assert.deepStrictEqual(lintText('s.md', 'add `entities.goals.tana_node_ids.<period>/<goal_id>: <node ID>`'), []);
+});
+
+test('support files next to a skill are linted too', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lint-support-'));
+  fs.mkdirSync(path.join(root, '.claude', 'commands', 'x'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.claude', 'commands', 'x', 'SKILL.md'), 'ok\n');
+  fs.writeFileSync(path.join(root, '.claude', 'commands', 'x', 'notes.md'), 'call mcp__tana__read_node\n');
+  assert.ok(rules(lintRepo(root)).includes('hardcoded-mcp-server'));
+});

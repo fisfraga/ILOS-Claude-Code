@@ -55,7 +55,7 @@ The local server runs inside the Tana Outliner desktop app, and is on whenever t
 **If the sign-in does not work**, use a personal API token instead. In Tana Outliner: your profile (top right) → **API tokens** → **Personal Tokens** → create one. Then add the server with the token:
 
 ```bash
-claude mcp remove tana
+claude mcp remove --scope user tana
 claude mcp add --transport http --scope user tana http://localhost:8262/mcp --header "Authorization: Bearer <your token>"
 ```
 

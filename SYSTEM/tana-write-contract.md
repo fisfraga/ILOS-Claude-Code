@@ -49,7 +49,7 @@ Drop the Area line when the capability rule above says so.
 
 **Needs:** the resolved decisions container, `DECISION_TAG_ID`, `DECISION_STATUS_FIELD_ID`, and the option for the decision's status (`DECISION_OPEN_OPTION_ID`, `DECISION_DECIDED_OPTION_ID` or `DECISION_SET_ASIDE_OPTION_ID`). If any is empty, the empty-ID guard applies: skip the push and leave the decision unrecorded.
 
-**Capabilities:** `capabilities.decision_supertag` must be `true`. When it is `false` (the workspace has no `#decision` tag) or still `unknown` with `DECISION_TAG_ID` blank, decisions stay in `MEMORY/decisions.jsonl`: say so once ("your workspace has no #decision tag, so decisions stay local") and continue.
+**Capabilities:** `capabilities.decision_supertag` must be `true`. When it is `false` (the workspace has no `#decision` tag) or still `unknown` with `DECISION_TAG_ID` blank, decisions stay in `MEMORY/decisions.jsonl`: say so once ("your workspace has no #decision tag, so decisions stay local") and continue. Still `unknown` with `DECISION_TAG_ID` filled (IDs copied from an older setup, before `/tana-setup` ran): push, and suggest `/tana-setup` once so it records the capability.
 
 **Dedup:** `entities.decisions.tana_node_ids` (create it empty if missing). A decision already listed is never pushed again; change its status instead (below).
 
@@ -89,9 +89,14 @@ set_field_option({
 
 **Needs:** the target (the period node, or the resolved goals container) and the level's tag ID. If either is empty, the empty-ID guard applies: skip the push and leave the goal unrecorded.
 
-**Optional lines** — add each only when its IDs are filled: Status (`GOAL_STATUS_FIELD_ID` + `GOAL_ACTIVE_OPTION_ID`; not on daily goals); Periodicity Year on annual goals (`PERIODICITY_FIELD_ID` + `PERIODICITY_YEAR_OPTION_ID`); Area (`AREA_FIELD_ID` + `areas.<slug>`).
+**Optional lines** — add each only when its IDs are filled: Status (`GOAL_STATUS_FIELD_ID` + the option for the goal's status — `GOAL_ACTIVE_OPTION_ID` for a new goal; not on daily goals); Periodicity Year on annual goals (`PERIODICITY_FIELD_ID` + `PERIODICITY_YEAR_OPTION_ID`); Area (`AREA_FIELD_ID` + `areas.<slug>`).
 
-**Dedup:** `entities.goals.tana_node_ids` (create it empty if missing). A goal whose `id` is already listed is never pushed again; change its status instead (below).
+**Map key:** goal IDs repeat every period (`w04_1` exists every year), so the goals map is keyed by `<period>/<goal_id>`, where `<period>` is the `period` value of the goal's level in `TIME/active-goals.yaml` (for example `2026-W04/w04_1`, `2026-Q1/q1_1`, `2026/annual_1`).
+
+**Dedup:** `entities.goals.tana_node_ids` (create it empty if missing). Before pushing a goal:
+1. Its `<period>/<goal_id>` key is listed → never push it again; change its status instead (below).
+2. Not listed, but Tana already has it: a goal node with the level's tag and the goal's `description` as its name (ignore case and surrounding spaces). Where to look: `/sync` and the agent use the goals their pull just returned; the review skills and `/morning` use the children of the period node (one `get_children` call before the first push). Found → record that node under the key (see **Record**) instead of pushing. This is how goals created in Tana, and goals pushed by ILOS 1.0 (which kept no map), get their entry.
+3. Otherwise push it once (below).
 
 **Push** (one call per goal, so each returned node ID can be recorded):
 ```
@@ -102,9 +107,9 @@ import_tana_paste({
 ```
 Use the level's tag; for an annual goal add `\n  - [[^[PERIODICITY_FIELD_ID]]]:: [[^[PERIODICITY_YEAR_OPTION_ID]]]`. In the goals-container placement, `parentNodeId` is `[GOALS_CONTAINER_ID_RESOLVED]`.
 
-**Record:** add `entities.goals.tana_node_ids.<goal_id>: <returned node ID>` and set `entities.goals.last_push` (daily goals: nothing to record).
+**Record:** add `entities.goals.tana_node_ids.<period>/<goal_id>: <node ID>` (quote the key in YAML: `"2026-W04/w04_1": "..."`) and set `entities.goals.last_push`. Daily goals have no local record: nothing to record.
 
-**Status change** (a goal already in the map changed status locally):
+**Status change** (a goal's local status differs from Tana's): `[TANA_GOAL_NODE_ID]` is the goal's `<period>/<goal_id>` entry in the map. No entry → find it as in **Dedup** step 2 and record it; still not found → push it once (above) with its current status. Never create a second node for a goal that has one. Local `abandoned` uses `GOAL_ABANDONED_OPTION_ID`; if that is empty, the empty-ID guard applies: leave the Tana status as it is and say so once.
 ```
 set_field_option({
   nodeId: "[TANA_GOAL_NODE_ID]",
