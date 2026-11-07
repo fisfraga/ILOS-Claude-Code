@@ -147,7 +147,7 @@
     },
     ".claude/commands/tana-setup/SKILL.md": {
       "class": "foundation",
-      "sha256": "fe71dbbb9625060f2913f43ff772a50836bae187b42a960e73e755dcfaf90772"
+      "sha256": "b9a66491dfe62e1d264e41ca39f7b29ecbf833b579b3d8043c25767b4754cbe1"
     },
     ".claude/commands/tana-understand/SKILL.md": {
       "class": "foundation",
@@ -483,7 +483,7 @@
     },
     "SYSTEM/tana-mcp-setup.md": {
       "class": "foundation",
-      "sha256": "4a90e5cda5510ba9c8252f712b6f15f17ab94d32a4a8b1d8e9e8331afe055d9a"
+      "sha256": "4a6050d099f0bf7128cdf8e7df5410839725ab60f14f64e6a03a029134e464ac"
     },
     "SYSTEM/tana-reference/README.md": {
       "class": "foundation",

@@ -79,4 +79,5 @@ In your ILOS folder, type `/tana-setup`. It checks the connection, finds your wo
 ## Verified
 
 - macOS, 2026-11-06: both addresses answer and ask for sign-in; the local server lists workspaces from Claude Code.
+- macOS, 2026-11-07: remote server added with `claude mcp add` and signed in through `/mcp`; it lists workspaces from Claude Code. It lists every workspace the account can reach (more than the local server, some without a name); the workspaces both servers list have the same IDs.
 - Not yet verified: Windows; Claude Cowork / claude.ai connector steps (taken from Tana's documentation).

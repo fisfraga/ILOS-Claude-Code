@@ -36,8 +36,9 @@ Stop here.
 ## Step 2 — Choose the workspace
 
 From the `list_workspaces` result:
-- One workspace → use it. Several → show their names and ask which one ILOS should use.
-- **The workspace ID lives in one place:** `workspace.WORKSPACE_ID` (and `HOME_NODE_ID`) in `SYSTEM/tana-ids.yaml`. Write them there.
+- Re-run with `WORKSPACE_ID` filled → check it is still in the list and keep it; do not ask again. If it is missing, say so and ask.
+- One workspace → use it. Several → show the named ones as a numbered list and ask which one ILOS should use (the user answers with a number or a name). The remote Tana server lists every workspace the account can reach, so the list can be long and some entries have no name: leave those out and say how many were left out ("3 workspaces without a name are not shown").
+- **The workspace ID lives in one place:** `workspace.WORKSPACE_ID` (and `HOME_NODE_ID`) in `SYSTEM/tana-ids.yaml`. Write them there. Some workspaces come back without a home node: then leave `HOME_NODE_ID` blank (no ILOS skill needs it).
 - Legacy fallback: a `sync-config.yaml` from ILOS 1.0 may still hold a `tana_workspace_id` key (legacy). If `WORKSPACE_ID` is blank and that legacy key is filled, offer that workspace first. If both are filled and differ, show both names and ask which is right. Never write the legacy key.
 
 ## Step 3 — Keep IDs from an older copy
