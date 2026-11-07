@@ -43,7 +43,7 @@ For a complete setup walkthrough, see `SYSTEM/setup-guide.md`.
 
 - [Claude Code](https://claude.ai/code) (or the Claude desktop app with Cowork)
 - [Node.js](https://nodejs.org) 18 or later -- only for `/dashboard` and `/update`
-- Optional: Tana with an MCP server configured, for sync
+- Optional: Tana, for sync — connect it with [`SYSTEM/tana-mcp-setup.md`](SYSTEM/tana-mcp-setup.md)
 
 ---
 
@@ -116,9 +116,9 @@ This cycle repeats fractally: Year > Quarter > Month > Week > Day.
 | ILOS Guide | `/guide` | Variable | Ether | Understand how ILOS works |
 | Help | `/help` | Instant | System | Skill catalog + what to do next |
 | Update | `/update` | 2-5 min | System | Update the template files; your data is never touched |
-| Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
-| Tana Understand | `/tana-understand` | 10-20 min | Air | Map your Tana workspace into `SYSTEM/tana-ids.yaml` (sync step 1) |
-| Sync Setup | `/sync-setup` | 5-10 min | Ether | Choose full or partial sync (sync step 2) |
+| Tana | `/tana` | Instant | Ether | Tana hub: routes to the right Tana skill |
+| Tana Setup | `/tana-setup` | 10-20 min | Ether | Connect Tana once: workspace IDs, capabilities, sync mode |
+| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore one tag, workflow or subsystem |
 | Tana Sync | `/sync` | 5-15 min | Ether | Sync local files and Tana |
 | Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
 | Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
@@ -136,7 +136,7 @@ PARACELSUS operates through eight specialized modes, each bringing a distinct co
 | **ATHENA** | The Strategist | Air | Goals, planning, prioritization, decision-making. `/morning`, `/strategist`, `/project-kickoff`, `/decision`, review planning phases. |
 | **HEPHAESTUS** | The Craftsman (Builder) | Earth | Execution, building products, shipping. `/build`, `/architect`, product work. |
 | **MNEMOSYNE** | The Memory Keeper (Archivist) | Water | Memory, context extraction, win patterns, reflection. `/win`, `/context-update`, `/area-review`, review celebration phases. |
-| **HERMES** | The Messenger (Tana) | -- | Bridges ILOS with Tana workspaces via MCP. `/tana`, `/tana-search-builder`, `/tana-schema-graph`, `/tana-understand`. |
+| **HERMES** | The Messenger (Tana) | -- | Bridges ILOS with Tana workspaces via MCP. `/tana-setup`, `/sync`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`. |
 | **DAEDALUS** | The Master Builder (Architect) | -- | System design, dashboard generation, schema architecture. `/dashboard`, `/architect`. |
 | **Council** | Meta-System | All | Orchestrates transitions between agents. Manages authority matrix and escalation patterns across all modes. |
 
@@ -194,7 +194,7 @@ All data lives in plain text files you can read and edit. No database, no cloud,
 
 ## Tana Integration (Optional)
 
-If you use [Tana](https://tana.inc), ILOS connects to it via MCP (Model Context Protocol). Set it up in two steps: `/tana-understand` (maps your workspace) then `/sync-setup` (chooses full or partial sync); after that, `/sync`. HERMES handles all Tana operations.
+If you use [Tana](https://tana.inc), connect it to Claude with [`SYSTEM/tana-mcp-setup.md`](SYSTEM/tana-mcp-setup.md) (the remote server on a paid Tana plan, the local one otherwise), then run `/tana-setup` once. After that, `/sync`.
 
 New to the Tana template? The six-video course is listed in [`ILOS-KNOWLEDGE/videos/README.md`](ILOS-KNOWLEDGE/videos/README.md).
 

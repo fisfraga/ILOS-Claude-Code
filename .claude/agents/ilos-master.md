@@ -49,7 +49,7 @@ Parse the user's request and match:
 | dashboard, open dashboard, life dashboard | Execute `/dashboard` skill | — |
 | update my context, personal context, self-knowledge | Route to **PYTHIA** (`/context-update`) | — |
 | tana, search tana | Route to **@tana** | — |
-| sync, setup sync, sync setup, configure sync | Execute `/sync-setup` or `/sync` skill | — |
+| sync, set up tana, setup sync, sync setup, configure sync | Execute `/tana-setup` (setup) or `/sync` skill | — |
 | understand, explain, what is, how does, why, learn, teach me, guide me, I'm new, confused about, I don't understand | Execute `/guide` skill (SOPHIA) | `ILOS-KNOWLEDGE/INDEX.md` |
 | how is this built, technical, file structure, how do agents work, how do skills work | Execute `/guide` skill — technical mode | — |
 | how to use, tool usage, claude code commands, tana setup, mcp, sync setup | Execute `/guide` skill — tools mode | — |
@@ -71,7 +71,7 @@ You know the entire ILOS architecture:
 - Earth: `/build`, `/dashboard`, `/architect`, `/area-review`
 - Water: `/win`, `/weekly-review`, `/monthly-review`, `/quarterly-review`, `/annual-review`
 - Ether: `/alignment`, `/context-update`, `/ilos-master`, `/help`, `/guide`
-- Tana: `/sync`, `/sync-setup`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
+- Tana: `/tana-setup`, `/sync`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph`
 
 **Data File Locations:**
 - Wins: `MEMORY/wins.jsonl`

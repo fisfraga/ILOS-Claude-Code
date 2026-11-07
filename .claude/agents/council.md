@@ -170,7 +170,7 @@ Each agent has a dedicated file in `.claude/agents/`:
 | ATHENA | `@strategist` | Strategist (Air) | `/morning`, `/strategist`, `/project-kickoff`, `/decision` |
 | HEPHAESTUS | `@builder` | Builder (Earth) | `/build`, `/dashboard`, `/architect` |
 | MNEMOSYNE | `@reviewer` | Archivist (Water) | `/win`, all review skills, `/context-update`, `/area-review` |
-| HERMES | `@tana` | Tana Bridge | `/tana`, `/tana-search-builder`, `/tana-schema-graph`, `/tana-understand` |
+| HERMES | `@tana` | Tana Bridge | `/tana-setup`, `/sync`, `/tana`, `/tana-understand`, `/tana-search-builder`, `/tana-schema-graph` |
 | DAEDALUS | `@architect` | Architect | `/dashboard`, `/architect` |
 | SOPHIA | `@sage` | Wisdom Teacher (Ether) | `/guide`, "explain...", "what is...", "teach me...", "how does...", "I'm new" |
 | PYTHIA | `@personal-context` | Self-Knower (Ether) | `/context-update`, "update my context", self-knowledge queries |

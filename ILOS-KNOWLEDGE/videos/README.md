@@ -4,7 +4,7 @@ Six videos that walk through the ILOS Tana template. Watch them in order the fir
 
 | # | Video | Length | What it teaches | Related in this repo |
 |---|-------|--------|-----------------|----------------------|
-| 1 | [Installation Steps](https://www.youtube.com/watch?v=1FKJ68nMHsQ) | 17:41 | Installing the template in Tana and the first configuration | `/tana-understand`, `/sync-setup`, `SYSTEM/setup-guide.md` |
+| 1 | [Installation Steps](https://www.youtube.com/watch?v=1FKJ68nMHsQ) | 17:41 | Installing the template in Tana and the first configuration | `/tana-setup`, `SYSTEM/tana-mcp-setup.md`, `SYSTEM/setup-guide.md` |
 | 2 | [Template Tour: Lessons, Hubs and Sections](https://www.youtube.com/watch?v=z6mNn80X5y8) | 20:05 | How the template is organised: lessons, hubs and sections | `ILOS-KNOWLEDGE/quantum-space-time.md`, `/guide` |
 | 3 | [Calendar Dynamics in Tana](https://www.youtube.com/watch?v=1LjBKi4bXTc) | 17:32 | Day, week, month and year nodes and how planning and reviews attach to them | `/morning`, `/weekly-review`, `ILOS-KNOWLEDGE/vper-cycle.md` |
 | 4 | [AI Agent Paracelsus](https://www.youtube.com/watch?v=2nQhRdGl9Tk) | 20:56 | The Paracelsus coaching agent | `/alignment`, `/ilos-master`, `.claude/agents/` |

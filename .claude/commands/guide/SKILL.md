@@ -146,10 +146,10 @@ The key insight is the **paradigm shift**: Tana used to be operated with fixed i
 - Test availability before any Tana operations: `list_workspaces`
 
 **Practical setup path:**
-1. `/tana-understand` — discover your workspace IDs
-2. `/sync-setup` — configure sync preferences (full or partial mode)
+1. Connect Tana to Claude — `SYSTEM/tana-mcp-setup.md` (remote server on a paid Tana plan, local server otherwise)
+2. `/tana-setup` — discover your workspace IDs, check what it supports, choose full or partial sync (once)
 3. `/sync` — run a sync anytime
-4. `/tana` — hub for all Tana operations
+4. `/tana` — hub that routes to the right Tana skill
 
 ---
 

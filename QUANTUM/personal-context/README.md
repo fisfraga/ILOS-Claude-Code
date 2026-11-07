@@ -76,7 +76,7 @@ If you use Tana with the ILOS integration, your personal context files can be mi
 - **Local files** — Read by PARACELSUS during Claude Code sessions (coaching, planning, alignment)
 - **Tana nodes** — Browseable in Tana's visual interface, searchable, connectable to other nodes
 
-Run `/sync-setup` to configure bidirectional sync, then `/sync` to keep local files and Tana in sync.
+Run `/tana-setup` to configure bidirectional sync, then `/sync` to keep local files and Tana in sync.
 
 ---
 

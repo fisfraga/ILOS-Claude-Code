@@ -2,6 +2,34 @@
 
 All notable changes to the ILOS template. Run `/update` to move to a newer release; your data is never touched.
 
+## 1.1.0 — one Tana setup, one write recipe
+
+### Added
+- `SYSTEM/tana-mcp-setup.md`: how to connect Tana to Claude, step by step. It recommends Tana's **remote** MCP server (`https://app.tana.inc/mcp`, paid Tana plan, beta), which works with the desktop app closed and also in Claude Cowork, Claude Desktop and claude.ai. The free **local** server (Tana desktop open) stays as the second option.
+- `/tana-setup`: one command that checks the connection (and points to the guide when Tana isn't connected), finds your workspace, fills `SYSTEM/tana-ids.yaml`, reports what your workspace supports, and sets full or partial sync. Safe to re-run: it only fills blanks and never touches your node overrides.
+- `SYSTEM/tana-write-contract.md`: one recipe per thing ILOS writes to Tana (win, decision, goal, project, topic) — where it goes, which IDs it needs, what happens when one is missing, and how the push is recorded so nothing is pushed twice. Every skill that writes to Tana follows it.
+- `skill-lint` rules: push templates live only in the contract and every writer cites it; skills never name an MCP server; the workspace ID is read from `tana-ids.yaml`.
+
+### Changed
+- The workspace ID lives in one place, `WORKSPACE_ID` in `SYSTEM/tana-ids.yaml`. A 1.0 `sync-config.yaml` that still has `tana_workspace_id` keeps working; `/tana-setup` moves it.
+- `/tana` is a short hub that routes to the right skill, and the Tana agent routes to the contract instead of restating recipes.
+- `/tana-understand` now only explores one tag, workflow or subsystem; first-time setup is `/tana-setup`.
+- Goals that the review skills and `/sync` push are recorded in `sync-state.yaml`, so `/sync` never creates them a second time. Review skills push goals one at a time.
+- A decision pushed to Tana carries the status it has locally (open, decided or set aside).
+- `/help`, `/guide`, `ROUTING.md`, `AGENTS.md`, the README and `SYSTEM/setup-guide.md` point to `/tana-setup` and the connection guide.
+
+### Fixed
+- `/sync` stopped when the workspace ID was only in `tana-ids.yaml`.
+- Pushing an older win no longer moves `last_pushed_win_id` backwards.
+- `/decision` skips its Tana search when your workspace has no `#decision` tag.
+- The "Tana MCP is not available" message named one particular server; it now points to `/mcp` and the guide.
+
+### Deprecated
+- `/sync-setup` now runs `/tana-setup`'s sync-mode step. It will be removed in a later release.
+
+### Updating from 1.0
+Run `/update`. It adds `/tana-setup`, the connection guide and the write contract, and updates the Tana skills; your data, `sync-config.yaml` and `tana-ids.yaml` are kept as they are. Then run `/tana-setup` once: it keeps every ID you already have and moves your workspace ID into `tana-ids.yaml`.
+
 ## 1.0.0 — first public release
 
 ### Added
@@ -39,8 +67,8 @@ node SYSTEM/tools/migrate-ids.js --write                                        
 
 After that, `/update` is installed and handles every later release.
 
-### Planned (not in 1.0)
+### Planned (not in 1.0 or 1.1)
 - Dashboard redesign and an extension API (`dashboard/extensions/`).
 - Video transcripts with timestamps.
 - Methodology diagrams and the onboarding emails.
-- One shared Tana write recipe and a single `/tana-setup` command replacing `/tana-understand` + `/sync-setup`.
+- Remove the `/sync-setup` pointer (use `/tana-setup`).

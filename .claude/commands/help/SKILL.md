@@ -93,12 +93,13 @@ Talk to any agent directly, or let skills auto-activate them.
 /ilos-master     — Master coaching session (Variable)
 
 ### Tana Sync (Optional)
-/tana-understand — Step 1: map your workspace into SYSTEM/tana-ids.yaml (10-20 min, once)
-/sync-setup      — Step 2: choose full or partial sync (5-10 min, once)
+/tana-setup      — Connect Tana once: workspace IDs, what it supports, sync mode (10-20 min; safe to re-run)
 /sync            — Sync local files and Tana (5-15 min)
-/tana            — Tana operations hub
+/tana            — Tana hub: routes to the right skill
+Not connected yet? SYSTEM/tana-mcp-setup.md
 
 ### Tana Tools (Optional, not part of sync)
+/tana-understand     — Explore one tag, workflow or subsystem
 /tana-search-builder — Build search nodes from plain language
 /tana-schema-graph   — Visualize tag schemas
 
@@ -129,7 +130,7 @@ Apply these rules to generate 2-3 suggestions:
 - Suggest: `/north-star` — "Define your vision and goals from scratch."
 
 **If Tana MCP is available (`list_workspaces` succeeds) AND `SYSTEM/tana-ids.yaml` has only empty values:**
-- Suggest: `/tana-understand` — "Your Tana workspace is connected but the ID file hasn't been filled in yet. Run this to map your workspace automatically (5 min) — it unlocks full Tana integration for all other skills."
+- Suggest: `/tana-setup` — "Your Tana workspace is connected but the ID file hasn't been filled in yet. Run this once to map your workspace (10-20 min) — it unlocks Tana for all other skills."
 
 **If the user asks how something works in Tana (calendar, hubs, supertags, the Paracelsus agent, routines):**
 - Read `ILOS-KNOWLEDGE/videos/README.md` and point to the video that covers it.

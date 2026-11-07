@@ -46,7 +46,7 @@ Tana is a structured data graph, not a document editor. Every piece of informati
 ## Getting Started
 
 1. Set up your Tana workspace with ILOS supertags
-2. Run `/tana-understand`: it discovers your tag, field, option and hub IDs and writes them to `SYSTEM/tana-ids.yaml`, and tells you if your workspace lacks something the skills use
+2. Connect Tana to Claude (`SYSTEM/tana-mcp-setup.md`), then run `/tana-setup`: it discovers your tag, field, option and hub IDs and writes them to `SYSTEM/tana-ids.yaml`, and tells you if your workspace lacks something the skills use
 3. Ask PARACELSUS to test the connection: "Search for my active goals in Tana"
 
 ## Periodicity Semantics

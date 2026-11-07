@@ -126,7 +126,7 @@ If Tana MCP is configured, you can also:
 - Sync calendar nodes (day, week, month, year)
 
 **Check availability:** Try `list_workspaces`. If it works, Tana is available.
-**Reference IDs:** `SYSTEM/tana-ids.yaml` holds every tag, field, option and node ID the skills use (filled by `/tana-understand`).
+**Reference IDs:** `SYSTEM/tana-ids.yaml` holds every tag, field, option and node ID the skills use (filled by `/tana-setup`; the workspace ID lives there too, as `WORKSPACE_ID`). Every Tana write follows `SYSTEM/tana-write-contract.md`.
 
 **Local files are always the canonical source.** Tana is a sync target, not a dependency.
 
@@ -145,8 +145,8 @@ ILOS supports two-mode bidirectional sync between local files and Tana:
 - Bidirectional: goals (status + content), personal context
 
 **Getting started with sync:**
-1. Run `/tana-understand` to discover your workspace IDs (one time)
-2. Run `/sync-setup` to choose your mode and configure preferences
+1. Connect Tana to Claude: `SYSTEM/tana-mcp-setup.md` (remote server on a paid Tana plan, local server otherwise)
+2. Run `/tana-setup` once: it discovers your workspace IDs, checks what your workspace supports and sets your sync mode
 3. Run `/sync` anytime to sync, or use `/sync status` to check state
 
 **Auto-sync triggers** (configurable in `SYSTEM/sync-config.yaml`):
@@ -181,9 +181,8 @@ get_or_create_calendar_node({
 })
 
 # Create a win in Tana: use /win (never hand-write the push or send it to a calendar node).
-# /win pushes to the resolved Wins container (tana_node_overrides, else WINS_CONTAINER_ID in
-# SYSTEM/tana-ids.yaml), sets Periodicity
-# Week and records the node in sync-state.yaml, so /sync never pushes the same win twice.
+# Every write follows SYSTEM/tana-write-contract.md: the resolved container, Periodicity Week,
+# and a record in sync-state.yaml, so /sync never pushes the same win twice.
 ```
 
 Every placeholder ID (`[BRACKETS]`) is a key in `SYSTEM/tana-ids.yaml`; a blank value means the Tana step is skipped and the item stays local.
@@ -246,12 +245,12 @@ Workflows are implemented as Claude Code skills in `.claude/commands/`. Users in
 | ILOS Master | `/ilos-master` | Variable | Ether | Master coaching orchestration |
 | Strategist | `/strategist` | Variable | Air | Deep planning and strategy session |
 | Architect | `/architect` | Variable | Earth | System design and dashboard deployment |
-| Tana | `/tana` | Variable | Ether | Tana MCP operations hub |
+| Tana | `/tana` | Instant | Ether | Tana hub: routes to the right Tana skill |
 | Tana Sync | `/sync` | 5-15 min | Ether | Bidirectional sync with Tana (full or partial) |
-| Sync Setup | `/sync-setup` | 5-10 min | Ether | First-time sync configuration wizard |
+| Tana Setup | `/tana-setup` | 10-20 min | Ether | Connect Tana once: IDs, capabilities, sync mode (safe to re-run) |
 | Tana Search Builder | `/tana-search-builder` | 5-10 min | Air | Build Tana search nodes from natural language |
 | Tana Schema Graph | `/tana-schema-graph` | 5-10 min | Earth | Visualize tag schemas as HTML graphs |
-| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore and document Tana system |
+| Tana Understand | `/tana-understand` | 10-20 min | Air | Explore one tag, workflow or subsystem |
 | ILOS Guide | `/guide` | Variable | Ether | Understand ILOS — methodology, philosophy, technical implementation, or tool usage |
 | Help | `/help` | Instant | System | Skill catalog + context-aware suggestions |
 | Update | `/update` | 2-5 min | System | Update template files to the latest release; your data is never touched |

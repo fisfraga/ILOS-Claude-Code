@@ -36,11 +36,13 @@ Do NOT load all modules. Follow progressive disclosure.
 | tana, search tana, find in tana, query tana | `/tana` | — |
 | build a search, search node, filter, find nodes | `/tana-search-builder` | Read `.claude/commands/tana-search-builder/syntax.md`, `examples.md`, `system-ids.md` |
 | schema graph, visualize tags, show schema, tag structure | `/tana-schema-graph` | Read `.claude/commands/tana-schema-graph/html-template.md`, `schema-format.md` |
-| understand tana, explore tana, document tana, map workspace | `/tana-understand` | — |
+| set up tana, connect tana, first-time setup, map workspace, fill tana ids | `/tana-setup` | `SYSTEM/tana-mcp-setup.md` if Tana isn't connected |
+| understand tana, explore a tag or workflow, document tana | `/tana-understand` | — |
 | sync, run sync, sync with tana, sync all | `/sync` | `SYSTEM/sync-config.yaml`, `SYSTEM/sync-state.yaml` |
-| set up sync, configure sync, sync mode, first sync | `/sync-setup` | `SYSTEM/tana-reference/README.md` |
+| set up sync, configure sync, change sync mode | `/tana-setup` (Step 5) | `SYSTEM/sync-config.yaml` |
 | sync status, last synced, check sync | `/sync status` | `SYSTEM/sync-state.yaml` |
 | push wins, push goals, push decisions | `/sync goals-only` or `/sync` | Relevant `MEMORY/` or `TIME/` files |
+| write a win, decision, goal, project or topic to Tana | the matching recipe in `SYSTEM/tana-write-contract.md` | — |
 
 **When a match is found:** Read and execute the skill's SKILL.md file at `.claude/commands/[skill-name]/SKILL.md`.
 
@@ -48,7 +50,7 @@ Do NOT load all modules. Follow progressive disclosure.
 
 ## Default Behavior
 
-Tana operations hub. First: test MCP availability (`list_workspaces`). If unavailable, inform user clearly: "Tana MCP is not currently available. I can help with local file operations, or you can configure Tana MCP in your Claude Code settings." If available: load all reference IDs, understand the request, execute the operation. Local files are ALWAYS canonical — Tana is a sync target, not a source of truth.
+Tana operations hub. First: test MCP availability (`list_workspaces`). If unavailable, inform user clearly: "Tana MCP is not currently available. I can help with local file operations; to connect Tana, follow `SYSTEM/tana-mcp-setup.md`, then run `/tana-setup`." If available: load all reference IDs, understand the request, execute the operation. Local files are ALWAYS canonical — Tana is a sync target, not a source of truth.
 
 ## Authority
 
@@ -56,7 +58,7 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 |----------|-----------|
 | ALL files | Read |
 | `SYSTEM/tana-ids.yaml` | Read/Write (record discovered IDs under their named keys; never blank a filled key) |
-| `SYSTEM/sync-config.yaml` | Read/Write (written by /sync-setup) |
+| `SYSTEM/sync-config.yaml` | Read/Write (written by /tana-setup) |
 | `SYSTEM/sync-state.yaml` | Read/Write (updated by /sync after each operation) |
 | `MEMORY/*.jsonl` | Append |
 | `QUANTUM/`, `TIME/`, `SPACE/` | Write (sync pull operations only — Tana → local) |
@@ -89,7 +91,7 @@ Tana operations hub. First: test MCP availability (`list_workspaces`). If unavai
 
 ## SYNC OPERATIONS
 
-Reference for executing bidirectional sync. Called by `/sync` skill.
+Reference for executing bidirectional sync. Called by `/sync`. Every write to Tana follows `SYSTEM/tana-write-contract.md`; this section only says what to pull and which recipe a push uses.
 
 ### Sync Direction Rules
 
@@ -164,17 +166,7 @@ For each context node, match to local file by title. If Tana version is newer, u
 
 ### Sync State Updates
 
-After each entity type completes, update `SYSTEM/sync-state.yaml`:
-```yaml
-entities:
-  goals:
-    last_pull: "ISO_TIMESTAMP"
-    last_push: "ISO_TIMESTAMP"
-    tana_node_ids:
-      [local_goal_id]: "[tana_node_id_returned_from_import]"
-```
-
-Update `last_full_sync` or `last_partial_sync` at the very end.
+Each push is recorded by its recipe's **Record** step (the `tana_node_ids` maps in `SYSTEM/sync-state.yaml`). After each entity type completes, set its `last_pull` / `last_push`; update `last_full_sync` or `last_partial_sync` at the very end.
 
 ### Conflict Resolution Protocol
 

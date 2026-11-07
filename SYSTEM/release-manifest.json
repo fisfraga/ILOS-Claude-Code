@@ -11,11 +11,11 @@
     },
     ".claude/agents/council.md": {
       "class": "foundation",
-      "sha256": "1477e514b62cac2105d933d76f2e460ab66c5d8795c43cb5f4b5c8e352f1bc79"
+      "sha256": "a8b690dd6c95ed91c2e575783dfb941f559721ef04fd45f3adfb8f128ba8a037"
     },
     ".claude/agents/ilos-master.md": {
       "class": "foundation",
-      "sha256": "7ffc48389c37aeb5c88bef014d20d3963e67cfa69d903e5234d8b241d44a6a9f"
+      "sha256": "a9458c224a9e2dfbd212d6c17f245d87ffc51799fcee7cede10fd5b7a7a2f118"
     },
     ".claude/agents/personal-context.md": {
       "class": "foundation",
@@ -35,7 +35,7 @@
     },
     ".claude/agents/tana.md": {
       "class": "foundation",
-      "sha256": "63e12e2eb2bab0e7c2c7b7d7256c8b06999601418faf871a3800025ebba4c795"
+      "sha256": "8d1c490de19cc85293b23dce0178187f36087fed107e0a0af58da7eec6106b16"
     },
     ".claude/agents/visionary.md": {
       "class": "foundation",
@@ -75,11 +75,11 @@
     },
     ".claude/commands/guide/SKILL.md": {
       "class": "foundation",
-      "sha256": "5dda19316fa0248f3d70ded8c230619b4ee33179f5508c399a834ed3734dc1ba"
+      "sha256": "3c4ca7644c075c9d9b9c8d4faaceb9b0250bbda80b97a9f3e8e46e46700c84ac"
     },
     ".claude/commands/help/SKILL.md": {
       "class": "foundation",
-      "sha256": "15042ae03bbb55340c3aefb21cd962a8728f5b124c2891ea6093a045478da818"
+      "sha256": "bab11d43b0c56816bcad0cf7633df72b73589b12808917d6a098577a1b458131"
     },
     ".claude/commands/ilos-master/SKILL.md": {
       "class": "foundation",
@@ -155,7 +155,7 @@
     },
     ".claude/commands/tana/SKILL.md": {
       "class": "foundation",
-      "sha256": "29ea6b78d9c60a38d14cebd700825c97ec65d2727844dc17135988c287b0044b"
+      "sha256": "592d46a6af43a880bfbbaa85f48e152c8fb9e503d097be7eebfdcd23a13067ec"
     },
     ".claude/commands/update/SKILL.md": {
       "class": "foundation",
@@ -179,11 +179,11 @@
     },
     "AGENTS.md": {
       "class": "foundation",
-      "sha256": "ac97f6c16b2f9e75e41a4ea366ad8940ab5df19ffa901326f22da2813a11f173"
+      "sha256": "6d9c039b41051a187393a57ca40b192a39f0e48d8c1ecab387d894c50b90b084"
     },
     "CHANGELOG.md": {
       "class": "foundation",
-      "sha256": "7af8c7d8759b68287e6a0fe7777e7a4abec22665edfeaf0227cd6ef20a8eb36e"
+      "sha256": "9a1e2ccaf55fd5a85d24255a0a4819037f353ecd4f016d5fe5ab177abcd9880f"
     },
     "CLAUDE.md": {
       "class": "foundation",
@@ -251,7 +251,7 @@
     },
     "ILOS-KNOWLEDGE/videos/README.md": {
       "class": "foundation",
-      "sha256": "e2b5c23ee9e79990735c609d23064f420dfb8b817fbf7683faf96eb62025644d"
+      "sha256": "820a026e741182687919f61e4d5473ac747963d3b374d2f4c0144333ab1e70e1"
     },
     "ILOS-KNOWLEDGE/vper-cycle.md": {
       "class": "foundation",
@@ -347,7 +347,7 @@
     },
     "QUANTUM/personal-context/README.md": {
       "class": "foundation",
-      "sha256": "9b4ab03fae4752098b0b6b3f53d431ab64956d5c3a637f1e099733e36bd4d682"
+      "sha256": "c877f55f99884daf7e348236c2057b6bc7773fd1437b756dc310dcd06746e321"
     },
     "QUANTUM/personal-context/archive/.gitkeep": {
       "class": "starter",
@@ -375,11 +375,11 @@
     },
     "README.md": {
       "class": "foundation",
-      "sha256": "b4ca36015e3bea5eacca13f911bcbd417c2759940868f273479ba00f277d725f"
+      "sha256": "453cfdc0c19084339586ef2de5f9371d9a59a3c76697a9f0edcaf299692c3ed2"
     },
     "ROUTING.md": {
       "class": "foundation",
-      "sha256": "b11d7affdccca3f7c8c60ba3f47a6fb26e8b3e9ace05b9690f56352b0ff82e28"
+      "sha256": "c41b3c2d6c13bba310ee2362600c7f3303259e0ac9b216bfc86be06c58ada9f4"
     },
     "SECURITY.md": {
       "class": "foundation",
@@ -467,7 +467,7 @@
     },
     "SYSTEM/setup-guide.md": {
       "class": "foundation",
-      "sha256": "61cbdbf2ee3e281633655ed392a140fbc570399942bdfe2abf305f6b639bcab5"
+      "sha256": "4f229f2a4f606ee459232308e64d7668489202e3f5f8fb6e40ee7dafbe6cc26a"
     },
     "SYSTEM/sync-config.yaml": {
       "class": "starter",
@@ -487,7 +487,7 @@
     },
     "SYSTEM/tana-reference/README.md": {
       "class": "foundation",
-      "sha256": "9a8006cc46ef5a98d479808afd6c48807918f5130ba7be052c3b85bb093e06f3"
+      "sha256": "a1971d65e31cd13a7cdcaca43e6980fb5ecad458f78f9764992629ca2f0be436"
     },
     "SYSTEM/tana-write-contract.md": {
       "class": "foundation",
@@ -620,6 +620,7 @@
       "0e5c15b25f40a882240723d4a42ce95b01c5ae0b96907b30fa750e98a9c16d7b"
     ],
     ".claude/agents/council.md": [
+      "1477e514b62cac2105d933d76f2e460ab66c5d8795c43cb5f4b5c8e352f1bc79",
       "3158ff5d1dc09acd9777d968dec7b884ccc862461a1f1b07842c2b7e4b54209d",
       "dfe4d259179b6ca2e919d41b81e175d674805a9583b8b4f49b0d551c33512f7c",
       "d799c08653c536bae33b4fb9761b2701aab58d297e84be91b028dce1e6749274",
@@ -627,6 +628,7 @@
       "b26f4a7b685fea87bbeccd958d396a53e77db385d08717d84c07a43495a99fd3"
     ],
     ".claude/agents/ilos-master.md": [
+      "7ffc48389c37aeb5c88bef014d20d3963e67cfa69d903e5234d8b241d44a6a9f",
       "deb171757516556eb52ae00c2a99f747fb6c3da870547e7f598c0a18efba9ec8",
       "dfecd36010f82736b7758f9c2faa6d0d232b88b10d7fa1cb6c16ef554af05847",
       "dfe3a0963984fd64333634475eee66de7538ff96e262eb3edc44b5e94fc46bc2",
@@ -809,6 +811,7 @@
       "b293bb673f4e65a9498b84217af1b4c8b51c5f585dae1a35086661d2e991e445"
     ],
     "QUANTUM/personal-context/README.md": [
+      "9b4ab03fae4752098b0b6b3f53d431ab64956d5c3a637f1e099733e36bd4d682",
       "99904b3b3b5e9955252e287480bdabcdc80ccdb469818457b24f39fb7aa06351"
     ],
     "QUANTUM/self-knowledge/README.md": [

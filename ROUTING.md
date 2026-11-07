@@ -38,7 +38,8 @@ This file tells you WHERE to find information. Read ONLY what you need.
 | Major decision | TIME/ + MEMORY/ | templates/major-decision.md, decisions.jsonl |
 | Tana operations | SYSTEM/ | tana-ids.yaml, relevant SPACE/ or TIME/ files |
 | Sync with Tana / run sync | SYSTEM/ + skill | sync-config.yaml → `.claude/commands/sync/SKILL.md` |
-| Set up sync / configure sync mode | SYSTEM/ + skill | tana-reference/README.md → `.claude/commands/sync-setup/SKILL.md` |
+| Connect Tana / set up sync / change sync mode | SYSTEM/ + skill | `SYSTEM/tana-mcp-setup.md` (connection) → `.claude/commands/tana-setup/SKILL.md` |
+| Write a win, decision, goal, project or topic to Tana | SYSTEM/ | `SYSTEM/tana-write-contract.md` (the recipe for that entity) |
 | Sync status / last synced | SYSTEM/ | sync-state.yaml |
 | System architecture | SYSTEM/ + ILOS-KNOWLEDGE/ | setup-guide.md, schemas.md |
 | AI configuration / agent setup | ILOS-KNOWLEDGE/ | field-intelligence-layer.md |
